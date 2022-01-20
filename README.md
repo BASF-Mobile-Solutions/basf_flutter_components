@@ -14,9 +14,10 @@ Specify the platform target in Podfile
 ```pod
 platform :ios, '11.0'
 ```
+
 ### Android Setup
 
-Ensure your `MainActivity` class extends from `FlutterFragmentActivity`
+Ensure your `MainActivity`.kt/.java file class extends from `FlutterFragmentActivity`
 
 **Java**
 ```java
@@ -24,6 +25,7 @@ public class MainActivity extends FlutterFragmentActivity {
 	// Your code...
 }
 ```
+
 **Kotlin**
 ```kotlin
 class MainActivity : FlutterFragmentActivity() {
@@ -32,7 +34,7 @@ class MainActivity : FlutterFragmentActivity() {
 ```
 
 Remember to add the import at the top of the `MainActivity` file
-```
+```kotlin
 import io.flutter.embedding.android.FlutterFragmentActivity;
 ```
 
