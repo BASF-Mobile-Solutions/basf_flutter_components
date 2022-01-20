@@ -1,6 +1,10 @@
 # basf_flutter_components
 
 A BASF Flutter components library.
+![](./assets/basf_logo.png)
+
+[![pub package](https://img.shields.io/pub/v/basf_flutter_components.svg?label=basf_flutter_components)](https://pub.dev/packages/basf_flutter_components)
+[![Telegram](https://img.shields.io/badge/Email-BASF%20Mobile%20Solutions-blue.svg)](mailto:Mobile-Solutions@basf.com)
 
 ## Getting Started
 
