@@ -42,45 +42,88 @@ import io.flutter.embedding.android.FlutterFragmentActivity;
 
 - **Widgets**
   - BASFBUTTON...
-  ```
+  ```dart
   code example here
   ```
 
   - BASFTextButton...
-  ```
+  ```dart
   code example here
   ```
 
-- **Colors**
-  - blue...
+  - Spacers
+  ````dart
+  // Vertical Spacers
+  VerticalSpacer.xSmall()
+  VerticalSpacer.small()
+  VerticalSpacer.normal()
+  VerticalSpacer.semi()
+  VerticalSpacer.mediumSmall()
+  VerticalSpacer.medium()
+  VerticalSpacer.medium20()
+  VerticalSpacer.mediumLarge()
+  VerticalSpacer.large()
+  VerticalSpacer.xLarge()
+  VerticalSpacer.xxLarge()
+  VerticalSpacer.xxxLarge()
+  // Horizontal Spacers
+  HorizontalSpacer.small()
+  HorizontalSpacer.normal()
+  HorizontalSpacer.semi()
+  HorizontalSpacer.mediumSmall()
+  HorizontalSpacer.medium()
+  HorizontalSpacer.medium20()
+  HorizontalSpacer.mediumLarge()
+  HorizontalSpacer.large()
+  HorizontalSpacer.xLarge()
+  HorizontalSpacer.xxLarge()
+  // Horizontal Spacer with text
+  HorizontalSpacerWithText(
+    text: 'example text',
+    color: Colors.green,
+  )
   ```
+
+- **Colors**
+  ```dart
   BASFColors.blue
   ```
 
 - **Theme**
-  - BasfTheme.blue
-  ```
+  ```dart
   BasfTheme.blue
-  ```
-
-  - BasfTheme.green
-  ```
   BasfTheme.green
   ```
 
 - **TextStyles**
-  - BASFTextStyle.
-  ```
+  ```dart
+  BASFTextStyle.
   BasfTheme.headline1
+  ```
+- **Styles**
+  - Dimens: Defines a preset of usefull standard paddings
+  ```dart
+  Dimens.paddingXSmall;
+  Dimens.paddingSmall;
+  Dimens.paddingDefault;
+  Dimens.paddingSemi;
+  Dimens.paddingMediumSmall;
+  Dimens.paddingMedium;
+  Dimens.paddingMedium20;
+  Dimens.paddingMediumLarge;
+  Dimens.paddingLarge;
+  Dimens.paddingXLarge;
+  Dimens.paddingXXLarge;
+  Dimens.paddingXXXLarge;
   ```
 
 - **One Trust**
   - Widget...
-  ```
+  ```dart
   code example here
   ```
 
   - initOneTrust...
-  ```
+  ```dart
   code example here
   ```
