@@ -1,6 +1,6 @@
-# basf_flutter_components_example
+# example
 
-Demonstrates how to use the basf_flutter_components plugin.
+A new Flutter project.
 
 ## Getting Started
 

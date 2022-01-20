@@ -1,18 +1,80 @@
 # basf_flutter_components
 
-A new flutter plugin project.
+A BASF Flutter components library.
 
 ## Getting Started
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
+### iOS Setup
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Specify the platform target in Podfile
+```pod
+platform :ios, '11.0'
+```
+### Android Setup
 
-The plugin project was generated without specifying the `--platforms` flag, no platforms are currently supported.
-To add platforms, run `flutter create -t plugin --platforms <platforms> .` under the same
-directory. You can also find a detailed instruction on how to add platforms in the `pubspec.yaml` at https://flutter.dev/docs/development/packages-and-plugins/developing-packages#plugin-platforms.
+Ensure your `MainActivity` class extends from `FlutterFragmentActivity`
+
+**Java**
+```java
+public class MainActivity extends FlutterFragmentActivity {
+	// Your code...
+}
+```
+**Kotlin**
+```kotlin
+class MainActivity : FlutterFragmentActivity() {
+	// Your code...
+}
+```
+
+Remember to add the import at the top of the `MainActivity` file
+```
+import io.flutter.embedding.android.FlutterFragmentActivity;
+```
+
+## Components
+
+- **Widgets**
+  - BASFBUTTON...
+  ```
+  code example here
+  ```
+
+  - BASFTextButton...
+  ```
+  code example here
+  ```
+
+- **Colors**
+  - blue...
+  ```
+  BASFColors.blue
+  ```
+
+- **Theme**
+  - BasfTheme.blue
+  ```
+  BasfTheme.blue
+  ```
+
+  - BasfTheme.green
+  ```
+  BasfTheme.green
+  ```
+
+- **TextStyles**
+  - BASFTextStyle.
+  ```
+  BasfTheme.headline1
+  ```
+
+- **One Trust**
+  - Widget...
+  ```
+  code example here
+  ```
+
+  - initOneTrust...
+  ```
+  code example here
+  ```

@@ -88,6 +88,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
+  logger:
+    dependency: transitive
+    description:
+      name: logger
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.0"
   matcher:
     dependency: transitive
     description:
@@ -102,6 +109,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.0"
+  onetrust_publishers_native_cmp:
+    dependency: transitive
+    description:
+      name: onetrust_publishers_native_cmp
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "6.29.0"
   path:
     dependency: transitive
     description:
