@@ -104,18 +104,18 @@ import io.flutter.embedding.android.FlutterFragmentActivity;
 - **Styles**
   - Dimens: Defines a preset of usefull standard paddings
   ```dart
-  Dimens.paddingXSmall;
-  Dimens.paddingSmall;
-  Dimens.paddingDefault;
-  Dimens.paddingSemi;
-  Dimens.paddingMediumSmall;
-  Dimens.paddingMedium;
-  Dimens.paddingMedium20;
-  Dimens.paddingMediumLarge;
-  Dimens.paddingLarge;
-  Dimens.paddingXLarge;
-  Dimens.paddingXXLarge;
-  Dimens.paddingXXXLarge;
+  Dimens.paddingXSmall
+  Dimens.paddingSmall
+  Dimens.paddingDefault
+  Dimens.paddingSemi
+  Dimens.paddingMediumSmall
+  Dimens.paddingMedium
+  Dimens.paddingMedium20
+  Dimens.paddingMediumLarge
+  Dimens.paddingLarge
+  Dimens.paddingXLarge
+  Dimens.paddingXXLarge
+  Dimens.paddingXXXLarge
   ```
 
 - **One Trust**
