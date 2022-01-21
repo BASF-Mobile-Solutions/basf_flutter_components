@@ -1,7 +1,7 @@
 # basf_flutter_components
 
 <p align="center">
-  <img src="./assets/basf_logo.png" />
+  <img src="https://raw.githubusercontent.com/BASF-Mobile-Solutions/basf_flutter_components/master/assets/basf_logo.png" />
 </p>	
 
 <p align="center">
