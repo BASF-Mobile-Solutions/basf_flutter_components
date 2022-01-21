@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
-import 'package:basf_flutter_components/extensions/scope_functions.dart';
+import 'package:basf_flutter_components/extensions/scope_functions_extensions.dart';
 
 /// [basfLogger] based on [logger], ready to use
 /// Small, easy to use and extensible logger which prints beautiful logs

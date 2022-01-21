@@ -73,25 +73,27 @@ import io.flutter.embedding.android.FlutterFragmentActivity;
 - **Widgets**
   - BASFBUTTON...
   ```dart
+  // TODO
   code example here
   ```
 
   - BASFTextButton...
   ```dart
+  // TODO
   code example here
   ```
 
   - BASFTextField...
   ```dart
+  // TODO
   code example here
   ```
 
   - BASFSnackbar...
   ```dart
+  // TODO
   code example here
   ```
-
-  ... etc...
 
   - Spacers
   ```dart
@@ -128,20 +130,24 @@ import io.flutter.embedding.android.FlutterFragmentActivity;
 
 - **Colors**
   ```dart
+  // TODO
   BASFColors.blue
   BASFColors.red
   BASFColors.black
   BASFColors.grey
+  ...
   ```
 
 - **Theme**
   ```dart
+  // TODO
   BasfTheme.blue
   BasfTheme.green
   ```
 
 - **TextStyles**
   ```dart
+  // TODO
   BASFTextStyle.headline1
   BASFTextStyle.bodyText1
   ```
@@ -177,7 +183,6 @@ import io.flutter.embedding.android.FlutterFragmentActivity;
         changeSdkStatus: (status) {
           // Turn off SDK's depending on state
           logger.i('Crashlytics status: $status');
-          FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(status);
         },
       ),
     ],
@@ -212,24 +217,8 @@ Based on `logger`, ready to use Small, easy to use and extensible logger which p
   logger.e('Error log...');
   logger.wtf('👾 What a terrible failure log');
   ```
-- **Extensions**
+  
+- **Utils**
 
-We also have some extensions
-  - Colors
-  ```dart
-  // Get a Color from Hex value
-  HexColor.fromHex('#ffffff');
-
-  // Darken your color
-  Color myColor = darken(Colors.red, 0.2);
-  // or lighten it
-  Color myColor = lighten(Colors.red, 0.2);
-  ```
-
-  - Strings
-  ```dart
-  String myString = 'this is my string'.toCapitalized; // This is my string
-  // or
-  String myString = 'this is my string'.toTitleCase; // This Is My String
-  ```
+A variety of predefines regexp, alias, and extensions are available
 

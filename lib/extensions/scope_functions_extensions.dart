@@ -1,6 +1,11 @@
 extension ScopeFunctionsExt<T extends Object> on T {
   /// Calls the [block] function with `this` value as its argument and returns value of another type.
   /// Used to invoke one or more functions on results of call chains or for executing a code block only with non-null values
+  /// 
+  /// Example:
+  /// ```dart
+  ///  final errorStackTrace = event.stackTrace?.let((st) => formatStackTrace(st, methodCount)) ?? '';
+  /// ```
   R let<R>(R Function(T it) block) => block(this);
 
   /// Calls the [block] function with `this` value as its argument and returns `this` value.

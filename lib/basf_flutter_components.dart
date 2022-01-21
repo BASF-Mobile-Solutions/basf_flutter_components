@@ -2,9 +2,16 @@
 /// predefined BASF Widgets, extensions, and utils
 library basf_flutter_components;
 
+// constants
+export 'package:basf_flutter_components/constants/alias.dart';
+export 'package:basf_flutter_components/constants/regexp.dart';
+
 // extensions
 export 'package:basf_flutter_components/extensions/color_extensions.dart';
-export 'package:basf_flutter_components/extensions/scope_functions.dart';
+export 'package:basf_flutter_components/extensions/iterable_extensions.dart';
+export 'package:basf_flutter_components/extensions/map_extensions.dart';
+export 'package:basf_flutter_components/extensions/object_extensions.dart';
+export 'package:basf_flutter_components/extensions/scope_functions_extensions.dart';
 export 'package:basf_flutter_components/extensions/string_extensions.dart';
 
 // theme
