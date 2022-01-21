@@ -94,7 +94,7 @@ import io.flutter.embedding.android.FlutterFragmentActivity;
   ... etc...
 
   - Spacers
-  ````dart
+  ```dart
   // Vertical Spacers
   VerticalSpacer.xSmall()
   VerticalSpacer.small()
