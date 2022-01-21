@@ -220,5 +220,5 @@ Based on `logger`, ready to use Small, easy to use and extensible logger which p
   
 - **Utils**
 
-A variety of predefines regexp, alias, and extensions are available
+A variety of predefined RegExp, aliases, and extensions are available
 
