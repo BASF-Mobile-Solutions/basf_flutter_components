@@ -139,6 +139,7 @@ import io.flutter.embedding.android.FlutterFragmentActivity;
   ```
 - **Styles**
   - Dimens
+
   Defines a preset of usefull standard paddings
   ```dart
   Dimens.paddingXSmall
@@ -157,6 +158,7 @@ import io.flutter.embedding.android.FlutterFragmentActivity;
 
 - **One Trust**
   - initOneTrust
+
   Initialize OneTrust on your app
   ```dart
   await initOneTrust(
@@ -181,7 +183,8 @@ import io.flutter.embedding.android.FlutterFragmentActivity;
   );
   ```
 
-  - Widget...
+  - OneTrustWidget
+
   A Widget that can be placed anywhere on the app and opens up the OneTrust Preference Center
   ```dart
   const OneTrustWidget(
@@ -191,6 +194,7 @@ import io.flutter.embedding.android.FlutterFragmentActivity;
   ```
 
 - **Logger**
+
 Based on `logger`, ready to use Small, easy to use and extensible logger which prints beautiful logs
   ```dart
   logger.v('Verbose log...');
@@ -201,6 +205,7 @@ Based on `logger`, ready to use Small, easy to use and extensible logger which p
   logger.wtf('👾 What a terrible failure log');
   ```
 - **Extensions**
+
 We also have some extensions
   - Colors
   ```dart
