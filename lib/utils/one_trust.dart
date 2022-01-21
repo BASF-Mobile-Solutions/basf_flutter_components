@@ -9,10 +9,17 @@ import 'package:onetrust_publishers_native_cmp/onetrust_publishers_native_cmp.da
 /// ```dart
 ///      Sdk(
 ///        categoryId: 'S0002',
-///        changeSdkStatus: (status) {
+///        changeSdkStatus: (status) async {
 ///          // Turn off SDK's depending on state
-///          logger.i('Crashlytics status: $status');
-///          FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(status);
+///          await FirebaseCrashlytics.instance
+///              .setCrashlyticsCollectionEnabled(status);
+///          // Delete unuset reports from Crashlytics if it's disabled
+///          if (status == false) {
+///            // FirebaseCrashlytics.instance.isCrashlyticsCollectionEnabled
+///            logger.d('Deleted Crashlytics reports');
+///            await FirebaseCrashlytics.instance.deleteUnsentReports();
+///          }
+///          logger.d('Crashlytics status: $status');
 ///        },
 ///      );
 /// ```
@@ -33,13 +40,20 @@ class Sdk {
   /// inside the app
   ///
   /// ```dart
-  ///     changeSdkStatus: (status) {
-  ///       // Turn off SDK's depending on state
-  ///       logger.i('Crashlytics status: $status');
-  ///       FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(status);
-  ///     },
+  ///      changeSdkStatus: (status) async {
+  ///        // Turn off SDK's depending on state
+  ///        await FirebaseCrashlytics.instance
+  ///            .setCrashlyticsCollectionEnabled(status);
+  ///        // Delete unuset reports from Crashlytics if it's disabled
+  ///        if (status == false) {
+  ///          // FirebaseCrashlytics.instance.isCrashlyticsCollectionEnabled
+  ///          logger.d('Deleted Crashlytics reports');
+  ///          await FirebaseCrashlytics.instance.deleteUnsentReports();
+  ///        }
+  ///        logger.d('Crashlytics status: $status');
+  ///      },
   /// ```
-  Function(bool) changeSdkStatus;
+  Future<void> Function(bool) changeSdkStatus;
 
   Sdk({
     required this.categoryId,
@@ -72,10 +86,17 @@ class Sdk {
 ///    sdks: [
 ///      Sdk(
 ///        categoryId: 'S0002',
-///        changeSdkStatus: (status) {
+///        changeSdkStatus: (status) async {
 ///          // Turn off SDK's depending on state
-///          logger.i('Crashlytics status: $status');
-///          FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(status);
+///          await FirebaseCrashlytics.instance
+///              .setCrashlyticsCollectionEnabled(status);
+///          // Delete unuset reports from Crashlytics if it's disabled
+///          if (status == false) {
+///            // FirebaseCrashlytics.instance.isCrashlyticsCollectionEnabled
+///            logger.d('Deleted Crashlytics reports');
+///            await FirebaseCrashlytics.instance.deleteUnsentReports();
+///          }
+///          logger.d('Crashlytics status: $status');
 ///        },
 ///      ),
 ///    ],
@@ -119,15 +140,17 @@ Future<void> initOneTrust({
 void _startListening(List<Sdk> sdks) {
   OTPublishersNativeSDK.listenForConsentChanges(
     List.generate(sdks.length, (index) => sdks[index].categoryId),
-  ).listen((event) {
-    logger.i(
-        'OneTrust Consent Changes: New status for ${event["categoryId"]} is ${event["consentStatus"]}');
+  ).listen(
+    (event) async {
+      logger.i(
+          'OneTrust Consent Changes: New status for ${event["categoryId"]} is ${event["consentStatus"]}');
 
-    // ? Future: Adapt depending on individual Sdk's not only each categoryId
-    sdks
-        .firstWhere((element) => element.categoryId == event['categoryId'])
-        .changeSdkStatus(event['consentStatus'] == 0 ? false : true);
-  });
+      // ? Future: Adapt depending on individual sdk not only categoryId
+      await sdks
+          .firstWhere((element) => element.categoryId == event['categoryId'])
+          .changeSdkStatus(event['consentStatus'] == 0 ? false : true);
+    },
+  );
 
   OTPublishersNativeSDK.listenForUIInteractions()
       .listen((event) => logger.i('OneTrust UI Interactions:\n\t$event'));
