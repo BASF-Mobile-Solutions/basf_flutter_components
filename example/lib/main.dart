@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
                               const Spacer(),
                               BASFButton(
                                 text: 'BASF Button',
+                                color: BASFColors.darkBlue,
                                 onPressed: () {},
                               ),
                               const Spacer(),

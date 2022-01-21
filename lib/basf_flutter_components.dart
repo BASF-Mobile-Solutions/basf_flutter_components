@@ -27,4 +27,6 @@ export 'package:basf_flutter_components/utils/one_trust.dart';
 
 // widgets
 export 'package:basf_flutter_components/widgets/buttons.dart';
+export 'package:basf_flutter_components/widgets/icons.dart';
+export 'package:basf_flutter_components/widgets/input_field.dart';
 export 'package:basf_flutter_components/widgets/spacer.dart';

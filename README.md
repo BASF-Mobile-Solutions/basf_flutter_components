@@ -74,7 +74,8 @@ import io.flutter.embedding.android.FlutterFragmentActivity;
   - BASFBUTTON...
   ```dart
   // TODO
-  code example here
+  !
+  BASFButton...
   ```
 
   - BASFTextButton...
@@ -83,10 +84,11 @@ import io.flutter.embedding.android.FlutterFragmentActivity;
   code example here
   ```
 
-  - BASFTextField...
+  - BASFInputField
   ```dart
   // TODO
-  code example here
+  !
+  BASFInputField...
   ```
 
   - BASFSnackbar...
@@ -131,11 +133,8 @@ import io.flutter.embedding.android.FlutterFragmentActivity;
 - **Colors**
   ```dart
   // TODO
-  BASFColors.blue
-  BASFColors.red
-  BASFColors.black
-  BASFColors.grey
-  ...
+  !
+  BASFColors...
   ```
 
 - **Theme**
@@ -148,8 +147,8 @@ import io.flutter.embedding.android.FlutterFragmentActivity;
 - **TextStyles**
   ```dart
   // TODO
-  BASFTextStyle.headline1
-  BASFTextStyle.bodyText1
+  !
+  BasfTextStyles...
   ```
 - **Styles**
   - Dimens
