@@ -1,4 +1,4 @@
-import 'package:basf_flutter_components/utils/basf_logger.dart';
+import 'package:basf_flutter_components/utils/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:onetrust_publishers_native_cmp/onetrust_publishers_native_cmp.dart';
 
@@ -120,7 +120,7 @@ void _startListening(List<Sdk> sdks) {
   OTPublishersNativeSDK.listenForConsentChanges(
     List.generate(sdks.length, (index) => sdks[index].categoryId),
   ).listen((event) {
-    basfLogger.i(
+    logger.i(
         'OneTrust Consent Changes: New status for ${event["categoryId"]} is ${event["consentStatus"]}');
 
     // ? Future: Adapt depending on individual Sdk's not only each categoryId
@@ -130,7 +130,7 @@ void _startListening(List<Sdk> sdks) {
   });
 
   OTPublishersNativeSDK.listenForUIInteractions()
-      .listen((event) => basfLogger.i('OneTrust UI Interactions:\n\t$event'));
+      .listen((event) => logger.i('OneTrust UI Interactions:\n\t$event'));
 
   // ? consentListener.cancel(); //Cancel event stream before opening a new one
 }

@@ -5,9 +5,9 @@ import 'package:basf_flutter_components/functions/scope_functions.dart';
 /// [basfLogger] based on [logger], ready to use
 /// Small, easy to use and extensible logger which prints beautiful logs
 /// 
-/// Just type [basfLogger] and start logging
+/// Just type [logger] and start logging
 /// ```dart
-///  basfLogger.d('BASF Logger is working');
+///  logger.d('BASF Logger is working');
 /// ```
 /// 
 /// Instead of a [string] message, you can also pass other objects like [List], [Map] or [Set]
@@ -16,14 +16,14 @@ import 'package:basf_flutter_components/functions/scope_functions.dart';
 /// 
 /// Example:
 /// ```dart
-///  basfLogger.v('Verbose log...');
-///  basfLogger.d('Debug log');
-///  basfLogger.i('Info log...');
-///  basfLogger.w('Warning log');
-///  basfLogger.e('Error log...');
-///  basfLogger.wtf('👾 What a terrible failure log');
+///  logger.v('Verbose log...');
+///  logger.d('Debug log');
+///  logger.i('Info log...');
+///  logger.w('Warning log');
+///  logger.e('Error log...');
+///  logger.wtf('👾 What a terrible failure log');
 /// ```
-Logger get basfLogger => _logger;
+Logger get logger => _logger;
 
 Logger _logger = Logger(printer: DevelopmentLogPrinter());
 

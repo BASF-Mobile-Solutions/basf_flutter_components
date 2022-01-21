@@ -1,11 +1,22 @@
 # basf_flutter_components
 
-A BASF Flutter components library.
+A BASF Flutter components library
 
 ![](./assets/basf_logo.png)
 
 [![pub package](https://img.shields.io/pub/v/basf_flutter_components.svg?label=basf_flutter_components)](https://pub.dev/packages/basf_flutter_components)
 [![Telegram](https://img.shields.io/badge/Email-BASF%20Mobile%20Solutions-blue.svg)](mailto:Mobile-Solutions@basf.com)
+
+## Installing
+
+Add BASF Flutter Components to your pubspec.yaml file:
+
+```yaml
+dependencies:
+  basf_flutter_components:
+```
+
+Use your IDE IntelliSense to import any of the [Components](#components) built into the library
 
 ## Getting Started
 
@@ -52,6 +63,18 @@ import io.flutter.embedding.android.FlutterFragmentActivity;
   code example here
   ```
 
+  - BASFTextField...
+  ```dart
+  code example here
+  ```
+
+  - BASFSnackbar...
+  ```dart
+  code example here
+  ```
+
+  ... etc...
+
   - Spacers
   ````dart
   // Vertical Spacers
@@ -88,6 +111,9 @@ import io.flutter.embedding.android.FlutterFragmentActivity;
 - **Colors**
   ```dart
   BASFColors.blue
+  BASFColors.red
+  BASFColors.black
+  BASFColors.grey
   ```
 
 - **Theme**
@@ -98,11 +124,12 @@ import io.flutter.embedding.android.FlutterFragmentActivity;
 
 - **TextStyles**
   ```dart
-  BASFTextStyle.
-  BasfTheme.headline1
+  BASFTextStyle.headline1
+  BASFTextStyle.bodyText1
   ```
 - **Styles**
-  - Dimens: Defines a preset of usefull standard paddings
+  - Dimens
+  Defines a preset of usefull standard paddings
   ```dart
   Dimens.paddingXSmall
   Dimens.paddingSmall
@@ -119,12 +146,47 @@ import io.flutter.embedding.android.FlutterFragmentActivity;
   ```
 
 - **One Trust**
-  - Widget...
+  - initOneTrust
+  Initialize OneTrust on your app
   ```dart
-  code example here
+  await initOneTrust(
+    domainIdentifier: Environment.otAppId,
+    sdks: [
+      Sdk(
+        categoryId: 'S0002',
+        changeSdkStatus: (status) {
+          // Turn off SDK's depending on state
+          logger.i('Crashlytics status: $status');
+          FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(status);
+        },
+      ),
+    ],
+    languageCode: 'es',
+    onInitParams: {
+      //Params are not required
+      'countryCode': 'US',
+      'regionCode': 'CA',
+    },
+    storageLocation: 'my.domain.com', // usually 'cdn.cookielaw.org'
+  );
   ```
 
-  - initOneTrust...
+  - Widget...
+  A Widget that can be placed anywhere on the app and opens up the OneTrust Preference Center
   ```dart
-  code example here
+  const OneTrustWidget(
+    widget: Text('Open preference center'),
+    widgetType: OneTrustUIWidget.preferenceCenter,
+  );
+  ```
+
+- **Logger**
+Based on `logger`, ready to use Small, easy to use and extensible logger which prints beautiful logs
+  ```dart
+  logger.v('Verbose log...');
+  logger.d('Debug log');
+  logger.i('Info log...');
+  logger.w('Warning log');
+  logger.e('Error log...');
+  logger.wtf('👾 What a terrible failure log');
   ```
