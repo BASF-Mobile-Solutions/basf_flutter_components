@@ -1,7 +1,5 @@
 # basf_flutter_components
 
-A BASF Flutter components library for iOS and Android
-
 <p align="center">
   <img src="./assets/basf_logo.png" />
 </p>	
@@ -14,6 +12,8 @@ A BASF Flutter components library for iOS and Android
      <img alt="email" src="https://img.shields.io/badge/Email-BASF%20Mobile%20Solutions-blue.svg">
   </a>
 </p>
+
+A BASF Flutter components library for iOS and Android
 
 ## Installing
 
