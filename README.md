@@ -2,10 +2,18 @@
 
 A BASF Flutter components library for iOS and Android
 
-![](./assets/basf_logo.png)
+<p align="center">
+  <img src="./assets/basf_logo.png" />
+</p>	
 
-[![pub package](https://img.shields.io/pub/v/basf_flutter_components.svg?label=basf_flutter_components)](https://pub.dev/packages/basf_flutter_components)
-[![Telegram](https://img.shields.io/badge/Email-BASF%20Mobile%20Solutions-blue.svg)](mailto:Mobile-Solutions@basf.com)
+<p align="center">
+  <a href="https://pub.dev/packages/basf_flutter_components">
+     <img alt="pub" src="https://img.shields.io/pub/v/basf_flutter_components.svg?label=basf_flutter_components">
+  </a>
+  <a href="mailto:Mobile-Solutions@basf.com">
+     <img alt="email" src="https://img.shields.io/badge/Email-BASF%20Mobile%20Solutions-blue.svg">
+  </a>
+</p>
 
 ## Installing
 
