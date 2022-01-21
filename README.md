@@ -16,6 +16,12 @@ dependencies:
   basf_flutter_components:
 ```
 
+Import it the library to your file:
+
+```dart
+import 'package:basf_flutter_components/basf_flutter_components.dart';
+```
+
 Use your IDE IntelliSense to import any of the [Components](#components) built into the library
 
 ---
