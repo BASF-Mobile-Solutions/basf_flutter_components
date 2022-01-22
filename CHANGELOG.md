@@ -11,14 +11,14 @@
 
 ## 0.0.1+2
 
-- Fixed README error [Do not use]
+- Fixed README error
 
 ## 0.0.1+1
 
-- Minor update [Do not use]
+- Minor update
 
 ## 0.0.1
 
-- Initial release [Do not use]
+- Initial release
 
 </details>
