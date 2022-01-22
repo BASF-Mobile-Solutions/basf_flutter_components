@@ -1,8 +1,8 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:flutter/cupertino.dart';
 
-class BasfTextStyles {
-  const BasfTextStyles._();
+class BASFTextStyles {
+  const BASFTextStyles._();
 
   ///InputField
   ///---------------------------------------------------------------------------

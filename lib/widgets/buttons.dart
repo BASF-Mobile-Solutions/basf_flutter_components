@@ -74,10 +74,10 @@ class _BASFButtonState extends State<BASFButton> {
   @override
   void initState() {
     if (widget.negative) {
-      textStyle = BasfTextStyles.containedButton.copyWith(color: widget.color);
+      textStyle = BASFTextStyles.containedButton.copyWith(color: widget.color);
       buttonColor = BASFColors.white;
     } else {
-      textStyle = BasfTextStyles.containedButton;
+      textStyle = BASFTextStyles.containedButton;
       buttonColor = widget.negative ? BASFColors.white : widget.color;
     }
 
@@ -89,7 +89,7 @@ class _BASFButtonState extends State<BASFButton> {
   @override
   Widget build(BuildContext context) {
     if (widget.negative && widget.onPressed == null) {
-      _textStyle = BasfTextStyles.containedButtonDisabledNegative;
+      _textStyle = BASFTextStyles.containedButtonDisabledNegative;
     }
 
     Icon _icon = Icon(
@@ -128,7 +128,7 @@ class _BASFButtonState extends State<BASFButton> {
         onPressed: widget.onPressed,
         onHighlightChanged: (value) {
           if (value) {
-            _textStyle = BasfTextStyles.containedButton;
+            _textStyle = BASFTextStyles.containedButton;
             _buttonColor = widget.color is MaterialColor
                 ? (widget.color as MaterialColor)[400]!
                 : Color.lerp(widget.color, BASFColors.white, 0.5)!;

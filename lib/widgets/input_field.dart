@@ -122,29 +122,29 @@ class _BASFInputFieldState extends State<BASFInputField> {
     if (widget.disabled!) {
       borderColor = BASFColors.middleGrey;
       backgroundColor = BASFColors.lightGrey;
-      textStyle = BasfTextStyles.inputFieldDisabled;
-      hintTextStyle = BasfTextStyles.inputFieldDisabled;
+      textStyle = BASFTextStyles.inputFieldDisabled;
+      hintTextStyle = BASFTextStyles.inputFieldDisabled;
     } else {
       if (errorText != null) {
         borderColor = BASFColors.red;
-        textStyle = BasfTextStyles.inputFieldError;
-        hintTextStyle = BasfTextStyles.inputFieldHintError;
+        textStyle = BASFTextStyles.inputFieldError;
+        hintTextStyle = BASFTextStyles.inputFieldHintError;
         if (focusNode.hasFocus) {
           backgroundColor = BASFColors.redPale;
         } else {
           backgroundColor = BASFColors.white;
         }
       } else {
-        textStyle = BasfTextStyles.inputFieldInput;
-        hintTextStyle = BasfTextStyles.inputFieldHint;
+        textStyle = BASFTextStyles.inputFieldInput;
+        hintTextStyle = BASFTextStyles.inputFieldHint;
         if (focusNode.hasFocus) {
           borderColor = BASFColors.darkBlue;
           backgroundColor = BASFColors.darkBluePale;
-          hintTextStyle = BasfTextStyles.inputFieldHintFocus;
+          hintTextStyle = BASFTextStyles.inputFieldHintFocus;
         } else {
           borderColor = BASFColors.darkBlue[200]!;
           backgroundColor = BASFColors.white;
-          hintTextStyle = BasfTextStyles.inputFieldHint;
+          hintTextStyle = BASFTextStyles.inputFieldHint;
         }
       }
     }
@@ -158,7 +158,7 @@ class _BASFInputFieldState extends State<BASFInputField> {
           if (widget.labelText!.isNotEmpty)
             Text(
               widget.labelText!,
-              style: BasfTextStyles.inputFieldLabel,
+              style: BASFTextStyles.inputFieldLabel,
             ),
 
           ///Text Field
@@ -244,7 +244,7 @@ class _BASFInputFieldState extends State<BASFInputField> {
                 const SizedBox(width: 4), //TODO: Replace with Placeholder
                 Text(
                   errorText!,
-                  style: BasfTextStyles.inputFieldErrorLabel,
+                  style: BASFTextStyles.inputFieldErrorLabel,
                 ),
               ],
             ),
