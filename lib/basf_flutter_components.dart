@@ -2,31 +2,15 @@
 /// predefined BASF Widgets, extensions, and utils
 library basf_flutter_components;
 
-// constants
-export 'package:basf_flutter_components/constants/alias.dart';
-export 'package:basf_flutter_components/constants/regexp.dart';
-
-// extensions
-export 'package:basf_flutter_components/extensions/color_extensions.dart';
-export 'package:basf_flutter_components/extensions/iterable_extensions.dart';
-export 'package:basf_flutter_components/extensions/map_extensions.dart';
-export 'package:basf_flutter_components/extensions/object_extensions.dart';
-export 'package:basf_flutter_components/extensions/scope_functions_extensions.dart';
-export 'package:basf_flutter_components/extensions/string_extensions.dart';
-
 // theme
 export 'package:basf_flutter_components/theme/colors.dart';
 export 'package:basf_flutter_components/theme/dimens.dart';
-export 'package:basf_flutter_components/theme/snackbar.dart';
 export 'package:basf_flutter_components/theme/text_styles.dart';
 export 'package:basf_flutter_components/theme/theme.dart';
-
-// utils
-export 'package:basf_flutter_components/utils/logger.dart';
-export 'package:basf_flutter_components/utils/one_trust.dart';
 
 // widgets
 export 'package:basf_flutter_components/widgets/buttons.dart';
 export 'package:basf_flutter_components/widgets/icons.dart';
 export 'package:basf_flutter_components/widgets/input_field.dart';
+export 'package:basf_flutter_components/widgets/snackbar.dart';
 export 'package:basf_flutter_components/widgets/spacer.dart';
