@@ -11,14 +11,14 @@
 
 ## 0.0.1+2
 
-- Fixed README error
+- Fixed errors
 
 ## 0.0.1+1
 
-- Minor update
+- Setup update
 
 ## 0.0.1
 
-- Initial release
+- Initial setup
 
 </details>
