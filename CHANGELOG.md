@@ -1,3 +1,10 @@
+## 0.1.0
+
+- Initial release
+
+<details >
+<summary>Previous versions</summary>
+
 ## 0.0.1+3
 
 - Removed unnecesary components
@@ -13,3 +20,5 @@
 ## 0.0.1
 
 - Initial release [Do not use]
+
+</details>
