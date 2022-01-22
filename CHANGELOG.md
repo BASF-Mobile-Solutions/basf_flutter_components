@@ -1,3 +1,7 @@
+## 0.0.1+3
+
+- Removed unnecesary components
+
 ## 0.0.1+2
 
 - Fixed README error [Do not use]
