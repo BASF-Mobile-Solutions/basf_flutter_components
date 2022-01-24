@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 /// (1) The [50] value of the MaterialColors is set additionally to the next darker one.
 ///     This prevents null pointer errors if you use these MaterialColors in themes.
 
-class BASFColors {
-  BASFColors._();
+class BasfColors {
+  BasfColors._();
 
   ///BASF - Default Colors
   static const Color transparent = Color(0x00000000);

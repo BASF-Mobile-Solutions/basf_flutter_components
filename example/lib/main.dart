@@ -28,9 +28,9 @@ class MyApp extends StatelessWidget {
                           child: Column(
                             children: [
                               const Spacer(),
-                              BASFButton(
+                              BasfContainedButton(
                                 text: 'BASF Button',
-                                color: BASFColors.darkBlue,
+                                color: BasfColors.darkBlue,
                                 onPressed: () {},
                               ),
                               const Spacer(),

@@ -134,7 +134,7 @@ import io.flutter.embedding.android.FlutterFragmentActivity;
   ```dart
   // TODO
   !
-  BASFColors...
+  BasfColors...
   ```
 
 - **Theme**

@@ -120,30 +120,30 @@ class _BASFInputFieldState extends State<BASFInputField> {
   Widget build(BuildContext context) {
     ///Set appearance depending on actions
     if (widget.disabled!) {
-      borderColor = BASFColors.middleGrey;
-      backgroundColor = BASFColors.lightGrey;
+      borderColor = BasfColors.middleGrey;
+      backgroundColor = BasfColors.lightGrey;
       textStyle = BASFTextStyles.inputFieldDisabled;
       hintTextStyle = BASFTextStyles.inputFieldDisabled;
     } else {
       if (errorText != null) {
-        borderColor = BASFColors.red;
+        borderColor = BasfColors.red;
         textStyle = BASFTextStyles.inputFieldError;
         hintTextStyle = BASFTextStyles.inputFieldHintError;
         if (focusNode.hasFocus) {
-          backgroundColor = BASFColors.redPale;
+          backgroundColor = BasfColors.redPale;
         } else {
-          backgroundColor = BASFColors.white;
+          backgroundColor = BasfColors.white;
         }
       } else {
         textStyle = BASFTextStyles.inputFieldInput;
         hintTextStyle = BASFTextStyles.inputFieldHint;
         if (focusNode.hasFocus) {
-          borderColor = BASFColors.darkBlue;
-          backgroundColor = BASFColors.darkBluePale;
+          borderColor = BasfColors.darkBlue;
+          backgroundColor = BasfColors.darkBluePale;
           hintTextStyle = BASFTextStyles.inputFieldHintFocus;
         } else {
-          borderColor = BASFColors.darkBlue[200]!;
-          backgroundColor = BASFColors.white;
+          borderColor = BasfColors.darkBlue[200]!;
+          backgroundColor = BasfColors.white;
           hintTextStyle = BASFTextStyles.inputFieldHint;
         }
       }
@@ -218,8 +218,8 @@ class _BASFInputFieldState extends State<BASFInputField> {
                       icon: const Icon(BasfIcons.clear, size: 24),
                       padding: EdgeInsets.zero,
                       constraints: BoxConstraints.tight(const Size(24, 24)),
-                      highlightColor: BASFColors.transparent,
-                      splashColor: BASFColors.transparent,
+                      highlightColor: BasfColors.transparent,
+                      splashColor: BasfColors.transparent,
                       onPressed: () {
                         controller.clear();
                         if (widget.onChanged != null) widget.onChanged!('');
@@ -240,7 +240,7 @@ class _BASFInputFieldState extends State<BASFInputField> {
             Row(
               children: [
                 const Icon(BasfIcons.attention,
-                    color: BASFColors.red, size: 16),
+                    color: BasfColors.red, size: 16),
                 const SizedBox(width: 4), //TODO: Replace with Placeholder
                 Text(
                   errorText!,

@@ -75,10 +75,10 @@ class _BASFButtonState extends State<BASFButton> {
   void initState() {
     if (widget.negative) {
       textStyle = BASFTextStyles.containedButton.copyWith(color: widget.color);
-      buttonColor = BASFColors.white;
+      buttonColor = BasfColors.white;
     } else {
       textStyle = BASFTextStyles.containedButton;
-      buttonColor = widget.negative ? BASFColors.white : widget.color;
+      buttonColor = widget.negative ? BasfColors.white : widget.color;
     }
 
     _textStyle = textStyle;
@@ -107,12 +107,12 @@ class _BASFButtonState extends State<BASFButton> {
         color: _buttonColor,
         height: widget.height,
         minWidth: widget.expand ? double.infinity : widget.width,
-        splashColor: BASFColors.transparent,
+        splashColor: BasfColors.transparent,
         elevation: 0,
         highlightElevation: 0,
         disabledColor:
-            widget.negative ? BASFColors.lightGrey : BASFColors.middleGrey,
-        highlightColor: BASFColors.transparent,
+            widget.negative ? BasfColors.lightGrey : BasfColors.middleGrey,
+        highlightColor: BasfColors.transparent,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -131,7 +131,7 @@ class _BASFButtonState extends State<BASFButton> {
             _textStyle = BASFTextStyles.containedButton;
             _buttonColor = widget.color is MaterialColor
                 ? (widget.color as MaterialColor)[400]!
-                : Color.lerp(widget.color, BASFColors.white, 0.5)!;
+                : Color.lerp(widget.color, BasfColors.white, 0.5)!;
           } else {
             _textStyle = textStyle;
             _buttonColor = buttonColor;
