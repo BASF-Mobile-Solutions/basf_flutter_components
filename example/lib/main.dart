@@ -1,51 +1,101 @@
-import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:flutter/material.dart';
+import 'package:basf_flutter_components/basf_flutter_components.dart';
+import 'screens/screens.dart';
 
-void main() => runApp(const MyApp());
+void main() {
+  runApp(const ExampleApp());
+}
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class ExampleApp extends StatelessWidget {
+  const ExampleApp({Key? key}) : super(key: key);
 
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'BASF Components',
-      home: Scaffold(
-        body: LayoutBuilder(
-          builder: (context, constraint) {
-            return Center(
-              child: Scrollbar(
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  reverse: true,
-                  child: ConstrainedBox(
-                    constraints:
-                        BoxConstraints(minHeight: constraint.maxHeight),
-                    child: SafeArea(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 24),
-                        child: IntrinsicHeight(
-                          child: Column(
-                            children: [
-                              const Spacer(),
-                              BasfContainedButton(
-                                text: 'BASF Button',
-                                color: BasfColors.darkBlue,
-                                onPressed: () {},
-                              ),
-                              const Spacer(),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            );
-          },
+      theme: ThemeData(
+        primarySwatch: BasfColors.darkBlue,
+        primaryColor: BasfColors.darkBlue,
+        disabledColor: BasfColors.middleGrey,
+        appBarTheme: const AppBarTheme(
+          elevation: 0.0,
+          color: BasfColors.darkBlue,
         ),
       ),
+      home: const OverviewPage(),
+    );
+  }
+}
+
+class OverviewPage extends StatefulWidget {
+  const OverviewPage({Key? key}) : super(key: key);
+
+  @override
+  State<OverviewPage> createState() => _OverviewPageState();
+}
+
+class _OverviewPageState extends State<OverviewPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Basf Component Library'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            BasfContainedButton(
+              text: 'Basf Colors',
+              color: BasfColors.darkBlue,
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ColorsOverviewPage(),
+                    ));
+              },
+            ),
+            const SizedBox(height: 15),
+            BasfContainedButton(
+              text: 'Basf Buttons',
+              color: BasfColors.darkBlue,
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ButtonsOverviewPage(),
+                    ));
+              },
+            ),
+            const SizedBox(height: 15),
+            BasfContainedButton(
+              text: 'Basf Forms',
+              color: BasfColors.darkBlue,
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const FormsOverviewPage(),
+                    ));
+              },
+            ),
+            const SizedBox(height: 15),
+            BasfContainedButton(
+              text: 'Basf Dialogs',
+              color: BasfColors.darkBlue,
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const DialogOverviewPage(),
+                    ));
+              },
+            ),
+          ],
+        ),
+      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
