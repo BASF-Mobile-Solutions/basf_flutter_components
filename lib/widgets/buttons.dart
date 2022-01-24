@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 //Known issues:
 // Color can not be changed with setState or hot reload
-class BASFButton extends StatefulWidget {
+class BasfContainedButton extends StatefulWidget {
   ///Use this to show text on the button directly.
   final String? text;
 
@@ -35,7 +35,7 @@ class BASFButton extends StatefulWidget {
   ///Swap the colors of the button. For instance for more contrast.
   final bool negative;
 
-  const BASFButton(
+  const BasfContainedButton(
       {Key? key,
       this.text,
       required this.onPressed,
@@ -61,10 +61,10 @@ class BASFButton extends StatefulWidget {
         super(key: key);
 
   @override
-  State<BASFButton> createState() => _BASFButtonState();
+  State<BasfContainedButton> createState() => _BasfContainedButtonState();
 }
 
-class _BASFButtonState extends State<BASFButton> {
+class _BasfContainedButtonState extends State<BasfContainedButton> {
   late TextStyle textStyle;
   late TextStyle _textStyle;
 
@@ -74,10 +74,10 @@ class _BASFButtonState extends State<BASFButton> {
   @override
   void initState() {
     if (widget.negative) {
-      textStyle = BASFTextStyles.containedButton.copyWith(color: widget.color);
+      textStyle = BasfTextStyles.containedButton.copyWith(color: widget.color);
       buttonColor = BasfColors.white;
     } else {
-      textStyle = BASFTextStyles.containedButton;
+      textStyle = BasfTextStyles.containedButton;
       buttonColor = widget.negative ? BasfColors.white : widget.color;
     }
 
@@ -89,7 +89,7 @@ class _BASFButtonState extends State<BASFButton> {
   @override
   Widget build(BuildContext context) {
     if (widget.negative && widget.onPressed == null) {
-      _textStyle = BASFTextStyles.containedButtonDisabledNegative;
+      _textStyle = BasfTextStyles.containedButtonDisabledNegative;
     }
 
     Icon _icon = Icon(
@@ -128,7 +128,7 @@ class _BASFButtonState extends State<BASFButton> {
         onPressed: widget.onPressed,
         onHighlightChanged: (value) {
           if (value) {
-            _textStyle = BASFTextStyles.containedButton;
+            _textStyle = BasfTextStyles.containedButton;
             _buttonColor = widget.color is MaterialColor
                 ? (widget.color as MaterialColor)[400]!
                 : Color.lerp(widget.color, BasfColors.white, 0.5)!;

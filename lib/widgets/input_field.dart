@@ -1,8 +1,8 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:flutter/material.dart';
 
-class BASFInputField extends StatefulWidget {
-  const BASFInputField({
+class BasfInputField extends StatefulWidget {
+  const BasfInputField({
     this.controller,
     this.onChanged,
     this.prefixIcon,
@@ -85,10 +85,10 @@ class BASFInputField extends StatefulWidget {
   final EdgeInsets? padding;
 
   @override
-  State<BASFInputField> createState() => _BASFInputFieldState();
+  State<BasfInputField> createState() => _BasfInputFieldState();
 }
 
-class _BASFInputFieldState extends State<BASFInputField> {
+class _BasfInputFieldState extends State<BasfInputField> {
   late TextEditingController controller;
   late FocusNode focusNode;
   String? errorText;
@@ -122,29 +122,29 @@ class _BASFInputFieldState extends State<BASFInputField> {
     if (widget.disabled!) {
       borderColor = BasfColors.middleGrey;
       backgroundColor = BasfColors.lightGrey;
-      textStyle = BASFTextStyles.inputFieldDisabled;
-      hintTextStyle = BASFTextStyles.inputFieldDisabled;
+      textStyle = BasfTextStyles.inputFieldDisabled;
+      hintTextStyle = BasfTextStyles.inputFieldDisabled;
     } else {
       if (errorText != null) {
         borderColor = BasfColors.red;
-        textStyle = BASFTextStyles.inputFieldError;
-        hintTextStyle = BASFTextStyles.inputFieldHintError;
+        textStyle = BasfTextStyles.inputFieldError;
+        hintTextStyle = BasfTextStyles.inputFieldHintError;
         if (focusNode.hasFocus) {
           backgroundColor = BasfColors.redPale;
         } else {
           backgroundColor = BasfColors.white;
         }
       } else {
-        textStyle = BASFTextStyles.inputFieldInput;
-        hintTextStyle = BASFTextStyles.inputFieldHint;
+        textStyle = BasfTextStyles.inputFieldInput;
+        hintTextStyle = BasfTextStyles.inputFieldHint;
         if (focusNode.hasFocus) {
           borderColor = BasfColors.darkBlue;
           backgroundColor = BasfColors.darkBluePale;
-          hintTextStyle = BASFTextStyles.inputFieldHintFocus;
+          hintTextStyle = BasfTextStyles.inputFieldHintFocus;
         } else {
           borderColor = BasfColors.darkBlue[200]!;
           backgroundColor = BasfColors.white;
-          hintTextStyle = BASFTextStyles.inputFieldHint;
+          hintTextStyle = BasfTextStyles.inputFieldHint;
         }
       }
     }
@@ -158,7 +158,7 @@ class _BASFInputFieldState extends State<BASFInputField> {
           if (widget.labelText!.isNotEmpty)
             Text(
               widget.labelText!,
-              style: BASFTextStyles.inputFieldLabel,
+              style: BasfTextStyles.inputFieldLabel,
             ),
 
           ///Text Field
@@ -244,7 +244,7 @@ class _BASFInputFieldState extends State<BASFInputField> {
                 const SizedBox(width: 4), //TODO: Replace with Placeholder
                 Text(
                   errorText!,
-                  style: BASFTextStyles.inputFieldErrorLabel,
+                  style: BasfTextStyles.inputFieldErrorLabel,
                 ),
               ],
             ),

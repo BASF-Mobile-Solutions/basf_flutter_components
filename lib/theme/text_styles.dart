@@ -1,8 +1,8 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:flutter/cupertino.dart';
 
-class BASFTextStyles {
-  const BASFTextStyles._();
+class BasfTextStyles {
+  const BasfTextStyles._();
 
   ///InputField
   ///---------------------------------------------------------------------------
@@ -22,43 +22,43 @@ class BASFTextStyles {
 
   ///InputField - Label (Top)
   static TextStyle inputFieldLabel = _defaultFieldLabel.copyWith(
-    color: BASFColors.copyTextGrey,
+    color: BasfColors.copyTextGrey,
   );
 
   ///InputField - Hint - Default
   static TextStyle inputFieldHint = _defaultFieldText.copyWith(
-    color: BASFColors.darkBlue[400]!,
+    color: BasfColors.darkBlue[400]!,
   );
 
   ///InputField - Hint - Error
   static TextStyle inputFieldHintError = _defaultFieldText.copyWith(
-    color: BASFColors.red[300]!,
+    color: BasfColors.red[300]!,
   );
 
   ///InputField - Hint - Focus
   static TextStyle inputFieldHintFocus = _defaultFieldText.copyWith(
-    color: BASFColors.darkBlue[500]!,
+    color: BasfColors.darkBlue[500]!,
   );
 
   ///InputField - Hint - Disabled
   ///InputField - Text Input - Disabled
   static TextStyle inputFieldDisabled = _defaultFieldText.copyWith(
-    color: BASFColors.darkGrey,
+    color: BasfColors.darkGrey,
   );
 
   ///InputField - Text Input - Default
   static TextStyle inputFieldInput = _defaultFieldText.copyWith(
-    color: BASFColors.copyTextGrey,
+    color: BasfColors.copyTextGrey,
   );
 
   ///InputField - Text Input - Error
   static TextStyle inputFieldError = _defaultFieldText.copyWith(
-    color: BASFColors.red,
+    color: BasfColors.red,
   );
 
   ///InputField - Error Label (Bottom)
   static TextStyle inputFieldErrorLabel = _defaultFieldLabel.copyWith(
-    color: BASFColors.red,
+    color: BasfColors.red,
   );
 
   ///End of InputField
@@ -70,14 +70,14 @@ class BASFTextStyles {
   static const TextStyle containedButton = TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.w700,
-    color: BASFColors.white,
+    color: BasfColors.white,
   );
 
   ///Contained Button - Disabled Negative
   static const TextStyle containedButtonDisabledNegative = TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.w700,
-    color: BASFColors.copyTextGrey,
+    color: BasfColors.copyTextGrey,
   );
 
   ///End of ContainedButton
@@ -87,14 +87,14 @@ class BASFTextStyles {
   static const TextStyle footer = TextStyle(
     fontSize: 12,
     fontWeight: FontWeight.normal,
-    color: BASFColors.darkGrey,
+    color: BasfColors.darkGrey,
   );
 
   ///Version
   static const TextStyle version = TextStyle(
     fontSize: 12,
     fontWeight: FontWeight.normal,
-    color: BASFColors.darkGrey,
+    color: BasfColors.darkGrey,
   );
 
   ///Alert Dialog
@@ -112,13 +112,13 @@ class BASFTextStyles {
   static const alertDialogDismiss = TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.normal,
-    color: BASFColors.red,
+    color: BasfColors.red,
   );
 
   static const alertDialogConfirm = TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.normal,
-    color: BASFColors.darkBlue,
+    color: BasfColors.darkBlue,
   );
 
   ///End Alert Dialog
