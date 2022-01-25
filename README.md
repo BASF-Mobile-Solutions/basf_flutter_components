@@ -34,40 +34,6 @@ Use your IDE IntelliSense to import any of the [Components](#components) built i
 
 ---
 
-## Getting Started
-
-### iOS Setup
-
-Specify the platform target in Podfile
-```pod
-platform :ios, '11.0'
-```
-
-### Android Setup
-
-Ensure your `MainActivity`.kt/.java file class extends from `FlutterFragmentActivity`
-
-**Java**
-```java
-public class MainActivity extends FlutterFragmentActivity {
-	// Your code...
-}
-```
-
-**Kotlin**
-```kotlin
-class MainActivity : FlutterFragmentActivity() {
-	// Your code...
-}
-```
-
-Remember to add the import at the top of the `MainActivity` file
-```kotlin
-import io.flutter.embedding.android.FlutterFragmentActivity;
-```
-
----
-
 ## Components
 
 - **Widgets**
