@@ -215,7 +215,7 @@ class _BasfInputFieldState extends State<BasfInputField> {
                   if (!widget.withoutClear! && focusNode.hasFocus)
                     IconButton(
                       focusNode: FocusNode(canRequestFocus: false),
-                      icon: const Icon(BasfIcons.clear, size: 24),
+                      icon: const Icon(BasfIcons.close, size: 24),
                       padding: EdgeInsets.zero,
                       constraints: BoxConstraints.tight(const Size(24, 24)),
                       highlightColor: BasfColors.transparent,
