@@ -124,3 +124,19 @@ class BasfTextStyles {
   ///End Alert Dialog
   ///---------------------------------------------------------------------------
 }
+
+class CustomTextStyle extends TextStyle {
+  const CustomTextStyle({
+    Color color = BasfColors.copyTextGrey,
+    double? fontSize,
+    String? fontFamily,
+    FontWeight? fontWeight,
+    double? lineHeight,
+  }) : super(
+    color: color,
+    fontWeight: fontWeight,
+    fontSize: fontSize,
+    fontFamily: fontFamily,
+    height: lineHeight,
+  );
+}
