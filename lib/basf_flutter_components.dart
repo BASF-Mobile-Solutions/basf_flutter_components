@@ -6,7 +6,7 @@ library basf_flutter_components;
 export 'package:basf_flutter_components/theme/colors.dart';
 export 'package:basf_flutter_components/theme/dimens.dart';
 export 'package:basf_flutter_components/theme/text_styles.dart';
-export 'package:basf_flutter_components/theme/theme.dart';
+export 'package:basf_flutter_components/theme/themes.dart';
 
 // widgets
 export 'package:basf_flutter_components/widgets/buttons.dart';

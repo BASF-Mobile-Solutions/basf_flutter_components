@@ -1,3 +1,4 @@
+import 'package:basf_flutter_components_example/screens/fonts/fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'screens/screens.dart';
@@ -14,15 +15,7 @@ class ExampleApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'BASF Components',
-      theme: ThemeData(
-        primarySwatch: BasfColors.darkBlue,
-        primaryColor: BasfColors.darkBlue,
-        disabledColor: BasfColors.middleGrey,
-        appBarTheme: const AppBarTheme(
-          elevation: 0.0,
-          color: BasfColors.darkBlue,
-        ),
-      ),
+      theme: BasfThemes.lightThemeDarkBlue(),
       home: const OverviewPage(),
     );
   }
@@ -46,7 +39,19 @@ class _OverviewPageState extends State<OverviewPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            BasfContainedButton(
+            BasfTextButton(
+              text: 'Basf Fonts',
+              color: BasfColors.darkBlue,
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const FontsScreen(),
+                    ));
+              },
+            ),
+            const SizedBox(height: 15),
+            BasfTextButton(
               text: 'Basf Colors',
               color: BasfColors.darkBlue,
               onPressed: () {
@@ -58,7 +63,7 @@ class _OverviewPageState extends State<OverviewPage> {
               },
             ),
             const SizedBox(height: 15),
-            BasfContainedButton(
+            BasfTextButton(
               text: 'Basf Buttons',
               color: BasfColors.darkBlue,
               onPressed: () {
@@ -70,7 +75,7 @@ class _OverviewPageState extends State<OverviewPage> {
               },
             ),
             const SizedBox(height: 15),
-            BasfContainedButton(
+            BasfTextButton(
               text: 'Basf Forms',
               color: BasfColors.darkBlue,
               onPressed: () {
@@ -82,7 +87,7 @@ class _OverviewPageState extends State<OverviewPage> {
               },
             ),
             const SizedBox(height: 15),
-            BasfContainedButton(
+            BasfTextButton(
               text: 'Basf Dialogs',
               color: BasfColors.darkBlue,
               onPressed: () {

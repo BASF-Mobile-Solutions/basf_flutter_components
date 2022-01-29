@@ -13,7 +13,7 @@ class ButtonsOverviewPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            BasfContainedButton(
+            BasfTextButton(
               text: 'Contained Button',
               color: BasfColors.darkBlue,
               onPressed: () {

@@ -12,7 +12,7 @@ class DialogOverviewPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            BasfContainedButton(
+            BasfTextButton(
               text: 'Only Confirm',
               color: BasfColors.darkBlue,
               onPressed: () {
@@ -27,7 +27,7 @@ class DialogOverviewPage extends StatelessWidget {
               },
             ),
             const SizedBox(height: 15),
-            BasfContainedButton(
+            BasfTextButton(
               text: 'Changed Text',
               color: BasfColors.darkBlue,
               onPressed: () {
@@ -45,7 +45,7 @@ class DialogOverviewPage extends StatelessWidget {
               },
             ),
             const SizedBox(height: 15),
-            BasfContainedButton(
+            BasfTextButton(
               text: 'Select functions',
               color: BasfColors.darkBlue,
               onPressed: () {

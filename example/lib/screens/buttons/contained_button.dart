@@ -23,14 +23,14 @@ class ContainedButtonPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               ///Only Text Button
-              BasfContainedButton(
+              BasfTextButton(
                 text: 'Only Text',
                 color: BasfColors.darkBlue,
                 onPressed: _onPressed,
               ),
 
               ///Button with leading icon
-              BasfContainedButton(
+              BasfTextButton(
                 text: 'With Leading Icon',
                 color: BasfColors.darkBlue,
                 leadingIcon: BasfIcons.arrow_forward,
@@ -38,7 +38,7 @@ class ContainedButtonPage extends StatelessWidget {
               ),
 
               ///Button with trailing icon
-              BasfContainedButton(
+              BasfTextButton(
                 text: 'With Trailing Icon',
                 color: BasfColors.darkBlue,
                 trailingIcon: BasfIcons.arrow_forward,
@@ -46,14 +46,14 @@ class ContainedButtonPage extends StatelessWidget {
               ),
 
               ///Icon Only Button
-              BasfContainedButton(
+              BasfTextButton(
                 iconOnly: BasfIcons.arrow_forward,
                 color: BasfColors.darkBlue,
                 onPressed: _onPressed,
               ),
 
               ///Expanded Button
-              BasfContainedButton(
+              BasfTextButton(
                 expand: true,
                 margin: const EdgeInsets.symmetric(horizontal: 10),
                 text: 'Expanded Button',
@@ -62,7 +62,7 @@ class ContainedButtonPage extends StatelessWidget {
               ),
 
               ///Sized Button
-              BasfContainedButton(
+              BasfTextButton(
                 width: 250,
                 height: 60,
                 margin: const EdgeInsets.symmetric(horizontal: 10),
@@ -72,7 +72,7 @@ class ContainedButtonPage extends StatelessWidget {
               ),
 
               ///Disabled Button
-              const BasfContainedButton(
+              const BasfTextButton(
                 text: 'Disabled Button',
                 color: BasfColors.darkBlue,
                 onPressed: null,
@@ -87,7 +87,7 @@ class ContainedButtonPage extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    BasfContainedButton(
+                    BasfTextButton(
                       text: 'Negative Button',
                       color: BasfColors.darkBlue,
                       negative: true,
@@ -96,7 +96,7 @@ class ContainedButtonPage extends StatelessWidget {
                     ),
 
                     ///Negative Disabled Button
-                    const BasfContainedButton(
+                    const BasfTextButton(
                       text: 'Negative Disabled',
                       negative: true,
                       color: BasfColors.darkBlue,
@@ -104,7 +104,7 @@ class ContainedButtonPage extends StatelessWidget {
                     ),
 
                     ///Negative Icon Only Button
-                    BasfContainedButton(
+                    BasfTextButton(
                       iconOnly: BasfIcons.arrow_forward,
                       color: BasfColors.darkBlue,
                       negative: true,

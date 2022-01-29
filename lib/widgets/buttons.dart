@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 //Known issues:
 // Color can not be changed with setState or hot reload
-class BasfContainedButton extends StatefulWidget {
+class BasfTextButton extends StatefulWidget {
   ///Use this to show text on the button directly.
   final String? text;
 
@@ -35,8 +35,8 @@ class BasfContainedButton extends StatefulWidget {
   ///Swap the colors of the button. For instance for more contrast.
   final bool negative;
 
-  const BasfContainedButton(
-      {Key? key,
+  const BasfTextButton({
+    Key? key,
       this.text,
       required this.onPressed,
       required this.color,
@@ -48,8 +48,8 @@ class BasfContainedButton extends StatefulWidget {
       this.leadingIcon,
       this.trailingIcon,
       this.iconOnly,
-      this.negative = false})
-      : assert(iconOnly != (text != null),
+      this.negative = false
+  }): assert((iconOnly != null) != (text != null),
             'You need a text or the iconOnly with true, but only one.'),
         assert(
             (leadingIcon == null && trailingIcon == null) ||
@@ -61,10 +61,10 @@ class BasfContainedButton extends StatefulWidget {
         super(key: key);
 
   @override
-  State<BasfContainedButton> createState() => _BasfContainedButtonState();
+  State<BasfTextButton> createState() => _BasfTextButtonState();
 }
 
-class _BasfContainedButtonState extends State<BasfContainedButton> {
+class _BasfTextButtonState extends State<BasfTextButton> {
   late TextStyle textStyle;
   late TextStyle _textStyle;
 
