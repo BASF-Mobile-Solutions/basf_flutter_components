@@ -15,7 +15,6 @@ class FormsOverviewPage extends StatelessWidget {
           children: [
             BasfTextButton(
               text: 'Basf Input Fields',
-              color: BasfColors.darkBlue,
               onPressed: () {
                 Navigator.push(
                     context,

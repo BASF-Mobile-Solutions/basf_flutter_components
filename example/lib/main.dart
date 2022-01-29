@@ -41,7 +41,6 @@ class _OverviewPageState extends State<OverviewPage> {
           children: [
             BasfTextButton(
               text: 'Basf Fonts',
-              color: BasfColors.darkBlue,
               onPressed: () {
                 Navigator.push(
                     context,
@@ -53,7 +52,6 @@ class _OverviewPageState extends State<OverviewPage> {
             const SizedBox(height: 15),
             BasfTextButton(
               text: 'Basf Colors',
-              color: BasfColors.darkBlue,
               onPressed: () {
                 Navigator.push(
                     context,
@@ -65,7 +63,6 @@ class _OverviewPageState extends State<OverviewPage> {
             const SizedBox(height: 15),
             BasfTextButton(
               text: 'Basf Buttons',
-              color: BasfColors.darkBlue,
               onPressed: () {
                 Navigator.push(
                     context,
@@ -77,7 +74,6 @@ class _OverviewPageState extends State<OverviewPage> {
             const SizedBox(height: 15),
             BasfTextButton(
               text: 'Basf Forms',
-              color: BasfColors.darkBlue,
               onPressed: () {
                 Navigator.push(
                     context,
@@ -89,7 +85,6 @@ class _OverviewPageState extends State<OverviewPage> {
             const SizedBox(height: 15),
             BasfTextButton(
               text: 'Basf Dialogs',
-              color: BasfColors.darkBlue,
               onPressed: () {
                 Navigator.push(
                     context,

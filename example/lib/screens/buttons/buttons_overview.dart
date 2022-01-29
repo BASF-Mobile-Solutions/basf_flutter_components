@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:basf_flutter_components/basf_flutter_components.dart';
-import 'contained_button.dart';
+import 'text_button_screen.dart';
 
 class ButtonsOverviewPage extends StatelessWidget {
   const ButtonsOverviewPage({Key? key}) : super(key: key);
@@ -15,12 +15,11 @@ class ButtonsOverviewPage extends StatelessWidget {
           children: [
             BasfTextButton(
               text: 'Contained Button',
-              color: BasfColors.darkBlue,
               onPressed: () {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const ContainedButtonPage(),
+                      builder: (context) => const TextButtonScreen(),
                     ));
               },
             ),

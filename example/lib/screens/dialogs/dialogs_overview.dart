@@ -14,7 +14,6 @@ class DialogOverviewPage extends StatelessWidget {
           children: [
             BasfTextButton(
               text: 'Only Confirm',
-              color: BasfColors.darkBlue,
               onPressed: () {
                 showDialog(
                     context: context,
@@ -29,7 +28,6 @@ class DialogOverviewPage extends StatelessWidget {
             const SizedBox(height: 15),
             BasfTextButton(
               text: 'Changed Text',
-              color: BasfColors.darkBlue,
               onPressed: () {
                 showDialog(
                     context: context,
@@ -47,7 +45,6 @@ class DialogOverviewPage extends StatelessWidget {
             const SizedBox(height: 15),
             BasfTextButton(
               text: 'Select functions',
-              color: BasfColors.darkBlue,
               onPressed: () {
                 showDialog(
                     context: context,

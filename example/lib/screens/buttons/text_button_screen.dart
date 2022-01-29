@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:basf_flutter_components/basf_flutter_components.dart';
 
-class ContainedButtonPage extends StatelessWidget {
-  const ContainedButtonPage({Key? key}) : super(key: key);
+class TextButtonScreen extends StatelessWidget {
+  const TextButtonScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,14 +25,12 @@ class ContainedButtonPage extends StatelessWidget {
               ///Only Text Button
               BasfTextButton(
                 text: 'Only Text',
-                color: BasfColors.darkBlue,
                 onPressed: _onPressed,
               ),
 
               ///Button with leading icon
               BasfTextButton(
                 text: 'With Leading Icon',
-                color: BasfColors.darkBlue,
                 leadingIcon: BasfIcons.arrow_forward,
                 onPressed: _onPressed,
               ),
@@ -40,41 +38,33 @@ class ContainedButtonPage extends StatelessWidget {
               ///Button with trailing icon
               BasfTextButton(
                 text: 'With Trailing Icon',
-                color: BasfColors.darkBlue,
                 trailingIcon: BasfIcons.arrow_forward,
                 onPressed: _onPressed,
               ),
 
               ///Icon Only Button
               BasfTextButton(
-                iconOnly: BasfIcons.arrow_forward,
-                color: BasfColors.darkBlue,
+                leadingIcon: BasfIcons.arrow_forward,
                 onPressed: _onPressed,
               ),
 
               ///Expanded Button
               BasfTextButton(
-                expand: true,
-                margin: const EdgeInsets.symmetric(horizontal: 10),
+                expanded: true,
                 text: 'Expanded Button',
-                color: BasfColors.darkBlue,
                 onPressed: _onPressed,
               ),
 
               ///Sized Button
               BasfTextButton(
-                width: 250,
-                height: 60,
-                margin: const EdgeInsets.symmetric(horizontal: 10),
+                size: const Size(250, 80),
                 text: 'Sized Button',
-                color: BasfColors.darkBlue,
                 onPressed: _onPressed,
               ),
 
               ///Disabled Button
               const BasfTextButton(
                 text: 'Disabled Button',
-                color: BasfColors.darkBlue,
                 onPressed: null,
               ),
 
@@ -89,8 +79,7 @@ class ContainedButtonPage extends StatelessWidget {
                   children: [
                     BasfTextButton(
                       text: 'Negative Button',
-                      color: BasfColors.darkBlue,
-                      negative: true,
+                      isOutlined: true,
                       trailingIcon: BasfIcons.arrow_forward,
                       onPressed: _onPressed,
                     ),
@@ -98,16 +87,14 @@ class ContainedButtonPage extends StatelessWidget {
                     ///Negative Disabled Button
                     const BasfTextButton(
                       text: 'Negative Disabled',
-                      negative: true,
-                      color: BasfColors.darkBlue,
+                      isOutlined: true,
                       onPressed: null,
                     ),
 
                     ///Negative Icon Only Button
                     BasfTextButton(
-                      iconOnly: BasfIcons.arrow_forward,
-                      color: BasfColors.darkBlue,
-                      negative: true,
+                      leadingIcon: BasfIcons.arrow_forward,
+                      isOutlined: true,
                       onPressed: _onPressed,
                     ),
                   ],
