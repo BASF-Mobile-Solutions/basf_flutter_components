@@ -13,6 +13,7 @@ class BasfColors {
   ///BASF - Default Colors
   static const Color transparent = Color(0x00000000);
   static const Color white = Color(0xFFFFFFFF);
+  static const Color backgroundWhite = Color(0xFFE5E5E5);
   static const Color black = Color(0xFF000000);
 
   ///BASF - Grey Swatches

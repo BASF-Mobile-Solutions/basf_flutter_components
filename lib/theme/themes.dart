@@ -13,7 +13,7 @@ class BasfThemes {
       fontFamily: 'Roboto',
       textTheme: mainTextTheme,
       appBarTheme: _mainAppBarTheme,
-      scaffoldBackgroundColor: BasfColors.white,
+      scaffoldBackgroundColor: BasfColors.backgroundWhite,
       snackBarTheme: _snackBarThemeData,
       splashColor: BasfColors.darkBlue.withOpacity(0.05),
       highlightColor: BasfColors.darkBlue.withOpacity(0.04),
