@@ -172,7 +172,11 @@ class _BasfInputFieldState extends State<BasfInputField> {
                 right: !widget.withoutClear! ? 8 : 5,
               ),
               decoration: BoxDecoration(
-                border: Border.all(color: borderColor, width: 1),
+                borderRadius: BorderRadius.circular(5),
+                border: Border.all(
+                    color: borderColor,
+                    width: 1,
+                ),
                 color: backgroundColor,
               ),
               child: Row(
@@ -215,7 +219,7 @@ class _BasfInputFieldState extends State<BasfInputField> {
                   if (!widget.withoutClear! && focusNode.hasFocus)
                     IconButton(
                       focusNode: FocusNode(canRequestFocus: false),
-                      icon: const Icon(BasfIcons.clear, size: 24),
+                      icon: const Icon(BasfIcons.clear, size: 19),
                       padding: EdgeInsets.zero,
                       constraints: BoxConstraints.tight(const Size(24, 24)),
                       highlightColor: BasfColors.transparent,

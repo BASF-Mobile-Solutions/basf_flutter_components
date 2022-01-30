@@ -1,5 +1,3 @@
-import 'package:basf_flutter_components/widgets/icons.dart';
-import 'package:basf_flutter_components/widgets/input_field.dart';
 import 'package:flutter/material.dart';
 
 enum ButtonType {outlined, elevated, text}
@@ -15,12 +13,6 @@ class FontsScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: body(),
-      bottomNavigationBar: BottomNavigationBar(
-        items: List.generate(4, (index) => const BottomNavigationBarItem(
-            icon: Icon(BasfIcons.heart),
-            label: 'label'
-        )),
-      ),
     );
   }
 
@@ -30,12 +22,7 @@ class FontsScreen extends StatelessWidget {
           return ListView(
             physics: const ClampingScrollPhysics(),
             padding: const EdgeInsets.all(20),
-            children: [
-              ...allStylesTexts(context),
-              const SizedBox(height: 20),
-              ...buttonsList(),
-              const BasfInputField(),
-            ],
+            children: allStylesTexts(context),
           );
         }
     );
@@ -68,12 +55,6 @@ class FontsScreen extends StatelessWidget {
     String styleType = '',
   }) {
     return Text(text ?? styleType, style: textStyle);
-  }
-
-  List<Widget> buttonsList() {
-    return List.generate(ButtonType.values.length, (index) {
-      return button(ButtonType.values[index]);
-    });
   }
 
   List<Widget> allStylesTexts(BuildContext context) {
