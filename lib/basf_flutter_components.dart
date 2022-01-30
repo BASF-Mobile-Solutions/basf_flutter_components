@@ -12,6 +12,6 @@ export 'package:basf_flutter_components/theme/themes.dart';
 export 'package:basf_flutter_components/widgets/buttons/text_button.dart';
 export 'package:basf_flutter_components/widgets/dialogs.dart';
 export 'package:basf_flutter_components/widgets/icons.dart';
-export 'package:basf_flutter_components/widgets/input_field.dart';
+export 'package:basf_flutter_components/widgets/text_field.dart';
 export 'package:basf_flutter_components/widgets/snackbar.dart';
 export 'package:basf_flutter_components/widgets/spacer.dart';

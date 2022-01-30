@@ -1,8 +1,8 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:flutter/material.dart';
 
-class BasfInputField extends StatefulWidget {
-  const BasfInputField({
+class BasfTextField extends StatefulWidget {
+  const BasfTextField({
     this.controller,
     this.onChanged,
     this.prefixIcon,
@@ -85,10 +85,10 @@ class BasfInputField extends StatefulWidget {
   final EdgeInsets? padding;
 
   @override
-  State<BasfInputField> createState() => _BasfInputFieldState();
+  State<BasfTextField> createState() => _BasfTextFieldState();
 }
 
-class _BasfInputFieldState extends State<BasfInputField> {
+class _BasfTextFieldState extends State<BasfTextField> {
   late TextEditingController controller;
   late FocusNode focusNode;
   String? errorText;
