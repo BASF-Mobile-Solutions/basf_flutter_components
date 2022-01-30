@@ -80,7 +80,8 @@ class BasfTextButton extends StatelessWidget {
 
   MaterialStateProperty<Size>? getSize() {
     if (expanded) {
-      return MaterialStateProperty.all(const Size(double.infinity, ButtonThemes.buttonHeight));
+      Size infiniteSize = const Size(double.infinity, ButtonThemes.buttonHeight);
+      return MaterialStateProperty.all(infiniteSize);
     } else if (size != null) {
       return MaterialStateProperty.all(size!);
     }
