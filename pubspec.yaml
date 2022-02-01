@@ -20,4 +20,4 @@ flutter:
   fonts:
     - family: BasfIcons
       fonts:
-        - asset: assets/fonts/BasfIcons.ttf
+        - asset: lib/fonts/BasfIcons.ttf
