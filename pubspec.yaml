@@ -12,8 +12,10 @@ dependencies:
     sdk: flutter
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
-  flutter_lints: ^1.0.0
+  flutter_lints: ^1.0.4
 
 flutter:
+  fonts:
+    - family: BasfIcons
+      fonts:
+        - asset: lib/fonts/BasfIcons.ttf
