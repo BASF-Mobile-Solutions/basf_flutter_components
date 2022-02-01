@@ -19,7 +19,8 @@ class BasfIcons {
   BasfIcons._();
 
   static const _kFontFam = 'BasfIcons';
-  static const String? _kFontPkg = null;
+  // ! Keep in mind to update this whenever we update the library
+  static const String? _kFontPkg = 'basf_flutter_components';
 
   static const IconData add_circle = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData add = IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);

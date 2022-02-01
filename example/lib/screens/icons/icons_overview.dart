@@ -1,3 +1,4 @@
+import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:flutter/material.dart';
 
 /// Uses to generate IconData for BasfIcons
@@ -6,7 +7,7 @@ class BasfIconsData extends IconData {
       : super(
           code,
           fontFamily: 'BasfIcons',
-          fontPackage: null,
+          fontPackage: 'basf_flutter_components',
         );
 }
 
