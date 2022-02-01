@@ -57,7 +57,7 @@ class _OverviewPageState extends State<OverviewPage> {
                     ));
               },
             ),
-            const SizedBox(height: 15),
+            VerticalSpacer.large(),
             BasfContainedButton(
               text: 'Basf Buttons',
               color: BasfColors.darkBlue,
@@ -69,7 +69,7 @@ class _OverviewPageState extends State<OverviewPage> {
                     ));
               },
             ),
-            const SizedBox(height: 15),
+            VerticalSpacer.large(),
             BasfContainedButton(
               text: 'Basf Forms',
               color: BasfColors.darkBlue,
@@ -81,7 +81,7 @@ class _OverviewPageState extends State<OverviewPage> {
                     ));
               },
             ),
-            const SizedBox(height: 15),
+            VerticalSpacer.large(),
             BasfContainedButton(
               text: 'Basf Dialogs',
               color: BasfColors.darkBlue,
@@ -93,12 +93,19 @@ class _OverviewPageState extends State<OverviewPage> {
                     ));
               },
             ),
-            const Icon(BasfIcons.add),
-            const Icon(BasfIcons.add_circle),
-            const Icon(BasfIcons.arrow_back),
-            const Icon(BasfIcons.send),
-            const Icon(BasfIcons.weibo),
-            const Icon(BasfIcons.trash),
+            VerticalSpacer.large(),
+            BasfContainedButton(
+              text: 'Basf Icons',
+              color: BasfColors.darkBlue,
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const IconsOverviewPage(),
+                    ));
+              },
+            ),
+            VerticalSpacer.large(),
           ],
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
