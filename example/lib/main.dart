@@ -93,6 +93,12 @@ class _OverviewPageState extends State<OverviewPage> {
                     ));
               },
             ),
+            const Icon(BasfIcons.add),
+            const Icon(BasfIcons.add_circle),
+            const Icon(BasfIcons.arrow_back),
+            const Icon(BasfIcons.send),
+            const Icon(BasfIcons.weibo),
+            const Icon(BasfIcons.trash),
           ],
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.

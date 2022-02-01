@@ -48,8 +48,8 @@ class BasfIcons {
   static const IconData eye = IconData(0xe818, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData facebook = IconData(0xe819, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData fax = IconData(0xe81a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData filter = IconData(0xe81b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData flickr = IconData(0xe81c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData flickr = IconData(0xe81b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData filter = IconData(0xe81c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData full_view_end = IconData(0xe81d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData full_view = IconData(0xe81e, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData google_plus = IconData(0xe81f, fontFamily: _kFontFam, fontPackage: _kFontPkg);
@@ -81,8 +81,8 @@ class BasfIcons {
   static const IconData question = IconData(0xe839, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData reload = IconData(0xe83a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData renren = IconData(0xe83b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData search = IconData(0xe83c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData send = IconData(0xe83d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData send = IconData(0xe83c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData search = IconData(0xe83d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData settings = IconData(0xe83e, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData share = IconData(0xe83f, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData slideshare = IconData(0xe840, fontFamily: _kFontFam, fontPackage: _kFontPkg);
