@@ -9,7 +9,7 @@ export 'package:basf_flutter_components/theme/text_styles.dart';
 export 'package:basf_flutter_components/theme/themes.dart';
 
 // widgets
-export 'package:basf_flutter_components/widgets/buttons.dart';
+export 'package:basf_flutter_components/widgets/buttons/text_button.dart';
 export 'package:basf_flutter_components/widgets/checkboxes.dart';
 export 'package:basf_flutter_components/widgets/buttons/text_button.dart';
 export 'package:basf_flutter_components/widgets/dialogs.dart';

@@ -1,4 +1,4 @@
-import 'package:basf_flutter_components_example/screens/overview.dart';
+import 'package:basf_flutter_components_example/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:basf_flutter_components/basf_flutter_components.dart';
 
@@ -38,9 +38,8 @@ class _OverviewPageState extends State<OverviewPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            BasfContainedButton(
+            BasfTextButton(
               text: 'Basf Colors',
-              color: BasfColors.darkBlue,
               onPressed: () {
                 Navigator.push(
                     context,
@@ -50,9 +49,8 @@ class _OverviewPageState extends State<OverviewPage> {
               },
             ),
             VerticalSpacer.large(),
-            BasfContainedButton(
+            BasfTextButton(
               text: 'Basf Buttons',
-              color: BasfColors.darkBlue,
               onPressed: () {
                 Navigator.push(
                     context,
@@ -62,9 +60,8 @@ class _OverviewPageState extends State<OverviewPage> {
               },
             ),
             VerticalSpacer.large(),
-            BasfContainedButton(
+            BasfTextButton(
               text: 'Basf Forms',
-              color: BasfColors.darkBlue,
               onPressed: () {
                 Navigator.push(
                     context,
@@ -74,9 +71,8 @@ class _OverviewPageState extends State<OverviewPage> {
               },
             ),
             VerticalSpacer.large(),
-            BasfContainedButton(
+            BasfTextButton(
               text: 'Basf Dialogs',
-              color: BasfColors.darkBlue,
               onPressed: () {
                 Navigator.push(
                     context,
@@ -86,9 +82,8 @@ class _OverviewPageState extends State<OverviewPage> {
               },
             ),
             VerticalSpacer.large(),
-            BasfContainedButton(
+            BasfTextButton(
               text: 'Basf Icons',
-              color: BasfColors.darkBlue,
               onPressed: () {
                 Navigator.push(
                     context,
