@@ -13,9 +13,8 @@ class FormsOverviewPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            BasfContainedButton(
+            BasfTextButton(
               text: 'Basf Input Fields',
-              color: BasfColors.darkBlue,
               onPressed: () {
                 Navigator.push(
                     context,

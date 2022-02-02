@@ -12,14 +12,14 @@ class InputFieldPage extends StatelessWidget {
         child: ListView(
           padding: const EdgeInsets.all(8.0),
           children: [
-            BasfInputField(
+            BasfTextField(
               labelText: 'False Input',
               hintText: 'Max. 4 Characters',
               validation: (text) {
                 if (text.length > 4) return 'Max. 4 Characters';
               },
             ),
-            BasfInputField(
+            BasfTextField(
               labelText: 'Delayed Error',
               hintText: 'Min. 1 Character',
               initialValidation: false,
@@ -27,35 +27,35 @@ class InputFieldPage extends StatelessWidget {
                 if (text.isEmpty) return 'Must not be empty!';
               },
             ),
-            BasfInputField(
+            BasfTextField(
               labelText: 'Initial Error',
               hintText: 'Min. 1 Character',
               validation: (text) {
                 if (text.isEmpty) return 'Must not be empty!';
               },
             ),
-            const BasfInputField(
+            const BasfTextField(
               disabled: true,
               labelText: 'Disabled Hint',
               hintText: 'Hint text',
             ),
-            const BasfInputField(
+            const BasfTextField(
               disabled: true,
               labelText: 'Disabled Text',
               hintText: 'Disabled',
               initialText: 'Default Text',
             ),
-            const BasfInputField(
+            const BasfTextField(
               labelText: 'Number Input',
               hintText: '0123456789',
               inputType: TextInputType.number,
             ),
-            const BasfInputField(
+            const BasfTextField(
               labelText: 'Initial Text',
               hintText: 'This was filled initially',
               initialText: 'Default Text',
             ),
-            BasfInputField(
+            BasfTextField(
               prefixIcon: BasfIcons.check_circle,
               // labelText: 'Icon Text',
               hintText: 'This was filled initially',
@@ -64,7 +64,7 @@ class InputFieldPage extends StatelessWidget {
                 debugPrint(text);
               },
             ),
-            const BasfInputField(
+            const BasfTextField(
               labelText: 'Obscure Text',
               hintText: 'This was filled initially',
               obscureText: true,
