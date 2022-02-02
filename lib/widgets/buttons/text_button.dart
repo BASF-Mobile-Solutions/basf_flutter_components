@@ -69,7 +69,7 @@ class BasfTextButton extends StatelessWidget {
       children: [
         if (leadingIcon != null) icon(leadingIcon!),
         if (leadingIcon != null && text != null) const SizedBox(width: 12),
-        if (text != null) Text(text!),
+        if (text != null) Expanded(child: Text(text!, maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: TextAlign.center,)),
         if (trailingIcon != null && text != null) const SizedBox(width: 12),
         if (trailingIcon != null) icon(trailingIcon!),
       ],

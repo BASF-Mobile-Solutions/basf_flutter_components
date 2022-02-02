@@ -35,65 +35,69 @@ class _OverviewPageState extends State<OverviewPage> {
         title: const Text('Basf Component Library'),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            BasfTextButton(
-              text: 'Basf Colors',
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ColorsOverviewPage(),
-                    ));
-              },
-            ),
-            VerticalSpacer.large(),
-            BasfTextButton(
-              text: 'Basf Buttons',
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ButtonsOverviewPage(),
-                    ));
-              },
-            ),
-            VerticalSpacer.large(),
-            BasfTextButton(
-              text: 'Basf Forms',
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const FormsOverviewPage(),
-                    ));
-              },
-            ),
-            VerticalSpacer.large(),
-            BasfTextButton(
-              text: 'Basf Dialogs',
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const DialogOverviewPage(),
-                    ));
-              },
-            ),
-            VerticalSpacer.large(),
-            BasfTextButton(
-              text: 'Basf Icons',
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const IconsOverviewPage(),
-                    ));
-              },
-            ),
-            VerticalSpacer.large(),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(Dimens.paddingDefault),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              BasfTextButton(
+                text: 'Basf Colors',
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ColorsOverviewPage(),
+                      ));
+                },
+              ),
+              VerticalSpacer.large(),
+              BasfTextButton(
+                text: 'Basf Buttons',
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ButtonsOverviewPage(),
+                      ));
+                },
+              ),
+              VerticalSpacer.large(),
+              BasfTextButton(
+                text: 'Basf Forms',
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const FormsOverviewPage(),
+                      ));
+                },
+              ),
+              VerticalSpacer.large(),
+              BasfTextButton(
+                text: 'Basf Dialogs',
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const DialogOverviewPage(),
+                      ));
+                },
+              ),
+              VerticalSpacer.large(),
+              BasfTextButton(
+                text: 'Basf Icons',
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const IconsOverviewPage(),
+                      ));
+                },
+              ),
+              VerticalSpacer.large(),
+            ],
+          ),
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
