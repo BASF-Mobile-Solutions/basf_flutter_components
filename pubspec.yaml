@@ -20,7 +20,7 @@ flutter:
   fonts:
     - family: BasfIcons
       fonts:
-        - asset: lib/fonts/BasfIcons.ttf
+        - asset: fonts/BasfIcons.ttf
     - family: Roboto
       fonts:
         - asset: fonts/roboto/Roboto-Thin.ttf
