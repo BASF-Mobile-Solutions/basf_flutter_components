@@ -1,90 +1,108 @@
 import 'package:basf_flutter_components/theme/buttons.dart';
+import 'package:basf_flutter_components/widgets/buttons/basf_button.dart';
 import 'package:flutter/material.dart';
 
-class BasfTextButton extends StatelessWidget {
-  ///Use this to show text on the button directly.
-  final String? text;
-
-  /// Icon on the left
-  final IconData? leadingIcon;
-
-  /// Icon on the right
-  final IconData? trailingIcon;
-
-  ///If this function is not set, the appearance of the button might be bad.
-  final VoidCallback? onPressed;
-
-  ///The minimum width of the button.
-  final Size? size;
-
-  ///The minimum width of the button.
-  final bool expanded;
-
-  ///Swap the colors of the button. For instance for more contrast.
-  final bool isOutlined;
-
-  const BasfTextButton({
+class BasfTextButton extends BasfButton {
+  const BasfTextButton.contained({
     Key? key,
-      this.text,
-      required this.onPressed,
-      this.size,
-      this.leadingIcon,
-      this.trailingIcon,
-      this.isOutlined = false,
-      this.expanded = false,
-  }) : super(key: key);
+    String? text,
+    IconData? leadingIcon,
+    IconData? trailingIcon,
+    double? iconSize,
+    Widget? child,
+    VoidCallback? onPressed,
+    VoidCallback? onLongPress,
+    ButtonStyle? style,
+    Size? size,
+    bool expanded = false,
+    AlignmentGeometry? alignment,
+  }) : super(
+          key: key,
+          text: text,
+          leadingIcon: leadingIcon,
+          trailingIcon: trailingIcon,
+          iconSize: iconSize,
+          child: child,
+          onPressed: onPressed,
+          onLongPress: onLongPress,
+          style: style,
+          size: size,
+          expanded: expanded,
+          alignment: alignment,
+        );
 
+  BasfTextButton.transparent({
+    Key? key,
+    String? text,
+    IconData? leadingIcon,
+    IconData? trailingIcon,
+    double? iconSize,
+    Widget? child,
+    VoidCallback? onPressed,
+    VoidCallback? onLongPress,
+    ButtonStyle? style,
+    Size? size,
+    bool expanded = false,
+    AlignmentGeometry? alignment,
+  }) : super(
+          key: key,
+          text: text,
+          leadingIcon: leadingIcon,
+          trailingIcon: trailingIcon,
+          iconSize: iconSize,
+          child: child,
+          onPressed: onPressed,
+          onLongPress: onLongPress,
+          style: style == null
+              ? ButtonStyles.transparentTextButtonStyle
+              : style.merge(ButtonStyles.transparentTextButtonStyle),
+          size: size,
+          expanded: expanded,
+          alignment: alignment,
+        );
+
+  BasfTextButton.hint({
+    Key? key,
+    String? text,
+    Widget? child,
+    VoidCallback? onPressed,
+    VoidCallback? onLongPress,
+    ButtonStyle? style,
+    Size? size,
+    bool expanded = false,
+    AlignmentGeometry? alignment,
+  }) : super(
+          key: key,
+          text: text,
+          child: child,
+          onPressed: onPressed,
+          onLongPress: onLongPress,
+          style: style == null
+              ? ButtonStyles.hintTextButtonStyle
+              : style.merge(ButtonStyles.hintTextButtonStyle),
+          size: size,
+          expanded: expanded,
+          alignment: alignment,
+        );
 
   @override
   Widget build(BuildContext context) {
-    if (isOutlined) {
-      return OutlinedButton(
-        onPressed: onPressed,
-        child: buttonContent(),
-        style: Theme.of(context).outlinedButtonTheme.style!.copyWith(
-          maximumSize: size != null
-              ? MaterialStateProperty.all(size)
-              : Theme.of(context).outlinedButtonTheme.style!.maximumSize,
-          minimumSize: expanded
-              ? MaterialStateProperty.all(const Size(double.infinity, ButtonThemes.buttonHeight))
-              : Theme.of(context).outlinedButtonTheme.style!.minimumSize,
-        ),
-      );
+    if (alignment == null) {
+      return button(context);
     } else {
-      return TextButton(
-        onPressed: onPressed,
-        child: buttonContent(),
-        style: Theme.of(context).textButtonTheme.style!.copyWith(
-            maximumSize: getSize() ?? Theme.of(context).textButtonTheme.style!.maximumSize,
-            minimumSize: getSize() ?? Theme.of(context).textButtonTheme.style!.minimumSize,
-        ),
-      );
+      return Align(alignment: alignment!, child: button(context));
     }
   }
 
-  Widget buttonContent() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        if (leadingIcon != null) icon(leadingIcon!),
-        if (leadingIcon != null && text != null) const SizedBox(width: 12),
-        if (text != null) Expanded(child: Text(text!, maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: TextAlign.center,)),
-        if (trailingIcon != null && text != null) const SizedBox(width: 12),
-        if (trailingIcon != null) icon(trailingIcon!),
-      ],
+  Widget button(BuildContext context) {
+    return TextButton(
+      onPressed: onPressed,
+      onLongPress: onLongPress,
+      child: child != null ? buttonChildContent() : buttonStandardContent(),
+      style: getStyleWithAdjustments(
+        context: context,
+        buttonType: ButtonType.text,
+      ),
     );
   }
-
-  Widget icon(IconData iconData) => Icon(iconData, size: 25);
-
-  MaterialStateProperty<Size>? getSize() {
-    if (expanded) {
-      Size infiniteSize = const Size(double.infinity, ButtonThemes.buttonHeight);
-      return MaterialStateProperty.all(infiniteSize);
-    } else if (size != null) {
-      return MaterialStateProperty.all(size!);
-    }
-  }
-
 }

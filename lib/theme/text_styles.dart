@@ -132,11 +132,13 @@ class CustomTextStyle extends TextStyle {
     String? fontFamily,
     FontWeight? fontWeight,
     double? lineHeight,
+    double? letterSpacing,
   }) : super(
-    color: color,
-    fontWeight: fontWeight,
-    fontSize: fontSize,
-    fontFamily: fontFamily,
-    height: lineHeight,
-  );
+          color: color,
+          fontWeight: fontWeight,
+          fontSize: fontSize,
+          fontFamily: fontFamily,
+          height: lineHeight,
+          letterSpacing: letterSpacing,
+        );
 }

@@ -1,9 +1,13 @@
-## 0.1.0
+## 1.0.0
 
-- Initial release
+- First version with basic components working
 
 <details >
 <summary>Previous versions</summary>
+
+## 0.1.0
+
+- Initial release
 
 ## 0.0.1+3
 

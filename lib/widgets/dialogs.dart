@@ -1,100 +1,71 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class BasfAlertDialog extends StatelessWidget {
-  final String alertTitle;
-  final String alertText;
+  final String title;
+  final String description;
   final String dismissText;
   final String confirmText;
   final Function? onConfirmed;
+  final Function? onDismissed;
   final bool onlyConfirm;
 
   const BasfAlertDialog({
     Key? key,
-    this.alertTitle = 'Warning',
-    required this.alertText,
+    required this.description,
+    this.title = 'Warning',
     this.dismissText = 'Cancel',
     this.confirmText = 'Confirm',
     this.onConfirmed,
-    this.onlyConfirm = true,
+    this.onDismissed,
+    this.onlyConfirm = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoAlertDialog(
-      title: Text(alertTitle, style: BasfTextStyles.alertDialogTitle),
-      content: SizedBox(
-        height: MediaQuery.of(context).size.height / 7,
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 10.0),
-            child: Text(alertText, style: BasfTextStyles.alertDialogBody),
-          ),
-        ),
+    return AlertDialog(
+      title: Text(
+        title,
+        textAlign: TextAlign.center,
+        style: BasfThemes.mainTextTheme.headline6,
       ),
+      content: Text(description,
+          textAlign: TextAlign.center,
+          style: BasfThemes.mainTextTheme.subtitle1),
       actions: <Widget>[
-        if (!onlyConfirm)
-          MaterialButton(
-            child: Text(dismissText, style: BasfTextStyles.alertDialogDismiss),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        MaterialButton(
-          child: Text(confirmText, style: BasfTextStyles.alertDialogConfirm),
-          onPressed: () {
-            if (onConfirmed != null) onConfirmed!();
-            Navigator.of(context).pop();
-          },
-        ),
+        if (!onlyConfirm) dismissButton(),
+        if (!onlyConfirm) VerticalSpacer.normal(),
+        confirmButton(),
       ],
     );
   }
-}
 
-class LoadingAnimation extends StatelessWidget {
-  final String? showText;
-  final bool? dependency;
+  Widget dismissButton() {
+    return Builder(builder: (context) {
+      return BasfOutlinedButton(
+        expanded: true,
+        text: dismissText,
+        style: OutlinedButton.styleFrom(
+            primary: BasfColors.red,
+            side: const BorderSide(color: BasfColors.red)),
+        onPressed: () {
+          dynamic result = onDismissed?.call();
+          Navigator.of(context).pop(result);
+        },
+      );
+    });
+  }
 
-  const LoadingAnimation({
-    Key? key,
-    this.showText = '',
-    this.dependency = true,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Visibility(
-      visible: dependency!,
-      child: Container(
-        color: BasfColors.black.withOpacity(0.2),
-        height: double.infinity,
-        width: double.infinity,
-        alignment: Alignment.center,
-        child: Container(
-          height: MediaQuery.of(context).size.height / 4,
-          width: MediaQuery.of(context).size.width / 2,
-          alignment: Alignment.center,
-          color: BasfColors.copyTextGrey.withOpacity(0.6),
-          padding: const EdgeInsets.all(12),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const CircularProgressIndicator(),
-              if (showText!.isNotEmpty) const SizedBox(height: 50),
-              if (showText!.isNotEmpty)
-                FittedBox(
-                  child: Text(
-                    showText!,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(color: BasfColors.white),
-                  ),
-                ),
-            ],
-          ),
-        ),
-      ),
-    );
+  Widget confirmButton() {
+    return Builder(builder: (context) {
+      return BasfTextButton.contained(
+        text: confirmText,
+        expanded: true,
+        onPressed: () {
+          dynamic result = onConfirmed?.call();
+          Navigator.of(context).pop(result);
+        },
+      );
+    });
   }
 }

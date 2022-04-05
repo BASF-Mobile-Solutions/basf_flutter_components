@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:basf_flutter_components/basf_flutter_components.dart';
 
-class ColorsOverviewPage extends StatelessWidget {
-  const ColorsOverviewPage({Key? key}) : super(key: key);
+class ColorsOverviewScreen extends StatelessWidget {
+  const ColorsOverviewScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: BasfColors.middleGrey,
-      appBar: AppBar(title: const Text('Basf Colors')),
+      appBar: AppBar(title: const Text('BASF Colors')),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: Column(
@@ -23,7 +23,8 @@ class ColorsOverviewPage extends StatelessWidget {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => ColorSwatchPage(color),
+                                builder: (context) =>
+                                    ColorSwatchScreen(color: color),
                               ));
                         },
                       ))
@@ -58,8 +59,11 @@ class ColorsOverviewPage extends StatelessWidget {
   }
 }
 
-class ColorSwatchPage extends StatelessWidget {
-  const ColorSwatchPage(this.color, {Key? key}) : super(key: key);
+class ColorSwatchScreen extends StatelessWidget {
+  const ColorSwatchScreen({
+    Key? key,
+    required this.color,
+  }) : super(key: key);
   final MaterialColor color;
 
   @override

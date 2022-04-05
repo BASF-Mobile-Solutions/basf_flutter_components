@@ -1,91 +1,94 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'buttons.dart';
 import 'colors.dart';
+import 'inputs.dart';
 import 'text_styles.dart';
 
 class BasfThemes {
+  static BorderRadius defaultBorderRadius = BorderRadius.circular(5);
+  static Color primaryColor = BasfColors.darkBlue;
 
-  static ThemeData lightThemeDarkBlue() {
+  static ThemeData get lightMainTheme {
     return ThemeData(
+      useMaterial3: true,
       fontFamily: 'Roboto',
       textTheme: mainTextTheme,
       appBarTheme: _mainAppBarTheme,
       scaffoldBackgroundColor: BasfColors.white,
       snackBarTheme: _snackBarThemeData,
-      splashColor: BasfColors.darkBlue.withOpacity(0.05),
-      highlightColor: BasfColors.darkBlue.withOpacity(0.04),
-      textButtonTheme: TextButtonThemeData(style: ButtonThemes.primaryTextButtonTheme()),
-      outlinedButtonTheme: OutlinedButtonThemeData(style: ButtonThemes.primaryOutlinedButtonTheme()),
-      floatingActionButtonTheme: const FloatingActionButtonThemeData(
-        backgroundColor: BasfColors.darkBlue,
+      colorSchemeSeed: primaryColor,
+      textButtonTheme: TextButtonThemeData(
+        style: ButtonStyles.containedTextButtonStyle,
       ),
-      radioTheme: RadioThemeData(
-        fillColor: MaterialStateProperty.all(BasfColors.darkBlue),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: ButtonStyles.primaryOutlinedButtonStyle,
       ),
-      textSelectionTheme: _enabledTextSelectionTheme,
-      cupertinoOverrideTheme: const CupertinoThemeData(
-        primaryColor: BasfColors.darkBlue,
-      ),
-      colorScheme: ColorScheme.fromSwatch().copyWith(
-        primary: BasfColors.darkBlue,
-        secondary: BasfColors.lightBlue,
-      ),
-      iconTheme: const IconThemeData(color: BasfColors.darkBlue),
-      // inputDecorationTheme: _inputDecorationTheme,
+      inputDecorationTheme: BasfInputThemes.mainInputDecorationTheme,
+      hintColor: BasfInputThemes.focusedBorderColor.shade400,
       bottomNavigationBarTheme: _bottomNavigationBarTheme,
     );
   }
 
-  static const TextTheme mainTextTheme = TextTheme(
-    headline1: CustomTextStyle(fontWeight: FontWeight.w500, fontSize: 60),
-    headline2: CustomTextStyle(fontWeight: FontWeight.w500, fontSize: 44),
-    headline3: CustomTextStyle(fontWeight: FontWeight.w500, fontSize: 32),
-    headline4: CustomTextStyle(fontWeight: FontWeight.w500, fontSize: 24),
-    headline5: CustomTextStyle(fontWeight: FontWeight.w500, fontSize: 20),
-    headline6: CustomTextStyle(fontWeight: FontWeight.w500, fontSize: 18),
-    bodyText1: CustomTextStyle(fontSize: 16),
-    bodyText2: CustomTextStyle(fontSize: 16, lineHeight: 1.5),
-    subtitle1: CustomTextStyle(fontWeight: FontWeight.w500, fontSize: 16),
-    subtitle2: CustomTextStyle(fontWeight: FontWeight.normal, fontSize: 14),
-    caption: CustomTextStyle(fontWeight: FontWeight.normal, fontSize: 12),
-    button: CustomTextStyle(fontWeight: FontWeight.w700, fontSize: 16),
-    overline: CustomTextStyle(fontSize: 10.0, lineHeight: 1),
-  );
+  static TextTheme get mainTextTheme => const TextTheme(
+        headline1: CustomTextStyle(fontWeight: FontWeight.bold, fontSize: 42),
+        headline2: CustomTextStyle(fontWeight: FontWeight.normal, fontSize: 42),
+        headline3: CustomTextStyle(fontWeight: FontWeight.normal, fontSize: 32),
+        headline4: CustomTextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        headline5: CustomTextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        headline6: CustomTextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+        bodyText1: CustomTextStyle(fontWeight: FontWeight.normal, fontSize: 16),
+        bodyText2: CustomTextStyle(fontWeight: FontWeight.normal, fontSize: 14),
+        subtitle1: CustomTextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        subtitle2: CustomTextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+        caption: CustomTextStyle(fontWeight: FontWeight.w700, fontSize: 14),
+        button: CustomTextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        overline: CustomTextStyle(fontWeight: FontWeight.normal, fontSize: 12),
+      );
 
   static final AppBarTheme _mainAppBarTheme = AppBarTheme(
-    backgroundColor: BasfColors.darkBlue,
+    backgroundColor: primaryColor,
     titleTextStyle: mainTextTheme.subtitle1!.copyWith(color: BasfColors.white),
     iconTheme: const IconThemeData(color: BasfColors.white),
     systemOverlayStyle: SystemUiOverlayStyle.light,
     elevation: 0,
   );
 
-  static final SnackBarThemeData _snackBarThemeData = SnackBarThemeData(
-    backgroundColor: Colors.transparent,
-    elevation: 0,
-    contentTextStyle: mainTextTheme.subtitle1!.copyWith(color: BasfColors.white),
-  );
+  static SnackBarThemeData get _snackBarThemeData {
+    return SnackBarThemeData(
+      backgroundColor: primaryColor,
+      behavior: SnackBarBehavior.floating,
+      shape: RoundedRectangleBorder(
+        borderRadius: defaultBorderRadius,
+      ),
+      contentTextStyle:
+          mainTextTheme.subtitle1!.copyWith(color: BasfColors.white),
+    );
+  }
 
-  static final TextSelectionThemeData _enabledTextSelectionTheme = TextSelectionThemeData(
-    cursorColor: BasfColors.darkBlue,
-    selectionHandleColor: BasfColors.darkBlue,
-    selectionColor: BasfColors.darkBlue.shade200,
-  );
-
-  static final BottomNavigationBarThemeData _bottomNavigationBarTheme = BottomNavigationBarThemeData(
+  static final BottomNavigationBarThemeData _bottomNavigationBarTheme =
+      BottomNavigationBarThemeData(
     type: BottomNavigationBarType.fixed,
     backgroundColor: BasfColors.white,
-    selectedItemColor: BasfColors.darkBlue,
-    unselectedItemColor: BasfColors.darkBlue,
-    selectedIconTheme: const IconThemeData(color: BasfColors.darkBlue, size: 20),
-    unselectedIconTheme: const IconThemeData(color: BasfColors.darkBlue, size: 20),
+    selectedItemColor: primaryColor,
+    unselectedItemColor: primaryColor,
+    selectedIconTheme: IconThemeData(color: primaryColor, size: 20),
+    unselectedIconTheme: IconThemeData(color: primaryColor, size: 20),
     unselectedLabelStyle: mainTextTheme.overline,
     selectedLabelStyle: mainTextTheme.overline!.copyWith(
       fontWeight: FontWeight.w500,
-      color: BasfColors.darkBlue,
+      color: primaryColor,
     ),
   );
+
+  // Change inout color scheme
+  static void setAppPrimaryInputColor(MaterialColor color) {
+    BasfInputThemes.focusedBorderColor = color;
+  }
+
+  // Change app color scheme without inputs
+  static void setAppPrimaryColor(MaterialColor color) {
+    BasfThemes.primaryColor = color;
+  }
 }

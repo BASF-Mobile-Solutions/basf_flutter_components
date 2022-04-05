@@ -1,54 +1,107 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:flutter/material.dart';
 
-class ButtonThemes {
-  static const double buttonHeight = 48;
+const double _buttonHeight = 48;
+const EdgeInsetsGeometry _padding = EdgeInsets.all(15);
+const Size _minimumSize = Size(0, _buttonHeight);
 
-  static ButtonStyle primaryTextButtonTheme() => TextButton.styleFrom(
-    primary: Colors.white,
-    padding: const EdgeInsets.symmetric(horizontal: 16),
-    minimumSize: const Size(0, buttonHeight),
-    maximumSize: const Size(double.infinity, buttonHeight),
-    side: BorderSide.none,
-  ).copyWith(
-      backgroundColor: MaterialStateProperty.resolveWith((states) {
-        if (states.contains(MaterialState.disabled)) {
-          return BasfColors.grey;
-        } else {
-          return BasfColors.darkBlue;
-        }
-      }),
-      textStyle: MaterialStateProperty.all(BasfThemes.mainTextTheme.button),
-      foregroundColor: MaterialStateProperty.all(BasfColors.white)
-  );
+abstract class ButtonStyles {
+  const ButtonStyles();
 
-  static ButtonStyle primaryOutlinedButtonTheme() => OutlinedButton.styleFrom(
-    primary: BasfColors.darkBlue,
-    padding: const EdgeInsets.symmetric(horizontal: 16),
-    minimumSize: const Size(0, buttonHeight),
-    maximumSize: const Size(double.infinity, buttonHeight),
-  ).copyWith(
-      side: MaterialStateProperty.resolveWith((states) {
-        if (states.contains(MaterialState.disabled)) {
-          return null;
-        } else {
-          return const BorderSide(color: BasfColors.darkBlue);
-        }
-      }),
-      backgroundColor: MaterialStateProperty.resolveWith((states) {
-        if (states.contains(MaterialState.disabled)) {
-          return BasfColors.grey;
-        } else {
-          return BasfColors.white;
-        }
-      }),
-      textStyle: MaterialStateProperty.all(BasfThemes.mainTextTheme.button),
+  static const _TextButtonStyles _textButtonStyles = _TextButtonStyles();
+  static const _OutlinedButtonStyles _outlinedButtonStyles =
+      _OutlinedButtonStyles();
+
+  static ButtonStyle get containedTextButtonStyle {
+    return _textButtonStyles.containedTextButtonStyle();
+  }
+
+  static ButtonStyle get transparentTextButtonStyle {
+    return _textButtonStyles.transparentTextButtonStyle();
+  }
+
+  static ButtonStyle get hintTextButtonStyle {
+    return _textButtonStyles.hintTextButtonStyle();
+  }
+
+  static ButtonStyle get primaryOutlinedButtonStyle {
+    return _outlinedButtonStyles.primaryOutlinedButtonStyle();
+  }
+}
+
+class _TextButtonStyles extends ButtonStyles {
+  const _TextButtonStyles() : super();
+
+  ButtonStyle containedTextButtonStyle() => TextButton.styleFrom(
+        primary: Colors.white,
+        padding: _padding,
+        minimumSize: _minimumSize,
+        side: BorderSide.none,
+      ).copyWith(
+          backgroundColor: MaterialStateProperty.resolveWith((states) {
+            if (states.contains(MaterialState.disabled)) {
+              return BasfColors.grey;
+            } else {
+              return BasfThemes.primaryColor;
+            }
+          }),
+          foregroundColor: MaterialStateProperty.all(BasfColors.white));
+
+  ButtonStyle transparentTextButtonStyle() {
+    return TextButton.styleFrom(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+      backgroundColor: BasfColors.transparent,
+      primary: BasfThemes.primaryColor,
+      minimumSize: Size.zero,
+      side: BorderSide.none,
+      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      textStyle: BasfThemes.mainTextTheme.caption,
+    ).copyWith(
       foregroundColor: MaterialStateProperty.resolveWith((states) {
-        if (states.contains(MaterialState.disabled)) {
-          return BasfColors.grey.shade700;
-        } else {
-          return BasfColors.darkBlue;
-        }
-      })
-  );
+        return states.contains(MaterialState.disabled)
+            ? BasfColors.grey
+            : BasfThemes.primaryColor;
+      }),
+    );
+  }
+
+  ButtonStyle hintTextButtonStyle() {
+    return transparentTextButtonStyle().copyWith(
+        textStyle:
+            MaterialStateProperty.all(BasfThemes.mainTextTheme.subtitle2),
+        padding: MaterialStateProperty.all(const EdgeInsets.all(5)),
+        foregroundColor: MaterialStateProperty.all(BasfColors.grey),
+        overlayColor: MaterialStateProperty.all(BasfColors.grey.shade100));
+  }
+}
+
+class _OutlinedButtonStyles extends ButtonStyles {
+  const _OutlinedButtonStyles() : super();
+
+  ButtonStyle primaryOutlinedButtonStyle() => OutlinedButton.styleFrom(
+        padding: _padding,
+        minimumSize: _minimumSize,
+      ).copyWith(
+        side: MaterialStateProperty.resolveWith((states) {
+          if (states.contains(MaterialState.disabled)) {
+            return null;
+          } else {
+            return BorderSide(color: BasfThemes.primaryColor);
+          }
+        }),
+        backgroundColor: MaterialStateProperty.resolveWith((states) {
+          if (states.contains(MaterialState.disabled)) {
+            return BasfColors.grey;
+          } else {
+            return BasfColors.transparent;
+          }
+        }),
+        foregroundColor: MaterialStateProperty.resolveWith((states) {
+          if (states.contains(MaterialState.disabled)) {
+            return BasfColors.white;
+          } else {
+            return BasfThemes.primaryColor;
+          }
+        }),
+      );
 }

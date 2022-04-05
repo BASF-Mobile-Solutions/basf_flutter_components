@@ -1,25 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:basf_flutter_components/basf_flutter_components.dart';
-import 'input_field.dart';
+import 'text_field.dart';
 
-class FormsOverviewPage extends StatelessWidget {
-  const FormsOverviewPage({Key? key}) : super(key: key);
+class FormsOverviewScreen extends StatelessWidget {
+  const FormsOverviewScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Basf Forms')),
-      body: Center(
+      appBar: AppBar(title: const Text('BASF Forms')),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: Dimens.paddingMedium20,
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            BasfTextButton(
-              text: 'Basf Input Fields',
+            BasfTextButton.contained(
+              alignment: Alignment.center,
+              text: 'BASF Text Fields',
               onPressed: () {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const InputFieldPage(),
+                      builder: (context) => const TextFieldScreen(),
                     ));
               },
             ),

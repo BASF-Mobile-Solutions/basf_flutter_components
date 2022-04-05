@@ -1,21 +1,13 @@
-import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:flutter/material.dart';
 
-/// Uses to generate IconData for BasfIcons
-class BasfIconsData extends IconData {
-  const BasfIconsData(int code)
-      : super(
-          code,
-          fontFamily: 'BasfIcons',
-          fontPackage: 'basf_flutter_components',
-        );
-}
+import '../../models/icon_data.dart';
 
-class IconsOverviewPage extends StatelessWidget {
-  const IconsOverviewPage({Key? key}) : super(key: key);
+class IconsOverviewScreen extends StatelessWidget {
+  const IconsOverviewScreen({Key? key}) : super(key: key);
 
-  static const _from = 0xe800;
-  static const _to = 0xe84f;
+  final int _from = 0xe800;
+  final int _to = 0xe84f;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +17,7 @@ class IconsOverviewPage extends StatelessWidget {
         children: List.generate(
           _to - _from + 1,
           (index) {
-            final code = index + _from;
+            int code = index + _from;
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,

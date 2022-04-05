@@ -107,7 +107,7 @@ class HorizontalSpacer extends SizedBox {
       : super(key: key, width: width);
 
   /// [HorizontalSpacer] with [2.0] as padding
-  factory HorizontalSpacer.xsmall() =>
+  factory HorizontalSpacer.xSmall() =>
       const HorizontalSpacer(width: Dimens.paddingXSmall);
 
   /// [HorizontalSpacer] with [4.0] as padding

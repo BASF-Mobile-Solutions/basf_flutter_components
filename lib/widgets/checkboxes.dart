@@ -44,38 +44,47 @@ class BasfCheckbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget _checkbox = MaterialButton(
-      minWidth: 0,
-      splashColor: !value
-          ? activeSplashColor ?? BasfColors.darkBlue
-          : inactiveSplashColor ?? BasfColors.middleGrey,
-      shape: const CircleBorder(),
-      onPressed: () => onChanged(value),
-      child: Container(
-        padding: const EdgeInsets.all(3),
-        decoration: BoxDecoration(
-          color: value
-              ? color ?? BasfColors.darkBlue
-              : inactiveColor ?? BasfColors.middleGrey,
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Icon(
-          icon ?? Icons.check,
-          color: iconColor ?? Colors.white,
-        ),
-      ),
-    );
-    Widget _text = Expanded(
-      child: Text(text ?? ''),
-    );
+    return checkBoxLayout();
+  }
 
-    final Widget leading = reverse ? _text : _checkbox;
-
-    final Widget trailing = reverse ? _checkbox : _text;
-
+  Widget checkBoxLayout() {
+    final Widget leading = reverse ? _text() : _checkbox();
+    final Widget trailing = reverse ? _checkbox() : _text();
     return Row(
       mainAxisAlignment: alignment,
       children: [leading, trailing],
+    );
+  }
+
+  Widget _checkbox() {
+    return Builder(builder: (context) {
+      return MaterialButton(
+        minWidth: 0,
+        splashColor: !value
+            ? activeSplashColor ?? Theme.of(context).colorScheme.primary
+            : inactiveSplashColor ?? BasfColors.middleGrey,
+        shape: const CircleBorder(),
+        onPressed: () => onChanged(value),
+        child: Container(
+          padding: const EdgeInsets.all(3),
+          decoration: BoxDecoration(
+            color: value
+                ? color ?? Theme.of(context).colorScheme.primary
+                : inactiveColor ?? BasfColors.middleGrey,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Icon(
+            icon ?? Icons.check,
+            color: iconColor ?? Colors.white,
+          ),
+        ),
+      );
+    });
+  }
+
+  Widget _text() {
+    return Expanded(
+      child: Text(text ?? ''),
     );
   }
 }
