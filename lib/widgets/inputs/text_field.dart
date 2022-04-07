@@ -1,5 +1,4 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
-import 'package:basf_flutter_components/theme/inputs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

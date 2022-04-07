@@ -1,5 +1,4 @@
-import 'package:basf_flutter_components/theme/buttons.dart';
-import 'package:basf_flutter_components/widgets/buttons/basf_button.dart';
+import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:flutter/material.dart';
 
 class BasfTextButton extends BasfButton {

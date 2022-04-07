@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
-
-import 'colors.dart';
+import 'package:basf_flutter_components/basf_flutter_components.dart';
 
 class BasfShadows {
   static const BoxShadow lightShadow = BoxShadow(

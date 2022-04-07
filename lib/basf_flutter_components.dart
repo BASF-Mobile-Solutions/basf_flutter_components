@@ -2,28 +2,33 @@
 /// predefined BASF Widgets, extensions, and utils
 library basf_flutter_components;
 
-// theme
-export 'package:basf_flutter_components/theme/colors.dart';
-export 'package:basf_flutter_components/theme/icons.dart';
-export 'package:basf_flutter_components/theme/dimens.dart';
-export 'package:basf_flutter_components/theme/text_styles.dart';
-export 'package:basf_flutter_components/theme/themes.dart';
+export 'data/models/option.dart';
 
-// widgets
-export 'package:basf_flutter_components/widgets/animations/fade.dart';
-export 'package:basf_flutter_components/widgets/animations/loading.dart';
+export 'theme/buttons.dart';
+export 'theme/colors.dart';
+export 'theme/dimens.dart';
+export 'theme/icons.dart';
+export 'theme/inputs.dart';
+export 'theme/paddings.dart';
+export 'theme/shadows.dart';
+export 'theme/system.dart';
+export 'theme/text_styles.dart';
+export 'theme/themes.dart';
 
-export 'package:basf_flutter_components/widgets/buttons/basf_button.dart';
-export 'package:basf_flutter_components/widgets/buttons/outlined_button.dart';
-export 'package:basf_flutter_components/widgets/buttons/slider_button.dart';
-export 'package:basf_flutter_components/widgets/buttons/text_button.dart';
+export 'widgets/animations/fade.dart';
+export 'widgets/animations/loading.dart';
 
-export 'package:basf_flutter_components/widgets/inputs/dropdown_input.dart';
-export 'package:basf_flutter_components/widgets/inputs/text_field.dart';
+export 'widgets/buttons/basf_button.dart';
+export 'widgets/buttons/outlined_button.dart';
+export 'widgets/buttons/slider_button.dart';
+export 'widgets/buttons/text_button.dart';
 
-export 'package:basf_flutter_components/widgets/options/radio.dart';
+export 'widgets/inputs/dropdown_input.dart';
+export 'widgets/inputs/text_field.dart';
 
-export 'package:basf_flutter_components/widgets/checkboxes.dart';
-export 'package:basf_flutter_components/widgets/dialogs.dart';
-export 'package:basf_flutter_components/widgets/snackbar.dart';
-export 'package:basf_flutter_components/widgets/spacer.dart';
+export 'widgets/options/radio.dart';
+
+export 'widgets/checkboxes.dart';
+export 'widgets/dialogs.dart';
+export 'widgets/snackbar.dart';
+export 'widgets/spacer.dart';

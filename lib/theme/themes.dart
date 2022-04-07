@@ -1,10 +1,6 @@
+import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import 'buttons.dart';
-import 'colors.dart';
-import 'inputs.dart';
-import 'text_styles.dart';
 
 class BasfThemes {
   static BorderRadius defaultBorderRadius = BorderRadius.circular(5);

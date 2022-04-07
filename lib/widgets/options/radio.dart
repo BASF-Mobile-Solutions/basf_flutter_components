@@ -1,8 +1,6 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:flutter/material.dart';
 
-import '../../data/models/option.dart';
-
 class _BasfRadioItem extends StatelessWidget {
   final BasfOption option;
   final Color? selectedColor;
