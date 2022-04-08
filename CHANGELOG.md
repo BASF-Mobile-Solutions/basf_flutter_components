@@ -1,9 +1,14 @@
+## 1.0.0+2
+
+- Changed .pubignore
+
+<details >
+<summary>Previous versions</summary>
+
 ## 1.0.0+1
 
 - Fixed some problems
 
-<details >
-<summary>Previous versions</summary>
 
 ## 1.0.0
 
