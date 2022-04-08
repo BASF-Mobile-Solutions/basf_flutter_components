@@ -13,7 +13,7 @@
   </a>
 </p>
 
-A BASF Flutter components library for iOS and Android
+A BASF Flutter components library for Flutter
 
 ## Installing
 
@@ -37,114 +37,34 @@ Use your IDE IntelliSense to import any of the [Components](#components) built i
 ## Components
 
 - **Widgets**
-  - BASFBUTTON...
-  ```dart
-  // TODO
-  !
-  BASFButton...
-  ```
-
-  - BASFTextButton...
-  ```dart
-  // TODO
-  code example here
-  ```
-
-  - BASFInputField
-  ```dart
-  // TODO
-  !
-  BASFInputField...
-  ```
-
-  - BasfCheckbox
-  ```dart
-  // TODO
-  !
-  BasfCheckbox...
-  ```
-
+  - Fade
+  - LoadingAnimation
+  - BasfButton
+  - BasfOutlinedButton
+  - SliderButton
+  - BasfTextButton
+  - BasfDropDownInput
+  - BasfTextField
   - BasfRadio
-  ```dart
-  // TODO
-  !
-  BasfRadio...
-  ```
-
-  - BASFSnackbar...
-  ```dart
-  // TODO
-  code example here
-  ```
-
-  - Spacers
-  ```dart
-  // Vertical Spacers
-  VerticalSpacer.xSmall()
-  VerticalSpacer.small()
-  VerticalSpacer.normal()
-  VerticalSpacer.semi()
-  VerticalSpacer.mediumSmall()
-  VerticalSpacer.medium()
-  VerticalSpacer.medium20()
-  VerticalSpacer.mediumLarge()
-  VerticalSpacer.large()
-  VerticalSpacer.xLarge()
-  VerticalSpacer.xxLarge()
-  VerticalSpacer.xxxLarge()
-  // Horizontal Spacers
-  HorizontalSpacer.small()
-  HorizontalSpacer.normal()
-  HorizontalSpacer.semi()
-  HorizontalSpacer.mediumSmall()
-  HorizontalSpacer.medium()
-  HorizontalSpacer.medium20()
-  HorizontalSpacer.mediumLarge()
-  HorizontalSpacer.large()
-  HorizontalSpacer.xLarge()
-  HorizontalSpacer.xxLarge()
-  // Horizontal Spacer with text
-  HorizontalSpacerWithText(
-    text: 'example text',
-    color: Colors.green,
-  )
-  ```
-
-- **Colors**
-  ```dart
-  // TODO
-  !
-  BasfColors...
-  ```
+  - BasfCheckbox
+  - BasfAlertDialog
+  - AppSnackBar
+  - VerticalSpacer
+  - HorizontalSpacer
 
 - **Theme**
-  ```dart
-  // TODO
-  BasfTheme.blue
-  BasfTheme.green
-  ```
-
-- **TextStyles**
-  ```dart
-  // TODO
-  !
-  BasfTextStyles...
-  ```
-- **Styles**
+  - ButtonStyles
+  - BasfColors
   - Dimens
+  - BasfIcons
+  - BasfInputThemes
+  - Paddings
+  - BasfShadows
+  - SystemThemes
+  - BasfTextStyles
+  - BasfThemes
 
-  Defines a preset of usefull standard paddings
-  ```dart
-  Dimens.paddingXSmall
-  Dimens.paddingSmall
-  Dimens.paddingDefault
-  Dimens.paddingSemi
-  Dimens.paddingMediumSmall
-  Dimens.paddingMedium
-  Dimens.paddingMedium20
-  Dimens.paddingMediumLarge
-  Dimens.paddingLarge
-  Dimens.paddingXLarge
-  Dimens.paddingXXLarge
-  Dimens.paddingXXXLarge
-  ```
+- **Data**
+  - BasfOption
+
+You can find how to use all of this components at the example project
