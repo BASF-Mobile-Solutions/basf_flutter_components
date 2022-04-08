@@ -5,5 +5,6 @@
 - Fix all linting issues and run `flutter format .`
 - Run `dart pub publish --dry-run` to test everything it's ok
 - If a new version is going to be published, add it to both `CHANGELOG.md` and `pubspec.yaml`
+- Run `flutter clean` in example folder
 
 Use `dart pub publish` when everything is ready for a new version
