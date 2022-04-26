@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class BasfThemes {
-  static BorderRadius defaultBorderRadius = BorderRadius.circular(5);
+  static BorderRadius defaultBorderRadius = BorderRadius.zero;
   static Color primaryColor = BasfColors.darkBlue;
 
   static ThemeData get lightMainTheme {

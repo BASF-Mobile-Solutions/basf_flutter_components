@@ -1,3 +1,4 @@
+import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:flutter/material.dart';
 
 class SliderButton extends StatefulWidget {
@@ -56,7 +57,7 @@ class SliderButtonState extends State<SliderButton> {
       width: widget.width,
       padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
-        borderRadius: widget.backgroundShape ?? BorderRadius.circular(3),
+        borderRadius: widget.backgroundShape ?? BasfThemes.defaultBorderRadius,
         color: widget.backgroundColorEnd != null
             ? calculateBackground()
             : widget.backgroundColor,

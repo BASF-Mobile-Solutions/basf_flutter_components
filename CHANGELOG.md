@@ -1,9 +1,13 @@
-## 1.0.0+2
+## 1.0.0+3
 
-- Changed .pubignore
+- Changed rounded corners (Sorry Dima)
 
 <details >
 <summary>Previous versions</summary>
+
+## 1.0.0+2
+
+- Changed .pubignore
 
 ## 1.0.0+1
 
