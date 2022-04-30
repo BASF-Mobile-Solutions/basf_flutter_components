@@ -37,6 +37,9 @@ class _TextButtonStyles extends ButtonStyles {
         padding: _padding,
         minimumSize: _minimumSize,
         side: BorderSide.none,
+        shape: RoundedRectangleBorder(
+          borderRadius: BasfThemes.defaultBorderRadius,
+        ),
       ).copyWith(
           backgroundColor: MaterialStateProperty.resolveWith((states) {
             if (states.contains(MaterialState.disabled)) {
@@ -54,6 +57,9 @@ class _TextButtonStyles extends ButtonStyles {
       primary: BasfThemes.primaryColor,
       minimumSize: Size.zero,
       side: BorderSide.none,
+      shape: RoundedRectangleBorder(
+        borderRadius: BasfThemes.defaultBorderRadius,
+      ),
       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
       textStyle: BasfThemes.mainTextTheme.caption,
     ).copyWith(
@@ -81,6 +87,9 @@ class _OutlinedButtonStyles extends ButtonStyles {
   ButtonStyle primaryOutlinedButtonStyle() => OutlinedButton.styleFrom(
         padding: _padding,
         minimumSize: _minimumSize,
+        shape: RoundedRectangleBorder(
+          borderRadius: BasfThemes.defaultBorderRadius,
+        ),
       ).copyWith(
         side: MaterialStateProperty.resolveWith((states) {
           if (states.contains(MaterialState.disabled)) {
