@@ -29,6 +29,7 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
     return Container(
       height: 48,
       decoration: BoxDecoration(
+        borderRadius: BasfThemes.defaultBorderRadius,
         border: Border.all(
             color: BasfInputThemes
                 .mainInputDecorationTheme.enabledBorder!.borderSide.color),
