@@ -134,7 +134,7 @@ class SliderButtonState extends State<SliderButton> {
           ),
           child: widget.sliderButtonContent ??
               Icon(
-                Icons.arrow_forward_ios,
+                Icons.navigate_next,
                 color: widget.iconColor,
               ),
         ),

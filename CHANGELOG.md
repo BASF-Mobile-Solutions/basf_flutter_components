@@ -1,9 +1,13 @@
-## 1.0.0+4
+## 1.0.0+5
 
-- Connected all components to rounded corners
+- Fixed iOS Icon error
 
 <details >
 <summary>Previous versions</summary>
+
+## 1.0.0+4
+
+- Connected all components to rounded corners
 
 ## 1.0.0+3
 
