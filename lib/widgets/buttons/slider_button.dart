@@ -128,7 +128,8 @@ class SliderButtonState extends State<SliderButton> {
           height: widget.height - 10,
           width: widget.height - 10,
           decoration: BoxDecoration(
-            borderRadius: widget.foregroundShape ?? BasfThemes.defaultBorderRadius,
+            borderRadius:
+                widget.foregroundShape ?? BasfThemes.defaultBorderRadius,
             color: widget.foregroundColor ?? Theme.of(context).primaryColor,
           ),
           child: widget.sliderButtonContent ??

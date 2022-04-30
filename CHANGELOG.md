@@ -1,9 +1,13 @@
-## 1.0.0+3
+## 1.0.0+4
 
-- Changed rounded corners (Sorry Dima)
+- Connected all components to rounded corners
 
 <details >
 <summary>Previous versions</summary>
+
+## 1.0.0+3
+
+- Changed rounded corners (Sorry Dima)
 
 ## 1.0.0+2
 
