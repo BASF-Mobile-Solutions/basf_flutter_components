@@ -1,9 +1,13 @@
-## 1.0.0+5
+## 1.0.0+6
 
-- Fixed iOS Icon error
+- Connect inputs to border theme
 
 <details >
 <summary>Previous versions</summary>
+
+## 1.0.0+5
+
+- Fixed iOS Icon error
 
 ## 1.0.0+4
 
