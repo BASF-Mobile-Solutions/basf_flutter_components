@@ -56,20 +56,34 @@ class BasfInputThemes {
   );
 
   static final OutlineInputBorder _focusedBorder = OutlineInputBorder(
-    borderSide: BorderSide(color: focusedBorderColor, width: _borderWidth),
+    borderSide: BorderSide(
+        color: focusedBorderColor,
+        width: _borderWidth,
+    ),
+    borderRadius: BasfThemes.defaultBorderRadius,
   );
 
   static final OutlineInputBorder _enabledBorder = OutlineInputBorder(
-    borderSide:
-        BorderSide(color: focusedBorderColor.shade300, width: _borderWidth),
+    borderSide: BorderSide(
+        color: focusedBorderColor.shade300,
+        width: _borderWidth,
+    ),
+    borderRadius: BasfThemes.defaultBorderRadius,
   );
 
   static final OutlineInputBorder _disabledBorder = OutlineInputBorder(
-    borderSide:
-        BorderSide(color: BasfColors.grey.shade300, width: _borderWidth),
+    borderSide: BorderSide(
+        color: BasfColors.grey.shade300,
+        width: _borderWidth,
+    ),
+    borderRadius: BasfThemes.defaultBorderRadius,
   );
 
-  static const OutlineInputBorder _errorBorder = OutlineInputBorder(
-    borderSide: BorderSide(color: BasfColors.red, width: _borderWidth),
+  static final OutlineInputBorder _errorBorder = OutlineInputBorder(
+    borderSide: const BorderSide(
+        color: BasfColors.red,
+        width: _borderWidth,
+    ),
+    borderRadius: BasfThemes.defaultBorderRadius,
   );
 }
