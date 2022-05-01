@@ -1,9 +1,13 @@
-## 1.0.0+6
+## 1.0.0+7
 
-- Connect inputs to border theme
+- Small fix
 
 <details >
 <summary>Previous versions</summary>
+
+## 1.0.0+6
+
+- Connect inputs to border theme
 
 ## 1.0.0+5
 
