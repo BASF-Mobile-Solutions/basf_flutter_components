@@ -1,9 +1,13 @@
-## 1.0.0+7
+## 1.0.0+8
 
-- Small fix
+- Fixed Padding
 
 <details >
 <summary>Previous versions</summary>
+
+## 1.0.0+7
+
+- Small fix
 
 ## 1.0.0+6
 
