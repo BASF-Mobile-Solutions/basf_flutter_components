@@ -1,6 +1,6 @@
 name: basf_flutter_components
 description: A collection of BASF Style components, such as Buttons, Colors, Icons, etc...
-version: 1.0.0+8
+version: 1.0.0+9
 homepage: https://github.com/BASF-Mobile-Solutions/basf_flutter_components
 
 environment:

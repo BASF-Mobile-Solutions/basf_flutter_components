@@ -1,9 +1,13 @@
-## 1.0.0+8
+## 1.0.0+9
 
-- Fixed Padding
+- Adjusted general Paddings
 
 <details >
 <summary>Previous versions</summary>
+
+## 1.0.0+8
+
+- Fixed Padding
 
 ## 1.0.0+7
 
