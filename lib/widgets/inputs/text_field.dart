@@ -111,7 +111,7 @@ class BasfTextField extends StatefulWidget {
   final bool enableIMEPersonalizedLearning;
 
   @override
-  _BasfTextFieldState createState() => _BasfTextFieldState();
+  State<BasfTextField> createState() => _BasfTextFieldState();
 }
 
 class _BasfTextFieldState extends State<BasfTextField> {
@@ -125,7 +125,7 @@ class _BasfTextFieldState extends State<BasfTextField> {
   }
 
   void redrawToChangeThemeBasedOnState() {
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       setState(() {});
     });
   }

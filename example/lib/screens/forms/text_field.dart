@@ -83,16 +83,18 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
             ),
             const SizedBox(height: 15),
             BasfTextField(
+              controller: _iconsController,
               decoration: InputDecoration(
                 hintText: 'Icons',
                 prefixIcon: const Icon(Icons.person),
                 suffixIcon: IconButton(
                   splashRadius: 20,
-                  onPressed: () {},
+                  onPressed: () {
+                    _iconsController.clear();
+                  },
                   icon: const Icon(Icons.close),
                 ),
               ),
-              controller: _iconsController,
             ),
           ],
         ),

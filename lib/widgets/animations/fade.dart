@@ -14,7 +14,7 @@ class Fade extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _FadeState createState() => _FadeState();
+  State<Fade> createState() => _FadeState();
 }
 
 class _FadeState extends State<Fade> with SingleTickerProviderStateMixin {

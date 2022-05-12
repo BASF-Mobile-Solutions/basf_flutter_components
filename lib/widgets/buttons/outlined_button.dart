@@ -46,11 +46,13 @@ class BasfOutlinedButton extends BasfButton {
     return OutlinedButton(
       onPressed: onPressed,
       onLongPress: onLongPress,
-      child: child != null ? buttonChildContent() : buttonStandardContent(),
       style: getStyleWithAdjustments(
         context: context,
         buttonType: ButtonType.outlined,
       ),
+      child: child != null
+          ? buttonChildContent()
+          : buttonStandardContent(),
     );
   }
 }

@@ -97,11 +97,13 @@ class BasfTextButton extends BasfButton {
     return TextButton(
       onPressed: onPressed,
       onLongPress: onLongPress,
-      child: child != null ? buttonChildContent() : buttonStandardContent(),
       style: getStyleWithAdjustments(
         context: context,
         buttonType: ButtonType.text,
       ),
+      child: child != null
+          ? buttonChildContent()
+          : buttonStandardContent(),
     );
   }
 }

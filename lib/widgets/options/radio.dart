@@ -52,15 +52,15 @@ class _BasfRadioItem extends StatelessWidget {
   Widget content() {
     return Container(
       padding: const EdgeInsets.all(10),
-      child: Text(
-        option.text,
-        textAlign: TextAlign.center,
-        style: const TextStyle(fontWeight: FontWeight.bold),
-      ),
       decoration: BoxDecoration(
         color: backgroundColor ?? BasfColors.boxGrey,
         borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(6), topRight: Radius.circular(6)),
+      ),
+      child: Text(
+        option.text,
+        textAlign: TextAlign.center,
+        style: const TextStyle(fontWeight: FontWeight.bold),
       ),
     );
   }
