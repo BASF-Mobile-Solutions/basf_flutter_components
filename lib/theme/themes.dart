@@ -48,6 +48,7 @@ class BasfThemes {
     titleTextStyle: mainTextTheme.subtitle1!.copyWith(color: BasfColors.white),
     iconTheme: const IconThemeData(color: BasfColors.white),
     systemOverlayStyle: SystemUiOverlayStyle.light,
+    scrolledUnderElevation: 0,
     elevation: 0,
   );
 

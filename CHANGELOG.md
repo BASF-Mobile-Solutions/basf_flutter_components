@@ -5,9 +5,13 @@
 <details >
 <summary>Previous versions</summary>
 
+## 1.0.0+11
+
+- Remove tint color from Appbar by default
+
 ## 1.0.0+10
 
-- Upgraded sdk
+- Migrated to Flutter 3
 
 ## 1.0.0+9
 
