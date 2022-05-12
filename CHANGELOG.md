@@ -1,9 +1,17 @@
-## 1.0.0+9
+## 1.1.0+1
 
-- Adjusted general Paddings
+- Flutter 3.0 and fixed issues
 
 <details >
 <summary>Previous versions</summary>
+
+## 1.0.0+10
+
+- Upgraded sdk
+
+## 1.0.0+9
+
+- Adjusted general Paddings
 
 ## 1.0.0+8
 

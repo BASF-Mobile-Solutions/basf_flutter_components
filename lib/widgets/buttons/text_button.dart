@@ -101,9 +101,7 @@ class BasfTextButton extends BasfButton {
         context: context,
         buttonType: ButtonType.text,
       ),
-      child: child != null
-          ? buttonChildContent()
-          : buttonStandardContent(),
+      child: child != null ? buttonChildContent() : buttonStandardContent(),
     );
   }
 }

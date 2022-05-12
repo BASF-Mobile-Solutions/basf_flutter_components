@@ -50,9 +50,7 @@ class BasfOutlinedButton extends BasfButton {
         context: context,
         buttonType: ButtonType.outlined,
       ),
-      child: child != null
-          ? buttonChildContent()
-          : buttonStandardContent(),
+      child: child != null ? buttonChildContent() : buttonStandardContent(),
     );
   }
 }
