@@ -1,9 +1,13 @@
-## 1.1.0+1
+## 1.1.1+12
 
-- Flutter 3.0 and fixed issues
+- Fix issues
 
 <details >
 <summary>Previous versions</summary>
+
+## 1.1.0+1
+
+- Flutter 3.0 and fixed issues
 
 ## 1.0.0+11
 
