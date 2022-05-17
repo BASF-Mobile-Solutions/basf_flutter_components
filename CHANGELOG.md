@@ -1,9 +1,13 @@
-## 1.1.2+1
+## 1.1.2+2
 
-- Updated BasfDropDownInput component
+- Quick BasfDropDownInput fix
 
 <details >
 <summary>Previous versions</summary>
+
+## 1.1.2+1
+
+- Updated BasfDropDownInput component
 
 ## 1.1.1+2
 

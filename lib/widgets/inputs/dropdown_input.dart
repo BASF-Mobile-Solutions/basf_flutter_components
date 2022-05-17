@@ -39,8 +39,8 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
                 .mainInputDecorationTheme.enabledBorder!.borderSide.color),
       ),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: widget.crossAxisAlignment,
+        mainAxisAlignment: widget.mainAxisAlignment,
         children: [
           Padding(
             padding: const EdgeInsets.only(left: Dimens.paddingMedium),
