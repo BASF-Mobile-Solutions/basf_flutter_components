@@ -7,11 +7,15 @@ class BasfDropDownInput extends StatefulWidget {
     required this.controller,
     required this.values,
     this.labelText,
+    this.crossAxisAlignment = CrossAxisAlignment.center,
+    this.mainAxisAlignment = MainAxisAlignment.end,
   }) : super(key: key);
 
   final TextEditingController controller;
   final String? labelText;
   final List<String> values;
+  final CrossAxisAlignment crossAxisAlignment;
+  final MainAxisAlignment mainAxisAlignment;
 
   @override
   State<BasfDropDownInput> createState() => _BasfDropDownInputState();

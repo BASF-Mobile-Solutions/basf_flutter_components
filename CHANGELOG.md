@@ -1,9 +1,13 @@
-## 1.1.1+2
+## 1.1.2+1
 
-- Fix issues
+- Updated BasfDropDownInput component
 
 <details >
 <summary>Previous versions</summary>
+
+## 1.1.1+2
+
+- Fix issues
 
 ## 1.1.0+1
 
