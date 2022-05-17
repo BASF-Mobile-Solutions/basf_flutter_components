@@ -1,9 +1,13 @@
-## 1.1.2+2
+## 1.1.2+3
 
-- Quick BasfDropDownInput fix
+- Added Spacer
 
 <details >
 <summary>Previous versions</summary>
+
+## 1.1.2+2
+
+- Quick BasfDropDownInput fix
 
 ## 1.1.2+1
 

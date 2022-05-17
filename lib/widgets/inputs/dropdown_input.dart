@@ -50,6 +50,7 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
                   ?.copyWith(color: BasfThemes.primaryColor),
             ),
           ),
+          const Spacer(),
           menuButton(),
         ],
       ),
