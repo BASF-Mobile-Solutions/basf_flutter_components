@@ -9,6 +9,7 @@ class BasfDropDownInput extends StatefulWidget {
     this.labelText,
     this.crossAxisAlignment = CrossAxisAlignment.center,
     this.mainAxisAlignment = MainAxisAlignment.end,
+    this.isExpanded = false,
   }) : super(key: key);
 
   final TextEditingController controller;
@@ -16,6 +17,7 @@ class BasfDropDownInput extends StatefulWidget {
   final List<String> values;
   final CrossAxisAlignment crossAxisAlignment;
   final MainAxisAlignment mainAxisAlignment;
+  final bool isExpanded;
 
   @override
   State<BasfDropDownInput> createState() => _BasfDropDownInputState();
@@ -50,7 +52,7 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
                   ?.copyWith(color: BasfThemes.primaryColor),
             ),
           ),
-          const Spacer(),
+          if (widget.isExpanded) const Spacer(),
           menuButton(),
         ],
       ),

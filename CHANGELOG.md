@@ -1,9 +1,13 @@
-## 1.1.2+3
+## 1.1.3+1
 
-- Added Spacer
+- Added additional params to BasfDropDownInput
 
 <details >
 <summary>Previous versions</summary>
+
+## 1.1.2+3
+
+- Added Spacer
 
 ## 1.1.2+2
 
