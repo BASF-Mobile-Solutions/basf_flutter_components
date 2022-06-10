@@ -44,29 +44,35 @@ class BasfAlertDialog extends StatelessWidget {
 
   Widget dismissButton() {
     return Builder(builder: (context) {
-      return BasfOutlinedButton(
-        expanded: true,
-        text: dismissText,
-        style: OutlinedButton.styleFrom(
-            primary: BasfColors.red,
-            side: const BorderSide(color: BasfColors.red)),
-        onPressed: () {
-          dynamic result = onDismissed?.call();
-          Navigator.of(context).pop(result);
-        },
+      return Padding(
+        padding: const EdgeInsets.only(left: Dimens.paddingMedium),
+        child: BasfOutlinedButton(
+          expanded: true,
+          text: dismissText,
+          style: OutlinedButton.styleFrom(
+              primary: BasfColors.red,
+              side: const BorderSide(color: BasfColors.red)),
+          onPressed: () {
+            dynamic result = onDismissed?.call();
+            Navigator.of(context).pop(result);
+          },
+        ),
       );
     });
   }
 
   Widget confirmButton() {
     return Builder(builder: (context) {
-      return BasfTextButton.contained(
-        text: confirmText,
-        expanded: true,
-        onPressed: () {
-          dynamic result = onConfirmed?.call();
-          Navigator.of(context).pop(result);
-        },
+      return Padding(
+        padding: const EdgeInsets.only(left: Dimens.paddingMedium),
+        child: BasfTextButton.contained(
+          text: confirmText,
+          expanded: true,
+          onPressed: () {
+            dynamic result = onConfirmed?.call();
+            Navigator.of(context).pop(result);
+          },
+        ),
       );
     });
   }

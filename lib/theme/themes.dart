@@ -21,6 +21,9 @@ class BasfThemes {
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: ButtonStyles.primaryOutlinedButtonStyle,
       ),
+      dialogTheme: DialogTheme(
+        shape: RoundedRectangleBorder(borderRadius: defaultBorderRadius),
+      ),
       inputDecorationTheme: BasfInputThemes.mainInputDecorationTheme,
       hintColor: BasfInputThemes.focusedBorderColor.shade400,
       bottomNavigationBarTheme: _bottomNavigationBarTheme,
@@ -78,6 +81,17 @@ class BasfThemes {
       color: primaryColor,
     ),
   );
+
+  static ThemeData get datePickerButtonTheme {
+    return lightMainTheme.copyWith(
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          primary: BasfThemes.primaryColor,
+          shape: RoundedRectangleBorder(borderRadius: BasfThemes.defaultBorderRadius),
+        ),
+      ),
+    );
+  }
 
   // Change inout color scheme
   static void setAppPrimaryInputColor(MaterialColor color) {

@@ -17,6 +17,23 @@ class DialogOverviewScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             BasfTextButton.contained(
+              text: 'Show datePicker',
+              onPressed: () async {
+                showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime.now().subtract(const Duration(days: 365)),
+                  lastDate: DateTime.now(),
+                  builder: (context, child) {
+                    return Theme(
+                        data: BasfThemes.datePickerButtonTheme,
+                        child: child!);
+                  }
+                );
+              },
+            ),
+            const SizedBox(height: 15),
+            BasfTextButton.contained(
               text: 'Only Confirm',
               onPressed: () {
                 showDialog(

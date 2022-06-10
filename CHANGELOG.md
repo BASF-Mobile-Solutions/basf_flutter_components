@@ -1,9 +1,13 @@
-## 1.1.3+1
+## 1.1.4+2
 
-- Added additional params to BasfDropDownInput
+- Changed dialog and date picker themes
 
 <details >
 <summary>Previous versions</summary>
+
+## 1.1.3+1
+
+- Added additional params to BasfDropDownInput
 
 ## 1.1.2+3
 
