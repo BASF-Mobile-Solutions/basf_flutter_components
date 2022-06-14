@@ -1,4 +1,4 @@
-import 'package:basf_flutter_components/widgets/inputs/text_field.dart';
+import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:flutter/material.dart';
 
 class TextFieldScreen extends StatefulWidget {
@@ -42,8 +42,10 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
       appBar: AppBar(title: const Text('BASF Text Fields')),
       body: SafeArea(
         child: ListView(
+          physics: const ClampingScrollPhysics(),
           padding: const EdgeInsets.all(8.0),
           children: [
+            const SizedBox(height: 15),
             BasfTextField(
               decoration: const InputDecoration(
                 hintText: 'Enabled',
@@ -95,6 +97,27 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
                   icon: const Icon(Icons.close),
                 ),
               ),
+            ),
+            const SizedBox(height: 15),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: BasfTextField(
+                      controller: TextEditingController(),
+                      autovalidateMode: AutovalidateMode.always,
+                      validator: (text) {
+                        if (text?.isEmpty ?? true) return 'Must not be empty';
+                        return null;
+                      },
+                  ),
+                ),
+                const SizedBox(width: 10),
+                BasfDropDownInput(
+                    controller: TextEditingController(),
+                    values: const ['PC']
+                ),
+              ],
             ),
           ],
         ),
