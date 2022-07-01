@@ -11,8 +11,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-  collection: ^1.16.0
-
 dev_dependencies:
   flutter_lints: ^2.0.1
 

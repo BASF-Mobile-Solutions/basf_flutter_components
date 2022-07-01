@@ -1,6 +1,5 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:flutter/material.dart';
-import 'package:collection/collection.dart';
 
 class BasfDropDownInput extends StatefulWidget {
   const BasfDropDownInput({
@@ -29,9 +28,12 @@ class BasfDropDownInput extends StatefulWidget {
 class _BasfDropDownInputState extends State<BasfDropDownInput> {
   @override
   void initState() {
-    String? value = widget.values
-        .firstWhereOrNull((e) => e == widget.controller.text.trim());
-    widget.controller.text = value ?? widget.values.first;
+    if (widget.values.contains(widget.controller.text.trim())) {
+      widget.controller.text = widget.values
+          .firstWhere((e) => e == widget.controller.text.trim());
+    } else {
+      widget.controller.text = widget.values.first;
+    }
     super.initState();
   }
 
