@@ -1,9 +1,16 @@
+## 1.1.6
+
+- changed init of Basf Dropdown
+- 
+<details>
+
+## 1.1.5
+
+- added loader for dropdown input
+
 ## 1.1.4+2
 
 - Changed dialog and date picker themes
-
-<details >
-<summary>Previous versions</summary>
 
 ## 1.1.3+1
 

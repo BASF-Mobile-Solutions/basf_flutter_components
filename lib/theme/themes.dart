@@ -87,7 +87,8 @@ class BasfThemes {
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           primary: BasfThemes.primaryColor,
-          shape: RoundedRectangleBorder(borderRadius: BasfThemes.defaultBorderRadius),
+          shape: RoundedRectangleBorder(
+              borderRadius: BasfThemes.defaultBorderRadius),
         ),
       ),
     );

@@ -20,16 +20,16 @@ class DialogOverviewScreen extends StatelessWidget {
               text: 'Show datePicker',
               onPressed: () async {
                 showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime.now().subtract(const Duration(days: 365)),
-                  lastDate: DateTime.now(),
-                  builder: (context, child) {
-                    return Theme(
-                        data: BasfThemes.datePickerButtonTheme,
-                        child: child!);
-                  }
-                );
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate:
+                        DateTime.now().subtract(const Duration(days: 365)),
+                    lastDate: DateTime.now(),
+                    builder: (context, child) {
+                      return Theme(
+                          data: BasfThemes.datePickerButtonTheme,
+                          child: child!);
+                    });
               },
             ),
             const SizedBox(height: 15),

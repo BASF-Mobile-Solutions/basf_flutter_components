@@ -1,5 +1,6 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:flutter/material.dart';
+import 'package:collection/collection.dart';
 
 class BasfDropDownInput extends StatefulWidget {
   const BasfDropDownInput({
@@ -10,6 +11,7 @@ class BasfDropDownInput extends StatefulWidget {
     this.crossAxisAlignment = CrossAxisAlignment.center,
     this.mainAxisAlignment = MainAxisAlignment.end,
     this.isExpanded = false,
+    this.isLoading = false,
   }) : super(key: key);
 
   final TextEditingController controller;
@@ -18,6 +20,7 @@ class BasfDropDownInput extends StatefulWidget {
   final CrossAxisAlignment crossAxisAlignment;
   final MainAxisAlignment mainAxisAlignment;
   final bool isExpanded;
+  final bool isLoading;
 
   @override
   State<BasfDropDownInput> createState() => _BasfDropDownInputState();
@@ -26,7 +29,9 @@ class BasfDropDownInput extends StatefulWidget {
 class _BasfDropDownInputState extends State<BasfDropDownInput> {
   @override
   void initState() {
-    widget.controller.text = widget.values.first;
+    String? value = widget.values
+        .firstWhereOrNull((e) => e == widget.controller.text.trim());
+    widget.controller.text = value ?? widget.values.first;
     super.initState();
   }
 
@@ -40,21 +45,48 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
             color: BasfInputThemes
                 .mainInputDecorationTheme.enabledBorder!.borderSide.color),
       ),
-      child: Row(
-        crossAxisAlignment: widget.crossAxisAlignment,
-        mainAxisAlignment: widget.mainAxisAlignment,
+      child: Stack(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(left: Dimens.paddingMedium),
-            child: Text(
-              widget.controller.text,
-              style: BasfThemes.mainTextTheme.headline6
-                  ?.copyWith(color: BasfThemes.primaryColor),
+          Opacity(
+            opacity: !widget.isLoading ? 1 : 0,
+            child: Row(
+              crossAxisAlignment: widget.crossAxisAlignment,
+              mainAxisAlignment: widget.mainAxisAlignment,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: Dimens.paddingMedium),
+                  child: Text(
+                    widget.controller.text,
+                    style: BasfThemes.mainTextTheme.headline6
+                        ?.copyWith(color: BasfThemes.primaryColor),
+                  ),
+                ),
+                if (widget.isExpanded) const Spacer(),
+                menuButton(),
+              ],
             ),
           ),
-          if (widget.isExpanded) const Spacer(),
-          menuButton(),
+          if (widget.isLoading)
+            Positioned(
+              top: 0,
+              bottom: 0,
+              right: 0,
+              left: 0,
+              child: Center(child: loader()),
+            ),
         ],
+      ),
+    );
+  }
+
+  Widget loader() {
+    return Container(
+      width: 20,
+      height: 20,
+      alignment: Alignment.centerLeft,
+      child: CircularProgressIndicator(
+        color: BasfThemes.primaryColor,
+        strokeWidth: 3,
       ),
     );
   }

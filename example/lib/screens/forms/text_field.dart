@@ -104,19 +104,19 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
               children: [
                 Expanded(
                   child: BasfTextField(
-                      controller: TextEditingController(),
-                      autovalidateMode: AutovalidateMode.always,
-                      validator: (text) {
-                        if (text?.isEmpty ?? true) return 'Must not be empty';
-                        return null;
-                      },
+                    controller: TextEditingController(),
+                    autovalidateMode: AutovalidateMode.always,
+                    validator: (text) {
+                      if (text?.isEmpty ?? true) return 'Must not be empty';
+                      return null;
+                    },
                   ),
                 ),
                 const SizedBox(width: 10),
                 BasfDropDownInput(
                     controller: TextEditingController(),
-                    values: const ['PC']
-                ),
+                    isLoading: false,
+                    values: const ['PC', 'PK', 'TM']),
               ],
             ),
           ],
