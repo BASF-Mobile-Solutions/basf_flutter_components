@@ -21,7 +21,7 @@ void main() {
         );
         await tester.pumpAndSettle();
         // here it should not be visible
-        // TODO(carlos): figure out why it does not change the visibility
+        // ! figure out why it does not change the visibility
         // ! and fix the didUpdateWidget test part
         await tester.tap(
           find.byKey(tapTarget),

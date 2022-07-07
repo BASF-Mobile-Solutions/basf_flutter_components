@@ -7,7 +7,7 @@ void main() {
       const Enum e1 = BasfThemeType.yellow, e2 = BasfThemeType.red;
       expect(e1.runtimeType != e2.runtimeType, false);
       expect(Enum.compareByIndex(e1, e2), -1);
-      // TODO(carlos): figure out what I'm supposed to do to get rid of
+      // ! figure out what I'm supposed to do to get rid of
       // ! line 7 untested in themes.dart
     });
   });
