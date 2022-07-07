@@ -2,22 +2,20 @@ import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:flutter/material.dart';
 
 class TextButtonsContainedScreen extends StatelessWidget {
-  const TextButtonsContainedScreen({Key? key}) : super(key: key);
+  const TextButtonsContainedScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> buttons = [
+    final buttons = <Widget>[
       ///Only Text Button
       BasfTextButton.contained(
         text: 'Only Text',
-        alignment: Alignment.center,
         onPressed: () => _onPressed(context),
       ),
 
       ///Button with leading icon
       BasfTextButton.contained(
         text: 'With Leading Icon',
-        alignment: Alignment.center,
         leadingIcon: BasfIcons.arrow_forward,
         onPressed: () => _onPressed(context),
       ),
@@ -25,14 +23,12 @@ class TextButtonsContainedScreen extends StatelessWidget {
       ///Button with trailing icon
       BasfTextButton.contained(
         text: 'With Trailing Icon',
-        alignment: Alignment.center,
         trailingIcon: BasfIcons.arrow_forward,
         onPressed: () => _onPressed(context),
       ),
 
       ///Icon Only Button
       BasfTextButton.contained(
-        alignment: Alignment.center,
         leadingIcon: BasfIcons.arrow_forward,
         onPressed: () => _onPressed(context),
       ),
@@ -40,7 +36,6 @@ class TextButtonsContainedScreen extends StatelessWidget {
       ///Expanded Button
       BasfTextButton.contained(
         expanded: true,
-        alignment: Alignment.center,
         text: 'Expanded Button',
         onPressed: () => _onPressed(context),
       ),
@@ -49,13 +44,11 @@ class TextButtonsContainedScreen extends StatelessWidget {
       BasfTextButton.contained(
         text: 'Sized Button',
         size: const Size(250, 80),
-        alignment: Alignment.center,
         onPressed: () => _onPressed(context),
       ),
 
       BasfTextButton.contained(
         expanded: true,
-        alignment: Alignment.center,
         onPressed: () => _onPressed(context),
         child: const SizedBox(
           width: 15,
@@ -68,7 +61,6 @@ class TextButtonsContainedScreen extends StatelessWidget {
 
       BasfTextButton.contained(
         text: 'Styled Button',
-        alignment: Alignment.center,
         onPressed: () => _onPressed(context),
         style: TextButton.styleFrom(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
@@ -78,8 +70,13 @@ class TextButtonsContainedScreen extends StatelessWidget {
 
       ///Disabled Button
       const BasfTextButton.contained(
-        alignment: Alignment.center,
         text: 'Disabled Button',
+      ),
+
+      ///Disabled Button
+      BasfTextButton.hint(
+        text: 'hint Button',
+        context: context,
       ),
     ];
 

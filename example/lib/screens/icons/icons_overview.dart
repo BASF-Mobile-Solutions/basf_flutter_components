@@ -1,12 +1,11 @@
+import 'package:basf_flutter_components_example/models/icon_data.dart';
 import 'package:flutter/material.dart';
 
-import '../../models/icon_data.dart';
-
 class IconsOverviewScreen extends StatelessWidget {
-  const IconsOverviewScreen({Key? key}) : super(key: key);
+  const IconsOverviewScreen({super.key});
 
-  final int _from = 0xe800;
-  final int _to = 0xe84f;
+  static const int _from = 0xe800;
+  static const int _to = 0xe84f;
 
   @override
   Widget build(BuildContext context) {
@@ -17,10 +16,9 @@ class IconsOverviewScreen extends StatelessWidget {
         children: List.generate(
           _to - _from + 1,
           (index) {
-            int code = index + _from;
+            final code = index + _from;
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Icon(BasfIconsData(code), size: 48),
                 Text(code.toRadixString(16)),

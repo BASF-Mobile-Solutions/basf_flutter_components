@@ -1,11 +1,9 @@
-import 'package:basf_flutter_components/theme/dimens.dart';
-import 'package:basf_flutter_components/widgets/buttons/text_button.dart';
+import 'package:basf_flutter_components/basf_flutter_components.dart';
+import 'package:basf_flutter_components_example/screens/screens.dart';
 import 'package:flutter/material.dart';
 
-import 'screens.dart';
-
 class OverviewScreen extends StatefulWidget {
-  const OverviewScreen({Key? key}) : super(key: key);
+  const OverviewScreen({super.key});
 
   @override
   State<OverviewScreen> createState() => _OverviewScreenState();
@@ -27,60 +25,105 @@ class _OverviewScreenState extends State<OverviewScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             BasfTextButton.contained(
-              text: 'BASF Fonts',
+              text: 'BASF Alerts',
               onPressed: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const FontsScreen(),
-                    ));
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (context) => const AlertsOverviewScreen(),
+                  ),
+                );
               },
             ),
-            const SizedBox(height: 15),
             BasfTextButton.contained(
-              text: 'BASF Colors',
+              text: 'BASF Animations',
               onPressed: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ColorsOverviewScreen(),
-                    ));
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (context) => const AnimationsOverviewScreen(),
+                  ),
+                );
               },
             ),
-            const SizedBox(height: 15),
             BasfTextButton.contained(
               text: 'BASF Buttons',
               onPressed: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ButtonsOverviewScreen(),
-                    ));
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (context) => const ButtonsOverviewScreen(),
+                  ),
+                );
               },
             ),
-            const SizedBox(height: 15),
             BasfTextButton.contained(
-              text: 'BASF Forms',
+              text: 'BASF Colors',
               onPressed: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const FormsOverviewScreen(),
-                    ));
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (context) => const ColorsOverviewScreen(),
+                  ),
+                );
               },
             ),
-            const SizedBox(height: 15),
             BasfTextButton.contained(
               text: 'BASF Dialogs',
               onPressed: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const DialogOverviewScreen(),
-                    ));
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (context) => const DialogOverviewScreen(),
+                  ),
+                );
               },
             ),
-          ],
+            BasfTextButton.contained(
+              text: 'BASF Fonts',
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (context) => const FontsScreen(),
+                  ),
+                );
+              },
+            ),
+            BasfTextButton.contained(
+              text: 'BASF Forms',
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (context) => const FormsOverviewScreen(),
+                  ),
+                );
+              },
+            ),
+            BasfTextButton.contained(
+              text: 'BASF Icons',
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (context) => const IconsOverviewScreen(),
+                  ),
+                );
+              },
+            ),
+            BasfTextButton.contained(
+              text: 'BASF Themes',
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (context) => const ThemesOverviewScreen(),
+                  ),
+                );
+              },
+            ),
+          ].joinWithSeparator(VerticalSpacer.medium20()),
         ),
       ),
     );

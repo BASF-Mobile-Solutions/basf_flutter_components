@@ -2,7 +2,7 @@ import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:flutter/material.dart';
 
 class TextFieldScreen extends StatefulWidget {
-  const TextFieldScreen({Key? key}) : super(key: key);
+  const TextFieldScreen({super.key});
 
   @override
   State<TextFieldScreen> createState() => _TextFieldScreenState();
@@ -43,7 +43,7 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
       body: SafeArea(
         child: ListView(
           physics: const ClampingScrollPhysics(),
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8),
           children: [
             const SizedBox(height: 15),
             BasfTextField(
@@ -91,9 +91,7 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
                 prefixIcon: const Icon(Icons.person),
                 suffixIcon: IconButton(
                   splashRadius: 20,
-                  onPressed: () {
-                    _iconsController.clear();
-                  },
+                  onPressed: _iconsController.clear,
                   icon: const Icon(Icons.close),
                 ),
               ),
@@ -114,9 +112,9 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
                 ),
                 const SizedBox(width: 10),
                 BasfDropDownInput(
-                    controller: TextEditingController(),
-                    isLoading: false,
-                    values: const ['PC', 'PK', 'TM']),
+                  controller: TextEditingController(),
+                  values: const ['PC', 'PK', 'TM'],
+                ),
               ],
             ),
           ],

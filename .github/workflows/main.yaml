@@ -1,0 +1,11 @@
+name: basf_flutter_components
+
+on: [pull_request]
+
+jobs:
+  build:
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
+    with:
+      flutter_channel: stable
+      flutter_version: 3.0.2
+      min_coverage: 0

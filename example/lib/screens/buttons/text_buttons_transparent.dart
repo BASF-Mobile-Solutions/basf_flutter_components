@@ -1,61 +1,61 @@
-import 'package:flutter/material.dart';
 import 'package:basf_flutter_components/basf_flutter_components.dart';
+import 'package:flutter/material.dart';
 
 class TextButtonsTransparentScreen extends StatelessWidget {
-  const TextButtonsTransparentScreen({Key? key}) : super(key: key);
+  const TextButtonsTransparentScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> buttons = [
+    final buttons = <Widget>[
       ///Only Text Button
       BasfTextButton.transparent(
+        context: context,
         text: 'Only Text',
-        alignment: Alignment.center,
         onPressed: () => _onPressed(context),
       ),
 
       ///Button with leading icon
       BasfTextButton.transparent(
+        context: context,
         text: 'With Leading Icon',
-        alignment: Alignment.center,
         leadingIcon: BasfIcons.arrow_forward,
         onPressed: () => _onPressed(context),
       ),
 
       ///Button with trailing icon
       BasfTextButton.transparent(
+        context: context,
         text: 'With Trailing Icon',
-        alignment: Alignment.center,
         trailingIcon: BasfIcons.arrow_forward,
         onPressed: () => _onPressed(context),
       ),
 
       ///Icon Only Button
       BasfTextButton.transparent(
-        alignment: Alignment.center,
+        context: context,
         leadingIcon: BasfIcons.arrow_forward,
         onPressed: () => _onPressed(context),
       ),
 
       ///Expanded Button
       BasfTextButton.transparent(
+        context: context,
         text: 'Expanded Button',
         expanded: true,
-        alignment: Alignment.center,
         onPressed: () => _onPressed(context),
       ),
 
       ///Sized Button
       BasfTextButton.transparent(
+        context: context,
         text: 'Sized Button',
         size: const Size(250, 80),
-        alignment: Alignment.center,
         onPressed: () => _onPressed(context),
       ),
 
       BasfTextButton.transparent(
+        context: context,
         expanded: true,
-        alignment: Alignment.center,
         onPressed: () => _onPressed(context),
         child: const SizedBox(
           width: 15,
@@ -67,8 +67,8 @@ class TextButtonsTransparentScreen extends StatelessWidget {
       ),
 
       BasfTextButton.transparent(
+        context: context,
         text: 'Styled Button',
-        alignment: Alignment.center,
         onPressed: () => _onPressed(context),
         style: TextButton.styleFrom(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
@@ -78,14 +78,14 @@ class TextButtonsTransparentScreen extends StatelessWidget {
 
       ///Disabled Button
       BasfTextButton.transparent(
+        context: context,
         text: 'Disabled Button',
-        alignment: Alignment.center,
       ),
 
       ///Hint Button
       BasfTextButton.hint(
+        context: context,
         text: 'Hint Button',
-        alignment: Alignment.center,
         onPressed: () => _onPressed(context),
       ),
     ];
