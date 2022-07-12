@@ -43,7 +43,6 @@ class ButtonsOverviewScreen extends StatelessWidget {
               },
             ),
             BasfTextButton.transparent(
-              context: context,
               text: 'Transparent Buttons',
               onPressed: () {
                 Navigator.push(

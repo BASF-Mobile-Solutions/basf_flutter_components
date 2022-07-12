@@ -4,10 +4,22 @@ import 'package:flutter/material.dart';
 /// {@template basf_text_button}
 /// A BASF-style text button
 /// {@endtemplate}
+
+enum TextButtonConstructorType {
+  /// contained constructor
+  contained,
+  /// transparent constructor
+  transparent,
+  /// hint constructor
+  hint,
+}
+
+/// {@macro basf_text_button}
 class BasfTextButton extends BasfButton {
+
   /// {@macro basf_text_button}
   /// contained
-  const BasfTextButton.contained({
+  BasfTextButton.contained({
     super.key,
     super.text,
     super.leadingIcon,
@@ -19,7 +31,9 @@ class BasfTextButton extends BasfButton {
     super.style,
     super.size,
     super.expanded,
-  });
+  }) {
+    constructorType = TextButtonConstructorType.contained;
+  }
 
   /// {@macro basf_text_button}
   /// transparent
@@ -32,21 +46,12 @@ class BasfTextButton extends BasfButton {
     super.child,
     super.onPressed,
     super.onLongPress,
-    ButtonStyle? style,
+    super.style,
     super.size,
     super.expanded,
-    required BuildContext context,
-  }) : super(
-          style: style == null
-              ? ButtonStyles.transparentTextButtonStyle(
-                  Theme.of(context).primaryColor,
-                )
-              : style.merge(
-                  ButtonStyles.transparentTextButtonStyle(
-                    Theme.of(context).primaryColor,
-                  ),
-                ),
-        );
+  }) {
+    constructorType = TextButtonConstructorType.transparent;
+  }
 
   /// {@macro basf_text_button}
   /// hint
@@ -56,35 +61,120 @@ class BasfTextButton extends BasfButton {
     super.child,
     super.onPressed,
     super.onLongPress,
-    ButtonStyle? style,
+    super.style,
     super.size,
     super.expanded,
     super.alignment,
-    required BuildContext context,
-  }) : super(
-          style: style == null
-              ? ButtonStyles.hintTextButtonStyle(Theme.of(context).primaryColor)
-              : style.merge(
-                  ButtonStyles.hintTextButtonStyle(
-                    Theme.of(context).primaryColor,
-                  ),
-                ),
-        );
+  }) {
+    constructorType = TextButtonConstructorType.hint;
+  }
+
+  /// shows with which constructor the widget has been built
+  late final TextButtonConstructorType constructorType;
+
+  @override
+  State<BasfTextButton> createState() => _BasfTextButtonState();
+}
+
+class _BasfTextButtonState extends State<BasfTextButton> with TextButtonHelper {
+
+  late final ButtonStyle? _buttonStyle;
+  bool _styleSet = false;
+
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (!_styleSet) {
+      _buttonStyle = getTextButtonButtonStyle(
+        context: context,
+        constructorType: widget.constructorType,
+        style: widget.style,
+      );
+      _styleSet = true;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Align(alignment: alignment!, child: _button(context));
+    return Align(
+        alignment: widget.alignment!,
+        child: _button(context),
+    );
   }
 
   Widget _button(BuildContext context) {
     return TextButton(
-      onPressed: onPressed,
-      onLongPress: onLongPress,
-      style: getStyleWithAdjustments(
+      onPressed: widget.onPressed,
+      onLongPress: widget.onLongPress,
+      style: widget.getStyleWithAdjustments(
         context: context,
         buttonType: ButtonType.text,
+        style: _buttonStyle,
       ),
-      child: child != null ? buttonChildContent() : buttonStandardContent(),
+      child: widget.child != null
+          ? widget.buttonChildContent()
+          : widget.buttonStandardContent(),
     );
+  }
+}
+
+/// mixing for text button
+mixin TextButtonHelper {
+
+  /// TextButton style
+  ButtonStyle? getTextButtonButtonStyle({
+    required TextButtonConstructorType constructorType,
+    required BuildContext context,
+    required ButtonStyle? style,
+  }) {
+    switch (constructorType) {
+      case TextButtonConstructorType.contained: return style;
+      case TextButtonConstructorType.transparent:
+        return getTransparentStyle(
+          context: context,
+          style: style,
+        );
+      case TextButtonConstructorType.hint:
+        return getHintStyle(
+          context: context,
+          style: style,
+        );
+    }
+  }
+
+  /// get transparent style
+  ButtonStyle? getTransparentStyle({
+    required BuildContext context,
+    required ButtonStyle? style,
+  }) {
+    if (style == null) {
+      return ButtonStyles.transparentTextButtonStyle(
+        Theme.of(context).primaryColor,
+      );
+    } else {
+      return style.merge(
+        ButtonStyles.transparentTextButtonStyle(
+          Theme.of(context).primaryColor,
+        ),
+      );
+    }
+  }
+
+  /// get hint style
+  ButtonStyle? getHintStyle({
+    required BuildContext context,
+    required ButtonStyle? style,
+  }) {
+    if (style == null) {
+      return ButtonStyles.hintTextButtonStyle(Theme.of(context).primaryColor);
+    } else {
+      return style.merge(
+        ButtonStyles.hintTextButtonStyle(
+          Theme.of(context).primaryColor,
+        ),
+      );
+    }
   }
 }

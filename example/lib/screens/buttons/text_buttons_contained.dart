@@ -69,14 +69,13 @@ class TextButtonsContainedScreen extends StatelessWidget {
       ),
 
       ///Disabled Button
-      const BasfTextButton.contained(
+      BasfTextButton.contained(
         text: 'Disabled Button',
       ),
 
       ///Disabled Button
       BasfTextButton.hint(
         text: 'hint Button',
-        context: context,
       ),
     ];
 

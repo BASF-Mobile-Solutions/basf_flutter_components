@@ -46,7 +46,6 @@ void main() {
         Builder(
           builder: (context) => BasfTextButton.hint(
             onPressed: () {},
-            context: context,
             style: TextButton.styleFrom(),
             child: const Text('Test'),
           ),
@@ -63,7 +62,6 @@ void main() {
         Builder(
           builder: (context) => BasfTextButton.hint(
             onPressed: () {},
-            context: context,
             child: const Text('Test'),
           ),
         ),
@@ -81,7 +79,6 @@ void main() {
         Builder(
           builder: (context) => BasfTextButton.transparent(
             onPressed: () {},
-            context: context,
             leadingIcon: Icons.abc,
             trailingIcon: Icons.abc_rounded,
             style: TextButton.styleFrom(),
@@ -101,7 +98,6 @@ void main() {
         Builder(
           builder: (context) => BasfTextButton.transparent(
             onPressed: () {},
-            context: context,
             leadingIcon: Icons.abc,
             trailingIcon: Icons.abc_rounded,
             child: const Text('Test'),

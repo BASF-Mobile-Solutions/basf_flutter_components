@@ -9,14 +9,12 @@ class TextButtonsTransparentScreen extends StatelessWidget {
     final buttons = <Widget>[
       ///Only Text Button
       BasfTextButton.transparent(
-        context: context,
         text: 'Only Text',
         onPressed: () => _onPressed(context),
       ),
 
       ///Button with leading icon
       BasfTextButton.transparent(
-        context: context,
         text: 'With Leading Icon',
         leadingIcon: BasfIcons.arrow_forward,
         onPressed: () => _onPressed(context),
@@ -24,7 +22,6 @@ class TextButtonsTransparentScreen extends StatelessWidget {
 
       ///Button with trailing icon
       BasfTextButton.transparent(
-        context: context,
         text: 'With Trailing Icon',
         trailingIcon: BasfIcons.arrow_forward,
         onPressed: () => _onPressed(context),
@@ -32,14 +29,12 @@ class TextButtonsTransparentScreen extends StatelessWidget {
 
       ///Icon Only Button
       BasfTextButton.transparent(
-        context: context,
         leadingIcon: BasfIcons.arrow_forward,
         onPressed: () => _onPressed(context),
       ),
 
       ///Expanded Button
       BasfTextButton.transparent(
-        context: context,
         text: 'Expanded Button',
         expanded: true,
         onPressed: () => _onPressed(context),
@@ -47,14 +42,12 @@ class TextButtonsTransparentScreen extends StatelessWidget {
 
       ///Sized Button
       BasfTextButton.transparent(
-        context: context,
         text: 'Sized Button',
         size: const Size(250, 80),
         onPressed: () => _onPressed(context),
       ),
 
       BasfTextButton.transparent(
-        context: context,
         expanded: true,
         onPressed: () => _onPressed(context),
         child: const SizedBox(
@@ -67,7 +60,6 @@ class TextButtonsTransparentScreen extends StatelessWidget {
       ),
 
       BasfTextButton.transparent(
-        context: context,
         text: 'Styled Button',
         onPressed: () => _onPressed(context),
         style: TextButton.styleFrom(
@@ -78,13 +70,11 @@ class TextButtonsTransparentScreen extends StatelessWidget {
 
       ///Disabled Button
       BasfTextButton.transparent(
-        context: context,
         text: 'Disabled Button',
       ),
 
       ///Hint Button
       BasfTextButton.hint(
-        context: context,
         text: 'Hint Button',
         onPressed: () => _onPressed(context),
       ),

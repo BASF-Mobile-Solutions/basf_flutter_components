@@ -12,7 +12,7 @@ enum ButtonType {
 /// {@template basf_button}
 /// Basf styled buttons button
 /// {@endtemplate}
-abstract class BasfButton extends StatelessWidget {
+abstract class BasfButton extends StatefulWidget {
   /// {@macro basf_button}
   const BasfButton({
     super.key,
@@ -112,19 +112,26 @@ abstract class BasfButton extends StatelessWidget {
   ButtonStyle getStyleWithAdjustments({
     required BuildContext context,
     required ButtonType buttonType,
+    ButtonStyle? style,
   }) {
     ButtonStyle getButtonStyle() {
       switch (buttonType) {
         case ButtonType.text:
-          return Theme.of(context).textButtonTheme.style!;
+          return Theme
+              .of(context)
+              .textButtonTheme
+              .style!;
         case ButtonType.outlined:
-          return Theme.of(context).outlinedButtonTheme.style!;
+          return Theme
+              .of(context)
+              .outlinedButtonTheme
+              .style!;
       }
     }
 
-    final buttonStyle = style ?? getButtonStyle();
+    final buttonStyle = style ?? this.style ?? getButtonStyle();
     final buttonSize =
-        size == null ? null : MaterialStateProperty.all<Size>(size!);
+    size == null ? null : MaterialStateProperty.all<Size>(size!);
 
     return buttonStyle.copyWith(
       maximumSize: buttonSize ?? buttonStyle.maximumSize,
