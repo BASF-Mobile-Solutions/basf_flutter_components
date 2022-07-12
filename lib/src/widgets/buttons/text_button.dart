@@ -87,7 +87,7 @@ class _BasfTextButtonState extends State<BasfTextButton> with TextButtonHelper {
     super.didChangeDependencies();
 
     if (!_styleSet) {
-      _buttonStyle = getTextButtonButtonStyle(
+      _buttonStyle = getTextButtonStyle(
         context: context,
         constructorType: widget.constructorType,
         style: widget.style,
@@ -124,7 +124,7 @@ class _BasfTextButtonState extends State<BasfTextButton> with TextButtonHelper {
 mixin TextButtonHelper {
 
   /// TextButton style
-  ButtonStyle? getTextButtonButtonStyle({
+  ButtonStyle? getTextButtonStyle({
     required TextButtonConstructorType constructorType,
     required BuildContext context,
     required ButtonStyle? style,
