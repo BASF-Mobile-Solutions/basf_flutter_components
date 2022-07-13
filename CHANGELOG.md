@@ -1,9 +1,13 @@
-## 2.1.0
+## 2.1.1
 
-- Removed unnecesary package dependencies
+- WIP
 
 <details >
 <summary>Previous versions</summary>
+
+## 2.1.0
+
+- Removed unnecesary package dependencies
 
 ## 2.0.2
 
