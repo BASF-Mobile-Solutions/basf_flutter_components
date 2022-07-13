@@ -1,6 +1,6 @@
 ## 2.1.1
 
-- WIP
+- Updated documentation and contributing guide
 
 <details >
 <summary>Previous versions</summary>
