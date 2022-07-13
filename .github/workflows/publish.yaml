@@ -30,14 +30,20 @@ jobs:
         #        or
         #        $HOME/.config/dart/pub-credentials.json
       - name: Setup Pub Credentials 🎯
-        shell: bash
-        env:
-          PUB_DEV_PUBLISH_ACCESS_TOKEN: ${{ secrets.PUB_DEV_PUBLISH_ACCESS_TOKEN }}
-          PUB_DEV_PUBLISH_REFRESH_TOKEN: ${{ secrets.PUB_DEV_PUBLISH_REFRESH_TOKEN }}
-          PUB_DEV_PUBLISH_TOKEN_ENDPOINT: ${{ secrets.PUB_DEV_PUBLISH_TOKEN_ENDPOINT }}
-          PUB_DEV_PUBLISH_EXPIRATION: ${{ secrets.PUB_DEV_PUBLISH_EXPIRATION }}
-        run: |
-          sh ./.github/pub_login.sh
+        run: | 
+          mkdir -p $HOME/.config/dart
+          cat <<EOF > $HOME/.config/dart/pub-credentials.json
+          {
+            "accessToken": "${{ secrets.PUB_DEV_PUBLISH_ACCESS_TOKEN }}",
+            "refreshToken": "${{ secrets.PUB_DEV_PUBLISH_REFRESH_TOKEN }}",
+            "idToken": "${{ secrets.PUB_CREDS_ID_TOKEN }}",
+            "tokenEndpoint": ${{ secrets.PUB_DEV_PUBLISH_TOKEN_ENDPOINT }},
+            "scopes": [ "openid", "https://www.googleapis.com/auth/userinfo.email" ],
+            "expiration": ${{ secrets.PUB_DEV_PUBLISH_EXPIRATION }}
+          }
+          EOF
+          dart pub publish -f
+
       - name: Check Publish Warnings 🙏🏽
         run: dart pub publish --dry-run
       - name: Clean example project 🧹
