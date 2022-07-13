@@ -8,15 +8,16 @@ import 'package:flutter/material.dart';
 enum TextButtonConstructorType {
   /// contained constructor
   contained,
+
   /// transparent constructor
   transparent,
+
   /// hint constructor
   hint,
 }
 
 /// {@macro basf_text_button}
 class BasfTextButton extends BasfButton {
-
   /// {@macro basf_text_button}
   /// contained
   BasfTextButton.contained({
@@ -77,10 +78,8 @@ class BasfTextButton extends BasfButton {
 }
 
 class _BasfTextButtonState extends State<BasfTextButton> with TextButtonHelper {
-
   late final ButtonStyle? _buttonStyle;
   bool _styleSet = false;
-
 
   @override
   void didChangeDependencies() {
@@ -99,8 +98,8 @@ class _BasfTextButtonState extends State<BasfTextButton> with TextButtonHelper {
   @override
   Widget build(BuildContext context) {
     return Align(
-        alignment: widget.alignment!,
-        child: _button(context),
+      alignment: widget.alignment!,
+      child: _button(context),
     );
   }
 
@@ -122,7 +121,6 @@ class _BasfTextButtonState extends State<BasfTextButton> with TextButtonHelper {
 
 /// mixing for text button
 mixin TextButtonHelper {
-
   /// TextButton style
   ButtonStyle? getTextButtonStyle({
     required TextButtonConstructorType constructorType,
@@ -130,7 +128,8 @@ mixin TextButtonHelper {
     required ButtonStyle? style,
   }) {
     switch (constructorType) {
-      case TextButtonConstructorType.contained: return style;
+      case TextButtonConstructorType.contained:
+        return style;
       case TextButtonConstructorType.transparent:
         return getTransparentStyle(
           context: context,

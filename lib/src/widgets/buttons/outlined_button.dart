@@ -25,7 +25,6 @@ class BasfOutlinedButton extends BasfButton {
 }
 
 class _BasfOutlinedButtonState extends State<BasfOutlinedButton> {
-
   @override
   Widget build(BuildContext context) {
     return Align(
