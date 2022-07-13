@@ -1,9 +1,13 @@
-## 2.0.1
+## 2.0.2
 
-- Added theme extension on context
+- Updated docs
 
 <details >
 <summary>Previous versions</summary>
+
+## 2.0.1
+
+- Added theme extension on context
 
 ## 2.0.0
 

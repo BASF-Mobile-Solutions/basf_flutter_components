@@ -217,7 +217,7 @@ Icon(BasfIconsData(code /* e842 */)),
 ---
 
 - ### Animations
-	- #### Fade
+#### Fade
 ```dart
 Fade(
     visible: value, // Update this value
@@ -225,6 +225,78 @@ Fade(
 );
 ```
 ![fade](./assets/screenshots/fade.gif)
+
+---
+
+- ### Extensions
+#### ThemeData on BuildContext
+
+This extensions allows us to access a themedata based on the current context
+
+```dart
+final theme = context.theme; // Current ThemeData
+```
+#### Joined Widgets
+
+This extension allows us to add a separator between each element of a List<Widget>
+Usage: `joinWithSeparator`
+
+```dart
+[
+ const Text('CARLOS'),
+ const Text('MOBILE SOLUTIONS'),
+].joinWithSeparator(); // You can also specify your own separator Widget
+//.joinWithSeparator(const SizedBox(height: 10));
+```
+
+#### Spaced Widgets
+
+This extension allows us to add a padding to a whole List<Widget>, by default excludes flex Widgets, such as `Expanded`, `Spacer` or `Flexible`
+Usage: `spaced`
+
+```dart
+[
+  const Text('CARLOS'),
+  const Text('MOBILE SOLUTIONS'),
+].spaced(); // You can also specify your own EdgeInsetsGeometry
+//.spaced(padding: const EdgeInsets.all(10));
+```
+
+#### Log on Object
+
+This extensions emits a log event of the current object, and returns the length of the output log
+Usage: `log`
+
+```dart
+final testString = 'My String';
+testString.log();
+// Outputs -> 'My String' as a log event
+```
+
+#### Detailed Where on Map<K, V>
+
+This set of extensions allows us to find an entry based on key, value, or both
+Usage: `where`, `whereKey` and `whereValue`
+
+```dart
+<String, int>{'John': 20, 'Mary': 21, 'Peter': 20}
+
+..where((key, value) => key.length > 4 && value >= 20) // {Peter: 22}
+
+..whereKey((key) => key.length < 5) // {John: 20, Mary: 21}
+
+..whereValue((value) => value.isEven); // {John: 20, Peter: 22}
+```
+
+#### Capitalization on String
+
+This extensions allows us to safely capitalize or title-case a String
+Usage: `toCapitalized` and `toTitleCase`
+
+```dart
+'carlos g'.toCapitalized(); // Carlos g
+'carlos g'.toTitleCase(); // Carlos G
+```
 
 You can find how to use all of this components at the example project
 
