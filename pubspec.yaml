@@ -1,18 +1,23 @@
 name: basf_flutter_components
-description: A collection of BASF Style components, such as Buttons, Colors, Icons, etc...
-version: 1.1.6
+description: A collection of BASF Style components such as Buttons, Theming, etc...
+version: 2.0.0
+
 homepage: https://github.com/BASF-Mobile-Solutions/basf_flutter_components
+repository: https://github.com/BASF-Mobile-Solutions/basf_flutter_components
+issue_tracker: https://github.com/BASF-Mobile-Solutions/basf_flutter_components/issues
 
 environment:
-  sdk: ">=2.17.5 <3.0.0"
-  flutter: ">=3.0.3"
+  sdk: ">=2.17.0 <3.0.0"
 
 dependencies:
+  collection: ^1.16.0
   flutter:
     sdk: flutter
-
+  mocktail: ^0.3.0
 dev_dependencies:
-  flutter_lints: ^2.0.1
+  flutter_test:
+    sdk: flutter
+  very_good_analysis: ^3.0.1
 
 flutter:
   uses-material-design: true
@@ -21,36 +26,36 @@ flutter:
   fonts:
     - family: BasfIcons
       fonts:
-        - asset: fonts/BasfIcons.ttf
+        - asset: assets/fonts/BasfIcons.ttf
     - family: Roboto
       fonts:
-        - asset: fonts/roboto/Roboto-Thin.ttf
+        - asset: assets/fonts/roboto/Roboto-Thin.ttf
           weight: 200
-        - asset: fonts/roboto/Roboto-Light.ttf
+        - asset: assets/fonts/roboto/Roboto-Light.ttf
           weight: 300
-        - asset: fonts/roboto/Roboto-Regular.ttf
+        - asset: assets/fonts/roboto/Roboto-Regular.ttf
           weight: 400
-        - asset: fonts/roboto/Roboto-Medium.ttf
+        - asset: assets/fonts/roboto/Roboto-Medium.ttf
           weight: 500
-        - asset: fonts/roboto/Roboto-Bold.ttf
+        - asset: assets/fonts/roboto/Roboto-Bold.ttf
           weight: 700
-        - asset: fonts/roboto/Roboto-Black.ttf
+        - asset: assets/fonts/roboto/Roboto-Black.ttf
           weight: 900
-        - asset: fonts/roboto/Roboto-ThinItalic.ttf
+        - asset: assets/fonts/roboto/Roboto-ThinItalic.ttf
           style: italic
           weight: 200
-        - asset: fonts/roboto/Roboto-LightItalic.ttf
+        - asset: assets/fonts/roboto/Roboto-LightItalic.ttf
           style: italic
           weight: 300
-        - asset: fonts/roboto/Roboto-Italic.ttf
+        - asset: assets/fonts/roboto/Roboto-Italic.ttf
           style: italic
           weight: 400
-        - asset: fonts/roboto/Roboto-MediumItalic.ttf
+        - asset: assets/fonts/roboto/Roboto-MediumItalic.ttf
           style: italic
           weight: 500
-        - asset: fonts/roboto/Roboto-BoldItalic.ttf
+        - asset: assets/fonts/roboto/Roboto-BoldItalic.ttf
           style: italic
           weight: 700
-        - asset: fonts/roboto/Roboto-BlackItalic.ttf
+        - asset: assets/fonts/roboto/Roboto-BlackItalic.ttf
           style: italic
           weight: 900

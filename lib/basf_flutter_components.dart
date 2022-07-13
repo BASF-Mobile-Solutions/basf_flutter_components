@@ -1,34 +1,25 @@
-/// BASF Flutter Components is a iOS and Android library with usefull
-/// predefined BASF Widgets, extensions, and utils
 library basf_flutter_components;
 
-export 'data/models/option.dart';
-
-export 'theme/buttons.dart';
-export 'theme/colors.dart';
-export 'theme/dimens.dart';
-export 'theme/icons.dart';
-export 'theme/inputs.dart';
-export 'theme/paddings.dart';
-export 'theme/shadows.dart';
-export 'theme/system.dart';
-export 'theme/text_styles.dart';
-export 'theme/themes.dart';
-
-export 'widgets/animations/fade.dart';
-export 'widgets/animations/loading.dart';
-
-export 'widgets/buttons/basf_button.dart';
-export 'widgets/buttons/outlined_button.dart';
-export 'widgets/buttons/slider_button.dart';
-export 'widgets/buttons/text_button.dart';
-
-export 'widgets/inputs/dropdown_input.dart';
-export 'widgets/inputs/text_field.dart';
-
-export 'widgets/options/radio.dart';
-
-export 'widgets/checkboxes.dart';
-export 'widgets/dialogs.dart';
-export 'widgets/snackbar.dart';
-export 'widgets/spacer.dart';
+export 'src/extensions/extensions.dart';
+export 'src/theme/buttons.dart';
+export 'src/theme/colors.dart';
+export 'src/theme/dimens.dart';
+export 'src/theme/icons.dart';
+export 'src/theme/inputs.dart';
+export 'src/theme/paddings.dart';
+export 'src/theme/shadows.dart';
+export 'src/theme/text_styles.dart';
+export 'src/theme/themes.dart';
+export 'src/widgets/animations/fade.dart';
+export 'src/widgets/buttons/basf_button.dart';
+export 'src/widgets/buttons/outlined_button.dart';
+export 'src/widgets/buttons/slider_button.dart';
+export 'src/widgets/buttons/text_button.dart';
+export 'src/widgets/dialogs.dart';
+export 'src/widgets/inputs/text_field.dart';
+export 'src/widgets/options/checkboxes.dart';
+export 'src/widgets/options/dropdown_input.dart';
+export 'src/widgets/options/option_button.dart';
+export 'src/widgets/options/radio.dart';
+export 'src/widgets/snackbar.dart';
+export 'src/widgets/spacers.dart';

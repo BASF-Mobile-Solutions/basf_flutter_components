@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:basf_flutter_components/basf_flutter_components.dart';
-import 'text_field.dart';
+import 'package:basf_flutter_components_example/screens/forms/options.dart';
+import 'package:basf_flutter_components_example/screens/forms/text_field.dart';
+import 'package:flutter/material.dart';
 
 class FormsOverviewScreen extends StatelessWidget {
-  const FormsOverviewScreen({Key? key}) : super(key: key);
+  const FormsOverviewScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,17 +18,28 @@ class FormsOverviewScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             BasfTextButton.contained(
-              alignment: Alignment.center,
               text: 'BASF Text Fields',
               onPressed: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const TextFieldScreen(),
-                    ));
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (context) => const TextFieldScreen(),
+                  ),
+                );
               },
             ),
-          ],
+            BasfTextButton.contained(
+              text: 'BASF Options',
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (context) => const OptionsScreen(),
+                  ),
+                );
+              },
+            ),
+          ].joinWithSeparator(VerticalSpacer.medium20()),
         ),
       ),
     );

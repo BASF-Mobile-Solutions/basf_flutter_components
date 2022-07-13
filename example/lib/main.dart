@@ -1,24 +1,24 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: public_member_api_docs
+
 import 'package:basf_flutter_components/basf_flutter_components.dart';
+import 'package:basf_flutter_components_example/screens/overview.dart';
+import 'package:flutter/material.dart';
 
-import 'screens/overview.dart';
-
-void main() {
-  // BasfThemes.setAppPrimaryColor(Colors.green);
-  // BasfThemes.setAppPrimaryInputColor(Colors.green);
-  runApp(const ExampleApp());
-}
+void main() => runApp(const ExampleApp());
 
 class ExampleApp extends StatelessWidget {
-  const ExampleApp({Key? key}) : super(key: key);
+  const ExampleApp({super.key});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'BASF Components',
-      theme: BasfThemes.lightMainTheme,
+      theme: BasfThemes.lightMainTheme(BasfThemeType.darkBlue),
       home: const OverviewScreen(),
     );
   }
 }
+
+// DEPRECATED BasfThemes.setAppPrimaryColor(Colors.green);
+// DEPRECATED BasfThemes.setAppPrimaryInputColor(Colors.green);

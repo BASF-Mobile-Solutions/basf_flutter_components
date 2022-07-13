@@ -1,5 +1,5 @@
 name: basf_flutter_components_example
-description: Demonstrates how to use the basf_flutter_components plugin.
+description: Demonstrates how to use the basf_flutter_components library.
 
 publish_to: 'none'
 
@@ -9,8 +9,6 @@ environment:
   sdk: ">=2.17.1 <3.0.0"
 
 dependencies:
-  flutter:
-    sdk: flutter
 
   basf_flutter_components:
     # When depending on this package from a real application you should use:
@@ -19,13 +17,12 @@ dependencies:
     # The example app is bundled with the plugin so we use a path dependency on
     # the parent directory to use the current plugin's version.
     path: ../
-
   cupertino_icons: ^1.0.5
+  flutter:
+    sdk: flutter
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
-  flutter_lints: ^2.0.1
+  very_good_analysis: ^3.0.1
 
 flutter:
   uses-material-design: true
