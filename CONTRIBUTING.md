@@ -17,4 +17,4 @@ very_good test --coverage && genhtml coverage/lcov.info -o coverage/html && open
 
 # Publishing
 
-Use `dart pub publish` when everything is ready for a new version
+Once merged to master the `publish` pipeline will automatically do `dart pub publish` when everything is ready for a new version
