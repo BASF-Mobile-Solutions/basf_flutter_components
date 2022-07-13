@@ -39,6 +39,6 @@ jobs:
         run: |
           sh ./.github/pub_login.sh
       - name: Check Publish Warnings 🙏🏽
-        run: pub publish --dry-run
+        run: dart pub publish --dry-run
       - name: Publish Package  🚀
         run: dart pub publish -f
