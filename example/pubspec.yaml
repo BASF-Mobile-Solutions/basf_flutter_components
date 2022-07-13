@@ -17,7 +17,6 @@ dependencies:
     # The example app is bundled with the plugin so we use a path dependency on
     # the parent directory to use the current plugin's version.
     path: ../
-  cupertino_icons: ^1.0.5
   flutter:
     sdk: flutter
 
