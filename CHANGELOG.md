@@ -1,9 +1,14 @@
+## 2.0.1
+
+- Added theme extension on context
+
+<details >
+<summary>Previous versions</summary>
+
 ## 2.0.0
 
 - Whole new structure for the library, tests, and documentation
 
-<details >
-<summary>Previous versions</summary>
 
 ## 1.1.6
 

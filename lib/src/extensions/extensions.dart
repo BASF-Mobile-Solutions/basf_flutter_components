@@ -161,3 +161,15 @@ extension SnackbarActions on AppSnackBar {
     );
   }
 }
+
+/// {@template theme_extension}
+/// Allows access to the current theme data
+/// {@endtemplate}
+extension ThemeExtension on BuildContext {
+  /// {@macro theme_extension}
+  /// Example:
+  /// ```dart
+  /// final theme = context.theme; // Access current theme data
+  /// ```
+  ThemeData get theme => Theme.of(this);
+}

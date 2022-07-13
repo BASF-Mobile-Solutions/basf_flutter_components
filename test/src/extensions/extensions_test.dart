@@ -188,4 +188,24 @@ void main() {
       },
     );
   });
+  group('Context extensions', () {
+    testWidgets(
+      'theme of context',
+      (tester) async {
+        // FlutterError.onError = ignoreOverflowErrors;
+        final theme = ThemeData(brightness: Brightness.light);
+        await tester.pumpWidget(
+          MaterialApp(
+            theme: ThemeData(brightness: Brightness.dark),
+            home: const Scaffold(),
+          ),
+        );
+
+        // Capture a BuildContext object
+        final BuildContext context = tester.element(find.byType(MaterialApp));
+
+        expect(context.theme.brightness, theme.brightness);
+      },
+    );
+  });
 }
