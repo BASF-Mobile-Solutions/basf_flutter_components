@@ -19,6 +19,10 @@ jobs:
         run: flutter pub get
       - name: Analyze 🔍
         run: flutter analyze
+      - name: Check Publish Warnings 🙏🏽
+        run: dart pub publish --dry-run
+      - name: Clean example project 🧹
+        run: cd example && flutter clean .
 
         # Pub credentials can be fount at:
         #
@@ -43,10 +47,3 @@ jobs:
           }
           EOF
           dart pub publish -f
-
-      - name: Check Publish Warnings 🙏🏽
-        run: dart pub publish --dry-run
-      - name: Clean example project 🧹
-        run: cd example && flutter clean .
-      - name: Publish Package  🚀
-        run: dart pub publish -f
