@@ -12,7 +12,7 @@ enum ButtonType {
 /// {@template basf_button}
 /// Basf styled buttons button
 /// {@endtemplate}
-abstract class BasfButton extends StatefulWidget {
+abstract class BasfButton extends StatelessWidget {
   /// {@macro basf_button}
   const BasfButton({
     super.key,
