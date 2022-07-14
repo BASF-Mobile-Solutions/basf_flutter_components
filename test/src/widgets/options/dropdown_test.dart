@@ -1,11 +1,13 @@
-import 'package:basf_flutter_components/basf_flutter_components.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
-
-import '../../../helpers/pump_app.dart';
+// import 'package:basf_flutter_components/basf_flutter_components.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter_test/flutter_test.dart';
+//
+// import '../../../helpers/pump_app.dart';
 
 void main() {
+  /*
   group('Dropdown', () {
+    
     testWidgets(
       'Dropdown with text controller text',
       (tester) async {
@@ -66,4 +68,5 @@ void main() {
       },
     );
   });
+  */
 }
