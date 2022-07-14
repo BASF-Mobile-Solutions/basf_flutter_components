@@ -8,6 +8,7 @@ export 'src/theme/icons.dart';
 export 'src/theme/inputs.dart';
 export 'src/theme/paddings.dart';
 export 'src/theme/shadows.dart';
+export 'src/theme/system.dart';
 export 'src/theme/text_styles.dart';
 export 'src/theme/themes.dart';
 export 'src/widgets/animations/fade.dart';
