@@ -96,9 +96,7 @@ class BasfTextButton extends BasfButton with TextButtonHelper {
           style: style,
         ),
       ),
-      child: child != null
-          ? buttonChildContent()
-          : buttonStandardContent(),
+      child: child != null ? buttonChildContent() : buttonStandardContent(),
     );
   }
 }

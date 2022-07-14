@@ -57,7 +57,7 @@ class BasfThemes {
         shape: RoundedRectangleBorder(borderRadius: defaultBorderRadius),
       ),
       inputDecorationTheme: BasfInputThemes.getMainInputDecorationTheme(
-          theme.primaryColor,
+        theme.primaryColor,
       ),
       hintColor: theme.primaryColor.shade400,
       bottomNavigationBarTheme: _bottomNavigationBarTheme(theme),

@@ -63,10 +63,7 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
       decoration: BoxDecoration(
         borderRadius: BasfThemes.defaultBorderRadius,
         border: Border.all(
-          color: theme.inputDecorationTheme
-              .enabledBorder!
-              .borderSide
-              .color,
+          color: theme.inputDecorationTheme.enabledBorder!.borderSide.color,
         ),
       ),
       child: Stack(

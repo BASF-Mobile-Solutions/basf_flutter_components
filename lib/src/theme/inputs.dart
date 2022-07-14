@@ -17,8 +17,8 @@ abstract class BasfInputThemes {
       iconColor: color,
       prefixIconColor: color,
       suffixIconColor: color,
-      hintStyle: BasfThemes.mainTextTheme.subtitle1!
-          .copyWith(color: color.shade400),
+      hintStyle:
+          BasfThemes.mainTextTheme.subtitle1!.copyWith(color: color.shade400),
     );
   }
 
@@ -52,17 +52,17 @@ abstract class BasfInputThemes {
     selectionColor: BasfColors.red.shade200,
   );
 
-  static OutlineInputBorder _focusedBorder(MaterialColor color)
-  => OutlineInputBorder(
-    borderSide: BorderSide(color: color),
-    borderRadius: BasfThemes.defaultBorderRadius,
-  );
+  static OutlineInputBorder _focusedBorder(MaterialColor color) =>
+      OutlineInputBorder(
+        borderSide: BorderSide(color: color),
+        borderRadius: BasfThemes.defaultBorderRadius,
+      );
 
-  static OutlineInputBorder _enabledBorder(MaterialColor color)
-  => OutlineInputBorder(
-    borderSide: BorderSide(color: color.shade300),
-    borderRadius: BasfThemes.defaultBorderRadius,
-  );
+  static OutlineInputBorder _enabledBorder(MaterialColor color) =>
+      OutlineInputBorder(
+        borderSide: BorderSide(color: color.shade300),
+        borderRadius: BasfThemes.defaultBorderRadius,
+      );
 
   static final OutlineInputBorder _disabledBorder = OutlineInputBorder(
     borderSide: BorderSide(color: BasfColors.grey.shade300),
