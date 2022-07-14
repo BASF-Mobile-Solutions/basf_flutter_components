@@ -45,5 +45,26 @@ void main() {
       await tester.drag(find.byType(GestureDetector), const Offset(50000, 0));
       await tester.pumpAndSettle();
     });
+
+    testWidgets('Slider test slider button in the middle',
+        (WidgetTester tester) async {
+      await tester.pumpApp(
+        SliderButton(
+          onConfirmation: () {},
+          width: 2000,
+          height: 500,
+        ),
+        BasfThemes.lightMainTheme(BasfThemeType.darkBlue),
+      );
+
+      expect(find.byType(SliderButton), findsOneWidget);
+      // holding it to mantain the widget in site after drag
+      await tester.timedDrag(
+        find.byType(GestureDetector),
+        const Offset(10000, 0),
+        const Duration(seconds: 5),
+      );
+      await tester.pumpAndSettle();
+    });
   });
 }

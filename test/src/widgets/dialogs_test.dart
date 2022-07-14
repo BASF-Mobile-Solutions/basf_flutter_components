@@ -63,6 +63,24 @@ void main() {
           findsOneWidget,
         );
 
+        expect(find.text(confirmText), findsOneWidget);
+        expect(find.text(dismissText), findsOneWidget);
+
+        expect(find.byType(BasfAlertDialog), findsOneWidget);
+        await tester.tap(find.text(confirmText));
+        await tester.pump();
+        expect(find.byType(BasfAlertDialog), findsNothing);
+
+        await tester.tap(
+          find.byKey(tapTarget),
+          warnIfMissed: false, // Added to remove unnecesary warning
+        );
+        await tester.pump();
+
+        expect(find.byType(BasfAlertDialog), findsOneWidget);
+        await tester.tap(find.text(dismissText));
+        await tester.pump();
+        expect(find.byType(BasfAlertDialog), findsNothing);
         // Lets mock the pressed function
         // ! Mock taps -> dismiss, confirm
         //await tester.tap(
