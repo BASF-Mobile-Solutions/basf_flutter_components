@@ -31,7 +31,7 @@ class BasfTextButton extends BasfButton with TextButtonHelper {
     super.onLongPress,
     super.style,
     super.size,
-    super.expanded,
+    super.expanded = false,
     super.alignment,
   }) {
     constructorType = TextButtonConstructorType.contained;
@@ -50,7 +50,7 @@ class BasfTextButton extends BasfButton with TextButtonHelper {
     super.onLongPress,
     super.style,
     super.size,
-    super.expanded,
+    super.expanded = false,
     super.alignment,
   }) {
     constructorType = TextButtonConstructorType.transparent;
@@ -66,7 +66,7 @@ class BasfTextButton extends BasfButton with TextButtonHelper {
     super.onLongPress,
     super.style,
     super.size,
-    super.expanded,
+    super.expanded = false,
     super.alignment,
   }) {
     constructorType = TextButtonConstructorType.hint;

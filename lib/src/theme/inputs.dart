@@ -5,23 +5,20 @@ import 'package:flutter/material.dart';
 abstract class BasfInputThemes {
   const BasfInputThemes._();
 
-  /// Focused border color
-  static const MaterialColor focusedBorderColor = BasfColors.grey;
-
   /// Main input theme
-  static InputDecorationTheme get mainInputDecorationTheme {
+  static InputDecorationTheme getMainInputDecorationTheme(MaterialColor color) {
     return InputDecorationTheme(
-      enabledBorder: _enabledBorder,
-      focusedBorder: _focusedBorder,
+      enabledBorder: _enabledBorder(color),
+      focusedBorder: _focusedBorder(color),
       errorBorder: _errorBorder,
       focusedErrorBorder: _errorBorder,
       disabledBorder: _disabledBorder,
       contentPadding: const EdgeInsets.symmetric(horizontal: 15),
-      iconColor: focusedBorderColor,
-      prefixIconColor: focusedBorderColor,
-      suffixIconColor: focusedBorderColor,
+      iconColor: color,
+      prefixIconColor: color,
+      suffixIconColor: color,
       hintStyle: BasfThemes.mainTextTheme.subtitle1!
-          .copyWith(color: focusedBorderColor.shade400),
+          .copyWith(color: color.shade400),
     );
   }
 
@@ -55,13 +52,15 @@ abstract class BasfInputThemes {
     selectionColor: BasfColors.red.shade200,
   );
 
-  static final OutlineInputBorder _focusedBorder = OutlineInputBorder(
-    borderSide: const BorderSide(color: focusedBorderColor),
+  static OutlineInputBorder _focusedBorder(MaterialColor color)
+  => OutlineInputBorder(
+    borderSide: BorderSide(color: color),
     borderRadius: BasfThemes.defaultBorderRadius,
   );
 
-  static final OutlineInputBorder _enabledBorder = OutlineInputBorder(
-    borderSide: BorderSide(color: focusedBorderColor.shade300),
+  static OutlineInputBorder _enabledBorder(MaterialColor color)
+  => OutlineInputBorder(
+    borderSide: BorderSide(color: color.shade300),
     borderRadius: BasfThemes.defaultBorderRadius,
   );
 
