@@ -1,9 +1,13 @@
-## 2.1.2
+## 2.2.0
 
-- Fixed some issues regarding styles on buttons
+- TODO: Mention update
 
 <details >
 <summary>Previous versions</summary>
+
+## 2.1.2
+
+- Fixed some issues regarding styles on buttons
 
 ## 2.1.1
 
