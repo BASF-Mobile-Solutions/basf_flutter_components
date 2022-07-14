@@ -17,7 +17,7 @@ enum TextButtonConstructorType {
 }
 
 /// {@macro basf_text_button}
-class BasfTextButton extends BasfButton {
+class BasfTextButton extends BasfButton with TextButtonHelper {
   /// {@macro basf_text_button}
   /// contained
   BasfTextButton.contained({
@@ -31,7 +31,7 @@ class BasfTextButton extends BasfButton {
     super.onLongPress,
     super.style,
     super.size,
-    super.expanded,
+    super.expanded = false,
     super.alignment,
   }) {
     constructorType = TextButtonConstructorType.contained;
@@ -50,7 +50,7 @@ class BasfTextButton extends BasfButton {
     super.onLongPress,
     super.style,
     super.size,
-    super.expanded,
+    super.expanded = false,
     super.alignment,
   }) {
     constructorType = TextButtonConstructorType.transparent;
@@ -66,7 +66,7 @@ class BasfTextButton extends BasfButton {
     super.onLongPress,
     super.style,
     super.size,
-    super.expanded,
+    super.expanded = false,
     super.alignment,
   }) {
     constructorType = TextButtonConstructorType.hint;
@@ -76,47 +76,27 @@ class BasfTextButton extends BasfButton {
   late final TextButtonConstructorType constructorType;
 
   @override
-  State<BasfTextButton> createState() => _BasfTextButtonState();
-}
-
-class _BasfTextButtonState extends State<BasfTextButton> with TextButtonHelper {
-  late final ButtonStyle? _buttonStyle;
-  bool _styleSet = false;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    if (!_styleSet) {
-      _buttonStyle = getTextButtonStyle(
-        context: context,
-        constructorType: widget.constructorType,
-        style: widget.style,
-      );
-      _styleSet = true;
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Align(
-      alignment: widget.alignment!,
+      alignment: alignment!,
       child: _button(context),
     );
   }
 
   Widget _button(BuildContext context) {
     return TextButton(
-      onPressed: widget.onPressed,
-      onLongPress: widget.onLongPress,
-      style: widget.getStyleWithAdjustments(
+      onPressed: onPressed,
+      onLongPress: onLongPress,
+      style: getStyleWithAdjustments(
         context: context,
         buttonType: ButtonType.text,
-        style: _buttonStyle,
+        style: getTextButtonStyle(
+          context: context,
+          constructorType: constructorType,
+          style: style,
+        ),
       ),
-      child: widget.child != null
-          ? widget.buttonChildContent()
-          : widget.buttonStandardContent(),
+      child: child != null ? buttonChildContent() : buttonStandardContent(),
     );
   }
 }

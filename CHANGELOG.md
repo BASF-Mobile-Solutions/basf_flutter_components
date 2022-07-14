@@ -1,9 +1,13 @@
-## 2.1.1
+## 2.1.2
 
-- Updated documentation and contributing guide
+- Fixed some issues regarding styles on buttons
 
 <details >
 <summary>Previous versions</summary>
+
+## 2.1.1
+
+- Updated documentation and contributing guide
 
 ## 2.1.0
 

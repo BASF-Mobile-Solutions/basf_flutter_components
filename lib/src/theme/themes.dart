@@ -27,7 +27,7 @@ enum BasfThemeType {
   const BasfThemeType(this.primaryColor);
 
   /// BASF theme primary color
-  final Color primaryColor;
+  final MaterialColor primaryColor;
 }
 
 /// Core of BASF Themes
@@ -56,8 +56,10 @@ class BasfThemes {
       dialogTheme: DialogTheme(
         shape: RoundedRectangleBorder(borderRadius: defaultBorderRadius),
       ),
-      inputDecorationTheme: BasfInputThemes.mainInputDecorationTheme,
-      hintColor: BasfInputThemes.focusedBorderColor.shade400,
+      inputDecorationTheme: BasfInputThemes.getMainInputDecorationTheme(
+        theme.primaryColor,
+      ),
+      hintColor: theme.primaryColor.shade400,
       bottomNavigationBarTheme: _bottomNavigationBarTheme(theme),
     );
   }

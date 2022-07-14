@@ -21,29 +21,22 @@ class BasfOutlinedButton extends BasfButton {
   });
 
   @override
-  State<BasfOutlinedButton> createState() => _BasfOutlinedButtonState();
-}
-
-class _BasfOutlinedButtonState extends State<BasfOutlinedButton> {
-  @override
   Widget build(BuildContext context) {
     return Align(
-      alignment: widget.alignment!,
+      alignment: alignment!,
       child: _button(context),
     );
   }
 
   Widget _button(BuildContext context) {
     return OutlinedButton(
-      onPressed: widget.onPressed,
-      onLongPress: widget.onLongPress,
-      style: widget.getStyleWithAdjustments(
+      onPressed: onPressed,
+      onLongPress: onLongPress,
+      style: getStyleWithAdjustments(
         context: context,
         buttonType: ButtonType.outlined,
       ),
-      child: widget.child != null
-          ? widget.buttonChildContent()
-          : widget.buttonStandardContent(),
+      child: child != null ? buttonChildContent() : buttonStandardContent(),
     );
   }
 }
