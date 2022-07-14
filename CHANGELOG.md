@@ -1,9 +1,13 @@
-## 2.1.2
+## 2.1.3
 
-- Fixed some issues regarding styles on buttons
+- Changed return type of identity helper of Radio Button
 
 <details >
 <summary>Previous versions</summary>
+
+## 2.1.2
+
+- Fixed some issues regarding styles on buttons
 
 ## 2.1.1
 
