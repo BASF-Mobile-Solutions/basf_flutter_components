@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 
-
 void main() {
   group('Alert Dialog types', () {
     /*
