@@ -8,18 +8,21 @@ void main() {
   group('BASF button', () {
     testWidgets('BasfButtonTest', (WidgetTester tester) async {
       const text = 'Hi!';
+      const text2 = 'henlo';
       await tester.pumpApp(
         BasfOutlinedButton(
           text: text,
           leadingIcon: Icons.abc_outlined,
           trailingIcon: Icons.abc_outlined,
+          child: const Text(text2),
           onPressed: () {},
         ),
         BasfThemes.lightMainTheme(BasfThemeType.darkBlue),
       );
 
       expect(find.byType(BasfOutlinedButton), findsOneWidget);
-      expect(find.text(text), findsOneWidget);
+      expect(find.text(text), findsNothing);
+      expect(find.text(text2), findsOneWidget);
       // expect(find.byIcon(Icons.abc), findsOneWidget);
       // expect(find.byIcon(Icons.abc_rounded), findsOneWidget);
     });

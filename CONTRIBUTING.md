@@ -10,11 +10,11 @@
 You can also install [Coverage Gutters](https://marketplace.visualstudio.com/items?itemName=ryanluker.vscode-coverage-gutters) in VSCode to see real-time coverage in the IDE once the lcov is generated.
 
 ```bash
-very_good test --coverage && genhtml coverage/lcov.info -o coverage/html && open coverage/index.html
+very_good test --coverage && genhtml coverage/lcov.info -o coverage/html && open coverage/html/index.html
 ```
 
 - Run `flutter clean` in example folder
 
 # Publishing
 
-Use `dart pub publish` when everything is ready for a new version
+Once merged to master the `publish` pipeline will automatically do `dart pub publish` when everything is ready for a new version

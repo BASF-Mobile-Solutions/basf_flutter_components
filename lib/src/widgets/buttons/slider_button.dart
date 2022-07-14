@@ -212,28 +212,24 @@ class _SliderButtonState extends State<SliderButton> {
   }
 
   Color _calculateBackground() {
-    if (widget.backgroundColorEnd != null) {
-      double percent;
+    double percent;
 
-      // calculates the percentage of the position of the slider
-      if (_position > widget.width - widget.height) {
-        percent = 1.0;
-      } else if (_position / (widget.width - widget.height) > 0) {
-        percent = _position / (widget.width - widget.height);
-      } else {
-        percent = 0.0;
-      }
-
-      final red = widget.backgroundColorEnd!.red;
-      final green = widget.backgroundColorEnd!.green;
-      final blue = widget.backgroundColorEnd!.blue;
-
-      return Color.alphaBlend(
-        Color.fromRGBO(red, green, blue, percent),
-        widget.backgroundColor,
-      );
+    // calculates the percentage of the position of the slider
+    if (_position > widget.width - widget.height) {
+      percent = 1.0;
+    } else if (_position / (widget.width - widget.height) > 0) {
+      percent = _position / (widget.width - widget.height);
     } else {
-      return widget.backgroundColor;
+      percent = 0.0;
     }
+
+    final red = widget.backgroundColorEnd!.red;
+    final green = widget.backgroundColorEnd!.green;
+    final blue = widget.backgroundColorEnd!.blue;
+
+    return Color.alphaBlend(
+      Color.fromRGBO(red, green, blue, percent),
+      widget.backgroundColor,
+    );
   }
 }

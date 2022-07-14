@@ -1,9 +1,13 @@
-## 2.1.0
+## 2.1.1
 
-- Removed unnecesary package dependencies
+- Updated documentation and contributing guide
 
 <details >
 <summary>Previous versions</summary>
+
+## 2.1.0
+
+- Removed unnecesary package dependencies
 
 ## 2.0.2
 

@@ -32,6 +32,7 @@ class BasfTextButton extends BasfButton {
     super.style,
     super.size,
     super.expanded,
+    super.alignment,
   }) {
     constructorType = TextButtonConstructorType.contained;
   }
@@ -50,6 +51,7 @@ class BasfTextButton extends BasfButton {
     super.style,
     super.size,
     super.expanded,
+    super.alignment,
   }) {
     constructorType = TextButtonConstructorType.transparent;
   }

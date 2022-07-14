@@ -30,6 +30,7 @@ Use your IDE IntelliSense to import any of the [Components](#components) built i
 - [Theme](#theme)
 - [Widgets](#widgets)
 - [Animations](#animations)
+- [Extensions](#extensions)
 
 ---
 
