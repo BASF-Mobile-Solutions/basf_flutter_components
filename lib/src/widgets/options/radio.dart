@@ -35,7 +35,7 @@ class RadioOptions<T> extends StatelessWidget {
   final ValueChanged<T> onSelected;
 
   /// Helper identity function
-  final T Function(T)? identityHelperFunction;
+  final String Function(T)? identityHelperFunction;
 
   /// Label generator function
   final String Function(T value) labelGenerator;

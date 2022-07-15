@@ -5,6 +5,10 @@
 <details >
 <summary>Previous versions</summary>
 
+## 2.1.3
+
+- Changed return type of identity helper of Radio Button
+
 ## 2.1.2
 
 - Fixed some issues regarding styles on buttons
