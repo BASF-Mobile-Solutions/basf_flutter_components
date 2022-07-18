@@ -13,6 +13,8 @@ You can also install [Coverage Gutters](https://marketplace.visualstudio.com/ite
 very_good test --coverage && genhtml coverage/lcov.info -o coverage/html && open coverage/html/index.html
 ```
 
+- Update the `coverage_badge.svg` file with the current coverage report percentage (there's two fields)
+
 - Run `flutter clean` in example folder
 
 # Publishing
