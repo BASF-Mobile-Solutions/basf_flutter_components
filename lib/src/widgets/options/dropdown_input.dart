@@ -15,6 +15,7 @@ class BasfDropDownInput extends StatefulWidget {
     this.mainAxisAlignment = MainAxisAlignment.end,
     this.isExpanded = false,
     this.isLoading = false,
+    this.isDisabled = false,
   });
 
   /// Controller
@@ -32,11 +33,14 @@ class BasfDropDownInput extends StatefulWidget {
   /// Main alignment
   final MainAxisAlignment mainAxisAlignment;
 
-  /// Wheter or not the dropdown should expand itself
+  /// Whether or not the dropdown should expand itself
   final bool isExpanded;
 
-  /// Wheter or not the dropdown is loading
+  /// Whether or not the dropdown is loading
   final bool isLoading;
+
+  /// Blocks dropdown and colors in grey
+  final bool isDisabled;
 
   @override
   State<BasfDropDownInput> createState() => _BasfDropDownInputState();
@@ -56,14 +60,30 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
 
   @override
   Widget build(BuildContext context) {
+    return AbsorbPointer(
+      absorbing: widget.isLoading || isDisabled,
+      child: layout(),
+    );
+  }
+
+  Widget layout() {
     final theme = Theme.of(context);
+    final disabledTheme = BasfInputThemes.disabledInputTheme(theme);
 
     return Container(
       height: 48,
       decoration: BoxDecoration(
         borderRadius: BasfThemes.defaultBorderRadius,
+        color: isDisabled
+            ? BasfInputThemes.disabledInputTheme(theme)
+                .inputDecorationTheme
+                .fillColor
+            : null,
         border: Border.all(
-          color: theme.inputDecorationTheme.enabledBorder!.borderSide.color,
+          color: isDisabled
+              ? disabledTheme
+                  .inputDecorationTheme.disabledBorder!.borderSide.color
+              : theme.inputDecorationTheme.enabledBorder!.borderSide.color,
         ),
       ),
       child: Stack(
@@ -113,12 +133,24 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
   }
 
   Widget _menuButton() {
+    final theme = Theme.of(context);
+
     return Theme(
       data: Theme.of(context).copyWith(
         highlightColor: BasfColors.darkBlue.shade100,
       ),
       child: PopupMenuButton<String>(
-        icon: const Icon(BasfIcons.arrow_down, size: 16),
+        icon: Icon(
+          BasfIcons.arrow_down,
+          size: 16,
+          color: isDisabled
+              ? BasfInputThemes.disabledInputTheme(theme)
+                  .inputDecorationTheme
+                  .disabledBorder!
+                  .borderSide
+                  .color
+              : theme.primaryColor,
+        ),
         iconSize: 18,
         tooltip: 'menu',
         initialValue: widget.controller.text,
@@ -140,5 +172,9 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
         },
       ),
     );
+  }
+
+  bool get isDisabled {
+    return (widget.values.length < 2 || widget.isDisabled) && !widget.isLoading;
   }
 }

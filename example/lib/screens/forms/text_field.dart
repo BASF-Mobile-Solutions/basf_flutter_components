@@ -112,8 +112,43 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
                 ),
                 const SizedBox(width: 10),
                 BasfDropDownInput(
-                  controller: TextEditingController(),
+                  controller: TextEditingController(text: 'PC'),
                   values: const ['PC', 'PK', 'TM'],
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                const Expanded(
+                  child: Center(
+                    child: Text(
+                      'Dropdown examples',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+                Column(
+                  children: [
+                    BasfDropDownInput(
+                      controller: TextEditingController(text: 'PC'),
+                      isLoading: true,
+                      values: const ['PC'],
+                    ),
+                    const SizedBox(height: 10),
+                    BasfDropDownInput(
+                      controller: TextEditingController(text: 'PK'),
+                      isLoading: true,
+                      values: const ['PC', 'PK'],
+                    ),
+                    const SizedBox(height: 10),
+                    BasfDropDownInput(
+                      controller: TextEditingController(text: 'PC'),
+                      values: const ['PC'],
+                    ),
+                  ],
                 ),
               ],
             ),

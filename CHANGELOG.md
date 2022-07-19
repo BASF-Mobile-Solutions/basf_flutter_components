@@ -1,6 +1,13 @@
+## 2.1.4
+
+- Added disable functionality for dropdown
+
+<details >
+<summary>Previous versions</summary>
+
 ## 2.1.3
 
-- Changed return type of identity helper of Radio Button
+- Changed disabled behavior of dropdown
 
 <details >
 <summary>Previous versions</summary>
@@ -15,7 +22,7 @@
 
 ## 2.1.0
 
-- Removed unnecesary package dependencies
+- Removed unnecessary package dependencies
 
 ## 2.0.2
 
@@ -121,7 +128,7 @@
 
 ## 0.0.1+3
 
-- Removed unnecesary components
+- Removed unnecessary components
 
 ## 0.0.1+2
 
