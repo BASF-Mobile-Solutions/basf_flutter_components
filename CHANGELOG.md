@@ -1,9 +1,13 @@
-## 2.1.2
+## 2.1.3
 
-- Fixed some issues regarding styles on buttons
+- Changed disabled behavior of dropdown
 
 <details >
 <summary>Previous versions</summary>
+
+## 2.1.2
+
+- Fixed some issues regarding styles on buttons
 
 ## 2.1.1
 
@@ -11,7 +15,7 @@
 
 ## 2.1.0
 
-- Removed unnecesary package dependencies
+- Removed unnecessary package dependencies
 
 ## 2.0.2
 
@@ -117,7 +121,7 @@
 
 ## 0.0.1+3
 
-- Removed unnecesary components
+- Removed unnecessary components
 
 ## 0.0.1+2
 
