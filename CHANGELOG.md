@@ -1,16 +1,17 @@
+## 2.1.5
+
+- Updated dropdown for single values
+
+<details >
+<summary>Previous versions</summary>
+
 ## 2.1.4
 
 - Added disable functionality for dropdown
 
-<details >
-<summary>Previous versions</summary>
-
 ## 2.1.3
 
-- Changed disabled behavior of dropdown
-
-<details >
-<summary>Previous versions</summary>
+- Changed return type of identity helper of Radio Button
 
 ## 2.1.2
 
