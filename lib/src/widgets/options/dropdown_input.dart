@@ -86,35 +86,21 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
               : theme.inputDecorationTheme.enabledBorder!.borderSide.color,
         ),
       ),
-      child: Stack(
+      child: Row(
+        crossAxisAlignment: widget.crossAxisAlignment,
+        mainAxisAlignment: widget.mainAxisAlignment,
         children: [
-          Opacity(
-            opacity: !widget.isLoading ? 1 : 0,
-            child: Row(
-              crossAxisAlignment: widget.crossAxisAlignment,
-              mainAxisAlignment: widget.mainAxisAlignment,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: Dimens.paddingMedium),
-                  child: Text(
-                    widget.controller.text,
-                    style: BasfThemes.mainTextTheme.headline6
-                        ?.copyWith(color: theme.primaryColor),
-                  ),
-                ),
-                if (widget.isExpanded) const Spacer(),
-                _menuButton(),
-              ],
+          Padding(
+            padding: const EdgeInsets.only(left: Dimens.paddingMedium),
+            child: Text(
+              widget.controller.text,
+              style: BasfThemes.mainTextTheme.headline6
+                  ?.copyWith(color: theme.primaryColor),
             ),
           ),
-          if (widget.isLoading)
-            Positioned(
-              top: 0,
-              bottom: 0,
-              right: 0,
-              left: 0,
-              child: Center(child: _loader(theme)),
-            ),
+          if (widget.isExpanded) const Spacer(),
+          if (!widget.isLoading) _menuButton(),
+          if (widget.isLoading) _loader(theme),
         ],
       ),
     );
@@ -122,9 +108,12 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
 
   Widget _loader(ThemeData theme) {
     return Container(
-      width: 20,
-      height: 20,
-      alignment: Alignment.centerLeft,
+      width: 15,
+      height: 15,
+      margin: const EdgeInsets.only(
+          left: 18,
+          right: 15,
+      ),
       child: CircularProgressIndicator(
         color: theme.primaryColor,
         strokeWidth: 3,
