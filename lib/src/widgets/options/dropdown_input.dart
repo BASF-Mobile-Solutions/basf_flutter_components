@@ -111,8 +111,8 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
       width: 15,
       height: 15,
       margin: const EdgeInsets.only(
-          left: 18,
-          right: 15,
+        left: 18,
+        right: 15,
       ),
       child: CircularProgressIndicator(
         color: theme.primaryColor,
