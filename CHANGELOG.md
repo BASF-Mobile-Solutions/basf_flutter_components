@@ -1,16 +1,17 @@
+## 2.1.5
+
+- Change dropdown loading UI
+
+<details >
+<summary>Previous versions</summary>
+
 ## 2.1.4
 
 - Added disable functionality for dropdown
 
-<details >
-<summary>Previous versions</summary>
-
 ## 2.1.3
 
 - Changed disabled behavior of dropdown
-
-<details >
-<summary>Previous versions</summary>
 
 ## 2.1.2
 
