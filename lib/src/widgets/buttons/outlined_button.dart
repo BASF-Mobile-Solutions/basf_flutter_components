@@ -1,11 +1,11 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:flutter/material.dart';
 
-/// {@template basf_otulined_button}
+/// {@template basf_outlined_button}
 /// A BasfButton with outline
 /// {@endtemplate}
 class BasfOutlinedButton extends BasfButton {
-  /// {@macro basf_otulined_button}
+  /// {@macro basf_outlined_button}
   const BasfOutlinedButton({
     super.key,
     super.text,
