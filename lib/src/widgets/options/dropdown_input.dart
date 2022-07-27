@@ -61,7 +61,7 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
   @override
   Widget build(BuildContext context) {
     return AbsorbPointer(
-      absorbing: widget.isLoading || isDisabled,
+      absorbing: widget.isLoading || isDisabled, //  || widget.values.length <= 1,
       child: layout(),
     );
   }

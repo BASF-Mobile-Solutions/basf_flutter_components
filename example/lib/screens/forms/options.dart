@@ -29,6 +29,15 @@ class _OptionsScreenState extends State<OptionsScreen> {
               controller: TextEditingController(),
               values: const ['Option1', 'Option2', 'Option3'],
             ),
+            BasfDropDownInput(
+              controller: TextEditingController(),
+              values: const ['Option1'],
+            ),
+            const Text('Single dropdown value'),
+            BasfDropDownInput(
+              controller: TextEditingController(),
+              values: const ['Option1'],
+            ),
             RadioOptions(
               title: 'BASF Radio',
               selectedValue: selectedValue,
