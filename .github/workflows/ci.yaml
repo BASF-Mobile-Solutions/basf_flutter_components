@@ -21,11 +21,25 @@ jobs:
     steps:
       - uses: actions/checkout@v3.0.2
       - uses: subosito/flutter-action@v2.6.1
+      - name: Check for duplicate code 🕵️
+        uses: platisd/duplicate-code-detection-tool@v1.1.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          directories: "lib/src"
+          # Only examine .ts files
+          file_extensions: "dart"
+          # Only report similarities above 20%
+          ignore_below: 50
+          # If a file is more than 99% similar to another, then the job fails
+          # This should probably be around 70% in the future
+          fail_above: 99
+          # If a file is more than 20% similar to another, show a warning symbol in the report
+          warn_above: 50
       - name: Install Dependencies 📦
         run: |
           flutter packages get
           flutter pub global activate pana
-      - name: Verify Pub Score 👌 
+      - name: Verify Pub Score 👌
         run: |
           PANA=$(pana . --no-warning); PANA_SCORE=$(echo $PANA | sed -n "s/.*Points: \([0-9]*\)\/\([0-9]*\)./\1\/\2/p")
           echo "score: $PANA_SCORE"
