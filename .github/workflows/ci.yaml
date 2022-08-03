@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3.0.2
-      - uses: subosito/flutter-action@v1.5.3
+      - uses: subosito/flutter-action@v2.6.1
       - name: Install Dependencies 📦
         run: |
           flutter packages get
