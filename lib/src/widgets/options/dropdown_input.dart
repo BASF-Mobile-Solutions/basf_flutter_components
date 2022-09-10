@@ -62,25 +62,34 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
   Widget build(BuildContext context) {
     return AbsorbPointer(
       absorbing: widget.isLoading || isDisabled,
-      child: PopupMenuButton<String>(
-        initialValue: widget.controller.text,
-        shape: RoundedRectangleBorder(
-          borderRadius: BasfThemes.defaultBorderRadius,
+      child: Theme(
+        data: ThemeData(
+          highlightColor: BasfColors.darkBlue.shade100,
         ),
-        onSelected: (String value) {
-          setState(() {
-            widget.controller.text = value;
-          });
-        },
-        itemBuilder: (context) {
-          return List.generate(widget.values.length, (index) {
-            return PopupMenuItem<String>(
-              value: widget.values[index],
-              child: Text(widget.values[index]),
-            );
-          });
-        },
-        child: layout(),
+        child: PopupMenuButton<String>(
+          initialValue: widget.controller.text,
+          shape: RoundedRectangleBorder(
+            borderRadius: BasfThemes.defaultBorderRadius,
+          ),
+          onSelected: (String value) {
+            setState(() {
+              widget.controller.text = value;
+            });
+          },
+          itemBuilder: (context) {
+            return List.generate(widget.values.length, (index) {
+              return PopupMenuItem<String>(
+                value: widget.values[index],
+                child: Text(
+                  widget.values[index],
+                  style: Theme.of(context).textTheme.bodyText1
+                      ?.copyWith(color: BasfColors.darkBlue),
+                ),
+              );
+            });
+          },
+          child: layout(),
+        ),
       ),
     );
   }
