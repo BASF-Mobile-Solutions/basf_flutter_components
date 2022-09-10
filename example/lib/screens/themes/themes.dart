@@ -19,42 +19,39 @@ class _ThemesOverviewScreenState extends State<ThemesOverviewScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: BasfThemes.lightMainTheme(theme),
-      child: Scaffold(
-        appBar: AppBar(title: const Text('BASF Themes')),
-        body: Padding(
-          padding: const EdgeInsets.all(8),
-          child: Column(
-            children: [
-              Wrap(
-                alignment: WrapAlignment.center,
-                spacing: 20,
-                runSpacing: 20,
-                children: getThemeButtons(),
-              ),
-              const HorizontalSpacerWithText(
-                text: 'Example Theme Output',
-                color: Colors.grey,
-              ),
-              BasfTextButton.contained(text: 'Theme button', onPressed: () {}),
-              BasfOutlinedButton(text: 'Outlined button', onPressed: () {}),
-              BasfCheckbox(
-                value: state,
-                onChanged: (_) => setState(() => state = !state),
-                text: 'Checkbox',
-              ),
-              RadioOptions(
-                title: 'BASF Option',
-                selectedValue: selectedValue,
-                labelGenerator: (o) => '$o',
-                values: values,
-                onSelected: (value) {
-                  setState(() => selectedValue = value.toString());
-                },
-              ),
-            ].joinWithSeparator(VerticalSpacer.medium20()),
-          ),
+    return Scaffold(
+      appBar: AppBar(title: const Text('BASF Themes')),
+      body: Padding(
+        padding: const EdgeInsets.all(8),
+        child: Column(
+          children: [
+            Wrap(
+              alignment: WrapAlignment.center,
+              spacing: 20,
+              runSpacing: 20,
+              children: getThemeButtons(),
+            ),
+            const HorizontalSpacerWithText(
+              text: 'Example Theme Output',
+              color: Colors.grey,
+            ),
+            BasfTextButton.contained(text: 'Theme button', onPressed: () {}),
+            BasfOutlinedButton(text: 'Outlined button', onPressed: () {}),
+            BasfCheckbox(
+              value: state,
+              onChanged: (_) => setState(() => state = !state),
+              text: 'Checkbox',
+            ),
+            RadioOptions(
+              title: 'BASF Option',
+              selectedValue: selectedValue,
+              labelGenerator: (o) => '$o',
+              values: values,
+              onSelected: (value) {
+                setState(() => selectedValue = value.toString());
+              },
+            ),
+          ].joinWithSeparator(VerticalSpacer.medium20()),
         ),
       ),
     );

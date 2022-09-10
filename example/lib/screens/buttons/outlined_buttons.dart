@@ -63,7 +63,7 @@ class OutlinedButtonsScreen extends StatelessWidget {
             borderRadius: BorderRadius.circular(0),
           ),
           side: const BorderSide(color: BasfColors.red),
-          primary: BasfColors.red,
+          foregroundColor: BasfColors.red,
         ),
       ),
 

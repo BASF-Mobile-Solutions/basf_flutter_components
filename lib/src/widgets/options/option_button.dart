@@ -55,7 +55,7 @@ class OptionButton extends StatelessWidget {
         style: TextButton.styleFrom(
           backgroundColor: isSelected ? null : BasfColors.white,
           elevation: 1,
-          primary: theme.primaryColor,
+          foregroundColor: theme.primaryColor,
         ),
         child: Text(
           labelText,

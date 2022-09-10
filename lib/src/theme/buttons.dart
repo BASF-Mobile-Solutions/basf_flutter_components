@@ -27,7 +27,7 @@ abstract class ButtonStyles {
 class _TextButtonStyles extends ButtonStyles {
   ButtonStyle containedTextButtonStyle(Color primaryColor) =>
       TextButton.styleFrom(
-        primary: Colors.white,
+        foregroundColor: Colors.white,
         padding: _padding,
         minimumSize: _minimumSize,
         side: BorderSide.none,
@@ -45,11 +45,11 @@ class _TextButtonStyles extends ButtonStyles {
         foregroundColor: MaterialStateProperty.all(BasfColors.white),
       );
 
-  ButtonStyle transparentTextButtonStyle(Color primaryColor) {
+  ButtonStyle transparentTextButtonStyle(Color foregroundColor) {
     return TextButton.styleFrom(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
       backgroundColor: BasfColors.transparent,
-      primary: primaryColor,
+      foregroundColor: foregroundColor,
       minimumSize: Size.zero,
       side: BorderSide.none,
       shape: RoundedRectangleBorder(
@@ -61,7 +61,7 @@ class _TextButtonStyles extends ButtonStyles {
       foregroundColor: MaterialStateProperty.resolveWith((states) {
         return states.contains(MaterialState.disabled)
             ? BasfColors.grey
-            : primaryColor;
+            : foregroundColor;
       }),
     );
   }

@@ -60,9 +60,64 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.labelText != null) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          title(),
+          VerticalSpacer.semi(),
+          popupMenuButton(),
+        ],
+      );
+    } else {
+      return popupMenuButton();
+    }
+  }
+
+  Widget title() {
+    return Text(
+      widget.labelText!,
+      style: Theme.of(context)
+          .textTheme
+          .overline!
+          .copyWith(color: BasfColors.black),
+    );
+  }
+
+  Widget popupMenuButton() {
     return AbsorbPointer(
       absorbing: widget.isLoading || isDisabled,
-      child: layout(),
+      child: Theme(
+        data: ThemeData(
+          highlightColor: BasfColors.darkBlue.shade50,
+        ),
+        child: PopupMenuButton<String>(
+          initialValue: widget.controller.text,
+          shape: RoundedRectangleBorder(
+            borderRadius: BasfThemes.defaultBorderRadius,
+          ),
+          onSelected: (String value) {
+            setState(() {
+              widget.controller.text = value;
+            });
+          },
+          itemBuilder: (context) {
+            return List.generate(widget.values.length, (index) {
+              return PopupMenuItem<String>(
+                value: widget.values[index],
+                child: Text(
+                  widget.values[index],
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText1
+                      ?.copyWith(color: BasfColors.darkBlue),
+                ),
+              );
+            });
+          },
+          child: layout(),
+        ),
+      ),
     );
   }
 
@@ -124,41 +179,23 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
   Widget _menuButton() {
     final theme = Theme.of(context);
 
-    return Theme(
-      data: Theme.of(context).copyWith(
-        highlightColor: BasfColors.darkBlue.shade100,
+    return Container(
+      width: 15,
+      height: 15,
+      margin: const EdgeInsets.only(
+        left: 18,
+        right: 15,
       ),
-      child: PopupMenuButton<String>(
-        icon: Icon(
-          BasfIcons.arrow_down,
-          size: 16,
-          color: isDisabled
-              ? BasfInputThemes.disabledInputTheme(theme)
-                  .inputDecorationTheme
-                  .disabledBorder!
-                  .borderSide
-                  .color
-              : theme.primaryColor,
-        ),
-        iconSize: 18,
-        tooltip: 'menu',
-        initialValue: widget.controller.text,
-        shape: RoundedRectangleBorder(
-          borderRadius: BasfThemes.defaultBorderRadius,
-        ),
-        onSelected: (String value) {
-          setState(() {
-            widget.controller.text = value;
-          });
-        },
-        itemBuilder: (context) {
-          return List.generate(widget.values.length, (index) {
-            return PopupMenuItem<String>(
-              value: widget.values[index],
-              child: Text(widget.values[index]),
-            );
-          });
-        },
+      child: Icon(
+        BasfIcons.arrow_down,
+        size: 16,
+        color: isDisabled
+            ? BasfInputThemes.disabledInputTheme(theme)
+                .inputDecorationTheme
+                .disabledBorder!
+                .borderSide
+                .color
+            : theme.primaryColor,
       ),
     );
   }
