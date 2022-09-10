@@ -64,7 +64,7 @@ class TextButtonsTransparentScreen extends StatelessWidget {
         onPressed: () => _onPressed(context),
         style: TextButton.styleFrom(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-          primary: BasfColors.red,
+          foregroundColor: BasfColors.red,
         ),
       ),
 

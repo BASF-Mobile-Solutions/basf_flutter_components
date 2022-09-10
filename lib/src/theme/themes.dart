@@ -40,13 +40,16 @@ class BasfThemes {
     final theme = basfThemeType ?? BasfThemeType.darkBlue;
 
     return ThemeData(
-      useMaterial3: true,
+      useMaterial3: false,
       fontFamily: 'Roboto',
       textTheme: mainTextTheme,
       appBarTheme: _mainAppBarTheme(theme),
       scaffoldBackgroundColor: BasfColors.white,
       snackBarTheme: _snackBarThemeData(theme),
       colorSchemeSeed: theme.primaryColor,
+      iconTheme: IconThemeData(
+        color: theme.primaryColor,
+      ),
       textButtonTheme: TextButtonThemeData(
         style: ButtonStyles.containedTextButtonStyle(theme.primaryColor),
       ),
@@ -130,7 +133,7 @@ class BasfThemes {
     return theme.copyWith(
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
-          primary: theme.primaryColor,
+          foregroundColor: theme.primaryColor,
           shape: RoundedRectangleBorder(
             borderRadius: BasfThemes.defaultBorderRadius,
           ),

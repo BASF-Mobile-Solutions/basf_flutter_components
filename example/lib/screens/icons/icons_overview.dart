@@ -10,12 +10,14 @@ class IconsOverviewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Basf Icons')),
+      appBar: AppBar(
+        title: const Text('Basf Icons'),
+      ),
       body: GridView.extent(
         maxCrossAxisExtent: 130,
         children: List.generate(
           _to - _from + 1,
-          (index) {
+              (index) {
             final code = index + _from;
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,

@@ -72,7 +72,7 @@ class BasfAlertDialog extends StatelessWidget {
             expanded: true,
             text: dismissText,
             style: OutlinedButton.styleFrom(
-              primary: BasfColors.red,
+              foregroundColor: BasfColors.red,
               side: const BorderSide(color: BasfColors.red),
             ),
             onPressed: () {
