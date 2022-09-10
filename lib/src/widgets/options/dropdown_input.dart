@@ -60,11 +60,36 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.labelText != null) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          title(),
+          VerticalSpacer.semi(),
+          popupMenuButton(),
+        ],
+      );
+    } else {
+      return popupMenuButton();
+    }
+  }
+
+  Widget title() {
+    return Text(
+      widget.labelText!,
+      style: Theme.of(context)
+          .textTheme
+          .overline!
+          .copyWith(color: BasfColors.black),
+    );
+  }
+
+  Widget popupMenuButton() {
     return AbsorbPointer(
       absorbing: widget.isLoading || isDisabled,
       child: Theme(
         data: ThemeData(
-          highlightColor: BasfColors.darkBlue.shade100,
+          highlightColor: BasfColors.darkBlue.shade50,
         ),
         child: PopupMenuButton<String>(
           initialValue: widget.controller.text,
