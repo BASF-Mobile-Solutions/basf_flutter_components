@@ -107,7 +107,9 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
                 value: widget.values[index],
                 child: Text(
                   widget.values[index],
-                  style: Theme.of(context).textTheme.bodyText1
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText1
                       ?.copyWith(color: BasfColors.darkBlue),
                 ),
               );
@@ -189,10 +191,10 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
         size: 16,
         color: isDisabled
             ? BasfInputThemes.disabledInputTheme(theme)
-            .inputDecorationTheme
-            .disabledBorder!
-            .borderSide
-            .color
+                .inputDecorationTheme
+                .disabledBorder!
+                .borderSide
+                .color
             : theme.primaryColor,
       ),
     );

@@ -1,9 +1,15 @@
-## 2.1.5
+## 2.1.6
 
-- Change dropdown loading UI
+- Dropdown title added
+- Dropdown click extended
+- Material3 switched off until released (icons theme was wrong)
 
 <details >
 <summary>Previous versions</summary>
+
+## 2.1.5
+
+- Change dropdown loading UI
 
 ## 2.1.4
 

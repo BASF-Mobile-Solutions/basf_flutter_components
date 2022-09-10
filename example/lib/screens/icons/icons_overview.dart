@@ -17,7 +17,7 @@ class IconsOverviewScreen extends StatelessWidget {
         maxCrossAxisExtent: 130,
         children: List.generate(
           _to - _from + 1,
-              (index) {
+          (index) {
             final code = index + _from;
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
