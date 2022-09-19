@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3.0.2
-      - uses: subosito/flutter-action@v2.7.0
+      - uses: subosito/flutter-action@v2.7.1
       #- name: Check for duplicate code 🕵️
       #  uses: platisd/duplicate-code-detection-tool@v1.1.0
       #  with:
