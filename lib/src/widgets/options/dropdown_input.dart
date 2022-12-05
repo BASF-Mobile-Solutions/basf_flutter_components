@@ -77,10 +77,7 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
   Widget title() {
     return Text(
       widget.labelText!,
-      style: Theme.of(context)
-          .textTheme
-          .overline!
-          .copyWith(color: BasfColors.black),
+      style: Theme.of(context).textTheme.bodyText2,
     );
   }
 

@@ -4,7 +4,8 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('Theme', () {
     test('Test enum theme', () {
-      const Enum e1 = BasfThemeType.yellow, e2 = BasfThemeType.red;
+      const Enum e1 = BasfThemeType.yellow;
+      const Enum e2 = BasfThemeType.red;
 
       expect(e1.runtimeType != e2.runtimeType, false);
       expect(Enum.compareByIndex(e1, e2), -1);

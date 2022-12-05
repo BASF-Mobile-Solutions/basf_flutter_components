@@ -1,9 +1,13 @@
-## 2.1.7
+## 2.1.8
 
-- TextInput title style changed to bodyText2
+- DropDownInput title style changed to bodyText2
 
 <details >
 <summary>Previous versions</summary>
+
+## 2.1.7
+
+- TextInput title style changed to bodyText2
 
 ## 2.1.6
 
