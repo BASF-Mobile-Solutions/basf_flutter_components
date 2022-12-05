@@ -1,11 +1,15 @@
+## 2.1.7
+
+- TextInput title style changed to bodyText2
+
+<details >
+<summary>Previous versions</summary>
+
 ## 2.1.6
 
 - Dropdown title added
 - Dropdown click extended
 - Material3 switched off until released (icons theme was wrong)
-
-<details >
-<summary>Previous versions</summary>
 
 ## 2.1.5
 
@@ -42,7 +46,6 @@
 ## 2.0.0
 
 - Whole new structure for the library, tests, and documentation
-
 
 ## 1.1.6
 
@@ -123,7 +126,6 @@
 ## 1.0.0+1
 
 - Fixed some problems
-
 
 ## 1.0.0
 
