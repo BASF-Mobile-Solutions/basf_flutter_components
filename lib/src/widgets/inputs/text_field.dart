@@ -272,10 +272,7 @@ class _BasfTextFieldState extends State<BasfTextField> {
     return Text(
       widget.decoration?.labelText ?? '',
       maxLines: 2,
-      style: Theme.of(context)
-          .textTheme
-          .overline!
-          .copyWith(color: BasfColors.black),
+      style: Theme.of(context).textTheme.bodyText2,
     );
   }
 
