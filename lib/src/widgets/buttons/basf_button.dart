@@ -1,3 +1,4 @@
+import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:flutter/material.dart';
 
 /// BASF button types
@@ -64,16 +65,20 @@ abstract class BasfButton extends StatelessWidget {
 
   /// Button content
   Widget buttonStandardContent() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      mainAxisSize: expanded ? MainAxisSize.max : MainAxisSize.min,
-      children: [
-        if (leadingIcon != null) icon(leadingIcon!),
-        if (leadingIcon != null && text != null) const SizedBox(width: 12),
-        if (text != null) buttonText(),
-        if (trailingIcon != null && text != null) const SizedBox(width: 12),
-        if (trailingIcon != null) icon(trailingIcon!),
-      ],
+    return ConstrainedBox(
+      constraints: const BoxConstraints(maxHeight: 48),
+      child: IntrinsicHeight(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          textBaseline: TextBaseline.ideographic,
+          mainAxisSize: expanded ? MainAxisSize.max : MainAxisSize.min,
+          children: [
+            if (leadingIcon != null) icon(leadingIcon!),
+            if (text != null) buttonText(),
+            if (trailingIcon != null) icon(trailingIcon!),
+          ].joinWithSeparator(const SizedBox(width: 12)),
+        ),
+      ),
     );
   }
 
@@ -103,9 +108,7 @@ abstract class BasfButton extends StatelessWidget {
 
   /// Icon
   Widget icon(IconData iconData) {
-    return Center(
-      child: Icon(iconData, size: iconSize ?? 19),
-    );
+    return FittedBox(child: Icon(iconData, size: iconSize ?? 19));
   }
 
   /// Style adjustments
