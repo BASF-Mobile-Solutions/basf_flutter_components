@@ -20,9 +20,8 @@ class _OverviewScreenState extends State<OverviewScreen> {
         padding: const EdgeInsets.symmetric(
           horizontal: Dimens.paddingMedium20,
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+        child: ListView(
+          padding: const EdgeInsets.symmetric(vertical: Dimens.paddingMedium),
           children: [
             BasfTextButton.contained(
               text: 'BASF Alerts',
