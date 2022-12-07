@@ -16,6 +16,7 @@ class BasfDropDownInput extends StatefulWidget {
     this.isExpanded = false,
     this.isLoading = false,
     this.isDisabled = false,
+    this.isMandatory = false,
   });
 
   /// Controller
@@ -41,6 +42,10 @@ class BasfDropDownInput extends StatefulWidget {
 
   /// Blocks dropdown and colors in grey
   final bool isDisabled;
+
+  /// Whether or not the border is displayed in current theme's error color
+  /// (e.g. red) if the field is empty
+  final bool isMandatory;
 
   @override
   State<BasfDropDownInput> createState() => _BasfDropDownInputState();
@@ -134,8 +139,13 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
         border: Border.all(
           color: isDisabled
               ? disabledTheme
-                  .inputDecorationTheme.disabledBorder!.borderSide.color
-              : theme.inputDecorationTheme.enabledBorder!.borderSide.color,
+                      .inputDecorationTheme.disabledBorder?.borderSide.color ??
+                  theme.disabledColor
+              : widget.isMandatory && widget.controller.text.trim().isEmpty
+                  ? theme.errorColor
+                  : theme.inputDecorationTheme.enabledBorder?.borderSide
+                          .color ??
+                      theme.primaryColor,
         ),
       ),
       child: Row(
@@ -188,11 +198,14 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
         size: 16,
         color: isDisabled
             ? BasfInputThemes.disabledInputTheme(theme)
-                .inputDecorationTheme
-                .disabledBorder!
-                .borderSide
-                .color
-            : theme.primaryColor,
+                    .inputDecorationTheme
+                    .disabledBorder
+                    ?.borderSide
+                    .color ??
+                theme.disabledColor
+            : widget.isMandatory && widget.controller.text.trim().isEmpty
+                ? theme.errorColor
+                : theme.primaryColor,
       ),
     );
   }

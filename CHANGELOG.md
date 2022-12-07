@@ -1,13 +1,20 @@
-## 2.1.8
+## 2.1.9
 
-- DropDownInput title style changed to bodyText2
+- Added `isMandatory` param to `DropDownInput`. If it is set to `true`,
+  and `TextEditingController.text` value is empty the border color is set to the current theme's
+  `errorColor` (default: `false`)
+- [Breaking change] Added limit of standard `BasfButton` height
 
 <details >
 <summary>Previous versions</summary>
 
+## 2.1.8
+
+- `DropDownInput` title style changed to `bodyText2`
+
 ## 2.1.7
 
-- TextInput title style changed to bodyText2
+- `TextInput` title style changed to `bodyText2`
 
 ## 2.1.6
 
