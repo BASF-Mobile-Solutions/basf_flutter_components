@@ -192,7 +192,7 @@ class BasfTextField extends StatefulWidget {
   /// Enable interactive selection
   final bool enableInteractiveSelection;
 
-  /// Enable interactive selection
+  /// If the color should be changed to grey when disabled
   final bool greyWhenDisabled;
 
   /// Controls
