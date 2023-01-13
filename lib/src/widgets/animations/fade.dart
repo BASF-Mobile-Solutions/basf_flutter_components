@@ -30,7 +30,7 @@ class Fade extends StatefulWidget {
 }
 
 class _FadeState extends State<Fade> with SingleTickerProviderStateMixin {
-  late AnimationController _animationController;
+  late final AnimationController _animationController;
 
   @override
   void initState() {
@@ -41,6 +41,12 @@ class _FadeState extends State<Fade> with SingleTickerProviderStateMixin {
     );
 
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
   }
 
   @override

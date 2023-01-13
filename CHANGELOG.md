@@ -1,12 +1,16 @@
+## 2.1.10
+
+- Fixed memory leak and error on dispose in Fade widget
+
+<details >
+<summary>Previous versions</summary>
+
 ## 2.1.9
 
 - Added `isMandatory` param to `DropDownInput`. If it is set to `true`,
   and `TextEditingController.text` value is empty the border color is set to the current theme's
   `errorColor` (default: `false`)
 - [Breaking change] Added limit of standard `BasfButton` height
-
-<details >
-<summary>Previous versions</summary>
 
 ## 2.1.8
 
