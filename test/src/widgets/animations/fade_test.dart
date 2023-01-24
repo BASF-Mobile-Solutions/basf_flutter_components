@@ -12,7 +12,7 @@ void main() {
         const tapTarget = Key('tap-target');
         await tester.pumpApp(
           const Scaffold(body: MyWidget(finderKey: tapTarget)),
-          BasfThemes.lightMainTheme(BasfThemeType.darkBlue),
+          BasfThemes.lightMainTheme(),
         );
         expect(find.byIcon(Icons.abc), findsOneWidget);
         await tester.tap(
