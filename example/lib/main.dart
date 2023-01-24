@@ -14,11 +14,8 @@ class ExampleApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'BASF Components',
-      theme: BasfThemes.lightMainTheme(BasfThemeType.darkBlue),
+      theme: BasfThemes.lightMainTheme(useMaterial3: true),
       home: const OverviewScreen(),
     );
   }
 }
-
-// DEPRECATED BasfThemes.setAppPrimaryColor(Colors.green);
-// DEPRECATED BasfThemes.setAppPrimaryInputColor(Colors.green);

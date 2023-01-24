@@ -56,7 +56,7 @@ class _TextButtonStyles extends ButtonStyles {
         borderRadius: BasfThemes.defaultBorderRadius,
       ),
       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      textStyle: BasfThemes.mainTextTheme.caption,
+      textStyle: BasfThemes.mainTextTheme.bodySmall,
     ).copyWith(
       foregroundColor: MaterialStateProperty.resolveWith((states) {
         return states.contains(MaterialState.disabled)

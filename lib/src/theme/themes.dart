@@ -36,11 +36,14 @@ class BasfThemes {
   static BorderRadius defaultBorderRadius = BorderRadius.zero;
 
   /// Default BASF light main theme
-  static ThemeData lightMainTheme(BasfThemeType? basfThemeType) {
-    final theme = basfThemeType ?? BasfThemeType.darkBlue;
+  static ThemeData lightMainTheme({
+    BasfThemeType basfThemeType = BasfThemeType.darkBlue,
+    bool useMaterial3 = false,
+  }) {
+    final theme = basfThemeType;
 
     return ThemeData(
-      useMaterial3: false,
+      useMaterial3: useMaterial3,
       fontFamily: 'Roboto',
       textTheme: mainTextTheme,
       appBarTheme: _mainAppBarTheme(theme),
