@@ -9,7 +9,7 @@ void main() {
 
       expect(e1.runtimeType != e2.runtimeType, false);
       expect(Enum.compareByIndex(e1, e2), -1);
-      // todo get this enum test working >:(
+      // TODO(Dima): get this enum test working >:(
     });
   });
 }

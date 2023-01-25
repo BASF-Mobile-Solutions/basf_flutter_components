@@ -39,7 +39,7 @@ class OptionButton extends StatelessWidget {
           VerticalSpacer.semi(),
           Text(
             description!,
-            style: theme.textTheme.bodyText2?.copyWith(color: BasfColors.grey),
+            style: theme.textTheme.bodyMedium?.copyWith(color: BasfColors.grey),
           ),
         ],
       );

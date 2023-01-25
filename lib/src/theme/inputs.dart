@@ -18,7 +18,7 @@ abstract class BasfInputThemes {
       prefixIconColor: color,
       suffixIconColor: color,
       hintStyle:
-          BasfThemes.mainTextTheme.subtitle1!.copyWith(color: color.shade400),
+          BasfThemes.mainTextTheme.titleMedium!.copyWith(color: color.shade400),
     );
   }
 

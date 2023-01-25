@@ -1,9 +1,13 @@
-## 2.1.10
+## 2.2.0
 
-- Fixed memory leak and error on dispose in Fade widget
+- Updated to Flutter 3.7.0 and Dart 2.19.0
 
 <details >
 <summary>Previous versions</summary>
+
+## 2.1.10
+
+- Fixed memory leak and error on dispose in Fade widget
 
 ## 2.1.9
 

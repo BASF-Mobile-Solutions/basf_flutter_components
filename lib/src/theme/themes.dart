@@ -36,11 +36,14 @@ class BasfThemes {
   static BorderRadius defaultBorderRadius = BorderRadius.zero;
 
   /// Default BASF light main theme
-  static ThemeData lightMainTheme(BasfThemeType? basfThemeType) {
-    final theme = basfThemeType ?? BasfThemeType.darkBlue;
+  static ThemeData lightMainTheme({
+    BasfThemeType basfThemeType = BasfThemeType.darkBlue,
+    bool useMaterial3 = false,
+  }) {
+    final theme = basfThemeType;
 
     return ThemeData(
-      useMaterial3: false,
+      useMaterial3: useMaterial3,
       fontFamily: 'Roboto',
       textTheme: mainTextTheme,
       appBarTheme: _mainAppBarTheme(theme),
@@ -70,19 +73,28 @@ class BasfThemes {
   /// BASF Main text theme
   static TextTheme get mainTextTheme {
     return const TextTheme(
-      headline1: CustomTextStyle(fontWeight: FontWeight.bold, fontSize: 42),
-      headline2: CustomTextStyle(fontWeight: FontWeight.normal, fontSize: 42),
-      headline3: CustomTextStyle(fontWeight: FontWeight.normal, fontSize: 32),
-      headline4: CustomTextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-      headline5: CustomTextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-      headline6: CustomTextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-      bodyText1: CustomTextStyle(fontWeight: FontWeight.normal, fontSize: 16),
-      bodyText2: CustomTextStyle(fontWeight: FontWeight.normal, fontSize: 14),
-      subtitle1: CustomTextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-      subtitle2: CustomTextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-      caption: CustomTextStyle(fontWeight: FontWeight.w700, fontSize: 14),
-      button: CustomTextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-      overline: CustomTextStyle(fontWeight: FontWeight.normal, fontSize: 12),
+      displayLarge: CustomTextStyle(fontWeight: FontWeight.bold, fontSize: 42),
+      displayMedium: CustomTextStyle(
+        fontWeight: FontWeight.normal,
+        fontSize: 42,
+      ),
+      displaySmall: CustomTextStyle(
+        fontWeight: FontWeight.normal,
+        fontSize: 32,
+      ),
+      headlineMedium: CustomTextStyle(
+        fontWeight: FontWeight.bold,
+        fontSize: 20,
+      ),
+      headlineSmall: CustomTextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+      titleLarge: CustomTextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+      bodyLarge: CustomTextStyle(fontWeight: FontWeight.normal, fontSize: 16),
+      bodyMedium: CustomTextStyle(fontWeight: FontWeight.normal, fontSize: 14),
+      titleMedium: CustomTextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+      titleSmall: CustomTextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+      bodySmall: CustomTextStyle(fontWeight: FontWeight.w700, fontSize: 14),
+      labelLarge: CustomTextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+      labelSmall: CustomTextStyle(fontWeight: FontWeight.normal, fontSize: 12),
     );
   }
 
@@ -90,7 +102,7 @@ class BasfThemes {
     return AppBarTheme(
       backgroundColor: theme.primaryColor,
       titleTextStyle:
-          mainTextTheme.subtitle1!.copyWith(color: BasfColors.white),
+          mainTextTheme.titleMedium!.copyWith(color: BasfColors.white),
       iconTheme: const IconThemeData(color: BasfColors.white),
       systemOverlayStyle: SystemUiOverlayStyle.light,
       scrolledUnderElevation: 0,
@@ -106,7 +118,7 @@ class BasfThemes {
         borderRadius: defaultBorderRadius,
       ),
       contentTextStyle:
-          mainTextTheme.subtitle1!.copyWith(color: BasfColors.white),
+          mainTextTheme.titleMedium!.copyWith(color: BasfColors.white),
     );
   }
 
@@ -120,8 +132,8 @@ class BasfThemes {
       unselectedItemColor: theme.primaryColor,
       selectedIconTheme: IconThemeData(color: theme.primaryColor, size: 20),
       unselectedIconTheme: IconThemeData(color: theme.primaryColor, size: 20),
-      unselectedLabelStyle: mainTextTheme.overline,
-      selectedLabelStyle: mainTextTheme.overline!.copyWith(
+      unselectedLabelStyle: mainTextTheme.labelSmall,
+      selectedLabelStyle: mainTextTheme.labelSmall!.copyWith(
         fontWeight: FontWeight.w500,
         color: theme.primaryColor,
       ),

@@ -17,7 +17,7 @@ void main() {
           child: const Text(text2),
           onPressed: () {},
         ),
-        BasfThemes.lightMainTheme(BasfThemeType.darkBlue),
+        BasfThemes.lightMainTheme(),
       );
 
       expect(find.byType(BasfOutlinedButton), findsOneWidget);
@@ -54,7 +54,7 @@ void main() {
             );
           },
         ),
-        BasfThemes.lightMainTheme(BasfThemeType.darkBlue),
+        BasfThemes.lightMainTheme(),
       );
 
       expect(find.byType(DatePickerDialog), findsNothing);
