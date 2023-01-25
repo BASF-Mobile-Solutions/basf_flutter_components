@@ -48,12 +48,12 @@ class BasfAlertDialog extends StatelessWidget {
       title: Text(
         title,
         textAlign: TextAlign.center,
-        style: BasfThemes.mainTextTheme.headline6,
+        style: BasfThemes.mainTextTheme.titleLarge,
       ),
       content: Text(
         description,
         textAlign: TextAlign.center,
-        style: BasfThemes.mainTextTheme.subtitle1,
+        style: BasfThemes.mainTextTheme.titleMedium,
       ),
       actions: <Widget>[
         if (!onlyConfirm) _dismissButton(),

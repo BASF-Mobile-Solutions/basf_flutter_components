@@ -63,55 +63,55 @@ class FontsScreen extends StatelessWidget {
   List<Widget> allStylesTexts(BuildContext context) {
     return [
       text(
-        textStyle: Theme.of(context).textTheme.headline1!,
+        textStyle: Theme.of(context).textTheme.displayLarge!,
         styleType: 'headline1',
       ),
       text(
-        textStyle: Theme.of(context).textTheme.headline2!,
+        textStyle: Theme.of(context).textTheme.displayMedium!,
         styleType: 'headline2',
       ),
       text(
-        textStyle: Theme.of(context).textTheme.headline3!,
+        textStyle: Theme.of(context).textTheme.displaySmall!,
         styleType: 'headline3',
       ),
       text(
-        textStyle: Theme.of(context).textTheme.headline4!,
+        textStyle: Theme.of(context).textTheme.headlineMedium!,
         styleType: 'headline4',
       ),
       text(
-        textStyle: Theme.of(context).textTheme.headline5!,
+        textStyle: Theme.of(context).textTheme.headlineSmall!,
         styleType: 'headline5',
       ),
       text(
-        textStyle: Theme.of(context).textTheme.headline6!,
+        textStyle: Theme.of(context).textTheme.titleLarge!,
         styleType: 'headline6',
       ),
       text(
-        textStyle: Theme.of(context).textTheme.bodyText1!,
+        textStyle: Theme.of(context).textTheme.bodyLarge!,
         styleType: 'bodyText1',
       ),
       text(
-        textStyle: Theme.of(context).textTheme.bodyText2!,
+        textStyle: Theme.of(context).textTheme.bodyMedium!,
         styleType: 'bodyText2',
       ),
       text(
-        textStyle: Theme.of(context).textTheme.subtitle1!,
+        textStyle: Theme.of(context).textTheme.titleMedium!,
         styleType: 'subtitle1',
       ),
       text(
-        textStyle: Theme.of(context).textTheme.subtitle2!,
+        textStyle: Theme.of(context).textTheme.titleSmall!,
         styleType: 'subtitle2',
       ),
       text(
-        textStyle: Theme.of(context).textTheme.caption!,
+        textStyle: Theme.of(context).textTheme.bodySmall!,
         styleType: 'caption',
       ),
       text(
-        textStyle: Theme.of(context).textTheme.button!,
+        textStyle: Theme.of(context).textTheme.labelLarge!,
         styleType: 'button',
       ),
       text(
-        textStyle: Theme.of(context).textTheme.overline!,
+        textStyle: Theme.of(context).textTheme.labelSmall!,
         styleType: 'overline',
       ),
     ];
