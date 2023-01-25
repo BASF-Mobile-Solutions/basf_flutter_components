@@ -56,7 +56,7 @@ class RadioOptions<T> extends StatelessWidget {
       children: [
         Text(
           title,
-          style: titleStyle ?? theme.textTheme.bodyText2,
+          style: titleStyle ?? theme.textTheme.bodyMedium,
         ),
         VerticalSpacer.normal(),
         Row(
