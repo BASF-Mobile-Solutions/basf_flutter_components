@@ -68,8 +68,8 @@ class ColorsOverviewScreen extends StatelessWidget {
 
 class ColorSwatchScreen extends StatelessWidget {
   const ColorSwatchScreen({
-    super.key,
     required this.color,
+    super.key,
   });
   final MaterialColor color;
 

@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 class BasfDropDownInput extends StatefulWidget {
   /// {@macro dropdown_input}
   const BasfDropDownInput({
-    super.key,
     required this.controller,
     required this.values,
+    super.key,
     this.labelText,
     this.crossAxisAlignment = CrossAxisAlignment.center,
     this.mainAxisAlignment = MainAxisAlignment.end,

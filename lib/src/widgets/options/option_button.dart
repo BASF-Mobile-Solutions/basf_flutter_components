@@ -7,10 +7,10 @@ import 'package:flutter/material.dart';
 class OptionButton extends StatelessWidget {
   /// {@macro option_button}
   const OptionButton({
-    super.key,
     required this.labelText,
-    this.onPressed,
     required this.isSelected,
+    super.key,
+    this.onPressed,
     this.description,
   });
 

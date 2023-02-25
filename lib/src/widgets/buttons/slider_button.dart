@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 class SliderButton extends StatefulWidget {
   /// {@macro basf_slider_button}
   const SliderButton({
+    required this.onConfirmation,
     super.key,
     this.height = 70,
     this.width = 300,
@@ -18,7 +19,6 @@ class SliderButton extends StatefulWidget {
     this.sliderButtonContent,
     this.text,
     this.textStyle,
-    required this.onConfirmation,
     this.foregroundShape,
     this.backgroundShape,
     this.stickToEnd = false,

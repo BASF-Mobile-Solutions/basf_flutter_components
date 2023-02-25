@@ -19,9 +19,9 @@ import 'package:flutter/material.dart';
 class BasfCheckbox extends StatelessWidget {
   /// {@macro basf_checkbox}
   const BasfCheckbox({
-    super.key,
     required this.value,
     required this.onChanged,
+    super.key,
     this.text,
     this.reverse = false,
     this.alignment = MainAxisAlignment.start,

@@ -8,8 +8,8 @@ import 'package:flutter/services.dart';
 class BasfTextField extends StatefulWidget {
   /// {@macro basf_text_field}
   const BasfTextField({
-    super.key,
     required this.controller,
+    super.key,
     this.formKey,
     this.initialValue,
     this.focusNode,

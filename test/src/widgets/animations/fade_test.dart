@@ -36,7 +36,10 @@ void main() {
 }
 
 class MyWidget extends StatefulWidget {
-  const MyWidget({super.key, required this.finderKey});
+  const MyWidget({
+    required this.finderKey,
+    super.key,
+  });
   final Key finderKey;
 
   @override
