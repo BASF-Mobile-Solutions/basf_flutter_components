@@ -24,7 +24,9 @@ class BasfTextField extends StatefulWidget {
     this.textAlignVertical,
     this.autofocus = false,
     this.readOnly = false,
-    this.toolbarOptions,
+    this.contextMenuBuilder,
+    this.mouseCursor,
+    this.onTapOutside,
     this.showCursor,
     this.obscuringCharacter = '•',
     this.obscureText = false,
@@ -108,8 +110,14 @@ class BasfTextField extends StatefulWidget {
   /// Read-only
   final bool readOnly;
 
-  /// Toolbar options
-  final ToolbarOptions? toolbarOptions;
+  /// Context menu builder
+  final EditableTextContextMenuBuilder? contextMenuBuilder;
+
+  /// Mouse cursor
+  final MouseCursor? mouseCursor;
+
+  /// OnTapOutside
+  final TapRegionCallback? onTapOutside;
 
   /// Whether or not to show the cursor
   final bool? showCursor;
@@ -276,7 +284,7 @@ class _BasfTextFieldState extends State<BasfTextField> {
     return Text(
       widget.decoration?.labelText ?? '',
       maxLines: 2,
-      style: Theme.of(context).textTheme.bodyText2,
+      style: Theme.of(context).textTheme.bodyMedium,
     );
   }
 
@@ -334,7 +342,7 @@ class _BasfTextFieldState extends State<BasfTextField> {
         prefixIcon: _getThemedPrefixIcon(theme),
         hintText: widget.decoration?.hintText,
         labelStyle: widget.decoration?.labelStyle ??
-            BasfThemes.mainTextTheme.bodyText1
+            BasfThemes.mainTextTheme.bodyLarge
                 ?.copyWith(color: BasfColors.darkGrey),
         floatingLabelBehavior: FloatingLabelBehavior.never,
       ),
@@ -348,7 +356,9 @@ class _BasfTextFieldState extends State<BasfTextField> {
       textAlignVertical: widget.textAlignVertical,
       autofocus: widget.autofocus,
       readOnly: widget.readOnly,
-      toolbarOptions: widget.toolbarOptions,
+      contextMenuBuilder: widget.contextMenuBuilder,
+      mouseCursor: widget.mouseCursor,
+      onTapOutside: widget.onTapOutside,
       showCursor: widget.showCursor,
       obscuringCharacter: widget.obscuringCharacter,
       obscureText: widget.obscureText,
@@ -395,7 +405,7 @@ class _BasfTextFieldState extends State<BasfTextField> {
         prefixIcon: _getThemedPrefixIcon(theme),
         hintText: widget.decoration?.hintText,
         labelStyle: widget.decoration?.labelStyle ??
-            BasfThemes.mainTextTheme.bodyText1
+            BasfThemes.mainTextTheme.bodyLarge
                 ?.copyWith(color: BasfColors.darkGrey),
         floatingLabelBehavior: FloatingLabelBehavior.never,
       ),
@@ -409,7 +419,6 @@ class _BasfTextFieldState extends State<BasfTextField> {
       textAlignVertical: widget.textAlignVertical,
       autofocus: widget.autofocus,
       readOnly: widget.readOnly,
-      toolbarOptions: widget.toolbarOptions,
       showCursor: widget.showCursor,
       obscuringCharacter: widget.obscuringCharacter,
       obscureText: widget.obscureText,

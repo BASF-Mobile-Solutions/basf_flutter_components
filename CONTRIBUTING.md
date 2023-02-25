@@ -2,7 +2,7 @@
 
 1. **Document new Components**: Widgets, Functions, etc... **with examples** in both `.dart` files and `README.md`
 2. If necessary **add new exports** to `basf_flutter_components.dart` file
-3. **Fix all linting issues** and run `flutter format .`
+3. **Fix all linting issues** and run `dart format .`
 4. **Run `dart pub publish --dry-run`** to test everything it's ok with the version
 5. Testing pub.dev score locally, first install **pana**: `flutter pub global activate pana`, and run `flutter pub global run pana ../basf_flutter_components`
 6. If a new version is going to be published, **update version numbers** in both `CHANGELOG.md` and `pubspec.yaml`

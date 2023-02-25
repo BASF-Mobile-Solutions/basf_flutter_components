@@ -13,7 +13,7 @@ void main() {
           text: text,
           onConfirmation: () {},
         ),
-        BasfThemes.lightMainTheme(BasfThemeType.darkBlue),
+        BasfThemes.lightMainTheme(),
       );
 
       expect(find.byType(SliderButton), findsOneWidget);
@@ -37,7 +37,7 @@ void main() {
           backgroundShape: BorderRadius.circular(20),
           stickToEnd: true,
         ),
-        BasfThemes.lightMainTheme(BasfThemeType.darkBlue),
+        BasfThemes.lightMainTheme(),
       );
 
       expect(find.byType(SliderButton), findsOneWidget);
@@ -54,11 +54,11 @@ void main() {
           width: 2000,
           height: 500,
         ),
-        BasfThemes.lightMainTheme(BasfThemeType.darkBlue),
+        BasfThemes.lightMainTheme(),
       );
 
       expect(find.byType(SliderButton), findsOneWidget);
-      // holding it to mantain the widget in site after drag
+      // holding it to maintain the widget in site after drag
       await tester.timedDrag(
         find.byType(GestureDetector),
         const Offset(10000, 0),

@@ -82,7 +82,7 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
   Widget title() {
     return Text(
       widget.labelText!,
-      style: Theme.of(context).textTheme.bodyText2,
+      style: Theme.of(context).textTheme.bodyMedium,
     );
   }
 
@@ -111,7 +111,7 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
                   widget.values[index],
                   style: Theme.of(context)
                       .textTheme
-                      .bodyText1
+                      .bodyLarge
                       ?.copyWith(color: BasfColors.darkBlue),
                 ),
               );
@@ -142,7 +142,7 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
                       .inputDecorationTheme.disabledBorder?.borderSide.color ??
                   theme.disabledColor
               : widget.isMandatory && widget.controller.text.trim().isEmpty
-                  ? theme.errorColor
+                  ? theme.colorScheme.error
                   : theme.inputDecorationTheme.enabledBorder?.borderSide
                           .color ??
                       theme.primaryColor,
@@ -156,7 +156,7 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
             padding: const EdgeInsets.only(left: Dimens.paddingMedium),
             child: Text(
               widget.controller.text,
-              style: BasfThemes.mainTextTheme.headline6
+              style: BasfThemes.mainTextTheme.titleLarge
                   ?.copyWith(color: theme.primaryColor),
             ),
           ),
@@ -204,7 +204,7 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
                     .color ??
                 theme.disabledColor
             : widget.isMandatory && widget.controller.text.trim().isEmpty
-                ? theme.errorColor
+                ? theme.colorScheme.error
                 : theme.primaryColor,
       ),
     );

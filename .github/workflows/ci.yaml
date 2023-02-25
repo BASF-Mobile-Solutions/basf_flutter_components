@@ -13,13 +13,13 @@ jobs:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
     with:
       flutter_channel: stable
-      flutter_version: 3.3.1
+      flutter_version: 3.7.0
       min_coverage: 75
 
   pana:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3.1.0
+      - uses: actions/checkout@v3.3.0
       - uses: subosito/flutter-action@v2.8.0
       #- name: Check for duplicate code 🕵️
       #  uses: platisd/duplicate-code-detection-tool@v1.1.0

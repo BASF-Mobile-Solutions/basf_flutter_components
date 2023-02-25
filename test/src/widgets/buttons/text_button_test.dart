@@ -16,7 +16,7 @@ void main() {
           style: TextButton.styleFrom(),
           child: const Text('Test'),
         ),
-        BasfThemes.lightMainTheme(BasfThemeType.darkBlue),
+        BasfThemes.lightMainTheme(),
       );
 
       expect(find.byType(BasfTextButton), findsOneWidget);
@@ -33,7 +33,7 @@ void main() {
           iconSize: 50,
           child: const Text('Test'),
         ),
-        BasfThemes.lightMainTheme(BasfThemeType.darkBlue),
+        BasfThemes.lightMainTheme(),
       );
 
       expect(find.byType(BasfTextButton), findsOneWidget);
@@ -50,7 +50,7 @@ void main() {
             child: const Text('Test'),
           ),
         ),
-        BasfThemes.lightMainTheme(BasfThemeType.darkBlue),
+        BasfThemes.lightMainTheme(),
       );
 
       expect(find.byType(BasfTextButton), findsOneWidget);
@@ -65,7 +65,7 @@ void main() {
             child: const Text('Test'),
           ),
         ),
-        BasfThemes.lightMainTheme(BasfThemeType.darkBlue),
+        BasfThemes.lightMainTheme(),
       );
 
       expect(find.byType(BasfTextButton), findsOneWidget);
@@ -85,7 +85,7 @@ void main() {
             child: const Text('Test'),
           ),
         ),
-        BasfThemes.lightMainTheme(BasfThemeType.darkBlue),
+        BasfThemes.lightMainTheme(),
       );
 
       expect(find.byType(BasfTextButton), findsOneWidget);
@@ -103,7 +103,7 @@ void main() {
             child: const Text('Test'),
           ),
         ),
-        BasfThemes.lightMainTheme(BasfThemeType.darkBlue),
+        BasfThemes.lightMainTheme(),
       );
 
       expect(find.byType(BasfTextButton), findsOneWidget);
