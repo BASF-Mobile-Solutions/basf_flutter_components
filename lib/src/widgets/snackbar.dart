@@ -8,8 +8,8 @@ class AppSnackBar extends StatelessWidget {
   /// {@macro app_snackbar}
   /// default
   const AppSnackBar({
-    super.key,
     required this.message,
+    super.key,
     this.prefixIcon,
     this.backgroundColor,
   });

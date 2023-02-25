@@ -9,8 +9,8 @@ import 'package:flutter/material.dart';
 class BasfAlertDialog extends StatelessWidget {
   /// {@macro basf_alert_dialog}
   const BasfAlertDialog({
-    super.key,
     required this.description,
+    super.key,
     this.title = 'Warning',
     this.dismissText = 'Cancel',
     this.confirmText = 'Confirm',

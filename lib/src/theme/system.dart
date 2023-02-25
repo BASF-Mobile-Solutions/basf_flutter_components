@@ -5,8 +5,8 @@ import 'package:flutter/services.dart';
 class SystemThemes {
   /// Dark Overlay sytle
   static SystemUiOverlayStyle defaultSystemOverlayStyleDark({
-    bool whiteNavigationBar = true,
     required ThemeData theme,
+    bool whiteNavigationBar = true,
   }) {
     return const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
@@ -26,8 +26,8 @@ class SystemThemes {
 
   /// Light Overlay sytle
   static SystemUiOverlayStyle defaultSystemOverlayStyleLight({
-    bool whiteNavigationBar = false,
     required ThemeData theme,
+    bool whiteNavigationBar = false,
   }) =>
       const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,

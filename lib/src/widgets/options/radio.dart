@@ -7,12 +7,12 @@ import 'package:flutter/material.dart';
 class RadioOptions<T> extends StatelessWidget {
   /// {@macro radio}
   const RadioOptions({
-    super.key,
     required this.values,
     required this.selectedValue,
     required this.title,
     required this.onSelected,
     required this.labelGenerator,
+    super.key,
     this.descriptionGenerator,
     this.titleStyle,
     this.identityHelperFunction,

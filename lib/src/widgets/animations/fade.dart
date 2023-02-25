@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 class Fade extends StatefulWidget {
   /// {@macro fade_widget}
   const Fade({
-    super.key,
     required this.visible,
     required this.child,
+    super.key,
     this.duration = const Duration(milliseconds: 200),
     this.curve = Curves.easeOut,
   });

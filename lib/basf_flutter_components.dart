@@ -1,5 +1,3 @@
-library basf_flutter_components;
-
 export 'src/extensions/extensions.dart';
 export 'src/theme/buttons.dart';
 export 'src/theme/colors.dart';

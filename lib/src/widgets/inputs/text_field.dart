@@ -8,8 +8,8 @@ import 'package:flutter/services.dart';
 class BasfTextField extends StatefulWidget {
   /// {@macro basf_text_field}
   const BasfTextField({
-    super.key,
     required this.controller,
+    super.key,
     this.formKey,
     this.initialValue,
     this.focusNode,
@@ -62,6 +62,7 @@ class BasfTextField extends StatefulWidget {
     this.scrollController,
     this.restorationId,
     this.enableIMEPersonalizedLearning = true,
+    this.greyWhenDisabled = true,
   });
 
   /// Form key
@@ -199,6 +200,9 @@ class BasfTextField extends StatefulWidget {
   /// Enable interactive selection
   final bool enableInteractiveSelection;
 
+  /// If the color should be changed to grey when disabled
+  final bool greyWhenDisabled;
+
   /// Controls
   final TextSelectionControls? selectionControls;
 
@@ -314,12 +318,14 @@ class _BasfTextFieldState extends State<BasfTextField> {
   }
 
   TextStyle _getTextStyle() {
-    return widget.style?.copyWith(
-          color: isEnabled() ? BasfColors.darkBlue : BasfColors.darkGrey,
-        ) ??
-        TextStyle(
-          color: isEnabled() ? BasfColors.darkBlue : BasfColors.darkGrey,
-        );
+    return widget.greyWhenDisabled
+        ? widget.style?.copyWith(
+              color: isEnabled() ? BasfColors.darkBlue : BasfColors.darkGrey,
+            ) ??
+            TextStyle(
+              color: isEnabled() ? BasfColors.darkBlue : BasfColors.darkGrey,
+            )
+        : widget.style ?? const TextStyle();
   }
 
   bool isEnabled() {

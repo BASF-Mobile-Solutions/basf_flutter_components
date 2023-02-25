@@ -1,9 +1,13 @@
-## 2.2.0
+## 2.2.1
 
-- Updated to Flutter 3.7.0 and Dart 2.19.0
+- add text styles to disabled inputs
 
 <details >
 <summary>Previous versions</summary>
+
+## 2.2.0
+
+- Updated to Flutter 3.7.0 and Dart 2.19.0
 
 ## 2.1.10
 
