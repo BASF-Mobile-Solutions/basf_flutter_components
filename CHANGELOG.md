@@ -1,3 +1,7 @@
+## 2.2.2
+
+- input field bug fix
+
 ## 2.2.1
 
 - add text styles to disabled inputs
