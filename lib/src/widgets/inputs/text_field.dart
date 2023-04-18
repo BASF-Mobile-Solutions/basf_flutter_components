@@ -241,10 +241,18 @@ class _BasfTextFieldState extends State<BasfTextField> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    widget.controller?.removeListener(redrawToChangeThemeBasedOnState);
+    super.dispose();
+  }
+
   void redrawToChangeThemeBasedOnState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      setState(() {});
-    });
+    if (mounted) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        setState(() {});
+      });
+    }
   }
 
   @override
