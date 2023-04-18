@@ -45,10 +45,10 @@ class _ThemesOverviewScreenState extends State<ThemesOverviewScreen> {
             RadioOptions(
               title: 'BASF Option',
               selectedValue: selectedValue,
-              labelGenerator: (o) => '$o',
+              labelGenerator: (o) => o,
               values: values,
               onSelected: (value) {
-                setState(() => selectedValue = value.toString());
+                setState(() => selectedValue = value);
               },
             ),
           ].joinWithSeparator(VerticalSpacer.medium20()),
