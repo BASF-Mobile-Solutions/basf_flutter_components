@@ -32,10 +32,10 @@ class _OptionsScreenState extends State<OptionsScreen> {
             RadioOptions(
               title: 'BASF Radio',
               selectedValue: selectedValue,
-              labelGenerator: (o) => '$o',
+              labelGenerator: (o) => o,
               values: values,
               onSelected: (value) {
-                setState(() => selectedValue = value.toString());
+                setState(() => selectedValue = value);
               },
             ),
             const Text('CheckBox'),
