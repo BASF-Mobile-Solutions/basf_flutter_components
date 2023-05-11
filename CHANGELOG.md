@@ -1,6 +1,6 @@
 ## 2.2.3
 
-- update to Dart 3
+- update to Dart 3 and Flutter 3.10.0
 
 <details >
 <summary>Previous versions</summary>
