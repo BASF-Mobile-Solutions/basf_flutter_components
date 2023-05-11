@@ -37,6 +37,7 @@ class BasfCheckbox extends StatelessWidget {
   final bool value;
 
   /// What happens when this value changes
+  // ignore: avoid_positional_boolean_parameters
   final void Function(bool) onChanged;
 
   /// Text of the checkbox

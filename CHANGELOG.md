@@ -1,3 +1,10 @@
+## 2.2.3
+
+- update to Dart 3
+
+<details >
+<summary>Previous versions</summary>
+
 ## 2.2.2
 
 - input field bug fix
@@ -5,9 +12,6 @@
 ## 2.2.1
 
 - add text styles to disabled inputs
-
-<details >
-<summary>Previous versions</summary>
 
 ## 2.2.0
 
