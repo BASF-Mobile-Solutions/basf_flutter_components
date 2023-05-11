@@ -38,7 +38,7 @@ class BasfThemes {
   /// Default BASF light main theme
   static ThemeData lightMainTheme({
     BasfThemeType basfThemeType = BasfThemeType.darkBlue,
-    bool useMaterial3 = false,
+    bool useMaterial3 = true,
   }) {
     final theme = basfThemeType;
 
