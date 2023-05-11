@@ -14,7 +14,7 @@ class ExampleApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'BASF Components',
-      theme: BasfThemes.lightMainTheme(useMaterial3: true),
+      theme: BasfThemes.lightMainTheme(),
       home: const OverviewScreen(),
     );
   }
