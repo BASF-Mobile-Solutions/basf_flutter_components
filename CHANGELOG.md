@@ -1,10 +1,14 @@
+## 2.2.4
+
+- update to Dart 3.1 and Flutter 3.13.6
+
+<details >
+<summary>Previous versions</summary>
+
 ## 2.2.3
 
 - update to Dart 3 and Flutter 3.10.0
 - material3 enabled by default, possible to switch off in theme arg
-
-<details >
-<summary>Previous versions</summary>
 
 ## 2.2.2
 

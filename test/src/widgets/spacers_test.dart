@@ -27,7 +27,7 @@ void main() {
               VerticalSpacer.xxLarge(),
               VerticalSpacer.xxxLarge(),
               // 12 types of spacers
-              const Text('2')
+              const Text('2'),
             ],
           ),
         );
@@ -54,7 +54,7 @@ void main() {
               HorizontalSpacer.xxLarge(),
               HorizontalSpacer.xxxLarge(),
               // 12 types of spacers
-              const Text('2')
+              const Text('2'),
             ],
           ),
         );
