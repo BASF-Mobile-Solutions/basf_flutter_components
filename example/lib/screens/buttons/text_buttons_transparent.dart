@@ -50,11 +50,11 @@ class TextButtonsTransparentScreen extends StatelessWidget {
       BasfTextButton.transparent(
         expanded: true,
         onPressed: () => _onPressed(context),
-        child: const SizedBox(
+        child: SizedBox(
           width: 15,
           height: 15,
           child: CircularProgressIndicator(
-            color: BasfColors.darkBlue,
+            color: Theme.of(context).primaryColor,
           ),
         ),
       ),

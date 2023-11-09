@@ -328,10 +328,11 @@ class _BasfTextFieldState extends State<BasfTextField> {
   TextStyle _getTextStyle() {
     return widget.greyWhenDisabled
         ? widget.style?.copyWith(
-              color: isEnabled() ? BasfColors.darkBlue : BasfColors.darkGrey,
-            ) ??
-            TextStyle(
-              color: isEnabled() ? BasfColors.darkBlue : BasfColors.darkGrey,
+              color: isEnabled()
+                  ? Theme.of(context).primaryColor : BasfColors.darkGrey,
+            ) ?? TextStyle(
+              color: isEnabled()
+                  ? Theme.of(context).primaryColor : BasfColors.darkGrey,
             )
         : widget.style ?? const TextStyle();
   }

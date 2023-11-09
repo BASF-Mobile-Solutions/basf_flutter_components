@@ -1,9 +1,13 @@
-## 2.2.4
+## 2.2.5
 
-- update to Dart 3.1 and Flutter 3.13.6
+- adjust theme for multi-theming
 
 <details >
 <summary>Previous versions</summary>
+
+## 2.2.4
+
+- update to Dart 3.1 and Flutter 3.13.6
 
 ## 2.2.3
 
