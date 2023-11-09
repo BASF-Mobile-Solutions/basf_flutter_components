@@ -80,7 +80,7 @@ class BasfThemes {
 
   /// Get material color
   static MaterialColor getMaterialColor() {
-    return switch(_lastUsedThemeType) {
+    return switch (_lastUsedThemeType) {
       BasfThemeType.orange => BasfColors.orange,
       BasfThemeType.red => BasfColors.red,
       BasfThemeType.lightGreen => BasfColors.lightGreen,
@@ -92,7 +92,7 @@ class BasfThemes {
   }
 
   static Color _getDialogBackgroundColor(BasfThemeType basfThemeType) {
-    return switch(basfThemeType) {
+    return switch (basfThemeType) {
       BasfThemeType.orange => BasfColors.orangePale,
       BasfThemeType.darkGreen => BasfColors.darkGreenPale,
       _ => BasfColors.darkBluePale,
