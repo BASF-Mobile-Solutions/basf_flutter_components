@@ -71,11 +71,11 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
         children: [
           title(),
           VerticalSpacer.semi(),
-          popupMenuButton(),
+          popupMenuButton(context),
         ],
       );
     } else {
-      return popupMenuButton();
+      return popupMenuButton(context);
     }
   }
 
@@ -86,12 +86,12 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
     );
   }
 
-  Widget popupMenuButton() {
+  Widget popupMenuButton(BuildContext context) {
     return AbsorbPointer(
       absorbing: widget.isLoading || isDisabled,
       child: Theme(
         data: ThemeData(
-          highlightColor: BasfColors.darkBlue.shade50,
+          highlightColor: BasfThemes.getMaterialColor().shade50,
         ),
         child: PopupMenuButton<String>(
           initialValue: widget.controller.text,
@@ -112,7 +112,7 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
                   style: Theme.of(context)
                       .textTheme
                       .bodyLarge
-                      ?.copyWith(color: BasfColors.darkBlue),
+                      ?.copyWith(color: Theme.of(context).primaryColor),
                 ),
               );
             });

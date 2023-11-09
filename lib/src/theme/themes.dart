@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 /// that will be used in the theme
 enum BasfThemeType {
   /// BASF yellow color
-  yellow(BasfColors.orange),
+  orange(BasfColors.orange),
 
   /// BASF red color
   red(BasfColors.red),
@@ -34,6 +34,7 @@ enum BasfThemeType {
 class BasfThemes {
   /// Default BASF border Radius
   static BorderRadius defaultBorderRadius = BorderRadius.zero;
+  static BasfThemeType? _lastUsedThemeType;
 
   /// Default BASF light main theme
   static ThemeData lightMainTheme({
@@ -41,6 +42,7 @@ class BasfThemes {
     bool useMaterial3 = true,
   }) {
     final theme = basfThemeType;
+    _lastUsedThemeType = theme;
 
     return ThemeData(
       useMaterial3: useMaterial3,
@@ -49,7 +51,13 @@ class BasfThemes {
       appBarTheme: _mainAppBarTheme(theme),
       scaffoldBackgroundColor: BasfColors.white,
       snackBarTheme: _snackBarThemeData(theme),
-      colorSchemeSeed: theme.primaryColor,
+      dialogBackgroundColor: _getDialogBackgroundColor(theme),
+      colorScheme: ColorScheme.fromSwatch(
+        primarySwatch: theme.primaryColor,
+        errorColor: BasfColors.red,
+      ),
+      splashColor: theme.primaryColor.withOpacity(0.1),
+      highlightColor: theme.primaryColor.withOpacity(0.2),
       iconTheme: IconThemeData(
         color: theme.primaryColor,
       ),
@@ -68,6 +76,27 @@ class BasfThemes {
       hintColor: theme.primaryColor.shade400,
       bottomNavigationBarTheme: _bottomNavigationBarTheme(theme),
     );
+  }
+
+  /// Get material color
+  static MaterialColor getMaterialColor() {
+    return switch (_lastUsedThemeType) {
+      BasfThemeType.orange => BasfColors.orange,
+      BasfThemeType.red => BasfColors.red,
+      BasfThemeType.lightGreen => BasfColors.lightGreen,
+      BasfThemeType.darkGreen => BasfColors.darkGreen,
+      BasfThemeType.lightBlue => BasfColors.lightBlue,
+      BasfThemeType.darkBlue => BasfColors.darkBlue,
+      _ => BasfColors.darkBlue,
+    };
+  }
+
+  static Color _getDialogBackgroundColor(BasfThemeType basfThemeType) {
+    return switch (basfThemeType) {
+      BasfThemeType.orange => BasfColors.orangePale,
+      BasfThemeType.darkGreen => BasfColors.darkGreenPale,
+      _ => BasfColors.darkBluePale,
+    };
   }
 
   /// BASF Main text theme
