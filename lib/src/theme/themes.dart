@@ -85,7 +85,7 @@ class BasfThemes {
       BasfThemeType.red => BasfColors.red,
       BasfThemeType.lightGreen => BasfColors.lightGreen,
       BasfThemeType.darkGreen => BasfColors.darkGreen,
-      BasfThemeType.lightBlue => BasfColors.lightGreen,
+      BasfThemeType.lightBlue => BasfColors.lightBlue,
       BasfThemeType.darkBlue => BasfColors.darkBlue,
       _ => BasfColors.darkBlue,
     };
