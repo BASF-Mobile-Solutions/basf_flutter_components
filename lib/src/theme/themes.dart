@@ -39,13 +39,11 @@ class BasfThemes {
   /// Default BASF light main theme
   static ThemeData lightMainTheme({
     BasfThemeType basfThemeType = BasfThemeType.darkBlue,
-    bool useMaterial3 = true,
   }) {
     final theme = basfThemeType;
     _lastUsedThemeType = theme;
 
     return ThemeData(
-      useMaterial3: useMaterial3,
       fontFamily: 'Roboto',
       textTheme: mainTextTheme,
       appBarTheme: _mainAppBarTheme(theme),
