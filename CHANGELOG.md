@@ -1,9 +1,14 @@
-## 2.2.5
+## 2.2.6
 
-- adjust theme for multi-theming
+- remove material 2
+- update Flutter to 3.16
 
 <details >
 <summary>Previous versions</summary>
+
+## 2.2.5
+
+- adjust theme for multi-theming
 
 ## 2.2.4
 
