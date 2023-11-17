@@ -23,7 +23,7 @@ class _ThemesOverviewScreenState extends State<ThemesOverviewScreen> {
       appBar: AppBar(title: const Text('BASF Themes')),
       body: Padding(
         padding: const EdgeInsets.all(8),
-        child: Column(
+        child: ListView(
           children: [
             Wrap(
               alignment: WrapAlignment.center,

@@ -1,3 +1,7 @@
+## 2.2.7
+
+- update colors
+
 ## 2.2.6
 
 - remove material 2
