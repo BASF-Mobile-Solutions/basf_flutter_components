@@ -66,6 +66,7 @@ class BasfThemes {
         style: ButtonStyles.primaryOutlinedButtonStyle(theme.primaryColor),
       ),
       dialogTheme: DialogTheme(
+        surfaceTintColor: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: defaultBorderRadius),
       ),
       inputDecorationTheme: BasfInputThemes.getMainInputDecorationTheme(

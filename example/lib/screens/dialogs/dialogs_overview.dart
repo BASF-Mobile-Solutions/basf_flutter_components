@@ -26,9 +26,7 @@ class DialogOverviewScreen extends StatelessWidget {
                   lastDate: DateTime.now(),
                   builder: (context, child) {
                     return Theme(
-                      data: BasfThemes.datePickerButtonTheme(
-                        Theme.of(context),
-                      ),
+                      data: BasfThemes.datePickerButtonTheme(Theme.of(context)),
                       child: child!,
                     );
                   },

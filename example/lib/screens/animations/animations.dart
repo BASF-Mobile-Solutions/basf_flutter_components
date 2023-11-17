@@ -17,7 +17,7 @@ class _AnimationsOverviewScreenState extends State<AnimationsOverviewScreen> {
       appBar: AppBar(title: const Text('BASF Alerts')),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8),
-        child: Column(
+        child: ListView(
           children: [
             BasfTextButton.contained(
               text: 'Click to hide',

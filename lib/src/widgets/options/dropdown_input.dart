@@ -89,36 +89,31 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
   Widget popupMenuButton(BuildContext context) {
     return AbsorbPointer(
       absorbing: widget.isLoading || isDisabled,
-      child: Theme(
-        data: ThemeData(
-          highlightColor: BasfThemes.getMaterialColor().shade50,
+      child: PopupMenuButton<String>(
+        initialValue: widget.controller.text,
+        shape: RoundedRectangleBorder(
+          borderRadius: BasfThemes.defaultBorderRadius,
         ),
-        child: PopupMenuButton<String>(
-          initialValue: widget.controller.text,
-          shape: RoundedRectangleBorder(
-            borderRadius: BasfThemes.defaultBorderRadius,
-          ),
-          onSelected: (String value) {
-            setState(() {
-              widget.controller.text = value;
-            });
-          },
-          itemBuilder: (context) {
-            return List.generate(widget.values.length, (index) {
-              return PopupMenuItem<String>(
-                value: widget.values[index],
-                child: Text(
-                  widget.values[index],
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyLarge
-                      ?.copyWith(color: Theme.of(context).primaryColor),
-                ),
-              );
-            });
-          },
-          child: layout(),
-        ),
+        onSelected: (String value) {
+          setState(() {
+            widget.controller.text = value;
+          });
+        },
+        itemBuilder: (context) {
+          return List.generate(widget.values.length, (index) {
+            return PopupMenuItem<String>(
+              value: widget.values[index],
+              child: Text(
+                widget.values[index],
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge
+                    ?.copyWith(color: Theme.of(context).primaryColor),
+              ),
+            );
+          });
+        },
+        child: layout(),
       ),
     );
   }
