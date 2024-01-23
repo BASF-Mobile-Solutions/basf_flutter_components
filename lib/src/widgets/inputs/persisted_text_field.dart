@@ -1,7 +1,10 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:basf_flutter_components/src/widgets/inputs/logic/persisted_input_cubit.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 
 /// [TextField] that prompts auto-filled values based on previous inputs, also
 /// has favorite inputs.
@@ -32,8 +35,23 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
 
   @override
   void initState() {
-    super.initState();
+    initHydratedStorage();
     _focusNode.addListener(_handleFocusChange);
+    super.initState();
+  }
+
+  Future<void> initHydratedStorage() async {
+    try {
+      // if storage could have been accessed, then it is already initialized
+      // and no action is needed
+      HydratedBloc.storage.toString();
+    } catch (e) {
+      HydratedBloc.storage = await HydratedStorage.build(
+        storageDirectory: kIsWeb
+            ? HydratedStorage.webStorageDirectory
+            : await getApplicationDocumentsDirectory(),
+      );
+    }
   }
 
   @override
@@ -70,7 +88,7 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
         left: position.dx,
         top: position.dy + renderBox.size.height,
         width: renderBox.size.width,
-        child: overlayBody(context),
+        child: overlayBody(_textFieldKey.currentContext!),
       ),
     );
 

@@ -9,7 +9,6 @@ environment:
   sdk: ">=3.2.5 <4.0.0"
 
 dependencies:
-
   basf_flutter_components:
     # When depending on this package from a real application you should use:
     #   basf_flutter_components: ^x.y.z
