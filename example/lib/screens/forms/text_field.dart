@@ -76,6 +76,11 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
               controller: _errorController,
             ),
             const SizedBox(height: 15),
+            PersistedTextField(
+              uniqueId: 'uniqueId',
+              controller: TextEditingController(),
+            ),
+            const SizedBox(height: 15),
             BasfTextField(
               decoration: const InputDecoration(
                 labelText: 'Obscured',

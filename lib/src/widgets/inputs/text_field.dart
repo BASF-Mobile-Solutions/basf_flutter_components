@@ -357,7 +357,7 @@ class _BasfTextFieldState extends State<BasfTextField> {
             BasfThemes.mainTextTheme.bodyLarge
                 ?.copyWith(color: BasfColors.darkGrey),
         floatingLabelBehavior: FloatingLabelBehavior.never,
-      ),
+      ) ?? const InputDecoration(),
       keyboardType: widget.keyboardType,
       textCapitalization: widget.textCapitalization,
       textInputAction: widget.textInputAction,
@@ -413,14 +413,14 @@ class _BasfTextFieldState extends State<BasfTextField> {
     return TextField(
       focusNode: widget.focusNode,
       controller: widget.controller,
-      decoration: widget.decoration?.copyWith(
+      decoration:  widget.decoration?.copyWith(
         prefixIcon: _getThemedPrefixIcon(theme),
         hintText: widget.decoration?.hintText,
         labelStyle: widget.decoration?.labelStyle ??
             BasfThemes.mainTextTheme.bodyLarge
                 ?.copyWith(color: BasfColors.darkGrey),
         floatingLabelBehavior: FloatingLabelBehavior.never,
-      ),
+      ) ?? const InputDecoration(),
       keyboardType: widget.keyboardType,
       textCapitalization: widget.textCapitalization,
       textInputAction: widget.textInputAction,

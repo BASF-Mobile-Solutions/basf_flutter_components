@@ -15,6 +15,7 @@ export 'src/widgets/buttons/outlined_button.dart';
 export 'src/widgets/buttons/slider_button.dart';
 export 'src/widgets/buttons/text_button.dart';
 export 'src/widgets/dialogs.dart';
+export 'src/widgets/inputs/persisted_text_field.dart';
 export 'src/widgets/inputs/text_field.dart';
 export 'src/widgets/options/checkboxes.dart';
 export 'src/widgets/options/dropdown_input.dart';
