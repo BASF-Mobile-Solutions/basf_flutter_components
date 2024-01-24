@@ -43,8 +43,8 @@ class PersistedInputCubit extends HydratedCubit<PersistedInputData> {
     if (!state.lastValues.contains(value) && state.favoriteValue != value) {
       final newValues = [value, ...state.lastValues];
 
-      if (newValues.length > 3) {
-        newValues.removeRange(3, newValues.length - 1);
+      if (newValues.length > 2) {
+        newValues.removeRange(2, newValues.length - 1);
       }
 
       if (!isClosed) {
@@ -59,17 +59,20 @@ class PersistedInputCubit extends HydratedCubit<PersistedInputData> {
   /// Sets favorite value
   void setFavoriteValue(String value) {
     if (!isClosed) {
-      final savedDefaultValue = state.favoriteValue;
-
-      if (savedDefaultValue != null && savedDefaultValue == value) {
-        emit(PersistedInputData(lastValues: state.lastValues));
-        addValue(savedDefaultValue);
-      } else {
-        emit(PersistedInputData(
-          favoriteValue: value,
-          lastValues: [...state.lastValues]..removeWhere((v) => v == value),
-        ),);
-      }
+      emit(PersistedInputData(
+        favoriteValue: value == state.favoriteValue ? null : value,
+        lastValues: [
+          if (state.favoriteValue != null)
+            state.favoriteValue!,
+          ...state.lastValues,
+        ]..removeWhere((v) {
+          if (value != state.favoriteValue) {
+            return v == value;
+          } else {
+            return false;
+          }
+        }),
+      ),);
     }
   }
 

@@ -79,6 +79,9 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
             PersistedTextField(
               uniqueId: 'uniqueId',
               controller: TextEditingController(),
+              decoration: const InputDecoration(
+                hintText: 'Persistent input',
+              ),
             ),
             const SizedBox(height: 15),
             BasfTextField(
