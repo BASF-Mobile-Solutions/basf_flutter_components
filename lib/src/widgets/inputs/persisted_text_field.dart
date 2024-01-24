@@ -10,11 +10,11 @@ import 'package:path_provider/path_provider.dart';
 /// [TextField] that prompts auto-filled values based on previous inputs, also
 /// has favorite inputs.
 class PersistedTextField extends StatefulWidget {
-
   /// Default constructor
   const PersistedTextField({
     required this.uniqueId,
     required this.controller,
+    this.dropdownBackgroundColor = Colors.white,
     this.formKey,
     this.initialValue,
     this.decoration,
@@ -69,6 +69,9 @@ class PersistedTextField extends StatefulWidget {
     this.greyWhenDisabled = true,
     super.key,
   });
+
+  /// Color of suggestions dropdown
+  final Color dropdownBackgroundColor;
 
   /// Id for unique bloc cache
   final String uniqueId;
@@ -154,7 +157,7 @@ class PersistedTextField extends StatefulWidget {
   /// Min lines for the input
   final int? minLines;
 
-  /// Wheter or not it expands
+  /// Whether or not it expands
   final bool expands;
 
   /// Max character length
@@ -232,7 +235,6 @@ class PersistedTextField extends StatefulWidget {
   /// Enable IMEPersonalized learning
   final bool enableIMEPersonalizedLearning;
 
-
   @override
   State<PersistedTextField> createState() => _PersistedTextFieldState();
 }
@@ -240,7 +242,7 @@ class PersistedTextField extends StatefulWidget {
 class _PersistedTextFieldState extends State<PersistedTextField> {
   final GlobalKey _textFieldKey = GlobalKey();
   late final FocusNode _focusNode;
-  ValueNotifier<bool> overlayShown = ValueNotifier(false);
+  ValueNotifier<bool> overlayShownNotifier = ValueNotifier(false);
 
   @override
   void initState() {
@@ -252,9 +254,20 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
 
   @override
   void dispose() {
-    _focusNode..removeListener(_handleFocusChange)..dispose();
+    _focusNode
+      ..removeListener(_handleFocusChange)
+      ..dispose();
     _removeOverlay();
     super.dispose();
+  }
+
+  void saveValue() {
+    try {
+      if (widget.controller.text.trim().isNotEmpty) {
+        context.read<PersistedInputCubit>().addValue(widget.controller.text);
+      }
+      _focusNode.unfocus();
+    } catch (_) {}
   }
 
   Future<void> _initHydratedStorage() async {
@@ -280,11 +293,11 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
   }
 
   void _removeOverlay() {
-    overlayShown.value = false;
+    overlayShownNotifier.value = false;
   }
 
   void _showOverlay() {
-    overlayShown.value = true;
+    overlayShownNotifier.value = true;
   }
 
   void _selectItem(String value) {
@@ -296,38 +309,14 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => PersistedInputCubit(id: widget.uniqueId),
-      child: Builder(
-        builder: (context) {
+      child: ValueListenableBuilder<bool>(
+        valueListenable: overlayShownNotifier,
+        builder: (context, overlayShown, _) {
+          final cubit = context.read<PersistedInputCubit>();
           return Stack(
             children: [
               textField(context),
-              ValueListenableBuilder(
-                  valueListenable: overlayShown,
-                  builder: (context, overlayShown, _) {
-                    if (!overlayShown) {
-                      return const SizedBox();
-                    }
-
-                    return FutureBuilder<double>(
-                        future: Future.delayed(Duration.zero, () {
-                          return  _textFieldKey.currentContext?.size?.height
-                              ?? 50;
-                        }),
-                        builder: (context, snapshot) {
-                          if (!snapshot.hasData) {
-                            return const SizedBox();
-                          }
-
-                          return Container(
-                            margin: EdgeInsets.only(
-                              top: snapshot.data!,
-                            ),
-                            child: overlayContainer(context),
-                          );
-                        },
-                    );
-
-                  },),
+              if (overlayShown && cubit.valuesExist) completeBottomOverlay(),
             ],
           );
         },
@@ -335,11 +324,37 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
     );
   }
 
+  Widget completeBottomOverlay() {
+    return FutureBuilder<({double width, double height})>(
+      future: Future.delayed(Duration.zero, () {
+        return (
+        width: _textFieldKey.currentContext?.size?.width ??
+            double.infinity,
+        height: _textFieldKey.currentContext?.size?.height ?? 50
+        );
+      }),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return const SizedBox();
+        }
+
+        return Container(
+          width: snapshot.data!.width,
+          margin: EdgeInsets.only(
+            top: snapshot.data!.height,
+          ),
+          padding: const EdgeInsets.only(bottom: 10),
+          child: overlayContainer(context),
+        );
+      },
+    );
+  }
+
   Widget overlayContainer(BuildContext context) {
     final cubit = context.read<PersistedInputCubit>();
 
     return Material(
-      color: Colors.white,
+      color: widget.dropdownBackgroundColor,
       elevation: 4,
       child: ListView(
         shrinkWrap: true,
@@ -353,6 +368,7 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
             ),
           if (cubit.state.lastValues.isNotEmpty)
             Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 if (cubit.state.favoriteValue != null)
                   separator(context: context, isFavorite: true),
@@ -361,10 +377,12 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
                     context: context,
                     value: cubit.state.lastValues[index],
                   );
-                }).joinWithSeparator(separator(
-                  context: context,
-                  isFavorite: false,
-                ),),
+                }).joinWithSeparator(
+                  separator(
+                    context: context,
+                    isFavorite: false,
+                  ),
+                ),
               ],
             ),
         ],
@@ -380,6 +398,13 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
     return ListTile(
       title: Text(value),
       contentPadding: const EdgeInsets.only(left: 15),
+      onLongPress: () {
+        if (!isFavorite) {
+          context.read<PersistedInputCubit>().deleteValue(value);
+          _removeOverlay();
+          _showOverlay();
+        }
+      },
       onTap: () {
         _selectItem(value);
       },
@@ -397,9 +422,8 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
     required bool isFavorite,
   }) {
     return IconButton(
-      icon: Icon(isFavorite
-          ? Icons.bookmark
-          : Icons.bookmark_add_outlined,
+      icon: Icon(
+        isFavorite ? Icons.bookmark : Icons.bookmark_add_outlined,
       ),
       color: Theme.of(context).primaryColor,
       onPressed: () {
@@ -462,8 +486,9 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
         _showOverlay();
       },
       onEditingComplete: () {
-        context.read<PersistedInputCubit>()
-            .addValue(widget.controller.text);
+        if (widget.controller.text.trim().isNotEmpty) {
+          context.read<PersistedInputCubit>().addValue(widget.controller.text);
+        }
         _focusNode.unfocus();
       },
       onFieldSubmitted: widget.onFieldSubmitted,
@@ -488,5 +513,4 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
       enableIMEPersonalizedLearning: widget.enableIMEPersonalizedLearning,
     );
   }
-
 }

@@ -38,6 +38,10 @@ class PersistedInputCubit extends HydratedCubit<PersistedInputData> {
   @override
   final String id;
 
+  /// Checks if values exist
+  bool get valuesExist => state.favoriteValue != null
+      || state.lastValues.isNotEmpty;
+
   /// Adds new input value to the list
   void addValue(String value) {
     if (!state.lastValues.contains(value) && state.favoriteValue != value) {
@@ -74,6 +78,14 @@ class PersistedInputCubit extends HydratedCubit<PersistedInputData> {
         }),
       ),);
     }
+  }
+
+  /// Deletes value from the list
+  void deleteValue(String value) {
+    emit(PersistedInputData(
+      favoriteValue: state.favoriteValue,
+      lastValues: List.from(state.lastValues)..remove(value),
+    ),);
   }
 
   @override
