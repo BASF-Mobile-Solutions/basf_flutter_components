@@ -17,7 +17,6 @@ class PersistedTextField extends StatefulWidget {
     required this.controller,
     this.formKey,
     this.initialValue,
-    this.focusNode,
     this.decoration,
     this.keyboardType,
     this.textCapitalization = TextCapitalization.none,
@@ -82,9 +81,6 @@ class PersistedTextField extends StatefulWidget {
 
   /// Initial value
   final String? initialValue;
-
-  /// Current focus node
-  final FocusNode? focusNode;
 
   /// Input decoration
   final InputDecoration? decoration;
@@ -244,12 +240,12 @@ class PersistedTextField extends StatefulWidget {
 class _PersistedTextFieldState extends State<PersistedTextField> {
   final GlobalKey _textFieldKey = GlobalKey();
   late final FocusNode _focusNode;
-  OverlayEntry? _overlayEntry;
+  ValueNotifier<bool> overlayShown = ValueNotifier(false);
 
   @override
   void initState() {
     _initHydratedStorage();
-    _focusNode = widget.focusNode ?? FocusNode();
+    _focusNode = FocusNode();
     _focusNode.addListener(_handleFocusChange);
     super.initState();
   }
@@ -284,29 +280,11 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
   }
 
   void _removeOverlay() {
-    _overlayEntry?.remove();
-    _overlayEntry = null;
+    overlayShown.value = false;
   }
 
   void _showOverlay() {
-    if (_overlayEntry != null) {
-      return;
-    }
-
-    final renderBox = _textFieldKey.currentContext!
-        .findRenderObject()! as RenderBox;
-    final position = renderBox.localToGlobal(Offset.zero);
-
-    _overlayEntry = OverlayEntry(
-      builder: (context) => Positioned(
-        left: position.dx,
-        top: position.dy + renderBox.size.height,
-        width: renderBox.size.width,
-        child: overlayBody(_textFieldKey.currentContext!),
-      ),
-    );
-
-    Overlay.of(_textFieldKey.currentContext!).insert(_overlayEntry!);
+    overlayShown.value = true;
   }
 
   void _selectItem(String value) {
@@ -320,82 +298,52 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
       create: (context) => PersistedInputCubit(id: widget.uniqueId),
       child: Builder(
         builder: (context) {
-          return BasfTextField(
-            key: _textFieldKey,
-            formKey: widget.formKey,
-            greyWhenDisabled: widget.greyWhenDisabled,
-            focusNode: _focusNode,
-            controller: widget.controller,
-            initialValue: widget.initialValue,
-            decoration: widget.decoration,
-            keyboardType: widget.keyboardType,
-            textCapitalization: widget.textCapitalization,
-            textInputAction: widget.textInputAction,
-            style: widget.style,
-            strutStyle: widget.strutStyle,
-            textDirection: widget.textDirection,
-            textAlign: widget.textAlign,
-            textAlignVertical: widget.textAlignVertical,
-            autofocus: widget.autofocus,
-            readOnly: widget.readOnly,
-            contextMenuBuilder: widget.contextMenuBuilder,
-            mouseCursor: widget.mouseCursor,
-            onTapOutside: widget.onTapOutside,
-            showCursor: widget.showCursor,
-            obscuringCharacter: widget.obscuringCharacter,
-            obscureText: widget.obscureText,
-            autocorrect: widget.autocorrect,
-            smartDashesType: widget.smartDashesType,
-            smartQuotesType: widget.smartQuotesType,
-            enableSuggestions: widget.enableSuggestions,
-            maxLengthEnforcement: widget.maxLengthEnforcement,
-            maxLines: widget.maxLines,
-            minLines: widget.minLines,
-            expands: widget.expands,
-            maxLength: widget.maxLength,
-            onChanged: widget.onChanged,
-            onTap: () {
-              widget.onTap?.call();
-              _showOverlay();
-            },
-            onEditingComplete: () {
-              context.read<PersistedInputCubit>()
-                  .addValue(widget.controller.text);
-              _focusNode.unfocus();
-            },
-            onFieldSubmitted: widget.onFieldSubmitted,
-            onSaved: widget.onSaved,
-            validator: widget.validator,
-            inputFormatters: widget.inputFormatters,
-            enabled: widget.enabled,
-            cursorWidth: widget.cursorWidth,
-            cursorHeight: widget.cursorHeight,
-            cursorRadius: widget.cursorRadius,
-            cursorColor: widget.cursorColor,
-            keyboardAppearance: widget.keyboardAppearance,
-            scrollPadding: widget.scrollPadding,
-            enableInteractiveSelection: widget.enableInteractiveSelection,
-            selectionControls: widget.selectionControls,
-            buildCounter: widget.buildCounter,
-            scrollPhysics: widget.scrollPhysics,
-            autofillHints: widget.autofillHints,
-            autovalidateMode: widget.autovalidateMode,
-            scrollController: widget.scrollController,
-            restorationId: widget.restorationId,
-            enableIMEPersonalizedLearning: widget.enableIMEPersonalizedLearning,
+          return Stack(
+            children: [
+              textField(context),
+              ValueListenableBuilder(
+                  valueListenable: overlayShown,
+                  builder: (context, overlayShown, _) {
+                    if (!overlayShown) {
+                      return const SizedBox();
+                    }
+
+                    return FutureBuilder<double>(
+                        future: Future.delayed(Duration.zero, () {
+                          return  _textFieldKey.currentContext?.size?.height
+                              ?? 50;
+                        }),
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return const SizedBox();
+                          }
+
+                          return Container(
+                            margin: EdgeInsets.only(
+                              top: snapshot.data!,
+                            ),
+                            child: overlayContainer(context),
+                          );
+                        },
+                    );
+
+                  },),
+            ],
           );
         },
       ),
     );
   }
 
-  Widget overlayBody(BuildContext context) {
+  Widget overlayContainer(BuildContext context) {
     final cubit = context.read<PersistedInputCubit>();
 
     return Material(
       color: Colors.white,
       elevation: 4,
-      child: Column(
+      child: ListView(
+        shrinkWrap: true,
+        physics: const ClampingScrollPhysics(),
         children: [
           if (cubit.state.favoriteValue != null)
             item(
@@ -471,6 +419,73 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
       color: isFavorite
           ? Theme.of(context).primaryColor
           : Theme.of(context).splashColor,
+    );
+  }
+
+  Widget textField(BuildContext context) {
+    return BasfTextField(
+      key: _textFieldKey,
+      formKey: widget.formKey,
+      greyWhenDisabled: widget.greyWhenDisabled,
+      focusNode: _focusNode,
+      controller: widget.controller,
+      initialValue: widget.initialValue,
+      decoration: widget.decoration,
+      keyboardType: widget.keyboardType,
+      textCapitalization: widget.textCapitalization,
+      textInputAction: widget.textInputAction,
+      style: widget.style,
+      strutStyle: widget.strutStyle,
+      textDirection: widget.textDirection,
+      textAlign: widget.textAlign,
+      textAlignVertical: widget.textAlignVertical,
+      autofocus: widget.autofocus,
+      readOnly: widget.readOnly,
+      contextMenuBuilder: widget.contextMenuBuilder,
+      mouseCursor: widget.mouseCursor,
+      onTapOutside: widget.onTapOutside,
+      showCursor: widget.showCursor,
+      obscuringCharacter: widget.obscuringCharacter,
+      obscureText: widget.obscureText,
+      autocorrect: widget.autocorrect,
+      smartDashesType: widget.smartDashesType,
+      smartQuotesType: widget.smartQuotesType,
+      enableSuggestions: widget.enableSuggestions,
+      maxLengthEnforcement: widget.maxLengthEnforcement,
+      maxLines: widget.maxLines,
+      minLines: widget.minLines,
+      expands: widget.expands,
+      maxLength: widget.maxLength,
+      onChanged: widget.onChanged,
+      onTap: () {
+        widget.onTap?.call();
+        _showOverlay();
+      },
+      onEditingComplete: () {
+        context.read<PersistedInputCubit>()
+            .addValue(widget.controller.text);
+        _focusNode.unfocus();
+      },
+      onFieldSubmitted: widget.onFieldSubmitted,
+      onSaved: widget.onSaved,
+      validator: widget.validator,
+      inputFormatters: widget.inputFormatters,
+      enabled: widget.enabled,
+      cursorWidth: widget.cursorWidth,
+      cursorHeight: widget.cursorHeight,
+      cursorRadius: widget.cursorRadius,
+      cursorColor: widget.cursorColor,
+      keyboardAppearance: widget.keyboardAppearance,
+      scrollPadding: widget.scrollPadding,
+      enableInteractiveSelection: widget.enableInteractiveSelection,
+      selectionControls: widget.selectionControls,
+      buildCounter: widget.buildCounter,
+      scrollPhysics: widget.scrollPhysics,
+      autofillHints: widget.autofillHints,
+      autovalidateMode: widget.autovalidateMode,
+      scrollController: widget.scrollController,
+      restorationId: widget.restorationId,
+      enableIMEPersonalizedLearning: widget.enableIMEPersonalizedLearning,
     );
   }
 
