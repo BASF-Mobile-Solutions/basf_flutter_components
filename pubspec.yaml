@@ -7,7 +7,7 @@ repository: https://github.com/BASF-Mobile-Solutions/basf_flutter_components
 issue_tracker: https://github.com/BASF-Mobile-Solutions/basf_flutter_components/issues
 
 environment:
-  sdk: ">=3.2.5 <4.0.0"
+  sdk: ">=3.2.6 <4.0.0"
 
 dependencies:
   flutter:
