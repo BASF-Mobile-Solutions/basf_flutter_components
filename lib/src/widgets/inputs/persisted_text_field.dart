@@ -1,6 +1,9 @@
+import 'dart:ui';
+
 import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:basf_flutter_components/src/widgets/inputs/logic/persisted_input_cubit.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,6 +17,9 @@ class PersistedTextField extends StatefulWidget {
   const PersistedTextField({
     required this.uniqueId,
     required this.controller,
+    /// You provide a bool notifier, when it becomes true,
+    /// save value is triggered
+    required this.saveTriggerNotifier,
     this.dropdownBackgroundColor = Colors.white,
     this.formKey,
     this.initialValue,
@@ -67,6 +73,19 @@ class PersistedTextField extends StatefulWidget {
     this.restorationId,
     this.enableIMEPersonalizedLearning = true,
     this.greyWhenDisabled = true,
+    this.canRequestFocus = true,
+    this.clipBehavior = Clip.hardEdge,
+    this.contentInsertionConfiguration,
+    this.cursorOpacityAnimates,
+    this.dragStartBehavior = DragStartBehavior.start,
+    this.magnifierConfiguration,
+    this.onAppPrivateCommand,
+    this.onSubmitted,
+    this.scribbleEnabled = true,
+    this.selectionHeightStyle = BoxHeightStyle.tight,
+    this.selectionWidthStyle = BoxWidthStyle.tight,
+    this.spellCheckConfiguration,
+    this.undoController,
     super.key,
   });
 
@@ -75,6 +94,10 @@ class PersistedTextField extends StatefulWidget {
 
   /// Id for unique bloc cache
   final String uniqueId;
+
+  /// You provide a bool notifier, when it changes to true or false,
+  /// save value is triggered
+  final ValueNotifier<bool> saveTriggerNotifier;
 
   /// Form key
   final GlobalKey<FormState>? formKey;
@@ -235,6 +258,45 @@ class PersistedTextField extends StatefulWidget {
   /// Enable IMEPersonalized learning
   final bool enableIMEPersonalizedLearning;
 
+  /// Request focus
+  final bool canRequestFocus;
+
+  /// Clip behavior
+  final Clip clipBehavior;
+
+  /// Content configuration
+  final ContentInsertionConfiguration? contentInsertionConfiguration;
+
+  /// Cursor animation
+  final bool? cursorOpacityAnimates;
+
+  /// Drag behavior
+  final DragStartBehavior dragStartBehavior;
+
+  /// Magnifier config
+  final TextMagnifierConfiguration? magnifierConfiguration;
+
+  /// Primitive command
+  final AppPrivateCommandCallback? onAppPrivateCommand;
+
+  /// OnSubmitted callback
+  final ValueChanged<String>? onSubmitted;
+
+  /// Scribble enabled
+  final bool scribbleEnabled;
+
+  /// Controls how height the selection highlight boxes are computed to be.
+  final BoxHeightStyle selectionHeightStyle;
+
+  /// Controls how wide the selection highlight boxes are computed to be.
+  final BoxWidthStyle selectionWidthStyle;
+
+  /// Spell check
+  final SpellCheckConfiguration? spellCheckConfiguration;
+
+  /// Undo controller
+  final UndoHistoryController? undoController;
+
   @override
   State<PersistedTextField> createState() => _PersistedTextFieldState();
 }
@@ -246,9 +308,9 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
 
   @override
   void initState() {
-    _initHydratedStorage();
     _focusNode = FocusNode();
     _focusNode.addListener(_handleFocusChange);
+    widget.saveTriggerNotifier.addListener(saveValue);
     super.initState();
   }
 
@@ -257,20 +319,22 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
     _focusNode
       ..removeListener(_handleFocusChange)
       ..dispose();
+    widget.saveTriggerNotifier.removeListener(saveValue);
     _removeOverlay();
     super.dispose();
   }
 
   void saveValue() {
-    try {
-      if (widget.controller.text.trim().isNotEmpty) {
-        context.read<PersistedInputCubit>().addValue(widget.controller.text);
-      }
+    if (widget.controller.text.trim().isNotEmpty) {
+      _textFieldKey.currentContext
+          ?.read<PersistedInputCubit>().addValue(widget.controller.text);
+    }
+    if (_focusNode.hasFocus) {
       _focusNode.unfocus();
-    } catch (_) {}
+    }
   }
 
-  Future<void> _initHydratedStorage() async {
+  Future<bool> _initHydratedStorage() async {
     try {
       // if storage could have been accessed, then it is already initialized
       // and no action is needed
@@ -282,6 +346,8 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
             : await getApplicationDocumentsDirectory(),
       );
     }
+
+    return true;
   }
 
   void _handleFocusChange() {
@@ -309,15 +375,24 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => PersistedInputCubit(id: widget.uniqueId),
-      child: ValueListenableBuilder<bool>(
-        valueListenable: overlayShownNotifier,
-        builder: (context, overlayShown, _) {
-          final cubit = context.read<PersistedInputCubit>();
-          return Stack(
-            children: [
-              textField(context),
-              if (overlayShown && cubit.valuesExist) completeBottomOverlay(),
-            ],
+      child: FutureBuilder<bool>(
+        future: _initHydratedStorage(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const SizedBox();
+          }
+
+          return ValueListenableBuilder<bool>(
+            valueListenable: overlayShownNotifier,
+            builder: (context, overlayShown, _) {
+              final cubit = context.read<PersistedInputCubit>();
+              return Stack(
+                children: [
+                  textField(context),
+                  if (overlayShown && cubit.valuesExist) completeBottomOverlay(),
+                ],
+              );
+            },
           );
         },
       ),
@@ -328,9 +403,9 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
     return FutureBuilder<({double width, double height})>(
       future: Future.delayed(Duration.zero, () {
         return (
-        width: _textFieldKey.currentContext?.size?.width ??
-            double.infinity,
-        height: _textFieldKey.currentContext?.size?.height ?? 50
+          width:
+            _textFieldKey.currentContext?.size?.width ?? double.infinity,
+          height: _textFieldKey.currentContext?.size?.height ?? 50,
         );
       }),
       builder: (context, snapshot) {
@@ -485,12 +560,6 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
         widget.onTap?.call();
         _showOverlay();
       },
-      onEditingComplete: () {
-        if (widget.controller.text.trim().isNotEmpty) {
-          context.read<PersistedInputCubit>().addValue(widget.controller.text);
-        }
-        _focusNode.unfocus();
-      },
       onFieldSubmitted: widget.onFieldSubmitted,
       onSaved: widget.onSaved,
       validator: widget.validator,
@@ -511,6 +580,20 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
       scrollController: widget.scrollController,
       restorationId: widget.restorationId,
       enableIMEPersonalizedLearning: widget.enableIMEPersonalizedLearning,
+      canRequestFocus: widget.canRequestFocus,
+      clipBehavior: widget.clipBehavior,
+      contentInsertionConfiguration: widget.contentInsertionConfiguration,
+      cursorOpacityAnimates: widget.cursorOpacityAnimates,
+      dragStartBehavior: widget.dragStartBehavior,
+      magnifierConfiguration: widget.magnifierConfiguration,
+      onAppPrivateCommand: widget.onAppPrivateCommand,
+      onSubmitted: widget.onSubmitted,
+      scribbleEnabled: widget.scribbleEnabled,
+      selectionHeightStyle: widget.selectionHeightStyle,
+      selectionWidthStyle: widget.selectionWidthStyle,
+      spellCheckConfiguration: widget.spellCheckConfiguration,
+      undoController: widget.undoController,
+      onEditingComplete: widget.onEditingComplete,
     );
   }
 }

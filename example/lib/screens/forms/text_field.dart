@@ -15,6 +15,7 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
   late final TextEditingController _obscureController;
   late final TextEditingController _iconsController;
   late final GlobalKey<FormState> _formKey;
+  final ValueNotifier<bool> saveTriggerNotifier = ValueNotifier(false);
 
   @override
   void initState() {
@@ -78,7 +79,11 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
             const SizedBox(height: 15),
             PersistedTextField(
               uniqueId: 'uniqueId',
+              saveTriggerNotifier: saveTriggerNotifier,
               controller: TextEditingController(),
+              onChanged: (text) {
+                saveTriggerNotifier.value = !saveTriggerNotifier.value;
+              },
               decoration: const InputDecoration(
                 hintText: 'Persistent input',
               ),
