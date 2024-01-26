@@ -402,7 +402,6 @@ class _BasfTextFieldState extends State<BasfTextField> {
 
   Widget textFormField(ThemeData theme) {
     return TextFormField(
-      key: widget.key,
       focusNode: widget.focusNode,
       controller: widget.controller,
       initialValue: widget.initialValue,
