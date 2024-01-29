@@ -433,24 +433,39 @@ class _BasfTextFieldState extends State<BasfTextField> {
     );
   }
 
+  InputDecoration _getDefaultDecoration(ThemeData theme) {
+    return InputDecoration(
+      suffixIcon: deleteIconButton(),
+      prefixIcon: _getThemedPrefixIcon(theme),
+      hintText: widget.decoration?.hintText,
+      errorStyle: widget.decoration?.errorStyle?.copyWith(
+        height: 0,
+      ) ?? const TextStyle(height: 0),
+      labelStyle: widget.decoration?.labelStyle ??
+          BasfThemes.mainTextTheme.bodyLarge
+              ?.copyWith(color: BasfColors.darkGrey),
+      floatingLabelBehavior: FloatingLabelBehavior.never,
+    );
+  }
+
   Widget textFormField(ThemeData theme) {
     return TextFormField(
       focusNode: widget.focusNode,
       controller: widget.controller,
       initialValue: widget.initialValue,
       decoration: widget.decoration?.copyWith(
-        suffixIcon: widget.decoration?.suffixIcon ?? deleteIconButton(),
-        prefixIcon: _getThemedPrefixIcon(theme),
-        hintText: widget.decoration?.hintText,
-        errorStyle: widget.decoration?.errorStyle?.copyWith(
-              height: 0,
-            ) ??
-            const TextStyle(height: 0),
-        labelStyle: widget.decoration?.labelStyle ??
-            BasfThemes.mainTextTheme.bodyLarge
-                ?.copyWith(color: BasfColors.darkGrey),
-        floatingLabelBehavior: FloatingLabelBehavior.never,
-      ),
+            suffixIcon: widget.decoration?.suffixIcon ?? deleteIconButton(),
+            prefixIcon: _getThemedPrefixIcon(theme),
+            hintText: widget.decoration?.hintText,
+            errorStyle: widget.decoration?.errorStyle?.copyWith(
+                  height: 0,
+                ) ??
+                const TextStyle(height: 0),
+            labelStyle: widget.decoration?.labelStyle ??
+                BasfThemes.mainTextTheme.bodyLarge
+                    ?.copyWith(color: BasfColors.darkGrey),
+            floatingLabelBehavior: FloatingLabelBehavior.never,
+          ) ?? _getDefaultDecoration(theme),
       keyboardType: widget.keyboardType,
       textCapitalization: widget.textCapitalization,
       textInputAction: widget.textInputAction,
@@ -519,18 +534,17 @@ class _BasfTextFieldState extends State<BasfTextField> {
       focusNode: widget.focusNode,
       controller: widget.controller,
       decoration: widget.decoration?.copyWith(
-        suffixIcon: widget.decoration?.suffixIcon ?? deleteIconButton(),
-        prefixIcon: _getThemedPrefixIcon(theme),
-        hintText: widget.decoration?.hintText,
-        labelStyle: widget.decoration?.labelStyle ??
-            BasfThemes.mainTextTheme.bodyLarge
-                ?.copyWith(color: BasfColors.darkGrey),
-        errorStyle: widget.decoration?.errorStyle?.copyWith(
-              height: 0,
-            ) ??
-            const TextStyle(height: 0),
-        floatingLabelBehavior: FloatingLabelBehavior.never,
-      ),
+            suffixIcon: widget.decoration?.suffixIcon ?? deleteIconButton(),
+            prefixIcon: _getThemedPrefixIcon(theme),
+            hintText: widget.decoration?.hintText,
+            labelStyle: widget.decoration?.labelStyle ??
+                BasfThemes.mainTextTheme.bodyLarge
+                    ?.copyWith(color: BasfColors.darkGrey),
+            errorStyle: widget.decoration?.errorStyle?.copyWith(
+                  height: 0,
+                ) ?? const TextStyle(height: 0),
+            floatingLabelBehavior: FloatingLabelBehavior.never,
+          ) ?? _getDefaultDecoration(theme),
       keyboardType: widget.keyboardType,
       textCapitalization: widget.textCapitalization,
       textInputAction: widget.textInputAction,
