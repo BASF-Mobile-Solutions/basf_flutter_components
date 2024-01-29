@@ -1,9 +1,7 @@
-
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 /// Data model for [PersistedInputCubit]
 class PersistedInputData {
-
   /// Default constructor
   const PersistedInputData({
     this.favoriteValue,
@@ -14,7 +12,7 @@ class PersistedInputData {
   PersistedInputData.fromJson(Map<String, dynamic> json)
       : favoriteValue = json['favorite_value'] as String?,
         lastValues = json['last_values'] as List<String>;
-  
+
   /// Value that is saved to be default
   final String? favoriteValue;
 
@@ -39,8 +37,8 @@ class PersistedInputCubit extends HydratedCubit<PersistedInputData> {
   final String id;
 
   /// Checks if values exist
-  bool get valuesExist => state.favoriteValue != null
-      || state.lastValues.isNotEmpty;
+  bool get valuesExist =>
+      state.favoriteValue != null || state.lastValues.isNotEmpty;
 
   /// Adds new input value to the list
   void addValue(String value) {
@@ -52,10 +50,12 @@ class PersistedInputCubit extends HydratedCubit<PersistedInputData> {
       }
 
       if (!isClosed) {
-        emit(PersistedInputData(
-          favoriteValue: state.favoriteValue,
-          lastValues: newValues,
-        ),);
+        emit(
+          PersistedInputData(
+            favoriteValue: state.favoriteValue,
+            lastValues: newValues,
+          ),
+        );
       }
     }
   }
@@ -63,29 +63,32 @@ class PersistedInputCubit extends HydratedCubit<PersistedInputData> {
   /// Sets favorite value
   void setFavoriteValue(String value) {
     if (!isClosed) {
-      emit(PersistedInputData(
-        favoriteValue: value == state.favoriteValue ? null : value,
-        lastValues: [
-          if (state.favoriteValue != null)
-            state.favoriteValue!,
-          ...state.lastValues,
-        ]..removeWhere((v) {
-          if (value != state.favoriteValue) {
-            return v == value;
-          } else {
-            return false;
-          }
-        }),
-      ),);
+      emit(
+        PersistedInputData(
+          favoriteValue: value == state.favoriteValue ? null : value,
+          lastValues: [
+            if (state.favoriteValue != null) state.favoriteValue!,
+            ...state.lastValues,
+          ]..removeWhere((v) {
+              if (value != state.favoriteValue) {
+                return v == value;
+              } else {
+                return false;
+              }
+            }),
+        ),
+      );
     }
   }
 
   /// Deletes value from the list
   void deleteValue(String value) {
-    emit(PersistedInputData(
-      favoriteValue: state.favoriteValue,
-      lastValues: List.from(state.lastValues)..remove(value),
-    ),);
+    emit(
+      PersistedInputData(
+        favoriteValue: state.favoriteValue,
+        lastValues: List.from(state.lastValues)..remove(value),
+      ),
+    );
   }
 
   @override

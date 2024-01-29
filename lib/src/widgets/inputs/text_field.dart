@@ -282,13 +282,11 @@ class BasfTextField extends StatefulWidget {
   /// Undo controller
   final UndoHistoryController? undoController;
 
-
   @override
   State<BasfTextField> createState() => _BasfTextFieldState();
 }
 
 class _BasfTextFieldState extends State<BasfTextField> {
-
   GlobalKey<FormState>? _formKey;
   late final ValueNotifier<bool> deleteButtonNotifier;
 
@@ -300,8 +298,8 @@ class _BasfTextFieldState extends State<BasfTextField> {
       redrawToChangeThemeBasedOnState();
     }
     widget.controller?.addListener(checkDeleteButtonVisibility);
-    deleteButtonNotifier = ValueNotifier(widget.controller
-        ?.text.isNotEmpty ?? false,
+    deleteButtonNotifier = ValueNotifier(
+      widget.controller?.text.isNotEmpty ?? false,
     );
     super.initState();
   }
@@ -314,8 +312,7 @@ class _BasfTextFieldState extends State<BasfTextField> {
   }
 
   void checkDeleteButtonVisibility() {
-    deleteButtonNotifier.value = widget.controller
-        ?.text.isNotEmpty ?? false;
+    deleteButtonNotifier.value = widget.controller?.text.isNotEmpty ?? false;
   }
 
   void redrawToChangeThemeBasedOnState() {
@@ -442,17 +439,19 @@ class _BasfTextFieldState extends State<BasfTextField> {
       controller: widget.controller,
       initialValue: widget.initialValue,
       decoration: widget.decoration?.copyWith(
-        suffixIcon: widget.decoration?.suffixIcon ?? deleteIconButton(),
-        prefixIcon: _getThemedPrefixIcon(theme),
-        hintText: widget.decoration?.hintText,
-        errorStyle: widget.decoration?.errorStyle?.copyWith(
-          height: 0,
-        ) ?? const TextStyle(height: 0),
-        labelStyle: widget.decoration?.labelStyle ??
-            BasfThemes.mainTextTheme.bodyLarge
-                ?.copyWith(color: BasfColors.darkGrey),
-        floatingLabelBehavior: FloatingLabelBehavior.never,
-      ) ?? const InputDecoration(),
+            suffixIcon: widget.decoration?.suffixIcon ?? deleteIconButton(),
+            prefixIcon: _getThemedPrefixIcon(theme),
+            hintText: widget.decoration?.hintText,
+            errorStyle: widget.decoration?.errorStyle?.copyWith(
+                  height: 0,
+                ) ??
+                const TextStyle(height: 0),
+            labelStyle: widget.decoration?.labelStyle ??
+                BasfThemes.mainTextTheme.bodyLarge
+                    ?.copyWith(color: BasfColors.darkGrey),
+            floatingLabelBehavior: FloatingLabelBehavior.never,
+          ) ??
+          const InputDecoration(),
       keyboardType: widget.keyboardType,
       textCapitalization: widget.textCapitalization,
       textInputAction: widget.textInputAction,
@@ -520,18 +519,20 @@ class _BasfTextFieldState extends State<BasfTextField> {
     return TextField(
       focusNode: widget.focusNode,
       controller: widget.controller,
-      decoration:  widget.decoration?.copyWith(
-        suffixIcon: widget.decoration?.suffixIcon ?? deleteIconButton(),
-        prefixIcon: _getThemedPrefixIcon(theme),
-        hintText: widget.decoration?.hintText,
-        labelStyle: widget.decoration?.labelStyle ??
-            BasfThemes.mainTextTheme.bodyLarge
-                ?.copyWith(color: BasfColors.darkGrey),
-        errorStyle: widget.decoration?.errorStyle?.copyWith(
-          height: 0,
-        ) ?? const TextStyle(height: 0),
-        floatingLabelBehavior: FloatingLabelBehavior.never,
-      ) ?? const InputDecoration(),
+      decoration: widget.decoration?.copyWith(
+            suffixIcon: widget.decoration?.suffixIcon ?? deleteIconButton(),
+            prefixIcon: _getThemedPrefixIcon(theme),
+            hintText: widget.decoration?.hintText,
+            labelStyle: widget.decoration?.labelStyle ??
+                BasfThemes.mainTextTheme.bodyLarge
+                    ?.copyWith(color: BasfColors.darkGrey),
+            errorStyle: widget.decoration?.errorStyle?.copyWith(
+                  height: 0,
+                ) ??
+                const TextStyle(height: 0),
+            floatingLabelBehavior: FloatingLabelBehavior.never,
+          ) ??
+          const InputDecoration(),
       keyboardType: widget.keyboardType,
       textCapitalization: widget.textCapitalization,
       textInputAction: widget.textInputAction,

@@ -17,6 +17,7 @@ class PersistedTextField extends StatefulWidget {
   const PersistedTextField({
     required this.uniqueId,
     required this.controller,
+
     /// You provide a bool notifier, when it becomes true,
     /// save value is triggered
     required this.saveTriggerNotifier,
@@ -341,8 +342,8 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
 
   Future<void> setFavoriteValueAsDefault() async {
     await _initHydratedStorage().then((value) {
-      final cubit = _futureBuilderKey
-          .currentContext!.read<PersistedInputCubit>();
+      final cubit =
+          _futureBuilderKey.currentContext!.read<PersistedInputCubit>();
 
       if (cubit.state.favoriteValue != null) {
         widget.controller.text = cubit.state.favoriteValue!;
@@ -354,7 +355,8 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
   void saveValue() {
     if (widget.controller.text.trim().isNotEmpty) {
       _textFieldKey.currentContext
-          ?.read<PersistedInputCubit>().addValue(widget.controller.text);
+          ?.read<PersistedInputCubit>()
+          .addValue(widget.controller.text);
     }
     if (_focusNode.hasFocus) {
       _focusNode.unfocus();
@@ -427,8 +429,7 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
     return FutureBuilder<({double width, double height})>(
       future: Future.delayed(Duration.zero, () {
         return (
-          width:
-            _textFieldKey.currentContext?.size?.width ?? double.infinity,
+          width: _textFieldKey.currentContext?.size?.width ?? double.infinity,
           height: _textFieldKey.currentContext?.size?.height ?? 50,
         );
       }),
@@ -438,9 +439,9 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
         }
 
         return overlayContainer(
-            snapshot.data!.width,
-            snapshot.data!.height,
-            context,
+          snapshot.data!.width,
+          snapshot.data!.height,
+          context,
         );
       },
     );
@@ -452,12 +453,14 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
     return ValueListenableBuilder(
       valueListenable: textNotifier,
       builder: (context, text, _) {
-        final showFavorite = cubit.state.favoriteValue != null
-          && cubit.state.favoriteValue!.contains(text);
+        final showFavorite = cubit.state.favoriteValue != null &&
+            cubit.state.favoriteValue!.contains(text);
 
         final lastValues = cubit.state.lastValues
-            .where((value) => value.contains(text),
-        ).toList();
+            .where(
+              (value) => value.contains(text),
+            )
+            .toList();
 
         if (!showFavorite && lastValues.isEmpty) {
           return const SizedBox();
@@ -508,8 +511,7 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        if (favoriteExists)
-          separator(context: context, isFavorite: true),
+        if (favoriteExists) separator(context: context, isFavorite: true),
         ...List.generate(lastValues.length, (index) {
           return item(
             context: context,
