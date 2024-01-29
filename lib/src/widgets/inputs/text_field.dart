@@ -288,9 +288,13 @@ class BasfTextField extends StatefulWidget {
 }
 
 class _BasfTextFieldState extends State<BasfTextField> {
+
+  GlobalKey<FormState>? _formKey;
+
   @override
   void initState() {
     if (widget.validator != null) {
+      _formKey = widget.formKey ?? GlobalKey<FormState>();
       widget.controller?.addListener(redrawToChangeThemeBasedOnState);
       redrawToChangeThemeBasedOnState();
     }
@@ -364,7 +368,7 @@ class _BasfTextFieldState extends State<BasfTextField> {
   }
 
   ThemeData _getTheme(ThemeData theme) {
-    if (widget.formKey?.currentState?.validate() == false) {
+    if (_formKey?.currentState?.validate() == false) {
       return BasfInputThemes.errorInputTheme(theme);
     } else if (!isEnabled()) {
       return BasfInputThemes.disabledInputTheme(theme);
@@ -375,7 +379,7 @@ class _BasfTextFieldState extends State<BasfTextField> {
 
   Widget validationFormField(ThemeData theme) {
     return Form(
-      key: widget.formKey,
+      key: _formKey,
       autovalidateMode: widget.autovalidateMode,
       child: textFormField(theme),
     );

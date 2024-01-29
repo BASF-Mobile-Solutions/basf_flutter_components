@@ -337,14 +337,19 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
 
   void textControllerListener() {
     textNotifier.value = widget.controller.text;
+    _showOverlay();
   }
 
-  void setFavoriteValueAsDefault() {
-    final cubit = _futureBuilderKey.currentContext!.read<PersistedInputCubit>();
-    if (cubit.state.favoriteValue != null) {
-      widget.controller.text = cubit.state.favoriteValue!;
-      textNotifier.value = widget.controller.text;
-    }
+  Future<void> setFavoriteValueAsDefault() async {
+    await _initHydratedStorage().then((value) {
+      final cubit = _futureBuilderKey
+          .currentContext!.read<PersistedInputCubit>();
+
+      if (cubit.state.favoriteValue != null) {
+        widget.controller.text = cubit.state.favoriteValue!;
+        textNotifier.value = widget.controller.text;
+      }
+    });
   }
 
   void saveValue() {
