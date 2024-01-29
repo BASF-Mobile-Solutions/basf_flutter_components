@@ -408,6 +408,9 @@ class _BasfTextFieldState extends State<BasfTextField> {
       decoration: widget.decoration?.copyWith(
         prefixIcon: _getThemedPrefixIcon(theme),
         hintText: widget.decoration?.hintText,
+        errorStyle: widget.decoration?.errorStyle?.copyWith(
+          height: 0,
+        ) ?? const TextStyle(height: 0),
         labelStyle: widget.decoration?.labelStyle ??
             BasfThemes.mainTextTheme.bodyLarge
                 ?.copyWith(color: BasfColors.darkGrey),
@@ -486,6 +489,9 @@ class _BasfTextFieldState extends State<BasfTextField> {
         labelStyle: widget.decoration?.labelStyle ??
             BasfThemes.mainTextTheme.bodyLarge
                 ?.copyWith(color: BasfColors.darkGrey),
+        errorStyle: widget.decoration?.errorStyle?.copyWith(
+          height: 0,
+        ) ?? const TextStyle(height: 0),
         floatingLabelBehavior: FloatingLabelBehavior.never,
       ) ?? const InputDecoration(),
       keyboardType: widget.keyboardType,

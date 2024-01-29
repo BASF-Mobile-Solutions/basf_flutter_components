@@ -303,14 +303,22 @@ class PersistedTextField extends StatefulWidget {
 
 class _PersistedTextFieldState extends State<PersistedTextField> {
   final GlobalKey _textFieldKey = GlobalKey();
+  final GlobalKey _futureBuilderKey = GlobalKey();
   late final FocusNode _focusNode;
-  ValueNotifier<bool> overlayShownNotifier = ValueNotifier(false);
+  late final Future<bool> _initStorage;
+  final ValueNotifier<String> textNotifier = ValueNotifier('');
+  final ValueNotifier<bool> overlayShownNotifier = ValueNotifier(false);
 
   @override
   void initState() {
+    _initStorage = _initHydratedStorage();
     _focusNode = FocusNode();
     _focusNode.addListener(_handleFocusChange);
     widget.saveTriggerNotifier.addListener(saveValue);
+    widget.controller.addListener(textControllerListener);
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      setFavoriteValueAsDefault();
+    });
     super.initState();
   }
 
@@ -320,8 +328,23 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
       ..removeListener(_handleFocusChange)
       ..dispose();
     widget.saveTriggerNotifier.removeListener(saveValue);
+    widget.controller.removeListener(textControllerListener);
     _removeOverlay();
+    textNotifier.dispose();
+    overlayShownNotifier.dispose();
     super.dispose();
+  }
+
+  void textControllerListener() {
+    textNotifier.value = widget.controller.text;
+  }
+
+  void setFavoriteValueAsDefault() {
+    final cubit = _futureBuilderKey.currentContext!.read<PersistedInputCubit>();
+    if (cubit.state.favoriteValue != null) {
+      widget.controller.text = cubit.state.favoriteValue!;
+      textNotifier.value = widget.controller.text;
+    }
   }
 
   void saveValue() {
@@ -376,7 +399,8 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
     return BlocProvider(
       create: (context) => PersistedInputCubit(id: widget.uniqueId),
       child: FutureBuilder<bool>(
-        future: _initHydratedStorage(),
+        key: _futureBuilderKey,
+        future: _initStorage,
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const SizedBox();
@@ -389,7 +413,8 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
               return Stack(
                 children: [
                   textField(context),
-                  if (overlayShown && cubit.valuesExist) completeBottomOverlay(),
+                  if (overlayShown && cubit.valuesExist)
+                    completeBottomOverlay(),
                 ],
               );
             },
@@ -413,55 +438,92 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
           return const SizedBox();
         }
 
-        return Container(
-          width: snapshot.data!.width,
-          margin: EdgeInsets.only(
-            top: snapshot.data!.height,
-          ),
-          padding: const EdgeInsets.only(bottom: 10),
-          child: overlayContainer(context),
+        return overlayContainer(
+            snapshot.data!.width,
+            snapshot.data!.height,
+            context,
         );
       },
     );
   }
 
-  Widget overlayContainer(BuildContext context) {
+  Widget overlayContainer(double width, double height, BuildContext context) {
     final cubit = context.read<PersistedInputCubit>();
 
-    return Material(
-      color: widget.dropdownBackgroundColor,
-      elevation: 4,
-      child: ListView(
-        shrinkWrap: true,
-        physics: const ClampingScrollPhysics(),
-        children: [
-          if (cubit.state.favoriteValue != null)
-            item(
-              context: context,
-              value: cubit.state.favoriteValue!,
-              isFavorite: true,
-            ),
-          if (cubit.state.lastValues.isNotEmpty)
-            Column(
-              mainAxisSize: MainAxisSize.min,
+    return ValueListenableBuilder(
+      valueListenable: textNotifier,
+      builder: (context, text, _) {
+        final showFavorite = cubit.state.favoriteValue != null
+          && cubit.state.favoriteValue!.contains(text)
+            && cubit.state.favoriteValue! != text;
+
+        final lastValues = cubit.state.lastValues
+            .where((value) => value.contains(text),
+        ).toList();
+
+        if (!showFavorite && lastValues.isEmpty) {
+          return const SizedBox();
+        }
+
+        return Container(
+          width: width,
+          margin: EdgeInsets.only(
+            top: height,
+          ),
+          padding: const EdgeInsets.only(bottom: 10),
+          child: Material(
+            color: widget.dropdownBackgroundColor,
+            elevation: 4,
+            child: ListView(
+              shrinkWrap: true,
+              physics: const ClampingScrollPhysics(),
               children: [
-                if (cubit.state.favoriteValue != null)
-                  separator(context: context, isFavorite: true),
-                ...List.generate(cubit.state.lastValues.length, (index) {
-                  return item(
+                if (showFavorite)
+                  favoriteItem(context, cubit.state.favoriteValue!),
+                if (lastValues.isNotEmpty)
+                  lastValuesList(
                     context: context,
-                    value: cubit.state.lastValues[index],
-                  );
-                }).joinWithSeparator(
-                  separator(
-                    context: context,
-                    isFavorite: false,
+                    favoriteExists: showFavorite,
+                    lastValues: lastValues,
                   ),
-                ),
               ],
             ),
-        ],
-      ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget favoriteItem(BuildContext context, String favoriteValue) {
+    return item(
+      context: context,
+      value: favoriteValue,
+      isFavorite: true,
+    );
+  }
+
+  Widget lastValuesList({
+    required bool favoriteExists,
+    required List<String> lastValues,
+    required BuildContext context,
+  }) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (favoriteExists)
+          separator(context: context, isFavorite: true),
+        ...List.generate(lastValues.length, (index) {
+          return item(
+            context: context,
+            value: lastValues[index],
+          );
+        }).joinWithSeparator(
+          separator(
+            context: context,
+            isFavorite: false,
+          ),
+        ),
+      ],
     );
   }
 

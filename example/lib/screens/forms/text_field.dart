@@ -81,7 +81,7 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
               uniqueId: 'uniqueId',
               saveTriggerNotifier: saveTriggerNotifier,
               controller: TextEditingController(),
-              onChanged: (text) {
+              onEditingComplete: () {
                 saveTriggerNotifier.value = !saveTriggerNotifier.value;
               },
               decoration: const InputDecoration(
