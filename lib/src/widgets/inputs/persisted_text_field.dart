@@ -459,8 +459,7 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
       valueListenable: textNotifier,
       builder: (context, text, _) {
         final showFavorite = cubit.state.favoriteValue != null
-          && cubit.state.favoriteValue!.contains(text)
-            && cubit.state.favoriteValue! != text;
+          && cubit.state.favoriteValue!.contains(text);
 
         final lastValues = cubit.state.lastValues
             .where((value) => value.contains(text),
