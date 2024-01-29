@@ -337,7 +337,6 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
 
   void textControllerListener() {
     textNotifier.value = widget.controller.text;
-    _showOverlay();
   }
 
   Future<void> setFavoriteValueAsDefault() async {
@@ -392,11 +391,6 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
 
   void _showOverlay() {
     overlayShownNotifier.value = true;
-  }
-
-  void _selectItem(String value) {
-    widget.controller.text = value;
-    _removeOverlay();
   }
 
   @override
@@ -547,7 +541,7 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
         }
       },
       onTap: () {
-        _selectItem(value);
+        widget.controller.text = value;
       },
       trailing: bookmarkIcon(
         context: context,
@@ -621,7 +615,10 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
       minLines: widget.minLines,
       expands: widget.expands,
       maxLength: widget.maxLength,
-      onChanged: widget.onChanged,
+      onChanged: (text) {
+        widget.onChanged?.call(text);
+        _showOverlay();
+      },
       onTap: () {
         widget.onTap?.call();
         _showOverlay();

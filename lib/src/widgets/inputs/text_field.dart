@@ -290,6 +290,7 @@ class BasfTextField extends StatefulWidget {
 class _BasfTextFieldState extends State<BasfTextField> {
 
   GlobalKey<FormState>? _formKey;
+  late final ValueNotifier<bool> deleteButtonNotifier;
 
   @override
   void initState() {
@@ -298,13 +299,23 @@ class _BasfTextFieldState extends State<BasfTextField> {
       widget.controller?.addListener(redrawToChangeThemeBasedOnState);
       redrawToChangeThemeBasedOnState();
     }
+    widget.controller?.addListener(checkDeleteButtonVisibility);
+    deleteButtonNotifier = ValueNotifier(widget.controller
+        ?.text.isNotEmpty ?? false,
+    );
     super.initState();
   }
 
   @override
   void dispose() {
     widget.controller?.removeListener(redrawToChangeThemeBasedOnState);
+    widget.controller?.removeListener(checkDeleteButtonVisibility);
     super.dispose();
+  }
+
+  void checkDeleteButtonVisibility() {
+    deleteButtonNotifier.value = widget.controller
+        ?.text.isNotEmpty ?? false;
   }
 
   void redrawToChangeThemeBasedOnState() {
@@ -404,12 +415,34 @@ class _BasfTextFieldState extends State<BasfTextField> {
     return widget.enabled ?? widget.decoration?.enabled ?? true;
   }
 
+  Widget deleteIconButton() {
+    return ValueListenableBuilder(
+      valueListenable: deleteButtonNotifier,
+      builder: (context, visible, _) {
+        return Visibility(
+          visible: visible,
+          child: IconButton(
+            icon: const Icon(Icons.delete_sweep_outlined),
+            splashRadius: 25,
+            splashColor: Theme.of(context).dialogBackgroundColor,
+            highlightColor: Theme.of(context).dialogBackgroundColor,
+            onPressed: () {
+              widget.controller?.text = '';
+              widget.focusNode?.requestFocus();
+            },
+          ),
+        );
+      },
+    );
+  }
+
   Widget textFormField(ThemeData theme) {
     return TextFormField(
       focusNode: widget.focusNode,
       controller: widget.controller,
       initialValue: widget.initialValue,
       decoration: widget.decoration?.copyWith(
+        suffixIcon: widget.decoration?.suffixIcon ?? deleteIconButton(),
         prefixIcon: _getThemedPrefixIcon(theme),
         hintText: widget.decoration?.hintText,
         errorStyle: widget.decoration?.errorStyle?.copyWith(
@@ -488,6 +521,7 @@ class _BasfTextFieldState extends State<BasfTextField> {
       focusNode: widget.focusNode,
       controller: widget.controller,
       decoration:  widget.decoration?.copyWith(
+        suffixIcon: widget.decoration?.suffixIcon ?? deleteIconButton(),
         prefixIcon: _getThemedPrefixIcon(theme),
         hintText: widget.decoration?.hintText,
         labelStyle: widget.decoration?.labelStyle ??
