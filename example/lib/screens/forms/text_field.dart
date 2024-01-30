@@ -64,7 +64,6 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
             const SizedBox(height: 15),
             BasfTextField(
               formKey: _formKey,
-              autovalidateMode: AutovalidateMode.always,
               validator: (value) {
                 if (value?.isEmpty ?? false) {
                   return 'Please enter some text';

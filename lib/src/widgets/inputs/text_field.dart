@@ -288,6 +288,7 @@ class BasfTextField extends StatefulWidget {
 
 class _BasfTextFieldState extends State<BasfTextField> {
   GlobalKey<FormState>? _formKey;
+  bool isFirstValidation = true;
   late final ValueNotifier<bool> deleteButtonNotifier;
 
   @override
@@ -317,7 +318,7 @@ class _BasfTextFieldState extends State<BasfTextField> {
 
   void redrawToChangeThemeBasedOnState() {
     if (mounted) {
-      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
         setState(() {});
       });
     }
@@ -376,14 +377,31 @@ class _BasfTextFieldState extends State<BasfTextField> {
   }
 
   ThemeData _getTheme(ThemeData theme) {
-    if (_formKey?.currentState?.validate() == false) {
-      return BasfInputThemes.errorInputTheme(theme);
-    } else if (!isEnabled()) {
+    switch (widget.autovalidateMode) {
+      case AutovalidateMode.always:
+        if (_formKey?.currentState?.validate() == false) {
+          return BasfInputThemes.errorInputTheme(theme);
+        }
+      case AutovalidateMode.onUserInteraction:
+        if (!isFirstValidation && _formKey?.currentState?.validate() == false) {
+          return BasfInputThemes.errorInputTheme(theme);
+        }
+      case AutovalidateMode.disabled: break;
+      case null:
+        if (widget.validator != null
+            && !isFirstValidation
+            && _formKey?.currentState?.validate() == false) {
+          return BasfInputThemes.errorInputTheme(theme);
+        }
+    }
+
+    if (!isEnabled()) {
       return BasfInputThemes.disabledInputTheme(theme);
     } else {
       return Theme.of(context);
     }
   }
+
 
   Widget validationFormField(ThemeData theme) {
     return Form(
@@ -420,6 +438,7 @@ class _BasfTextFieldState extends State<BasfTextField> {
           visible: visible,
           child: IconButton(
             icon: const Icon(Icons.delete_sweep_outlined),
+            color: Theme.of(context).iconTheme.color,
             splashRadius: 25,
             splashColor: Theme.of(context).dialogBackgroundColor,
             highlightColor: Theme.of(context).dialogBackgroundColor,
@@ -454,7 +473,8 @@ class _BasfTextFieldState extends State<BasfTextField> {
       controller: widget.controller,
       initialValue: widget.initialValue,
       decoration: widget.decoration?.copyWith(
-            suffixIcon: widget.decoration?.suffixIcon ?? deleteIconButton(),
+            suffixIcon: widget.decoration?.suffixIcon
+                ?? deleteIconButton(),
             prefixIcon: _getThemedPrefixIcon(theme),
             hintText: widget.decoration?.hintText,
             errorStyle: widget.decoration?.errorStyle?.copyWith(
@@ -491,7 +511,10 @@ class _BasfTextFieldState extends State<BasfTextField> {
       minLines: widget.minLines,
       expands: widget.expands,
       maxLength: widget.maxLength,
-      onChanged: widget.onChanged,
+      onChanged: (text) {
+        widget.onChanged?.call(text);
+        isFirstValidation = false;
+      },
       onTap: widget.onTap,
       onEditingComplete: widget.onEditingComplete,
       onFieldSubmitted: widget.onFieldSubmitted,
@@ -534,7 +557,8 @@ class _BasfTextFieldState extends State<BasfTextField> {
       focusNode: widget.focusNode,
       controller: widget.controller,
       decoration: widget.decoration?.copyWith(
-            suffixIcon: widget.decoration?.suffixIcon ?? deleteIconButton(),
+            suffixIcon: widget.decoration?.suffixIcon
+                ?? deleteIconButton(),
             prefixIcon: _getThemedPrefixIcon(theme),
             hintText: widget.decoration?.hintText,
             labelStyle: widget.decoration?.labelStyle ??
