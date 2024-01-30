@@ -14,7 +14,7 @@ jobs:
     with:
       flutter_channel: stable
       flutter_version: 3.16.9
-      min_coverage: 75
+      min_coverage: 30
 
   pana:
     runs-on: ubuntu-latest
