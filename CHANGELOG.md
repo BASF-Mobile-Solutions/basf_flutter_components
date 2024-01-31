@@ -1,3 +1,11 @@
+## 2.2.8
+
+- Persistent input widget added
+- Basf input widget updated
+
+<details >
+<summary>Previous versions</summary>
+
 ## 2.2.7
 
 - update colors
@@ -6,9 +14,6 @@
 
 - remove material 2
 - update Flutter to 3.16
-
-<details >
-<summary>Previous versions</summary>
 
 ## 2.2.5
 

@@ -1,4 +1,7 @@
+import 'dart:ui';
+
 import 'package:basf_flutter_components/basf_flutter_components.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -63,6 +66,19 @@ class BasfTextField extends StatefulWidget {
     this.restorationId,
     this.enableIMEPersonalizedLearning = true,
     this.greyWhenDisabled = true,
+    this.canRequestFocus = true,
+    this.clipBehavior = Clip.hardEdge,
+    this.contentInsertionConfiguration,
+    this.cursorOpacityAnimates,
+    this.dragStartBehavior = DragStartBehavior.start,
+    this.magnifierConfiguration,
+    this.onAppPrivateCommand,
+    this.onSubmitted,
+    this.scribbleEnabled = true,
+    this.selectionHeightStyle = BoxHeightStyle.tight,
+    this.selectionWidthStyle = BoxWidthStyle.tight,
+    this.spellCheckConfiguration,
+    this.undoController,
   });
 
   /// Form key
@@ -125,10 +141,10 @@ class BasfTextField extends StatefulWidget {
   /// Obscuring character
   final String obscuringCharacter;
 
-  /// Wheter or not to hide the text
+  /// Whether or not to hide the text
   final bool obscureText;
 
-  /// Wheter or not to correct the text automatically
+  /// Whether or not to correct the text automatically
   final bool autocorrect;
 
   /// Smart dashes type
@@ -137,7 +153,7 @@ class BasfTextField extends StatefulWidget {
   /// Smart quotes type
   final SmartQuotesType? smartQuotesType;
 
-  /// Wheter or not to show suggestions
+  /// Whether or not to show suggestions
   final bool enableSuggestions;
 
   /// Max length setter
@@ -149,7 +165,7 @@ class BasfTextField extends StatefulWidget {
   /// Min lines for the input
   final int? minLines;
 
-  /// Wheter or not it expands
+  /// Whether or not it expands
   final bool expands;
 
   /// Max character length
@@ -176,7 +192,7 @@ class BasfTextField extends StatefulWidget {
   /// Input formatters
   final List<TextInputFormatter>? inputFormatters;
 
-  /// Wheter or not it is enabled
+  /// Whether or not it is enabled
   final bool? enabled;
 
   /// Cursor width
@@ -224,32 +240,85 @@ class BasfTextField extends StatefulWidget {
   /// Restoration ID
   final String? restorationId;
 
-  /// Enable IMEPErsonalized learning
+  /// Enable IMEPersonalized learning
   final bool enableIMEPersonalizedLearning;
+
+  /// Request focus
+  final bool canRequestFocus;
+
+  /// Clip behavior
+  final Clip clipBehavior;
+
+  /// Content configuration
+  final ContentInsertionConfiguration? contentInsertionConfiguration;
+
+  /// Cursor animation
+  final bool? cursorOpacityAnimates;
+
+  /// Drag behavior
+  final DragStartBehavior dragStartBehavior;
+
+  /// Magnifier config
+  final TextMagnifierConfiguration? magnifierConfiguration;
+
+  /// Primitive command
+  final AppPrivateCommandCallback? onAppPrivateCommand;
+
+  /// OnSubmitted callback
+  final ValueChanged<String>? onSubmitted;
+
+  /// Scribble enabled
+  final bool scribbleEnabled;
+
+  /// Controls how height the selection highlight boxes are computed to be.
+  final BoxHeightStyle selectionHeightStyle;
+
+  /// Controls how wide the selection highlight boxes are computed to be.
+  final BoxWidthStyle selectionWidthStyle;
+
+  /// Spell check
+  final SpellCheckConfiguration? spellCheckConfiguration;
+
+  /// Undo controller
+  final UndoHistoryController? undoController;
 
   @override
   State<BasfTextField> createState() => _BasfTextFieldState();
 }
 
 class _BasfTextFieldState extends State<BasfTextField> {
+  GlobalKey<FormState>? _formKey;
+  bool isFirstValidation = true;
+  late final ValueNotifier<bool> deleteButtonNotifier;
+
   @override
   void initState() {
     if (widget.validator != null) {
+      _formKey = widget.formKey ?? GlobalKey<FormState>();
       widget.controller?.addListener(redrawToChangeThemeBasedOnState);
       redrawToChangeThemeBasedOnState();
     }
+    widget.controller?.addListener(checkDeleteButtonVisibility);
+    deleteButtonNotifier = ValueNotifier(
+      widget.controller?.text.isNotEmpty ?? false,
+    );
     super.initState();
   }
 
   @override
   void dispose() {
     widget.controller?.removeListener(redrawToChangeThemeBasedOnState);
+    widget.controller?.removeListener(checkDeleteButtonVisibility);
     super.dispose();
+  }
+
+  void checkDeleteButtonVisibility() {
+    deleteButtonNotifier.value = widget.controller?.text.isNotEmpty ?? false;
   }
 
   void redrawToChangeThemeBasedOnState() {
     if (mounted) {
-      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
         setState(() {});
       });
     }
@@ -308,9 +377,26 @@ class _BasfTextFieldState extends State<BasfTextField> {
   }
 
   ThemeData _getTheme(ThemeData theme) {
-    if (widget.formKey?.currentState?.validate() == false) {
-      return BasfInputThemes.errorInputTheme(theme);
-    } else if (!isEnabled()) {
+    switch (widget.autovalidateMode) {
+      case AutovalidateMode.always:
+        if (_formKey?.currentState?.validate() == false) {
+          return BasfInputThemes.errorInputTheme(theme);
+        }
+      case AutovalidateMode.onUserInteraction:
+        if (!isFirstValidation && _formKey?.currentState?.validate() == false) {
+          return BasfInputThemes.errorInputTheme(theme);
+        }
+      case AutovalidateMode.disabled:
+        break;
+      case null:
+        if (widget.validator != null &&
+            !isFirstValidation &&
+            _formKey?.currentState?.validate() == false) {
+          return BasfInputThemes.errorInputTheme(theme);
+        }
+    }
+
+    if (!isEnabled()) {
       return BasfInputThemes.disabledInputTheme(theme);
     } else {
       return Theme.of(context);
@@ -319,7 +405,7 @@ class _BasfTextFieldState extends State<BasfTextField> {
 
   Widget validationFormField(ThemeData theme) {
     return Form(
-      key: widget.formKey,
+      key: _formKey,
       autovalidateMode: widget.autovalidateMode,
       child: textFormField(theme),
     );
@@ -344,20 +430,63 @@ class _BasfTextFieldState extends State<BasfTextField> {
     return widget.enabled ?? widget.decoration?.enabled ?? true;
   }
 
+  Widget deleteIconButton() {
+    return ValueListenableBuilder(
+      valueListenable: deleteButtonNotifier,
+      builder: (context, visible, _) {
+        return Visibility(
+          visible: visible,
+          child: IconButton(
+            icon: const Icon(Icons.delete_sweep_outlined),
+            color: Theme.of(context).iconTheme.color,
+            splashRadius: 25,
+            splashColor: Theme.of(context).dialogBackgroundColor,
+            highlightColor: Theme.of(context).dialogBackgroundColor,
+            onPressed: () {
+              widget.controller?.text = '';
+              widget.focusNode?.requestFocus();
+            },
+          ),
+        );
+      },
+    );
+  }
+
+  InputDecoration _getDefaultDecoration(ThemeData theme) {
+    return InputDecoration(
+      suffixIcon: deleteIconButton(),
+      prefixIcon: _getThemedPrefixIcon(theme),
+      hintText: widget.decoration?.hintText,
+      errorStyle: widget.decoration?.errorStyle?.copyWith(
+            height: 0,
+          ) ??
+          const TextStyle(height: 0),
+      labelStyle: widget.decoration?.labelStyle ??
+          BasfThemes.mainTextTheme.bodyLarge
+              ?.copyWith(color: BasfColors.darkGrey),
+      floatingLabelBehavior: FloatingLabelBehavior.never,
+    );
+  }
+
   Widget textFormField(ThemeData theme) {
     return TextFormField(
-      key: widget.key,
       focusNode: widget.focusNode,
       controller: widget.controller,
       initialValue: widget.initialValue,
       decoration: widget.decoration?.copyWith(
-        prefixIcon: _getThemedPrefixIcon(theme),
-        hintText: widget.decoration?.hintText,
-        labelStyle: widget.decoration?.labelStyle ??
-            BasfThemes.mainTextTheme.bodyLarge
-                ?.copyWith(color: BasfColors.darkGrey),
-        floatingLabelBehavior: FloatingLabelBehavior.never,
-      ),
+            suffixIcon: widget.decoration?.suffixIcon ?? deleteIconButton(),
+            prefixIcon: _getThemedPrefixIcon(theme),
+            hintText: widget.decoration?.hintText,
+            errorStyle: widget.decoration?.errorStyle?.copyWith(
+                  height: 0,
+                ) ??
+                const TextStyle(height: 0),
+            labelStyle: widget.decoration?.labelStyle ??
+                BasfThemes.mainTextTheme.bodyLarge
+                    ?.copyWith(color: BasfColors.darkGrey),
+            floatingLabelBehavior: FloatingLabelBehavior.never,
+          ) ??
+          _getDefaultDecoration(theme),
       keyboardType: widget.keyboardType,
       textCapitalization: widget.textCapitalization,
       textInputAction: widget.textInputAction,
@@ -383,7 +512,10 @@ class _BasfTextFieldState extends State<BasfTextField> {
       minLines: widget.minLines,
       expands: widget.expands,
       maxLength: widget.maxLength,
-      onChanged: widget.onChanged,
+      onChanged: (text) {
+        widget.onChanged?.call(text);
+        isFirstValidation = false;
+      },
       onTap: widget.onTap,
       onEditingComplete: widget.onEditingComplete,
       onFieldSubmitted: widget.onFieldSubmitted,
@@ -406,6 +538,18 @@ class _BasfTextFieldState extends State<BasfTextField> {
       scrollController: widget.scrollController,
       restorationId: widget.restorationId,
       enableIMEPersonalizedLearning: widget.enableIMEPersonalizedLearning,
+      canRequestFocus: widget.canRequestFocus,
+      clipBehavior: widget.clipBehavior,
+      contentInsertionConfiguration: widget.contentInsertionConfiguration,
+      cursorOpacityAnimates: widget.cursorOpacityAnimates,
+      dragStartBehavior: widget.dragStartBehavior,
+      magnifierConfiguration: widget.magnifierConfiguration,
+      onAppPrivateCommand: widget.onAppPrivateCommand,
+      scribbleEnabled: widget.scribbleEnabled,
+      selectionHeightStyle: widget.selectionHeightStyle,
+      selectionWidthStyle: widget.selectionWidthStyle,
+      spellCheckConfiguration: widget.spellCheckConfiguration,
+      undoController: widget.undoController,
     );
   }
 
@@ -414,13 +558,19 @@ class _BasfTextFieldState extends State<BasfTextField> {
       focusNode: widget.focusNode,
       controller: widget.controller,
       decoration: widget.decoration?.copyWith(
-        prefixIcon: _getThemedPrefixIcon(theme),
-        hintText: widget.decoration?.hintText,
-        labelStyle: widget.decoration?.labelStyle ??
-            BasfThemes.mainTextTheme.bodyLarge
-                ?.copyWith(color: BasfColors.darkGrey),
-        floatingLabelBehavior: FloatingLabelBehavior.never,
-      ),
+            suffixIcon: widget.decoration?.suffixIcon ?? deleteIconButton(),
+            prefixIcon: _getThemedPrefixIcon(theme),
+            hintText: widget.decoration?.hintText,
+            labelStyle: widget.decoration?.labelStyle ??
+                BasfThemes.mainTextTheme.bodyLarge
+                    ?.copyWith(color: BasfColors.darkGrey),
+            errorStyle: widget.decoration?.errorStyle?.copyWith(
+                  height: 0,
+                ) ??
+                const TextStyle(height: 0),
+            floatingLabelBehavior: FloatingLabelBehavior.never,
+          ) ??
+          _getDefaultDecoration(theme),
       keyboardType: widget.keyboardType,
       textCapitalization: widget.textCapitalization,
       textInputAction: widget.textInputAction,
@@ -462,6 +612,22 @@ class _BasfTextFieldState extends State<BasfTextField> {
       scrollController: widget.scrollController,
       restorationId: widget.restorationId,
       enableIMEPersonalizedLearning: widget.enableIMEPersonalizedLearning,
+      contextMenuBuilder: widget.contextMenuBuilder,
+      onTapOutside: widget.onTapOutside,
+      canRequestFocus: widget.canRequestFocus,
+      clipBehavior: widget.clipBehavior,
+      contentInsertionConfiguration: widget.contentInsertionConfiguration,
+      cursorOpacityAnimates: widget.cursorOpacityAnimates,
+      dragStartBehavior: widget.dragStartBehavior,
+      magnifierConfiguration: widget.magnifierConfiguration,
+      mouseCursor: widget.mouseCursor,
+      onAppPrivateCommand: widget.onAppPrivateCommand,
+      onSubmitted: widget.onSubmitted,
+      scribbleEnabled: widget.scribbleEnabled,
+      selectionHeightStyle: widget.selectionHeightStyle,
+      selectionWidthStyle: widget.selectionWidthStyle,
+      spellCheckConfiguration: widget.spellCheckConfiguration,
+      undoController: widget.undoController,
     );
   }
 }

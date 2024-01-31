@@ -6,10 +6,9 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: ">=3.2.0 <4.0.0"
+  sdk: ">=3.2.6 <4.0.0"
 
 dependencies:
-
   basf_flutter_components:
     # When depending on this package from a real application you should use:
     #   basf_flutter_components: ^x.y.z
