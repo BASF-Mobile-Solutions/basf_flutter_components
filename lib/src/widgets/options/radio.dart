@@ -2,7 +2,6 @@ import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:flutter/material.dart';
 
 /// Radio option row with BASF Style
-/// {@radio}
 class RadioOptions<T> extends StatelessWidget {
   /// {@macro radio}
   const RadioOptions({

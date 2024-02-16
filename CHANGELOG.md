@@ -1,10 +1,14 @@
+## 2.2.9
+
+- Flutter 3.19
+
+<details >
+<summary>Previous versions</summary>
+
 ## 2.2.8
 
 - Persistent input widget added
 - Basf input widget updated
-
-<details >
-<summary>Previous versions</summary>
 
 ## 2.2.7
 
