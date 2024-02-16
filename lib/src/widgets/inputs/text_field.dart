@@ -79,6 +79,9 @@ class BasfTextField extends StatefulWidget {
     this.selectionWidthStyle = BoxWidthStyle.tight,
     this.spellCheckConfiguration,
     this.undoController,
+    this.cursorErrorColor,
+    this.onTapAlwaysCalled = false,
+    this.statesController,
   });
 
   /// Form key
@@ -281,6 +284,15 @@ class BasfTextField extends StatefulWidget {
 
   /// Undo controller
   final UndoHistoryController? undoController;
+
+  /// cursor error color
+  final Color? cursorErrorColor;
+
+  /// on tap always called
+  final bool onTapAlwaysCalled;
+
+  /// states controller
+  final MaterialStatesController? statesController;
 
   @override
   State<BasfTextField> createState() => _BasfTextFieldState();
@@ -550,6 +562,9 @@ class _BasfTextFieldState extends State<BasfTextField> {
       selectionWidthStyle: widget.selectionWidthStyle,
       spellCheckConfiguration: widget.spellCheckConfiguration,
       undoController: widget.undoController,
+      cursorErrorColor: widget.cursorErrorColor,
+      onTapAlwaysCalled: widget.onTapAlwaysCalled,
+      statesController: widget.statesController,
     );
   }
 
@@ -628,6 +643,9 @@ class _BasfTextFieldState extends State<BasfTextField> {
       selectionWidthStyle: widget.selectionWidthStyle,
       spellCheckConfiguration: widget.spellCheckConfiguration,
       undoController: widget.undoController,
+      cursorErrorColor: widget.cursorErrorColor,
+      onTapAlwaysCalled: widget.onTapAlwaysCalled,
+      statesController: widget.statesController,
     );
   }
 }
