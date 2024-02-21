@@ -411,11 +411,14 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
             valueListenable: overlayShownNotifier,
             builder: (context, overlayShown, _) {
               final cubit = context.read<PersistedInputCubit>();
-              return Stack(
+              return Column(
                 children: [
                   textField(context),
-                  if (overlayShown && cubit.valuesExist)
-                    completeBottomOverlay(),
+                  Fade(
+                    duration: const Duration(milliseconds: 150),
+                    visible: overlayShown && cubit.valuesExist,
+                    child: completeBottomOverlay(),
+                  ),
                 ],
               );
             },
@@ -440,14 +443,13 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
 
         return overlayContainer(
           snapshot.data!.width,
-          snapshot.data!.height,
           context,
         );
       },
     );
   }
 
-  Widget overlayContainer(double width, double height, BuildContext context) {
+  Widget overlayContainer(double width, BuildContext context) {
     final cubit = context.read<PersistedInputCubit>();
 
     return ValueListenableBuilder(
@@ -468,10 +470,7 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
 
         return Container(
           width: width,
-          margin: EdgeInsets.only(
-            top: height,
-          ),
-          padding: const EdgeInsets.only(bottom: 10),
+          margin: const EdgeInsets.only(bottom: 10),
           child: Material(
             color: widget.dropdownBackgroundColor,
             elevation: 4,

@@ -1,9 +1,10 @@
+## 2.2.10
+
+- Better persistent field show up
+
 ## 2.2.9
 
 - Flutter 3.19
-
-<details >
-<summary>Previous versions</summary>
 
 ## 2.2.8
 
@@ -208,5 +209,3 @@
 ## 0.0.1
 
 - Initial setup
-
-</details>
