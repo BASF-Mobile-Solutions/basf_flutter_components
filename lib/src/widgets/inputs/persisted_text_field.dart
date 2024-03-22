@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:basf_flutter_components/src/widgets/inputs/logic/persisted_input_cubit.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -87,8 +88,13 @@ class PersistedTextField extends StatefulWidget {
     this.selectionWidthStyle = BoxWidthStyle.tight,
     this.spellCheckConfiguration,
     this.undoController,
+    this.persistentCubit,
     super.key,
   });
+
+  /// Cubit to work with persistent state from outside,
+  /// if not provided will be auto-created
+  final PersistedInputCubit? persistentCubit;
 
   /// Color of suggestions dropdown
   final Color dropdownBackgroundColor;
@@ -397,34 +403,45 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => PersistedInputCubit(id: widget.uniqueId),
-      child: FutureBuilder<bool>(
-        key: _futureBuilderKey,
-        future: _initStorage,
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return const SizedBox();
-          }
+    if (widget.persistentCubit != null) {
+      return BlocProvider.value(
+          value: widget.persistentCubit!,
+          child: body(),
+      );
+    } else {
+      return BlocProvider(
+        create: (context) => PersistedInputCubit(id: widget.uniqueId),
+        child: body(),
+      );
+    }
+  }
 
-          return ValueListenableBuilder<bool>(
-            valueListenable: overlayShownNotifier,
-            builder: (context, overlayShown, _) {
-              final cubit = context.read<PersistedInputCubit>();
-              return Column(
-                children: [
-                  textField(context),
-                  Fade(
-                    duration: const Duration(milliseconds: 150),
-                    visible: overlayShown && cubit.valuesExist,
-                    child: completeBottomOverlay(),
-                  ),
-                ],
-              );
-            },
-          );
-        },
-      ),
+  Widget body() {
+    return FutureBuilder<bool>(
+      key: _futureBuilderKey,
+      future: _initStorage,
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return const SizedBox();
+        }
+
+        return ValueListenableBuilder<bool>(
+          valueListenable: overlayShownNotifier,
+          builder: (context, overlayShown, _) {
+            final cubit = context.read<PersistedInputCubit>();
+            return Column(
+              children: [
+                textField(context),
+                Fade(
+                  duration: const Duration(milliseconds: 150),
+                  visible: overlayShown && cubit.valuesExist,
+                  child: completeBottomOverlay(),
+                ),
+              ],
+            );
+          },
+        );
+      },
     );
   }
 

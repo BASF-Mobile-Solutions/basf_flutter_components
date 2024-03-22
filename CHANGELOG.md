@@ -1,3 +1,7 @@
+## 2.2.11
+
+- Persistent input now can work from outside
+
 ## 2.2.10
 
 - Better persistent field show up
