@@ -1,8 +1,6 @@
 import 'dart:ui';
 
 import 'package:basf_flutter_components/basf_flutter_components.dart';
-import 'package:basf_flutter_components/src/widgets/inputs/logic/persisted_input_cubit.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -405,8 +403,8 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
   Widget build(BuildContext context) {
     if (widget.persistentCubit != null) {
       return BlocProvider.value(
-          value: widget.persistentCubit!,
-          child: body(),
+        value: widget.persistentCubit!,
+        child: body(),
       );
     } else {
       return BlocProvider(
