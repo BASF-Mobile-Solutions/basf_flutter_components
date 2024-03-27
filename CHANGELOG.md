@@ -1,3 +1,7 @@
+## 2.2.12
+
+- Fix actions and paste in BASF Text field
+
 ## 2.2.11
 
 - Persistent input now can work from outside

@@ -509,7 +509,8 @@ class _BasfTextFieldState extends State<BasfTextField> {
       textAlignVertical: widget.textAlignVertical,
       autofocus: widget.autofocus,
       readOnly: widget.readOnly,
-      contextMenuBuilder: widget.contextMenuBuilder,
+      contextMenuBuilder:
+          widget.contextMenuBuilder ?? const TextField().contextMenuBuilder,
       mouseCursor: widget.mouseCursor,
       onTapOutside: widget.onTapOutside,
       showCursor: widget.showCursor,
@@ -627,7 +628,8 @@ class _BasfTextFieldState extends State<BasfTextField> {
       scrollController: widget.scrollController,
       restorationId: widget.restorationId,
       enableIMEPersonalizedLearning: widget.enableIMEPersonalizedLearning,
-      contextMenuBuilder: widget.contextMenuBuilder,
+      contextMenuBuilder:
+          widget.contextMenuBuilder ?? const TextField().contextMenuBuilder,
       onTapOutside: widget.onTapOutside,
       canRequestFocus: widget.canRequestFocus,
       clipBehavior: widget.clipBehavior,
