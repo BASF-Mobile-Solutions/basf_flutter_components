@@ -292,7 +292,7 @@ class BasfTextField extends StatefulWidget {
   final bool onTapAlwaysCalled;
 
   /// states controller
-  final MaterialStatesController? statesController;
+  final WidgetStatesController? statesController;
 
   @override
   State<BasfTextField> createState() => _BasfTextFieldState();

@@ -35,14 +35,14 @@ class _TextButtonStyles extends ButtonStyles {
           borderRadius: BasfThemes.defaultBorderRadius,
         ),
       ).copyWith(
-        backgroundColor: MaterialStateProperty.resolveWith((states) {
-          if (states.contains(MaterialState.disabled)) {
+        backgroundColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.disabled)) {
             return BasfColors.grey;
           } else {
             return primaryColor;
           }
         }),
-        foregroundColor: MaterialStateProperty.all(BasfColors.white),
+        foregroundColor: WidgetStateProperty.all(BasfColors.white),
       );
 
   ButtonStyle transparentTextButtonStyle(Color foregroundColor) {
@@ -58,8 +58,8 @@ class _TextButtonStyles extends ButtonStyles {
       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
       textStyle: BasfThemes.mainTextTheme.bodySmall,
     ).copyWith(
-      foregroundColor: MaterialStateProperty.resolveWith((states) {
-        return states.contains(MaterialState.disabled)
+      foregroundColor: WidgetStateProperty.resolveWith((states) {
+        return states.contains(WidgetState.disabled)
             ? BasfColors.grey
             : foregroundColor;
       }),
@@ -68,10 +68,10 @@ class _TextButtonStyles extends ButtonStyles {
 
   ButtonStyle hintTextButtonStyle(Color primaryColor) {
     return transparentTextButtonStyle(primaryColor).copyWith(
-      textStyle: MaterialStateProperty.all(BasfThemes.mainTextTheme.titleSmall),
-      padding: MaterialStateProperty.all(const EdgeInsets.all(5)),
-      foregroundColor: MaterialStateProperty.all(BasfColors.grey),
-      overlayColor: MaterialStateProperty.all(BasfColors.grey.shade100),
+      textStyle: WidgetStateProperty.all(BasfThemes.mainTextTheme.titleSmall),
+      padding: WidgetStateProperty.all(const EdgeInsets.all(5)),
+      foregroundColor: WidgetStateProperty.all(BasfColors.grey),
+      overlayColor: WidgetStateProperty.all(BasfColors.grey.shade100),
     );
   }
 }
@@ -85,22 +85,22 @@ class _OutlinedButtonStyles extends ButtonStyles {
           borderRadius: BasfThemes.defaultBorderRadius,
         ),
       ).copyWith(
-        side: MaterialStateProperty.resolveWith((states) {
-          if (states.contains(MaterialState.disabled)) {
+        side: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.disabled)) {
             return null;
           } else {
             return BorderSide(color: primaryColor);
           }
         }),
-        backgroundColor: MaterialStateProperty.resolveWith((states) {
-          if (states.contains(MaterialState.disabled)) {
+        backgroundColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.disabled)) {
             return BasfColors.grey;
           } else {
             return BasfColors.transparent;
           }
         }),
-        foregroundColor: MaterialStateProperty.resolveWith((states) {
-          if (states.contains(MaterialState.disabled)) {
+        foregroundColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.disabled)) {
             return BasfColors.white;
           } else {
             return primaryColor;
