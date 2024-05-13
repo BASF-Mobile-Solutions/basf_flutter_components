@@ -1,3 +1,7 @@
+## 2.3.0
+
+- Upgrade to Flutter 3.22 and Dart 3.4
+
 ## 2.2.12
 
 - Fix actions and paste in BASF Text field
