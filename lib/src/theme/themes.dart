@@ -45,6 +45,7 @@ class BasfThemes {
 
     return ThemeData(
       fontFamily: 'Roboto',
+      fontFamilyFallback: const ['NotoSansSC'],
       textTheme: mainTextTheme,
       appBarTheme: _mainAppBarTheme(theme),
       scaffoldBackgroundColor: BasfColors.white,
