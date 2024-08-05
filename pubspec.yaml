@@ -63,3 +63,23 @@ flutter:
         - asset: assets/fonts/roboto/Roboto-BlackItalic.ttf
           style: italic
           weight: 900
+    - family: NotoSansSC
+      fonts:
+        - asset: assets/fonts/noto_sans_sc/NotoSansSC-Black.ttf
+          weight: 900
+        - asset: assets/fonts/noto_sans_sc/NotoSansSC-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/noto_sans_sc/NotoSansSC-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/noto_sans_sc/NotoSansSC-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/noto_sans_sc/NotoSansSC-Light.ttf
+          weight: 300
+        - asset: assets/fonts/noto_sans_sc/NotoSansSC-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/noto_sans_sc/NotoSansSC-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/noto_sans_sc/NotoSansSC-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/noto_sans_sc/NotoSansSC-Thin.ttf
+          weight: 100
