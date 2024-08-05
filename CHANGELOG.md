@@ -1,3 +1,7 @@
+## 2.4.0
+
+- Adds Noto Sans SC font to the package
+
 ## 2.3.0
 
 - Upgrade to Flutter 3.22 and Dart 3.4
