@@ -398,14 +398,14 @@ class _BasfTextFieldState extends State<BasfTextField> {
         if (!isFirstValidation && _formKey?.currentState?.validate() == false) {
           return BasfInputThemes.errorInputTheme(theme);
         }
-      case AutovalidateMode.disabled:
-        break;
       case null:
         if (widget.validator != null &&
             !isFirstValidation &&
             _formKey?.currentState?.validate() == false) {
           return BasfInputThemes.errorInputTheme(theme);
         }
+      default:
+        break;
     }
 
     if (!isEnabled()) {
