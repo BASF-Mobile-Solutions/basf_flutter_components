@@ -1,5 +1,9 @@
 include: package:very_good_analysis/analysis_options.4.0.0.yaml
 
+linter:
+  rules:
+    no_default_cases: false
+
 analyzer:
   exclude:
     - "**/icons.dart"

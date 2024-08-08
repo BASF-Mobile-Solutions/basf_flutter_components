@@ -1,3 +1,7 @@
+## 2.4.1
+
+- Add dart 3.5 support
+
 ## 2.4.0
 
 - Adds Noto Sans SC font to the package
