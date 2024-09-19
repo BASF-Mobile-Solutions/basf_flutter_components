@@ -1,3 +1,7 @@
+## 2.4.2
+
+- Adds BasfOptionalDropDownInput
+
 ## 2.4.1
 
 - Add dart 3.5 support
