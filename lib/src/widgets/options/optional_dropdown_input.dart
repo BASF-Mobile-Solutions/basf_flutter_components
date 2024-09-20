@@ -17,7 +17,6 @@ class BasfOptionalDropDownInput extends StatefulWidget {
     this.isLoading = false,
     this.isDisabled = false,
     this.emptyStateText = 'Select an option',
-    this.clearButtonText = 'Clear',
   });
 
   /// Controller
@@ -46,9 +45,6 @@ class BasfOptionalDropDownInput extends StatefulWidget {
 
   /// Text to display when no value is selected
   final String emptyStateText;
-
-  /// Text for the clear button
-  final String clearButtonText;
 
   @override
   State<BasfOptionalDropDownInput> createState() =>
@@ -110,26 +106,18 @@ class _BasfOptionalDropDownInputState extends State<BasfOptionalDropDownInput> {
                     ?.copyWith(color: Theme.of(context).hintColor),
               ),
             ),
-            ...widget.values.map((value) => PopupMenuItem<String>(
-                  value: value,
-                  child: Text(
-                    value,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyLarge
-                        ?.copyWith(color: Theme.of(context).primaryColor),
-                  ),
-                ),),
-            if (_selectedValue != null)
-              PopupMenuItem<String?>(
+            ...widget.values.map(
+              (value) => PopupMenuItem<String>(
+                value: value,
                 child: Text(
-                  widget.clearButtonText,
+                  value,
                   style: Theme.of(context)
                       .textTheme
                       .bodyLarge
-                      ?.copyWith(color: Theme.of(context).colorScheme.error),
+                      ?.copyWith(color: Theme.of(context).primaryColor),
                 ),
               ),
+            ),
           ];
         },
         child: layout(),
