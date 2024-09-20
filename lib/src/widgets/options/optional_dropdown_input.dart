@@ -17,6 +17,7 @@ class BasfOptionalDropDownInput extends StatefulWidget {
     this.isLoading = false,
     this.isDisabled = false,
     this.emptyStateText = 'Select an option',
+    this.onChanged,
   });
 
   /// Controller
@@ -46,22 +47,33 @@ class BasfOptionalDropDownInput extends StatefulWidget {
   /// Text to display when no value is selected
   final String emptyStateText;
 
+  /// Callback for when the selected value changes
+  final ValueChanged<String?>? onChanged;
+
   @override
   State<BasfOptionalDropDownInput> createState() =>
       _BasfOptionalDropDownInputState();
 }
 
 class _BasfOptionalDropDownInputState extends State<BasfOptionalDropDownInput> {
-  String? _selectedValue;
+  String? selectedValue;
 
   @override
   void initState() {
     super.initState();
-    _selectedValue = widget.controller.text.isNotEmpty &&
+    selectedValue = widget.controller.text.isNotEmpty &&
             widget.values.contains(widget.controller.text.trim())
         ? widget.controller.text.trim()
         : null;
-    widget.controller.text = _selectedValue ?? '';
+    widget.controller.text = selectedValue ?? '';
+  }
+
+  void updateValue(String? value) {
+    setState(() {
+      selectedValue = value;
+      widget.controller.text = value ?? '';
+    });
+    widget.onChanged?.call(value);
   }
 
   @override
@@ -85,16 +97,11 @@ class _BasfOptionalDropDownInputState extends State<BasfOptionalDropDownInput> {
     return AbsorbPointer(
       absorbing: widget.isLoading || widget.isDisabled,
       child: PopupMenuButton<String?>(
-        initialValue: _selectedValue,
+        initialValue: selectedValue,
         shape: RoundedRectangleBorder(
           borderRadius: BasfThemes.defaultBorderRadius,
         ),
-        onSelected: (String? value) {
-          setState(() {
-            _selectedValue = value;
-            widget.controller.text = value ?? '';
-          });
-        },
+        onSelected: updateValue,
         itemBuilder: (context) {
           return [
             PopupMenuItem<String?>(
@@ -153,8 +160,8 @@ class _BasfOptionalDropDownInputState extends State<BasfOptionalDropDownInput> {
             child: Padding(
               padding: const EdgeInsets.only(left: Dimens.paddingMedium),
               child: Text(
-                _selectedValue ?? widget.emptyStateText,
-                style: _selectedValue == null
+                selectedValue ?? widget.emptyStateText,
+                style: selectedValue == null
                     ? BasfThemes.mainTextTheme.titleLarge
                         ?.copyWith(color: theme.hintColor)
                     : BasfThemes.mainTextTheme.titleLarge

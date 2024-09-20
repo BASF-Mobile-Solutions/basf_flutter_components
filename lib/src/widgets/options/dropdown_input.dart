@@ -17,6 +17,7 @@ class BasfDropDownInput extends StatefulWidget {
     this.isLoading = false,
     this.isDisabled = false,
     this.isMandatory = false,
+    this.onChanged,
   });
 
   /// Controller
@@ -47,42 +48,54 @@ class BasfDropDownInput extends StatefulWidget {
   /// (e.g. red) if the field is empty
   final bool isMandatory;
 
+  /// Callback for when the selected value changes
+  final ValueChanged<String>? onChanged;
+
   @override
   State<BasfDropDownInput> createState() => _BasfDropDownInputState();
 }
 
 class _BasfDropDownInputState extends State<BasfDropDownInput> {
+  late String selectedValue;
+
   @override
   void initState() {
+    super.initState();
+    _initializeSelectedValue();
+  }
+
+  void _initializeSelectedValue() {
     if (widget.values.contains(widget.controller.text.trim())) {
-      widget.controller.text =
+      selectedValue =
           widget.values.firstWhere((e) => e == widget.controller.text.trim());
     } else {
-      widget.controller.text = widget.values.first;
+      selectedValue = widget.values.isNotEmpty ? widget.values.first : '';
     }
-    super.initState();
+    widget.controller.text = selectedValue;
+  }
+
+  void updateValue(String value) {
+    setState(() {
+      selectedValue = value;
+      widget.controller.text = value;
+    });
+    widget.onChanged?.call(value);
   }
 
   @override
   Widget build(BuildContext context) {
-    if (widget.labelText != null) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          title(),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (widget.labelText != null) ...[
+          Text(
+            widget.labelText!,
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
           VerticalSpacer.semi(),
-          popupMenuButton(context),
         ],
-      );
-    } else {
-      return popupMenuButton(context);
-    }
-  }
-
-  Widget title() {
-    return Text(
-      widget.labelText!,
-      style: Theme.of(context).textTheme.bodyMedium,
+        popupMenuButton(context),
+      ],
     );
   }
 
@@ -90,28 +103,26 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
     return AbsorbPointer(
       absorbing: widget.isLoading || isDisabled,
       child: PopupMenuButton<String>(
-        initialValue: widget.controller.text,
+        initialValue: selectedValue,
         shape: RoundedRectangleBorder(
           borderRadius: BasfThemes.defaultBorderRadius,
         ),
-        onSelected: (String value) {
-          setState(() {
-            widget.controller.text = value;
-          });
-        },
+        onSelected: updateValue,
         itemBuilder: (context) {
-          return List.generate(widget.values.length, (index) {
-            return PopupMenuItem<String>(
-              value: widget.values[index],
-              child: Text(
-                widget.values[index],
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge
-                    ?.copyWith(color: Theme.of(context).primaryColor),
-              ),
-            );
-          });
+          return widget.values
+              .map(
+                (value) => PopupMenuItem<String>(
+                  value: value,
+                  child: Text(
+                    value,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge
+                        ?.copyWith(color: Theme.of(context).primaryColor),
+                  ),
+                ),
+              )
+              .toList();
         },
         child: layout(),
       ),
@@ -126,17 +137,13 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
       height: 48,
       decoration: BoxDecoration(
         borderRadius: BasfThemes.defaultBorderRadius,
-        color: isDisabled
-            ? BasfInputThemes.disabledInputTheme(theme)
-                .inputDecorationTheme
-                .fillColor
-            : null,
+        color: isDisabled ? disabledTheme.inputDecorationTheme.fillColor : null,
         border: Border.all(
           color: isDisabled
               ? disabledTheme
                       .inputDecorationTheme.disabledBorder?.borderSide.color ??
                   theme.disabledColor
-              : widget.isMandatory && widget.controller.text.trim().isEmpty
+              : widget.isMandatory && selectedValue.isEmpty
                   ? theme.colorScheme.error
                   : theme.inputDecorationTheme.enabledBorder?.borderSide
                           .color ??
@@ -147,23 +154,25 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
         crossAxisAlignment: widget.crossAxisAlignment,
         mainAxisAlignment: widget.mainAxisAlignment,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(left: Dimens.paddingMedium),
-            child: Text(
-              widget.controller.text,
-              style: BasfThemes.mainTextTheme.titleLarge
-                  ?.copyWith(color: theme.primaryColor),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(left: Dimens.paddingMedium),
+              child: Text(
+                selectedValue,
+                style: BasfThemes.mainTextTheme.titleLarge
+                    ?.copyWith(color: theme.primaryColor),
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
           ),
-          if (widget.isExpanded) const Spacer(),
-          if (!widget.isLoading) _menuButton(),
-          if (widget.isLoading) _loader(theme),
+          if (!widget.isLoading) menuButton(),
+          if (widget.isLoading) loader(theme),
         ],
       ),
     );
   }
 
-  Widget _loader(ThemeData theme) {
+  Widget loader(ThemeData theme) {
     return Container(
       width: 15,
       height: 15,
@@ -178,7 +187,7 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
     );
   }
 
-  Widget _menuButton() {
+  Widget menuButton() {
     final theme = Theme.of(context);
 
     return Container(
@@ -198,7 +207,7 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
                     ?.borderSide
                     .color ??
                 theme.disabledColor
-            : widget.isMandatory && widget.controller.text.trim().isEmpty
+            : widget.isMandatory && selectedValue.isEmpty
                 ? theme.colorScheme.error
                 : theme.primaryColor,
       ),
