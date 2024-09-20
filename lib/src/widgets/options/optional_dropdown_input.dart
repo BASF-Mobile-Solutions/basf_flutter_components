@@ -107,7 +107,7 @@ class _BasfOptionalDropDownInputState extends State<BasfOptionalDropDownInput> {
               ),
             ),
             ...widget.values.map(
-              (value) => PopupMenuItem<String>(
+              (value) => PopupMenuItem<String?>(
                 value: value,
                 child: Text(
                   value,
@@ -163,14 +163,14 @@ class _BasfOptionalDropDownInputState extends State<BasfOptionalDropDownInput> {
               ),
             ),
           ),
-          if (!widget.isLoading) _menuButton(),
-          if (widget.isLoading) _loader(theme),
+          if (!widget.isLoading) menuButton(),
+          if (widget.isLoading) loader(theme),
         ],
       ),
     );
   }
 
-  Widget _loader(ThemeData theme) {
+  Widget loader(ThemeData theme) {
     return Container(
       width: 15,
       height: 15,
@@ -185,7 +185,7 @@ class _BasfOptionalDropDownInputState extends State<BasfOptionalDropDownInput> {
     );
   }
 
-  Widget _menuButton() {
+  Widget menuButton() {
     final theme = Theme.of(context);
 
     return Container(
