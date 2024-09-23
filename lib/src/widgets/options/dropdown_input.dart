@@ -20,6 +20,7 @@ class BasfDropDownInput extends StatefulWidget {
     this.initialValue,
     this.unselectedText = 'Select value',
     this.allowUnselected = false,
+    this.onChanged,
   });
 
   /// Controller
@@ -58,6 +59,9 @@ class BasfDropDownInput extends StatefulWidget {
 
   /// Whether to allow unselected state
   final bool allowUnselected;
+
+  /// Callback for when the value changes
+  final void Function(String?)? onChanged;
 
   /// Special value to represent the unselected state
   static const String unselectedValue = '____UNSELECTED____';
@@ -127,6 +131,10 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
           borderRadius: BasfThemes.defaultBorderRadius,
         ),
         onSelected: (String value) {
+          widget.onChanged?.call(
+            value == BasfDropDownInput.unselectedValue ? null : value,
+          );
+
           setState(() {
             _selectedValue = value;
             _updateController();
