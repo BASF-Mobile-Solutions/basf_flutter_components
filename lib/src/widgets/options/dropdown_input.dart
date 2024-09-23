@@ -66,7 +66,7 @@ class BasfDropDownInput extends StatefulWidget {
 
   /// A function that allows us to change the color of the dropdown's items
   /// based on the value of the item
-  final Color Function(String)? itemColor;
+  final Color? Function(String)? itemColor;
 
   /// Special value to represent the unselected state
   static const String unselectedValue = '____UNSELECTED____';
