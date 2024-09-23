@@ -20,6 +20,7 @@ class BasfDropDownInput extends StatefulWidget {
     this.initialValue,
     this.unselectedText = 'Select value',
     this.allowUnselected = false,
+    this.itemColor,
     this.onChanged,
   });
 
@@ -62,6 +63,10 @@ class BasfDropDownInput extends StatefulWidget {
 
   /// Callback for when the value changes
   final void Function(String?)? onChanged;
+
+  /// A function that allows us to change the color of the dropdown's items
+  /// based on the value of the item
+  final Color Function(String)? itemColor;
 
   /// Special value to represent the unselected state
   static const String unselectedValue = '____UNSELECTED____';
@@ -164,10 +169,10 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
                 value: value,
                 child: Text(
                   value,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyLarge
-                      ?.copyWith(color: Theme.of(context).primaryColor),
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        color: widget.itemColor?.call(value) ??
+                            Theme.of(context).primaryColor,
+                      ),
                 ),
               ),
             ),
