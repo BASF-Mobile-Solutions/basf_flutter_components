@@ -473,6 +473,9 @@ class _BasfTextFieldState extends State<BasfTextField> {
             height: 0,
           ) ??
           const TextStyle(height: 0),
+      errorText: (widget.decoration?.errorText?.isNotEmpty ?? false)
+          ? widget.decoration?.errorText
+          : null,
       labelStyle: widget.decoration?.labelStyle ??
           BasfThemes.mainTextTheme.bodyLarge
               ?.copyWith(color: BasfColors.darkGrey),

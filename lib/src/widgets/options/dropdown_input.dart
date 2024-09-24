@@ -68,8 +68,7 @@ class BasfDropDownInput extends StatefulWidget {
   /// based on the value of the item
   final Color? Function(String)? itemColor;
 
-  /// Special value to represent the unselected state
-  static const String unselectedValue = '____UNSELECTED____';
+  /// Special value to represent the unselected
 
   @override
   State<BasfDropDownInput> createState() => _BasfDropDownInputState();
@@ -78,11 +77,23 @@ class BasfDropDownInput extends StatefulWidget {
 class _BasfDropDownInputState extends State<BasfDropDownInput> {
   late String _selectedValue;
   Color? _selectedColor;
+  late String _unselectedValue;
 
   @override
   void initState() {
     super.initState();
+    _unselectedValue = _generateUniqueUnselectedValue();
     _initializeSelectedValue();
+  }
+
+  String _generateUniqueUnselectedValue() {
+    var unselectedValue = '____UNSELECTED____';
+    var counter = 0;
+    while (widget.values.contains(unselectedValue)) {
+      counter++;
+      unselectedValue = '____UNSELECTED_${counter}____';
+    }
+    return unselectedValue;
   }
 
   void _initializeSelectedValue() {
@@ -90,24 +101,23 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
         widget.values.contains(widget.initialValue)) {
       _selectedValue = widget.initialValue!;
     } else if (widget.allowUnselected) {
-      _selectedValue = BasfDropDownInput.unselectedValue;
+      _selectedValue = _unselectedValue;
     } else {
-      _selectedValue = widget.values.isNotEmpty
-          ? widget.values.first
-          : BasfDropDownInput.unselectedValue;
+      _selectedValue =
+          widget.values.isNotEmpty ? widget.values.first : _unselectedValue;
     }
     _updateController();
     _updateSelectedColor();
   }
 
   void _updateController() {
-    widget.controller.text = _selectedValue == BasfDropDownInput.unselectedValue
+    widget.controller.text = _selectedValue == _unselectedValue
         ? widget.unselectedText
         : _selectedValue;
   }
 
   void _updateSelectedColor() {
-    _selectedColor = _selectedValue == BasfDropDownInput.unselectedValue
+    _selectedColor = _selectedValue == _unselectedValue
         ? null
         : widget.itemColor?.call(_selectedValue);
   }
@@ -145,7 +155,7 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
         ),
         onSelected: (value) {
           widget.onChanged?.call(
-            value == BasfDropDownInput.unselectedValue ? null : value,
+            value == _unselectedValue ? null : value,
           );
 
           setState(() {
@@ -160,7 +170,7 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
           if (widget.allowUnselected) {
             items.add(
               PopupMenuItem<String>(
-                value: BasfDropDownInput.unselectedValue,
+                value: _unselectedValue,
                 child: Text(widget.unselectedText),
               ),
             );
@@ -195,8 +205,7 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
     final borderColor = isDisabled
         ? disabledTheme.inputDecorationTheme.disabledBorder?.borderSide.color ??
             theme.disabledColor
-        : widget.isMandatory &&
-                _selectedValue == BasfDropDownInput.unselectedValue
+        : widget.isMandatory && _selectedValue == _unselectedValue
             ? theme.colorScheme.error
             : _selectedColor ??
                 theme.inputDecorationTheme.enabledBorder?.borderSide.color ??
@@ -223,7 +232,7 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
           Padding(
             padding: const EdgeInsets.only(left: Dimens.paddingMedium),
             child: Text(
-              _selectedValue == BasfDropDownInput.unselectedValue
+              _selectedValue == _unselectedValue
                   ? widget.unselectedText
                   : _selectedValue,
               style: BasfThemes.mainTextTheme.titleLarge
