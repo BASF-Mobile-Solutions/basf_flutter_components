@@ -131,6 +131,7 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
             ),
             const SizedBox(height: 10),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Expanded(
                   child: Center(
@@ -160,6 +161,19 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
                       labelText: 'Label',
                       controller: TextEditingController(text: 'PC'),
                       values: const ['PC'],
+                    ),
+                    const SizedBox(height: 10),
+                    BasfDropDownInput(
+                      labelText: 'Label',
+                      controller: TextEditingController(text: 'PC'),
+                      values: const ['PC', 'PK', 'TM'],
+                      unselectedText: 'Select a value',
+                      allowUnselected: true,
+                      itemColor: (value) {
+                        if (value == 'PC') return Colors.red;
+                        if (value == 'PK') return Colors.green;
+                        return null;
+                      },
                     ),
                   ],
                 ),

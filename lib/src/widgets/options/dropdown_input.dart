@@ -2,7 +2,7 @@ import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:flutter/material.dart';
 
 /// {@template dropdown_input}
-/// A BASF-styled dropdown input
+/// A BASF-styled dropdown input with support for unselected values
 /// {@endtemplate}
 class BasfDropDownInput extends StatefulWidget {
   /// {@macro dropdown_input}
@@ -17,6 +17,11 @@ class BasfDropDownInput extends StatefulWidget {
     this.isLoading = false,
     this.isDisabled = false,
     this.isMandatory = false,
+    this.initialValue,
+    this.unselectedText = 'Select value',
+    this.allowUnselected = false,
+    this.itemColor,
+    this.onChanged,
   });
 
   /// Controller
@@ -47,20 +52,74 @@ class BasfDropDownInput extends StatefulWidget {
   /// (e.g. red) if the field is empty
   final bool isMandatory;
 
+  /// Initial value for the dropdown
+  final String? initialValue;
+
+  /// Text to display for the unselected option
+  final String unselectedText;
+
+  /// Whether to allow unselected state
+  final bool allowUnselected;
+
+  /// Callback for when the value changes
+  final void Function(String?)? onChanged;
+
+  /// A function that allows us to change the color of the dropdown's items
+  /// based on the value of the item
+  final Color? Function(String)? itemColor;
+
+  /// Special value to represent the unselected
+
   @override
   State<BasfDropDownInput> createState() => _BasfDropDownInputState();
 }
 
 class _BasfDropDownInputState extends State<BasfDropDownInput> {
+  late String _selectedValue;
+  Color? _selectedColor;
+  late String _unselectedValue;
+
   @override
   void initState() {
-    if (widget.values.contains(widget.controller.text.trim())) {
-      widget.controller.text =
-          widget.values.firstWhere((e) => e == widget.controller.text.trim());
-    } else {
-      widget.controller.text = widget.values.first;
-    }
     super.initState();
+    _unselectedValue = _generateUniqueUnselectedValue();
+    _initializeSelectedValue();
+  }
+
+  String _generateUniqueUnselectedValue() {
+    var unselectedValue = '____UNSELECTED____';
+    var counter = 0;
+    while (widget.values.contains(unselectedValue)) {
+      counter++;
+      unselectedValue = '____UNSELECTED_${counter}____';
+    }
+    return unselectedValue;
+  }
+
+  void _initializeSelectedValue() {
+    if (widget.initialValue != null &&
+        widget.values.contains(widget.initialValue)) {
+      _selectedValue = widget.initialValue!;
+    } else if (widget.allowUnselected) {
+      _selectedValue = _unselectedValue;
+    } else {
+      _selectedValue =
+          widget.values.isNotEmpty ? widget.values.first : _unselectedValue;
+    }
+    _updateController();
+    _updateSelectedColor();
+  }
+
+  void _updateController() {
+    widget.controller.text = _selectedValue == _unselectedValue
+        ? widget.unselectedText
+        : _selectedValue;
+  }
+
+  void _updateSelectedColor() {
+    _selectedColor = _selectedValue == _unselectedValue
+        ? null
+        : widget.itemColor?.call(_selectedValue);
   }
 
   @override
@@ -90,28 +149,49 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
     return AbsorbPointer(
       absorbing: widget.isLoading || isDisabled,
       child: PopupMenuButton<String>(
-        initialValue: widget.controller.text,
+        initialValue: _selectedValue,
         shape: RoundedRectangleBorder(
           borderRadius: BasfThemes.defaultBorderRadius,
         ),
-        onSelected: (String value) {
+        onSelected: (value) {
+          widget.onChanged?.call(
+            value == _unselectedValue ? null : value,
+          );
+
           setState(() {
-            widget.controller.text = value;
+            _selectedValue = value;
+            _updateSelectedColor();
+            _updateController();
           });
         },
         itemBuilder: (context) {
-          return List.generate(widget.values.length, (index) {
-            return PopupMenuItem<String>(
-              value: widget.values[index],
-              child: Text(
-                widget.values[index],
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge
-                    ?.copyWith(color: Theme.of(context).primaryColor),
+          final items = <PopupMenuEntry<String>>[];
+
+          if (widget.allowUnselected) {
+            items.add(
+              PopupMenuItem<String>(
+                value: _unselectedValue,
+                child: Text(widget.unselectedText),
               ),
             );
-          });
+          }
+
+          items.addAll(
+            widget.values.map(
+              (value) => PopupMenuItem<String>(
+                value: value,
+                child: Text(
+                  value,
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        color: widget.itemColor?.call(value) ??
+                            Theme.of(context).primaryColor,
+                      ),
+                ),
+              ),
+            ),
+          );
+
+          return items;
         },
         child: layout(),
       ),
@@ -122,6 +202,18 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
     final theme = Theme.of(context);
     final disabledTheme = BasfInputThemes.disabledInputTheme(theme);
 
+    final borderColor = isDisabled
+        ? disabledTheme.inputDecorationTheme.disabledBorder?.borderSide.color ??
+            theme.disabledColor
+        : widget.isMandatory && _selectedValue == _unselectedValue
+            ? theme.colorScheme.error
+            : _selectedColor ??
+                theme.inputDecorationTheme.enabledBorder?.borderSide.color ??
+                theme.primaryColor;
+
+    final textColor =
+        isDisabled ? theme.disabledColor : _selectedColor ?? theme.primaryColor;
+
     return Container(
       height: 48,
       decoration: BoxDecoration(
@@ -131,17 +223,7 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
                 .inputDecorationTheme
                 .fillColor
             : null,
-        border: Border.all(
-          color: isDisabled
-              ? disabledTheme
-                      .inputDecorationTheme.disabledBorder?.borderSide.color ??
-                  theme.disabledColor
-              : widget.isMandatory && widget.controller.text.trim().isEmpty
-                  ? theme.colorScheme.error
-                  : theme.inputDecorationTheme.enabledBorder?.borderSide
-                          .color ??
-                      theme.primaryColor,
-        ),
+        border: Border.all(color: borderColor),
       ),
       child: Row(
         crossAxisAlignment: widget.crossAxisAlignment,
@@ -150,20 +232,22 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
           Padding(
             padding: const EdgeInsets.only(left: Dimens.paddingMedium),
             child: Text(
-              widget.controller.text,
+              _selectedValue == _unselectedValue
+                  ? widget.unselectedText
+                  : _selectedValue,
               style: BasfThemes.mainTextTheme.titleLarge
-                  ?.copyWith(color: theme.primaryColor),
+                  ?.copyWith(color: textColor),
             ),
           ),
           if (widget.isExpanded) const Spacer(),
-          if (!widget.isLoading) _menuButton(),
-          if (widget.isLoading) _loader(theme),
+          if (!widget.isLoading) menuButton(borderColor),
+          if (widget.isLoading) loader(theme),
         ],
       ),
     );
   }
 
-  Widget _loader(ThemeData theme) {
+  Widget loader(ThemeData theme) {
     return Container(
       width: 15,
       height: 15,
@@ -178,9 +262,7 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
     );
   }
 
-  Widget _menuButton() {
-    final theme = Theme.of(context);
-
+  Widget menuButton(Color color) {
     return Container(
       width: 15,
       height: 15,
@@ -191,21 +273,12 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
       child: Icon(
         BasfIcons.arrow_down,
         size: 16,
-        color: isDisabled
-            ? BasfInputThemes.disabledInputTheme(theme)
-                    .inputDecorationTheme
-                    .disabledBorder
-                    ?.borderSide
-                    .color ??
-                theme.disabledColor
-            : widget.isMandatory && widget.controller.text.trim().isEmpty
-                ? theme.colorScheme.error
-                : theme.primaryColor,
+        color: color,
       ),
     );
   }
 
   bool get isDisabled {
-    return (widget.values.length < 2 || widget.isDisabled) && !widget.isLoading;
+    return (widget.values.isEmpty || widget.isDisabled) && !widget.isLoading;
   }
 }
