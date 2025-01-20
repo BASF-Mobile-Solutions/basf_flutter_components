@@ -375,8 +375,8 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
     } catch (e) {
       HydratedBloc.storage = await HydratedStorage.build(
         storageDirectory: kIsWeb
-            ? HydratedStorage.webStorageDirectory
-            : await getApplicationDocumentsDirectory(),
+            ? HydratedStorageDirectory.web
+            : HydratedStorageDirectory((await getTemporaryDirectory()).path),
       );
     }
 

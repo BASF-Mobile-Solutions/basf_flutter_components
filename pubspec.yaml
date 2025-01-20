@@ -1,27 +1,27 @@
 name: basf_flutter_components
 description: A collection of BASF Style components such as Buttons, Theming, etc...
-version: 2.4.2
+version: 2.4.3
 
 homepage: https://github.com/BASF-Mobile-Solutions/basf_flutter_components
 repository: https://github.com/BASF-Mobile-Solutions/basf_flutter_components
 issue_tracker: https://github.com/BASF-Mobile-Solutions/basf_flutter_components/issues
 
 environment:
-  sdk: ">=3.5.0 <4.0.0"
+  sdk: ^3.6.1
 
 dependencies:
   flutter:
     sdk: flutter
 
-  flutter_bloc: ^8.1.6
-  hydrated_bloc: ^9.1.5
-  path_provider: ^2.1.4
+  flutter_bloc: ^9.0.0
+  hydrated_bloc: ^10.0.0
+  path_provider: ^2.1.5
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  very_good_analysis: ^6.0.0
+  very_good_analysis: ^7.0.0
 
 flutter:
   uses-material-design: true

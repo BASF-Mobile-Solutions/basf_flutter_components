@@ -1,3 +1,7 @@
+## 2.4.3
+
+- updated libs and support for Flutter 3.27
+
 ## 2.4.2
 
 - Adds BasfOptionalDropDownInput
