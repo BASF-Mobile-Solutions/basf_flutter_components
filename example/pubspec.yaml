@@ -6,7 +6,7 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: ">=3.5.0 <4.0.0"
+  sdk: ^3.6.1
 
 dependencies:
   basf_flutter_components:
@@ -20,7 +20,7 @@ dependencies:
     sdk: flutter
 
 dev_dependencies:
-  very_good_analysis: ^5.1.0
+  very_good_analysis: ^7.0.0
 
 flutter:
   uses-material-design: true

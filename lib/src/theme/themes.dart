@@ -55,8 +55,8 @@ class BasfThemes {
         primarySwatch: theme.primaryColor,
         errorColor: BasfColors.red,
       ),
-      splashColor: theme.primaryColor.withOpacity(0.1),
-      highlightColor: theme.primaryColor.withOpacity(0.2),
+      splashColor: theme.primaryColor.withValues(alpha: 0.1),
+      highlightColor: theme.primaryColor.withValues(alpha: 0.2),
       iconTheme: IconThemeData(
         color: theme.primaryColor,
       ),
