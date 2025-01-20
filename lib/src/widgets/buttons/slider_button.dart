@@ -227,5 +227,4 @@ class _SliderButtonState extends State<SliderButton> {
       widget.backgroundColor,
     );
   }
-
 }
