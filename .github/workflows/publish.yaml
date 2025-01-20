@@ -9,11 +9,11 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3.5.2
+      - uses: actions/checkout@v4
       - name: Install Flutter
-        uses: subosito/flutter-action@v2.10.0
+        uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.0'
+          flutter-version: '3.27.2'
           channel: 'stable'
       - name: Install dependencies 📦
         run: flutter pub get
