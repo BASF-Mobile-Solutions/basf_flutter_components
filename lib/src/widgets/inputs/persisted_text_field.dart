@@ -349,7 +349,7 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
       final cubit =
           _futureBuilderKey.currentContext!.read<PersistedInputCubit>();
 
-      if (cubit.state.favoriteValue != null) {
+      if (cubit.state.favoriteValue != null && widget.controller.text.isEmpty) {
         widget.controller.text = cubit.state.favoriteValue!;
         textNotifier.value = widget.controller.text;
       }
