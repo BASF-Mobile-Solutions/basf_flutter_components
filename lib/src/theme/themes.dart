@@ -39,13 +39,14 @@ class BasfThemes {
   /// Default BASF light main theme
   static ThemeData lightMainTheme({
     BasfThemeType basfThemeType = BasfThemeType.darkBlue,
+    List<String>? fontFamilyFallback,
   }) {
     final theme = basfThemeType;
     _lastUsedThemeType = theme;
 
     return ThemeData(
       fontFamily: 'Roboto',
-      fontFamilyFallback: const ['NotoSansSC'],
+      fontFamilyFallback: fontFamilyFallback,
       textTheme: mainTextTheme,
       appBarTheme: _mainAppBarTheme(theme),
       scaffoldBackgroundColor: BasfColors.white,

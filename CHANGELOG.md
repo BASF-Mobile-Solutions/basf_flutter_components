@@ -1,3 +1,19 @@
+## 2.4.4
+
+**BREAKING CHANGES:**
+
+Custom fonts behaviour
+
+Now to use custom font from the library, you need to do two steps in the app.
+
+1. Add mappings to the font in your app's pubspec.yaml with a path to the lib, full example is in **readme.md**
+
+2. If you are using a BASF theme for theme app, then you need to include your font into the list of fallback fonts
+
+`BasfThemes.lightMainTheme(fontFamilyFallback: const ['NotoSansSC'])`
+
+* changed behavior of persistent input
+
 ## 2.4.3
 
 - updated libs and support for Flutter 3.27

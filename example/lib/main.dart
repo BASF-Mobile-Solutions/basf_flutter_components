@@ -14,7 +14,9 @@ class ExampleApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'BASF Components',
-      theme: BasfThemes.lightMainTheme(),
+      theme: BasfThemes.lightMainTheme(
+        fontFamilyFallback: const ['NotoSansSC'],
+      ),
       home: const OverviewScreen(),
     );
   }
