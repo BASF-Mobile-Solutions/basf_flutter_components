@@ -556,9 +556,7 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
           _showOverlay();
         }
       },
-      onTap: () {
-        widget.controller.text = value;
-      },
+      onTap: () => widget.controller.text = value,
       trailing: bookmarkIcon(
         context: context,
         value: value,
@@ -573,12 +571,11 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
     required bool isFavorite,
   }) {
     return IconButton(
-      icon: Icon(
-        isFavorite ? Icons.bookmark : Icons.bookmark_add_outlined,
-      ),
+      icon: Icon(isFavorite ? Icons.bookmark : Icons.bookmark_add_outlined),
       color: Theme.of(context).primaryColor,
       onPressed: () {
         context.read<PersistedInputCubit>().setFavoriteValue(value);
+        widget.controller.text = value;
         _removeOverlay();
         _showOverlay();
       },
