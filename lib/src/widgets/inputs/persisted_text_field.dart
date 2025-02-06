@@ -349,7 +349,7 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
       final cubit =
           _futureBuilderKey.currentContext!.read<PersistedInputCubit>();
 
-      if (cubit.state.favoriteValue != null) {
+      if (cubit.state.favoriteValue != null && widget.controller.text.isEmpty) {
         widget.controller.text = cubit.state.favoriteValue!;
         textNotifier.value = widget.controller.text;
       }
@@ -556,9 +556,7 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
           _showOverlay();
         }
       },
-      onTap: () {
-        widget.controller.text = value;
-      },
+      onTap: () => widget.controller.text = value,
       trailing: bookmarkIcon(
         context: context,
         value: value,
@@ -573,11 +571,10 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
     required bool isFavorite,
   }) {
     return IconButton(
-      icon: Icon(
-        isFavorite ? Icons.bookmark : Icons.bookmark_add_outlined,
-      ),
+      icon: Icon(isFavorite ? Icons.bookmark : Icons.bookmark_add_outlined),
       color: Theme.of(context).primaryColor,
       onPressed: () {
+        if (!isFavorite) widget.controller.text = value;
         context.read<PersistedInputCubit>().setFavoriteValue(value);
         _removeOverlay();
         _showOverlay();
