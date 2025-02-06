@@ -574,8 +574,8 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
       icon: Icon(isFavorite ? Icons.bookmark : Icons.bookmark_add_outlined),
       color: Theme.of(context).primaryColor,
       onPressed: () {
+        if (!isFavorite) widget.controller.text = value;
         context.read<PersistedInputCubit>().setFavoriteValue(value);
-        widget.controller.text = value;
         _removeOverlay();
         _showOverlay();
       },
