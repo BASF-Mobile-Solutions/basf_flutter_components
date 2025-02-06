@@ -13,24 +13,24 @@ The only exception is 'Roboto', it is available with no actions
 
     - family: NotoSansSC
       fonts:
-        - asset: packages/basf_flutter_components/fonts/noto_sans_sc/NotoSansSC-Black.ttf
-          weight: 900
-        - asset: packages/basf_flutter_components/fonts/noto_sans_sc/NotoSansSC-Bold.ttf
-          weight: 700
-        - asset: packages/basf_flutter_components/fonts/noto_sans_sc/NotoSansSC-ExtraBold.ttf
-          weight: 800
+        - asset: packages/basf_flutter_components/fonts/noto_sans_sc/NotoSansSC-Thin.ttf
+          weight: 100
         - asset: packages/basf_flutter_components/fonts/noto_sans_sc/NotoSansSC-ExtraLight.ttf
           weight: 200
         - asset: packages/basf_flutter_components/fonts/noto_sans_sc/NotoSansSC-Light.ttf
           weight: 300
-        - asset: packages/basf_flutter_components/fonts/noto_sans_sc/NotoSansSC-Medium.ttf
-          weight: 500
         - asset: packages/basf_flutter_components/fonts/noto_sans_sc/NotoSansSC-Regular.ttf
           weight: 400
+        - asset: packages/basf_flutter_components/fonts/noto_sans_sc/NotoSansSC-Medium.ttf
+          weight: 500
         - asset: packages/basf_flutter_components/fonts/noto_sans_sc/NotoSansSC-SemiBold.ttf
           weight: 600
-        - asset: packages/basf_flutter_components/fonts/noto_sans_sc/NotoSansSC-Thin.ttf
-          weight: 100
+        - asset: packages/basf_flutter_components/fonts/noto_sans_sc/NotoSansSC-Bold.ttf
+          weight: 700
+        - asset: packages/basf_flutter_components/fonts/noto_sans_sc/NotoSansSC-ExtraBold.ttf
+          weight: 800
+        - asset: packages/basf_flutter_components/fonts/noto_sans_sc/NotoSansSC-Black.ttf
+          weight: 900
 
 It also requires to be provided into basf theme if needed as a fallback font.
 `BasfThemes.lightMainTheme(fontFamilyFallback: const ['NotoSansSC'])`
