@@ -156,7 +156,7 @@ extension DetailedWhere<K, V> on Map<K, V> {
 extension SnackbarActions on AppSnackBar {
   /// {@macro show_app_snackbar}
   void show(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(
+    ScaffoldMessenger.of(context)..clearSnackBars()..showSnackBar(
       SnackBar(backgroundColor: backgroundColor, content: this),
     );
   }

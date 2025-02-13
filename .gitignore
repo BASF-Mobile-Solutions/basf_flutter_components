@@ -40,3 +40,4 @@ app.*.map.json
 
 # Code coverage
 coverage/
+/devtools_options.yaml

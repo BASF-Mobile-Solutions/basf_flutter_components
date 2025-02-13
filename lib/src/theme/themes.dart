@@ -41,25 +41,40 @@ class BasfThemes {
     BasfThemeType basfThemeType = BasfThemeType.darkBlue,
     List<String>? fontFamilyFallback,
   }) {
+
     final theme = basfThemeType;
     _lastUsedThemeType = theme;
 
     return ThemeData(
+      useMaterial3: true,
       fontFamily: 'Roboto',
       fontFamilyFallback: fontFamilyFallback,
       textTheme: mainTextTheme,
       appBarTheme: _mainAppBarTheme(theme),
       scaffoldBackgroundColor: BasfColors.white,
       snackBarTheme: _snackBarThemeData(theme),
-      dialogBackgroundColor: _getDialogBackgroundColor(theme),
       colorScheme: ColorScheme.fromSwatch(
         primarySwatch: theme.primaryColor,
         errorColor: BasfColors.red,
+      ),
+      pageTransitionsTheme: PageTransitionsTheme(
+        builders: {
+          ...ThemeData().pageTransitionsTheme.builders
+              .whereKey((key) => key != TargetPlatform.android),
+          TargetPlatform.android: const FadeForwardsPageTransitionsBuilder(),
+        },
       ),
       splashColor: theme.primaryColor.withValues(alpha: 0.1),
       highlightColor: theme.primaryColor.withValues(alpha: 0.2),
       iconTheme: IconThemeData(
         color: theme.primaryColor,
+      ),
+      progressIndicatorTheme: ProgressIndicatorThemeData(
+        circularTrackColor: theme.primaryColor.shade50,
+        linearTrackColor: theme.primaryColor.shade50,
+      ),
+      sliderTheme: SliderThemeData(
+        inactiveTrackColor: theme.primaryColor.shade50,
       ),
       textButtonTheme: TextButtonThemeData(
         style: ButtonStyles.containedTextButtonStyle(theme.primaryColor),
@@ -69,7 +84,8 @@ class BasfThemes {
       ),
       dialogTheme: DialogTheme(
         surfaceTintColor: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: defaultBorderRadius),
+        backgroundColor: _getDialogBackgroundColor(theme),
+        shape: const BeveledRectangleBorder(),
       ),
       inputDecorationTheme: BasfInputThemes.getMainInputDecorationTheme(
         theme.primaryColor,

@@ -664,7 +664,7 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
       magnifierConfiguration: widget.magnifierConfiguration,
       onAppPrivateCommand: widget.onAppPrivateCommand,
       onSubmitted: widget.onSubmitted,
-      scribbleEnabled: widget.scribbleEnabled,
+      stylusHandwritingEnabled: widget.scribbleEnabled,
       selectionHeightStyle: widget.selectionHeightStyle,
       selectionWidthStyle: widget.selectionWidthStyle,
       spellCheckConfiguration: widget.spellCheckConfiguration,
