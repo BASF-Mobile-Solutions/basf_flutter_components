@@ -7,61 +7,55 @@ import '../../../helpers/test_helpers.dart';
 
 void main() {
   group('Checkboxes', () {
-    testWidgets(
-      'Active checkbox',
-      (tester) async {
-        FlutterError.onError = ignoreOverflowErrors;
+    testWidgets('Active checkbox', (tester) async {
+      FlutterError.onError = ignoreOverflowErrors;
 
-        // ignore: prefer_function_declarations_over_variables
-        final onChanged = (myBool) => true;
+      // ignore: prefer_function_declarations_over_variables
+      final onChanged = (myBool) => true;
 
-        const checkboxText = 'Hi Checkbox!';
-        await tester.pumpApp(
-          Scaffold(
-            body: Builder(
-              builder: (context) {
-                return BasfCheckbox(
-                  text: checkboxText,
-                  onChanged: onChanged,
-                  value: true,
-                );
-              },
-            ),
+      const checkboxText = 'Hi Checkbox!';
+      await tester.pumpApp(
+        Scaffold(
+          body: Builder(
+            builder: (context) {
+              return BasfCheckbox(
+                text: checkboxText,
+                onChanged: onChanged,
+                value: true,
+              );
+            },
           ),
-        );
-        expect(find.text(checkboxText), findsOneWidget);
-        expect(find.byType(BasfCheckbox), findsOneWidget);
+        ),
+      );
+      expect(find.text(checkboxText), findsOneWidget);
+      expect(find.byType(BasfCheckbox), findsOneWidget);
 
-        await tester.tap(
-          find.byType(MaterialButton),
-          warnIfMissed: false, // Added to remove unnecesary warning
-        );
-        await tester.pump();
-      },
-    );
-    testWidgets(
-      'Inactive checkbox',
-      (tester) async {
-        FlutterError.onError = ignoreOverflowErrors;
+      await tester.tap(
+        find.byType(MaterialButton),
+        warnIfMissed: false, // Added to remove unnecesary warning
+      );
+      await tester.pump();
+    });
+    testWidgets('Inactive checkbox', (tester) async {
+      FlutterError.onError = ignoreOverflowErrors;
 
-        const checkboxText = 'Hi Checkbox!';
-        await tester.pumpApp(
-          Scaffold(
-            body: Builder(
-              builder: (context) {
-                return BasfCheckbox(
-                  text: checkboxText,
-                  // ignore: avoid_returning_null_for_void
-                  onChanged: (_) => null,
-                  value: false,
-                );
-              },
-            ),
+      const checkboxText = 'Hi Checkbox!';
+      await tester.pumpApp(
+        Scaffold(
+          body: Builder(
+            builder: (context) {
+              return BasfCheckbox(
+                text: checkboxText,
+                // ignore: avoid_returning_null_for_void
+                onChanged: (_) => null,
+                value: false,
+              );
+            },
           ),
-        );
-        expect(find.text(checkboxText), findsOneWidget);
-        expect(find.byType(BasfCheckbox), findsOneWidget);
-      },
-    );
+        ),
+      );
+      expect(find.text(checkboxText), findsOneWidget);
+      expect(find.byType(BasfCheckbox), findsOneWidget);
+    });
   });
 }

@@ -28,18 +28,17 @@ class SystemThemes {
   static SystemUiOverlayStyle defaultSystemOverlayStyleLight({
     required ThemeData theme,
     bool whiteNavigationBar = false,
-  }) =>
-      const SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.light, // For Android (light icons)
-        statusBarBrightness: Brightness.dark, // For iOS (light icons)
-      ).copyWith(
-        systemNavigationBarColor:
-            whiteNavigationBar ? Colors.white : theme.primaryColor,
-        systemNavigationBarDividerColor: Colors.transparent,
-        systemNavigationBarIconBrightness:
-            whiteNavigationBar ? Brightness.dark : Brightness.light,
-      );
+  }) => const SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+    statusBarIconBrightness: Brightness.light, // For Android (light icons)
+    statusBarBrightness: Brightness.dark, // For iOS (light icons)
+  ).copyWith(
+    systemNavigationBarColor:
+        whiteNavigationBar ? Colors.white : theme.primaryColor,
+    systemNavigationBarDividerColor: Colors.transparent,
+    systemNavigationBarIconBrightness:
+        whiteNavigationBar ? Brightness.dark : Brightness.light,
+  );
 
   /// Set portrait mode for the app
   static void setSystemOrientations() {

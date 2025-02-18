@@ -44,11 +44,12 @@ void main() {
     testWidgets('BasfButtonTest hint with style', (WidgetTester tester) async {
       await tester.pumpApp(
         Builder(
-          builder: (context) => BasfTextButton.hint(
-            onPressed: () {},
-            style: TextButton.styleFrom(),
-            child: const Text('Test'),
-          ),
+          builder:
+              (context) => BasfTextButton.hint(
+                onPressed: () {},
+                style: TextButton.styleFrom(),
+                child: const Text('Test'),
+              ),
         ),
         BasfThemes.lightMainTheme(),
       );
@@ -60,10 +61,11 @@ void main() {
     testWidgets('BasfButtonTest hint', (WidgetTester tester) async {
       await tester.pumpApp(
         Builder(
-          builder: (context) => BasfTextButton.hint(
-            onPressed: () {},
-            child: const Text('Test'),
-          ),
+          builder:
+              (context) => BasfTextButton.hint(
+                onPressed: () {},
+                child: const Text('Test'),
+              ),
         ),
         BasfThemes.lightMainTheme(),
       );
@@ -72,18 +74,20 @@ void main() {
       expect(find.byType(Text), findsOneWidget);
       //  expect(find.widgetWithText(Text, 'Test'), findsOneWidget);
     });
-    testWidgets('BasfButtonTest transparent with style',
-        (WidgetTester tester) async {
+    testWidgets('BasfButtonTest transparent with style', (
+      WidgetTester tester,
+    ) async {
       //
       await tester.pumpApp(
         Builder(
-          builder: (context) => BasfTextButton.transparent(
-            onPressed: () {},
-            leadingIcon: Icons.abc,
-            trailingIcon: Icons.abc_rounded,
-            style: TextButton.styleFrom(),
-            child: const Text('Test'),
-          ),
+          builder:
+              (context) => BasfTextButton.transparent(
+                onPressed: () {},
+                leadingIcon: Icons.abc,
+                trailingIcon: Icons.abc_rounded,
+                style: TextButton.styleFrom(),
+                child: const Text('Test'),
+              ),
         ),
         BasfThemes.lightMainTheme(),
       );
@@ -96,12 +100,13 @@ void main() {
       //
       await tester.pumpApp(
         Builder(
-          builder: (context) => BasfTextButton.transparent(
-            onPressed: () {},
-            leadingIcon: Icons.abc,
-            trailingIcon: Icons.abc_rounded,
-            child: const Text('Test'),
-          ),
+          builder:
+              (context) => BasfTextButton.transparent(
+                onPressed: () {},
+                leadingIcon: Icons.abc,
+                trailingIcon: Icons.abc_rounded,
+                child: const Text('Test'),
+              ),
         ),
         BasfThemes.lightMainTheme(),
       );

@@ -10,97 +10,65 @@ void main() {
     test('Capitalized text', () {
       final result = text.toCapitalized();
 
-      expect(
-        result,
-        equals('Exception test'),
-      );
+      expect(result, equals('Exception test'));
     });
 
     test('Capitalized without text', () {
       const String? test = null;
       final result = test?.toCapitalized();
 
-      expect(
-        result,
-        equals(null),
-      );
+      expect(result, equals(null));
     });
 
     test('TitleCase with text', () {
       final result = text.toTitleCase();
 
-      expect(
-        result,
-        equals('Exception Test'),
-      );
+      expect(result, equals('Exception Test'));
     });
 
     test('TitleCase without text', () {
       const String? test = null;
       final result = test?.toTitleCase();
 
-      expect(
-        result,
-        equals(null),
-      );
+      expect(result, equals(null));
     });
   });
 
   group('Widgets extensions', () {
-    const items = <Widget>[
-      Text('a'),
-      Text('b'),
-      Text('c'),
-      Text('d'),
-    ];
+    const items = <Widget>[Text('a'), Text('b'), Text('c'), Text('d')];
     test('Adding separator', () {
       final result = items.joinWithSeparator(HorizontalSpacer.semi());
 
-      expect(
-        result.length,
-        equals(7),
-      );
+      expect(result.length, equals(7));
     });
 
     test('Adding separator on a single widget', () {
-      final result = [const Text('a')].joinWithSeparator(
-        HorizontalSpacer.semi(),
-      );
+      final result = [
+        const Text('a'),
+      ].joinWithSeparator(HorizontalSpacer.semi());
 
-      expect(
-        result.length,
-        equals(1),
-      );
+      expect(result.length, equals(1));
     });
 
-    test('Adding space should equal same ammount of Widgets, but with padding',
-        () {
-      final result = items.spaced();
+    test(
+      'Adding space should equal same ammount of Widgets, but with padding',
+      () {
+        final result = items.spaced();
 
-      expect(
-        result.length,
-        equals(items.length),
-      );
-    });
+        expect(result.length, equals(items.length));
+      },
+    );
 
     test('Adding a Spacer widget', () {
       final result = [...items, const Spacer()].spaced();
 
-      expect(
-        result.length,
-        equals(items.length + 1),
-      );
+      expect(result.length, equals(items.length + 1));
     });
 
-    testWidgets(
-      'Finds padding when spacing the widgets',
-      (tester) async {
-        await tester.pumpApp(
-          Column(children: items.spaced()),
-        );
-        expect(find.byType(Padding), findsNWidgets(items.length));
-      },
-    );
+    testWidgets('Finds padding when spacing the widgets', (tester) async {
+      await tester.pumpApp(Column(children: items.spaced()));
+      expect(find.byType(Padding), findsNWidgets(items.length));
+    });
     testWidgets(
       '''Finds paddings when spacing the widgets, doesnt add padding to this to Spacer''',
       (tester) async {
@@ -122,33 +90,21 @@ void main() {
 
   group('Object Map<K,V>', () {
     test('where extension', () {
-      final people = <String, int>{
-        'John': 20,
-        'Mary': 21,
-        'Peter': 22,
-      };
+      final people = <String, int>{'John': 20, 'Mary': 21, 'Peter': 22};
 
       final subMap = people.where((key, value) => key.length > 4 && value > 20);
 
       expect(subMap, {'Peter': 22});
     });
     test('whereKey extension', () {
-      final people = <String, int>{
-        'John': 20,
-        'Mary': 21,
-        'Peter': 22,
-      };
+      final people = <String, int>{'John': 20, 'Mary': 21, 'Peter': 22};
 
       final subMap = people.whereKey((key) => key.length < 5);
 
       expect(subMap, {'John': 20, 'Mary': 21});
     });
     test('whereValue extension', () {
-      final people = <String, int>{
-        'John': 20,
-        'Mary': 21,
-        'Peter': 22,
-      };
+      final people = <String, int>{'John': 20, 'Mary': 21, 'Peter': 22};
 
       final subMap = people.whereValue((value) => value.isEven);
 
@@ -167,11 +123,16 @@ void main() {
             body: Builder(
               builder: (context) {
                 return GestureDetector(
-                  onTap: () =>
-                      AppSnackBar.info(message: helloSnackBar).show(context),
+                  onTap:
+                      () => AppSnackBar.info(
+                        message: helloSnackBar,
+                      ).show(context),
                   behavior: HitTestBehavior.opaque, // behaviour during the test
-                  child:
-                      const SizedBox(height: 100, width: 100, key: tapTarget),
+                  child: const SizedBox(
+                    height: 100,
+                    width: 100,
+                    key: tapTarget,
+                  ),
                 );
               },
             ),
@@ -189,23 +150,20 @@ void main() {
     );
   });
   group('Context extensions', () {
-    testWidgets(
-      'theme of context',
-      (tester) async {
-        // FlutterError.onError = ignoreOverflowErrors;
-        final theme = ThemeData(brightness: Brightness.light);
-        await tester.pumpWidget(
-          MaterialApp(
-            theme: ThemeData(brightness: Brightness.dark),
-            home: const Scaffold(),
-          ),
-        );
+    testWidgets('theme of context', (tester) async {
+      // FlutterError.onError = ignoreOverflowErrors;
+      final theme = ThemeData(brightness: Brightness.light);
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: ThemeData(brightness: Brightness.dark),
+          home: const Scaffold(),
+        ),
+      );
 
-        // Capture a BuildContext object
-        final BuildContext context = tester.element(find.byType(MaterialApp));
+      // Capture a BuildContext object
+      final BuildContext context = tester.element(find.byType(MaterialApp));
 
-        expect(context.theme.brightness, theme.brightness);
-      },
-    );
+      expect(context.theme.brightness, theme.brightness);
+    });
   });
 }

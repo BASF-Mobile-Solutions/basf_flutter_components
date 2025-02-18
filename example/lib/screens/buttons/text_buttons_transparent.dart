@@ -69,9 +69,7 @@ class TextButtonsTransparentScreen extends StatelessWidget {
       ),
 
       ///Disabled Button
-      BasfTextButton.transparent(
-        text: 'Disabled Button',
-      ),
+      BasfTextButton.transparent(text: 'Disabled Button'),
 
       ///Hint Button
       BasfTextButton.hint(
@@ -81,9 +79,7 @@ class TextButtonsTransparentScreen extends StatelessWidget {
     ];
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Transparent Text Buttons'),
-      ),
+      appBar: AppBar(title: const Text('Transparent Text Buttons')),
       body: SafeArea(
         child: ListView.separated(
           padding: const EdgeInsets.all(Dimens.paddingMedium20),

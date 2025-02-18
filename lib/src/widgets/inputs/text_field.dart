@@ -354,9 +354,10 @@ class _BasfTextFieldState extends State<BasfTextField> {
 
     return Theme(
       data: _getTheme(theme),
-      child: widget.decoration?.labelText == null
-          ? inputForm(theme)
-          : inputFormWithTitle(theme),
+      child:
+          widget.decoration?.labelText == null
+              ? inputForm(theme)
+              : inputFormWithTitle(theme),
     );
   }
 
@@ -439,15 +440,20 @@ class _BasfTextFieldState extends State<BasfTextField> {
   }
 
   TextStyle _getTextStyle() {
-    return widget.greyWhenDisabled ? widget.style?.copyWith(
-      color: isEnabled()
-          ? Theme.of(context).primaryColor
-          : BasfColors.darkGrey,
-    ) ?? TextStyle(
-      color: isEnabled()
-          ? Theme.of(context).primaryColor
-          : BasfColors.darkGrey,
-    ) : widget.style ?? const TextStyle();
+    return widget.greyWhenDisabled
+        ? widget.style?.copyWith(
+              color:
+                  isEnabled()
+                      ? Theme.of(context).primaryColor
+                      : BasfColors.darkGrey,
+            ) ??
+            TextStyle(
+              color:
+                  isEnabled()
+                      ? Theme.of(context).primaryColor
+                      : BasfColors.darkGrey,
+            )
+        : widget.style ?? const TextStyle();
   }
 
   bool isEnabled() {
@@ -486,33 +492,40 @@ class _BasfTextFieldState extends State<BasfTextField> {
       error: errorText != null && errorText.isEmpty ? const SizedBox() : null,
       errorText: errorText == null || errorText.isEmpty ? null : errorText,
       hintText: widget.decoration?.hintText,
-      labelStyle: widget.decoration?.labelStyle ??
-          BasfThemes.mainTextTheme.bodyLarge
-              ?.copyWith(color: BasfColors.darkGrey),
+      labelStyle:
+          widget.decoration?.labelStyle ??
+          BasfThemes.mainTextTheme.bodyLarge?.copyWith(
+            color: BasfColors.darkGrey,
+          ),
       floatingLabelBehavior: FloatingLabelBehavior.never,
     );
   }
 
-  Widget textField({
-    required ThemeData theme,
-    FormFieldState<String>? state,
-  }) {
+  Widget textField({required ThemeData theme, FormFieldState<String>? state}) {
     final errorText = state?.errorText ?? widget.validatorForceErrorText;
 
     return TextField(
       focusNode: widget.focusNode,
       controller: widget.controller,
-      decoration: widget.decoration?.copyWith(
-        suffixIcon: widget.decoration?.suffixIcon ?? deleteIconButton(),
-        prefixIcon: _getThemedPrefixIcon(theme),
-        error: errorText != null && errorText.isEmpty ? const SizedBox() : null,
-        errorText: errorText == null || errorText.isEmpty ? null : errorText,
-        hintText: widget.decoration?.hintText,
-        labelStyle: widget.decoration?.labelStyle
-            ?? BasfThemes.mainTextTheme.bodyLarge
-                ?.copyWith(color: BasfColors.darkGrey),
-        floatingLabelBehavior: FloatingLabelBehavior.never,
-      ) ?? _getDefaultDecoration(theme: theme, errorText: state?.errorText),
+      decoration:
+          widget.decoration?.copyWith(
+            suffixIcon: widget.decoration?.suffixIcon ?? deleteIconButton(),
+            prefixIcon: _getThemedPrefixIcon(theme),
+            error:
+                errorText != null && errorText.isEmpty
+                    ? const SizedBox()
+                    : null,
+            errorText:
+                errorText == null || errorText.isEmpty ? null : errorText,
+            hintText: widget.decoration?.hintText,
+            labelStyle:
+                widget.decoration?.labelStyle ??
+                BasfThemes.mainTextTheme.bodyLarge?.copyWith(
+                  color: BasfColors.darkGrey,
+                ),
+            floatingLabelBehavior: FloatingLabelBehavior.never,
+          ) ??
+          _getDefaultDecoration(theme: theme, errorText: state?.errorText),
       keyboardType: widget.keyboardType,
       textCapitalization: widget.textCapitalization,
       textInputAction: widget.textInputAction,

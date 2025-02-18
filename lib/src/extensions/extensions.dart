@@ -25,10 +25,10 @@ extension StringCasingExtension on String {
   /// See also:
   ///
   ///  * [toCapitalized]
-  String toTitleCase() => replaceAll(RegExp(' +'), ' ')
-      .split(' ')
-      .map((str) => str.toCapitalized())
-      .join(' ');
+  String toTitleCase() => replaceAll(
+    RegExp(' +'),
+    ' ',
+  ).split(' ').map((str) => str.toCapitalized()).join(' ');
 }
 
 /// A collection of usefull extensions on [List<Widget>]
@@ -75,7 +75,8 @@ extension JoinedWidgets on List<Widget> {
       } else {
         spacedWidgets.add(
           Padding(
-            padding: padding ??
+            padding:
+                padding ??
                 const EdgeInsets.fromLTRB(
                   Dimens.paddingMediumLarge,
                   0,
@@ -120,8 +121,8 @@ extension DetailedWhere<K, V> on Map<K, V> {
   /// const Map<String, int> people = {'John': 20, 'Mary': 21, 'Peter':20};
   /// ```
   Map<K, V> where(bool Function(K key, V value) f) => Map<K, V>.fromEntries(
-        entries.where((entry) => f(entry.key, entry.value)),
-      );
+    entries.where((entry) => f(entry.key, entry.value)),
+  );
 
   /// {@macro map_extension}
   /// based on key
@@ -133,8 +134,9 @@ extension DetailedWhere<K, V> on Map<K, V> {
   ///
   /// const Map<String, int> people = {'John': 20, 'Mary': 21, 'Peter':20};
   /// ```
-  Map<K, V> whereKey(bool Function(K key) f) =>
-      {...where((key, value) => f(key))};
+  Map<K, V> whereKey(bool Function(K key) f) => {
+    ...where((key, value) => f(key)),
+  };
 
   /// {@macro map_extension}
   /// based on  value
@@ -146,8 +148,9 @@ extension DetailedWhere<K, V> on Map<K, V> {
   ///
   /// const Map<String, int> people = {'John': 20, 'Mary': 21, 'Peter':20};
   /// ```
-  Map<K, V> whereValue(bool Function(V value) f) =>
-      {...where((key, value) => f(value))};
+  Map<K, V> whereValue(bool Function(V value) f) => {
+    ...where((key, value) => f(value)),
+  };
 }
 
 /// {@template show_app_snackbar}
@@ -156,9 +159,9 @@ extension DetailedWhere<K, V> on Map<K, V> {
 extension SnackbarActions on AppSnackBar {
   /// {@macro show_app_snackbar}
   void show(BuildContext context) {
-    ScaffoldMessenger.of(context)..clearSnackBars()..showSnackBar(
-      SnackBar(backgroundColor: backgroundColor, content: this),
-    );
+    ScaffoldMessenger.of(context)
+      ..clearSnackBars()
+      ..showSnackBar(SnackBar(backgroundColor: backgroundColor, content: this));
   }
 }
 

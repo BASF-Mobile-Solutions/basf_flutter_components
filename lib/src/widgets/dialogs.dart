@@ -43,8 +43,9 @@ class BasfAlertDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      shape:
-          RoundedRectangleBorder(borderRadius: BasfThemes.defaultBorderRadius),
+      shape: RoundedRectangleBorder(
+        borderRadius: BasfThemes.defaultBorderRadius,
+      ),
       title: Text(
         title,
         textAlign: TextAlign.center,

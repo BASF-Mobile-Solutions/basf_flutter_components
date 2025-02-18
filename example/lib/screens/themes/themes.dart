@@ -11,10 +11,7 @@ class ThemesOverviewScreen extends StatefulWidget {
 class _ThemesOverviewScreenState extends State<ThemesOverviewScreen> {
   BasfThemeType theme = BasfThemeType.darkBlue;
   bool state = true;
-  List<String> values = [
-    'Option1',
-    'Option2',
-  ];
+  List<String> values = ['Option1', 'Option2'];
   String selectedValue = 'Option1';
 
   @override
@@ -66,9 +63,7 @@ class _ThemesOverviewScreenState extends State<ThemesOverviewScreen> {
         onPressed: () {
           setState(() => theme = element);
         },
-        style: TextButton.styleFrom(
-          backgroundColor: element.primaryColor,
-        ),
+        style: TextButton.styleFrom(backgroundColor: element.primaryColor),
         child: Text(element.name),
       );
 

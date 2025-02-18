@@ -9,9 +9,7 @@ class DialogOverviewScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('BASF Dialogs')),
       body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: Dimens.paddingMedium20,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: Dimens.paddingMedium20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -71,15 +69,18 @@ class DialogOverviewScreen extends StatelessWidget {
                   context: context,
                   builder: (_) {
                     return BasfAlertDialog(
-                      description: 'Shows error or info snackbars '
+                      description:
+                          'Shows error or info snackbars '
                           'on different buttons',
                       onConfirmed: () {
-                        AppSnackBar.info(message: 'Confirm pressed')
-                            .show(context);
+                        AppSnackBar.info(
+                          message: 'Confirm pressed',
+                        ).show(context);
                       },
                       onDismissed: () {
-                        AppSnackBar.error(message: 'Cancel pressed')
-                            .show(context);
+                        AppSnackBar.error(
+                          message: 'Cancel pressed',
+                        ).show(context);
                       },
                     );
                   },

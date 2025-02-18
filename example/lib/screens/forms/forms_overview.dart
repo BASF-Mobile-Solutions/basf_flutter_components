@@ -11,9 +11,7 @@ class FormsOverviewScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('BASF Forms')),
       body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: Dimens.paddingMedium20,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: Dimens.paddingMedium20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

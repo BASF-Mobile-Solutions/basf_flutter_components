@@ -1,10 +1,13 @@
-## 2.4.5
+## 2.5.0
 - Flutter 3.29
 - Snackbar clears previous snackbars before showing
 - Validated fields do not occupy space when error text is empty
 - Popup/Dropdown menu items do not add additional padding vertically
 - (Max) dropdown - allow change via controller & disable if only one value
-- 
+- New android animations
+
+**BREAKING CHANGES:**
+instead of Theme.of(context).dialogBackgroundColor now use BasfThemes.primaryPaleBackgroundColor()
 
 ## 2.4.4
 

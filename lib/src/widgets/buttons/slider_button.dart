@@ -24,9 +24,9 @@ class SliderButton extends StatefulWidget {
     this.stickToEnd = false,
     this.animationCurve,
   }) : assert(
-          height >= 25 && width >= 250,
-          '''Height must be be greater or equal to 25, and width greater or equal to 250''',
-        );
+         height >= 25 && width >= 250,
+         '''Height must be be greater or equal to 25, and width greater or equal to 250''',
+       );
 
   /// Height of the slider
   final double height;
@@ -93,9 +93,10 @@ class _SliderButtonState extends State<SliderButton> {
       padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
         borderRadius: widget.backgroundShape ?? BasfThemes.defaultBorderRadius,
-        color: widget.backgroundColorEnd != null
-            ? _calculateBackground()
-            : widget.backgroundColor,
+        color:
+            widget.backgroundColorEnd != null
+                ? _calculateBackground()
+                : widget.backgroundColor,
         boxShadow: [
           widget.shadow ??
               const BoxShadow(
@@ -105,13 +106,7 @@ class _SliderButtonState extends State<SliderButton> {
               ),
         ],
       ),
-      child: Stack(
-        children: [
-          _text(),
-          _backgroundOverlay(),
-          _sliderButton(),
-        ],
-      ),
+      child: Stack(children: [_text(), _backgroundOverlay(), _sliderButton()]),
     );
   }
 
@@ -119,11 +114,9 @@ class _SliderButtonState extends State<SliderButton> {
     return Center(
       child: Text(
         widget.text ?? '',
-        style: widget.textStyle ??
-            const TextStyle(
-              color: Colors.black26,
-              fontWeight: FontWeight.bold,
-            ),
+        style:
+            widget.textStyle ??
+            const TextStyle(color: Colors.black26, fontWeight: FontWeight.bold),
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
       ),
@@ -139,11 +132,13 @@ class _SliderButtonState extends State<SliderButton> {
         duration: Duration(milliseconds: _duration),
         curve: Curves.ease,
         decoration: BoxDecoration(
-          borderRadius: widget.backgroundShape ??
+          borderRadius:
+              widget.backgroundShape ??
               BorderRadius.all(Radius.circular(widget.height)),
-          color: widget.backgroundColorEnd != null
-              ? _calculateBackground()
-              : widget.backgroundColor,
+          color:
+              widget.backgroundColorEnd != null
+                  ? _calculateBackground()
+                  : widget.backgroundColor,
         ),
       ),
     );
@@ -166,11 +161,9 @@ class _SliderButtonState extends State<SliderButton> {
                 widget.foregroundShape ?? BasfThemes.defaultBorderRadius,
             color: widget.foregroundColor ?? Theme.of(context).primaryColor,
           ),
-          child: widget.sliderButtonContent ??
-              Icon(
-                Icons.navigate_next,
-                color: widget.iconColor,
-              ),
+          child:
+              widget.sliderButtonContent ??
+              Icon(Icons.navigate_next, color: widget.iconColor),
         ),
       ),
     );
