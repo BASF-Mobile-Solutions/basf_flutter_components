@@ -109,8 +109,8 @@ class BasfThemes {
   }
 
   /// primary pale color
-  static Color primaryPaleBackgroundColor(BasfThemeType basfThemeType) {
-    return switch (basfThemeType) {
+  static Color primaryPaleBackgroundColor() {
+    return switch (_lastUsedThemeType) {
       BasfThemeType.orange => BasfColors.orangePale,
       BasfThemeType.darkGreen => BasfColors.darkGreenPale,
       _ => BasfColors.darkBluePale,
