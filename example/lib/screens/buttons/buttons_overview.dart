@@ -57,25 +57,6 @@ class ButtonsOverviewScreen extends StatelessWidget {
               text: 'Basf Slider button',
               onConfirmation: () {},
             ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: BasfTextField(
-                    autovalidateMode: AutovalidateMode.always,
-                    validator: (text) {
-                      if (text?.isEmpty ?? true) return 'test';
-                      return null;
-                    },
-                    controller: TextEditingController(),
-                  ),
-                ),
-                Expanded(
-                  child: BasfTextField(controller: TextEditingController()),
-                ),
-              ],
-            ),
-            const Text('test'),
           ].joinWithSeparator(VerticalSpacer.medium20()),
         ),
       ),
