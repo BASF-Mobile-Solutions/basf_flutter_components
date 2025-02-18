@@ -25,7 +25,7 @@ void main() {
                   selectedValue: 'a',
                   title: radioText,
                   onSelected: onChanged,
-                  identityHelperFunction: (_) => _,
+                  identityHelperFunction: (idt) => idt,
                 );
               },
             ),

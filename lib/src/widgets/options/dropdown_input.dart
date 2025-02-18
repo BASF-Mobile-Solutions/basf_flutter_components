@@ -170,6 +170,7 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
       absorbing: widget.isLoading || isDisabled,
       child: PopupMenuButton<String>(
         initialValue: _selectedValue,
+        menuPadding: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
           borderRadius: BasfThemes.defaultBorderRadius,
         ),

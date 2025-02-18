@@ -1,3 +1,8 @@
+## 2.4.5
+- Flutter 3.29
+- Snackbar clears previous snackbars before showing
+- Validated fields do not occupy space when error text is empty
+
 ## 2.4.4
 
 **BREAKING CHANGES:**
