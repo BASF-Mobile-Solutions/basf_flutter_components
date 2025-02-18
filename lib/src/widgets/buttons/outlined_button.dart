@@ -22,10 +22,7 @@ class BasfOutlinedButton extends BasfButton {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: alignment!,
-      child: _button(context),
-    );
+    return Align(alignment: alignment!, child: _button(context));
   }
 
   Widget _button(BuildContext context) {

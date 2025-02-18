@@ -41,41 +41,57 @@ class BasfThemes {
     BasfThemeType basfThemeType = BasfThemeType.darkBlue,
     List<String>? fontFamilyFallback,
   }) {
-    final theme = basfThemeType;
-    _lastUsedThemeType = theme;
+    _lastUsedThemeType = basfThemeType;
 
     return ThemeData(
+      useMaterial3: true,
       fontFamily: 'Roboto',
       fontFamilyFallback: fontFamilyFallback,
       textTheme: mainTextTheme,
-      appBarTheme: _mainAppBarTheme(theme),
+      appBarTheme: _mainAppBarTheme(basfThemeType),
       scaffoldBackgroundColor: BasfColors.white,
-      snackBarTheme: _snackBarThemeData(theme),
-      dialogBackgroundColor: _getDialogBackgroundColor(theme),
+      snackBarTheme: _snackBarThemeData(basfThemeType),
       colorScheme: ColorScheme.fromSwatch(
-        primarySwatch: theme.primaryColor,
+        primarySwatch: basfThemeType.primaryColor,
         errorColor: BasfColors.red,
       ),
-      splashColor: theme.primaryColor.withValues(alpha: 0.1),
-      highlightColor: theme.primaryColor.withValues(alpha: 0.2),
-      iconTheme: IconThemeData(
-        color: theme.primaryColor,
+      pageTransitionsTheme: PageTransitionsTheme(
+        builders: {
+          ...ThemeData().pageTransitionsTheme.builders.whereKey(
+            (key) => key != TargetPlatform.android,
+          ),
+          TargetPlatform.android: const FadeForwardsPageTransitionsBuilder(),
+        },
+      ),
+      splashColor: basfThemeType.primaryColor.withValues(alpha: 0.1),
+      highlightColor: basfThemeType.primaryColor.withValues(alpha: 0.2),
+      iconTheme: IconThemeData(color: basfThemeType.primaryColor),
+      progressIndicatorTheme: ProgressIndicatorThemeData(
+        circularTrackColor: basfThemeType.primaryColor.shade50,
+        linearTrackColor: basfThemeType.primaryColor.shade50,
+      ),
+      popupMenuTheme: const PopupMenuThemeData(menuPadding: EdgeInsets.zero),
+      sliderTheme: SliderThemeData(
+        inactiveTrackColor: basfThemeType.primaryColor.shade50,
       ),
       textButtonTheme: TextButtonThemeData(
-        style: ButtonStyles.containedTextButtonStyle(theme.primaryColor),
+        style: ButtonStyles.containedTextButtonStyle(
+          basfThemeType.primaryColor,
+        ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
-        style: ButtonStyles.primaryOutlinedButtonStyle(theme.primaryColor),
+        style: ButtonStyles.primaryOutlinedButtonStyle(
+          basfThemeType.primaryColor,
+        ),
       ),
-      dialogTheme: DialogTheme(
-        surfaceTintColor: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: defaultBorderRadius),
+      datePickerTheme: const DatePickerThemeData(
+        shape: BeveledRectangleBorder(),
       ),
       inputDecorationTheme: BasfInputThemes.getMainInputDecorationTheme(
-        theme.primaryColor,
+        basfThemeType.primaryColor,
       ),
-      hintColor: theme.primaryColor.shade400,
-      bottomNavigationBarTheme: _bottomNavigationBarTheme(theme),
+      hintColor: basfThemeType.primaryColor.shade400,
+      bottomNavigationBarTheme: _bottomNavigationBarTheme(basfThemeType),
     );
   }
 
@@ -92,8 +108,9 @@ class BasfThemes {
     };
   }
 
-  static Color _getDialogBackgroundColor(BasfThemeType basfThemeType) {
-    return switch (basfThemeType) {
+  /// primary pale color
+  static Color primaryPaleBackgroundColor() {
+    return switch (_lastUsedThemeType) {
       BasfThemeType.orange => BasfColors.orangePale,
       BasfThemeType.darkGreen => BasfColors.darkGreenPale,
       _ => BasfColors.darkBluePale,
@@ -131,8 +148,9 @@ class BasfThemes {
   static AppBarTheme _mainAppBarTheme(BasfThemeType theme) {
     return AppBarTheme(
       backgroundColor: theme.primaryColor,
-      titleTextStyle:
-          mainTextTheme.titleMedium!.copyWith(color: BasfColors.white),
+      titleTextStyle: mainTextTheme.titleMedium!.copyWith(
+        color: BasfColors.white,
+      ),
       iconTheme: const IconThemeData(color: BasfColors.white),
       systemOverlayStyle: SystemUiOverlayStyle.light,
       scrolledUnderElevation: 0,
@@ -144,11 +162,10 @@ class BasfThemes {
     return SnackBarThemeData(
       backgroundColor: theme.primaryColor,
       behavior: SnackBarBehavior.floating,
-      shape: RoundedRectangleBorder(
-        borderRadius: defaultBorderRadius,
+      shape: RoundedRectangleBorder(borderRadius: defaultBorderRadius),
+      contentTextStyle: mainTextTheme.titleMedium!.copyWith(
+        color: BasfColors.white,
       ),
-      contentTextStyle:
-          mainTextTheme.titleMedium!.copyWith(color: BasfColors.white),
     );
   }
 

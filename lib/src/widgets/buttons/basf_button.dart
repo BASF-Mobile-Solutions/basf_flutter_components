@@ -85,10 +85,7 @@ abstract class BasfButton extends StatelessWidget {
   /// Button child content
   Widget buttonChildContent() {
     if (expanded) {
-      return SizedBox(
-        width: double.infinity,
-        child: Align(child: child),
-      );
+      return SizedBox(width: double.infinity, child: Align(child: child));
     } else {
       return child!;
     }

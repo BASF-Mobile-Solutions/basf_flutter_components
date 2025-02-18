@@ -52,10 +52,7 @@ class RadioOptions<T> extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: titleStyle ?? theme.textTheme.bodyMedium,
-        ),
+        Text(title, style: titleStyle ?? theme.textTheme.bodyMedium),
         VerticalSpacer.normal(),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,10 +62,11 @@ class RadioOptions<T> extends StatelessWidget {
               child: OptionButton(
                 labelText: labelGenerator(values[index]),
                 description: descriptionGenerator?.call(values[index]),
-                isSelected: identityHelperFunction != null
-                    ? identityHelperFunction?.call(selectedValue) ==
-                        identityHelperFunction?.call(values[index])
-                    : selectedValue == values[index],
+                isSelected:
+                    identityHelperFunction != null
+                        ? identityHelperFunction?.call(selectedValue) ==
+                            identityHelperFunction?.call(values[index])
+                        : selectedValue == values[index],
                 onPressed: () {
                   onSelected(values[index]);
                 },

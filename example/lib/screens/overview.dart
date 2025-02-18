@@ -13,13 +13,9 @@ class _OverviewScreenState extends State<OverviewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('BASF Components'),
-      ),
+      appBar: AppBar(title: const Text('BASF Components')),
       body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: Dimens.paddingMedium20,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: Dimens.paddingMedium20),
         child: ListView(
           padding: const EdgeInsets.symmetric(vertical: Dimens.paddingMedium),
           children: [

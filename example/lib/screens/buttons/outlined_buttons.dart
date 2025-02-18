@@ -59,24 +59,18 @@ class OutlinedButtonsScreen extends StatelessWidget {
         text: 'Styled Button',
         onPressed: () => _onPressed(context),
         style: TextButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(0),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
           side: const BorderSide(color: BasfColors.red),
           foregroundColor: BasfColors.red,
         ),
       ),
 
       ///Disabled Button
-      const BasfOutlinedButton(
-        text: 'Disabled Button',
-      ),
+      const BasfOutlinedButton(text: 'Disabled Button'),
     ];
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Outlined Buttons'),
-      ),
+      appBar: AppBar(title: const Text('Outlined Buttons')),
       body: SafeArea(
         child: ListView.separated(
           padding: const EdgeInsets.all(Dimens.paddingMedium20),

@@ -26,9 +26,8 @@ abstract class BasfTextStyles {
   );
 
   /// InputField - Hint - Default
-  static TextStyle get inputFieldHint => _defaultFieldText.copyWith(
-        color: BasfThemes.getMaterialColor().shade400,
-      );
+  static TextStyle get inputFieldHint =>
+      _defaultFieldText.copyWith(color: BasfThemes.getMaterialColor().shade400);
 
   /// InputField - Hint - Error
   static final TextStyle inputFieldHintError = _defaultFieldText.copyWith(
@@ -36,9 +35,8 @@ abstract class BasfTextStyles {
   );
 
   /// InputField - Hint - Focus
-  static TextStyle get inputFieldHintFocus => _defaultFieldText.copyWith(
-        color: BasfThemes.getMaterialColor().shade500,
-      );
+  static TextStyle get inputFieldHintFocus =>
+      _defaultFieldText.copyWith(color: BasfThemes.getMaterialColor().shade500);
 
   /// InputField - Hint - Disabled
   /// InputField - Text Input - Disabled
@@ -112,10 +110,10 @@ abstract class BasfTextStyles {
 
   /// Alert Dialog Confirm
   static TextStyle getAlertDialogConfirm(BuildContext context) => TextStyle(
-        fontSize: 16,
-        fontWeight: FontWeight.normal,
-        color: Theme.of(context).primaryColor,
-      );
+    fontSize: 16,
+    fontWeight: FontWeight.normal,
+    color: Theme.of(context).primaryColor,
+  );
 }
 
 /// Custom text style used at BASF Themes

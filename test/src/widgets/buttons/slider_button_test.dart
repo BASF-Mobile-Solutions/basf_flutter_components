@@ -9,10 +9,7 @@ void main() {
     testWidgets('Slider button text', (WidgetTester tester) async {
       const text = 'Hi!';
       await tester.pumpApp(
-        SliderButton(
-          text: text,
-          onConfirmation: () {},
-        ),
+        SliderButton(text: text, onConfirmation: () {}),
         BasfThemes.lightMainTheme(),
       );
 
@@ -46,14 +43,11 @@ void main() {
       await tester.pumpAndSettle();
     });
 
-    testWidgets('Slider test slider button in the middle',
-        (WidgetTester tester) async {
+    testWidgets('Slider test slider button in the middle', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpApp(
-        SliderButton(
-          onConfirmation: () {},
-          width: 2000,
-          height: 500,
-        ),
+        SliderButton(onConfirmation: () {}, width: 2000, height: 500),
         BasfThemes.lightMainTheme(),
       );
 

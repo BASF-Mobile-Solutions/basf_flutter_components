@@ -77,10 +77,7 @@ class BasfTextButton extends BasfButton with TextButtonHelper {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: alignment!,
-      child: _button(context),
-    );
+    return Align(alignment: alignment!, child: _button(context));
   }
 
   Widget _button(BuildContext context) {
@@ -113,15 +110,9 @@ mixin TextButtonHelper {
       case TextButtonConstructorType.contained:
         return style;
       case TextButtonConstructorType.transparent:
-        return getTransparentStyle(
-          context: context,
-          style: style,
-        );
+        return getTransparentStyle(context: context, style: style);
       case TextButtonConstructorType.hint:
-        return getHintStyle(
-          context: context,
-          style: style,
-        );
+        return getHintStyle(context: context, style: style);
     }
   }
 
@@ -136,9 +127,7 @@ mixin TextButtonHelper {
       );
     } else {
       return style.merge(
-        ButtonStyles.transparentTextButtonStyle(
-          Theme.of(context).primaryColor,
-        ),
+        ButtonStyles.transparentTextButtonStyle(Theme.of(context).primaryColor),
       );
     }
   }
@@ -152,9 +141,7 @@ mixin TextButtonHelper {
       return ButtonStyles.hintTextButtonStyle(Theme.of(context).primaryColor);
     } else {
       return style.merge(
-        ButtonStyles.hintTextButtonStyle(
-          Theme.of(context).primaryColor,
-        ),
+        ButtonStyles.hintTextButtonStyle(Theme.of(context).primaryColor),
       );
     }
   }

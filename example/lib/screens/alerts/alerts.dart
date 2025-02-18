@@ -16,13 +16,16 @@ class AlertsOverviewScreen extends StatelessWidget {
             const Divider(),
             BasfTextButton.contained(
               text: 'Info',
-              onPressed: () =>
-                  AppSnackBar.info(message: 'Button pressed').show(context),
+              onPressed:
+                  () =>
+                      AppSnackBar.info(message: 'Button pressed').show(context),
             ),
             BasfTextButton.contained(
               text: 'Error',
-              onPressed: () =>
-                  AppSnackBar.error(message: 'Button pressed').show(context),
+              onPressed:
+                  () => AppSnackBar.error(
+                    message: 'Button pressed',
+                  ).show(context),
             ),
           ].joinWithSeparator(VerticalSpacer.medium20()),
         ),
