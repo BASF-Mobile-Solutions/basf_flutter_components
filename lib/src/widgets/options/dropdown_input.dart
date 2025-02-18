@@ -81,9 +81,19 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
 
   @override
   void initState() {
-    super.initState();
     _unselectedValue = _generateUniqueUnselectedValue();
     _initializeSelectedValue();
+    widget.controller.addListener(() {
+      if (widget.controller.text.isEmpty) {
+        _onChanged(widget.unselectedText);
+      } else {
+        if (widget.controller.text != _selectedValue &&
+            widget.values.contains(widget.controller.text)) {
+          _onChanged(widget.controller.text);
+        }
+      }
+    });
+    super.initState();
   }
 
   String _generateUniqueUnselectedValue() {
@@ -122,6 +132,16 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
         : widget.itemColor?.call(_selectedValue);
   }
 
+  void _onChanged(String? value) {
+    widget.onChanged?.call(value == _unselectedValue ? null : value);
+
+    setState(() {
+      _selectedValue = value ?? '';
+      _updateSelectedColor();
+      _updateController();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     if (widget.labelText != null) {
@@ -153,17 +173,7 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
         shape: RoundedRectangleBorder(
           borderRadius: BasfThemes.defaultBorderRadius,
         ),
-        onSelected: (value) {
-          widget.onChanged?.call(
-            value == _unselectedValue ? null : value,
-          );
-
-          setState(() {
-            _selectedValue = value;
-            _updateSelectedColor();
-            _updateController();
-          });
-        },
+        onSelected: _onChanged,
         itemBuilder: (context) {
           final items = <PopupMenuEntry<String>>[];
 
