@@ -181,7 +181,10 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
             items.add(
               PopupMenuItem<String>(
                 value: _unselectedValue,
-                child: Text(widget.unselectedText),
+                child: Text(
+                  widget.unselectedText,
+                  style: TextStyle(color: Theme.of(context).primaryColor),
+                ),
               ),
             );
           }
@@ -261,10 +264,7 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
     return Container(
       width: 15,
       height: 15,
-      margin: const EdgeInsets.only(
-        left: 18,
-        right: 15,
-      ),
+      margin: const EdgeInsets.only(left: 18, right: 15),
       child: CircularProgressIndicator(
         color: theme.primaryColor,
         strokeWidth: 3,
@@ -276,19 +276,15 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
     return Container(
       width: 15,
       height: 15,
-      margin: const EdgeInsets.only(
-        left: 18,
-        right: 15,
-      ),
-      child: Icon(
-        BasfIcons.arrow_down,
-        size: 16,
-        color: color,
-      ),
+      margin: const EdgeInsets.only(left: 18, right: 15),
+      child: Icon(BasfIcons.arrow_down, size: 16, color: color),
     );
   }
 
   bool get isDisabled {
-    return (widget.values.isEmpty || widget.isDisabled) && !widget.isLoading;
+    return (widget.values.isEmpty ||
+            widget.values.length == 1 ||
+            widget.isDisabled) &&
+        !widget.isLoading;
   }
 }
