@@ -29,7 +29,7 @@ class LabeledWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (labelText != null)
+        if (labelText.isNullOrEmpty)
           Text(
             labelText!,
             overflow: TextOverflow.ellipsis,

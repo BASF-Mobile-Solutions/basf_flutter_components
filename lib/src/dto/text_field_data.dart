@@ -30,15 +30,12 @@ class TextFieldData {
     this.validator,
     this.autovalidateMode,
     this.keyboardType,
-    // this.scanBehavior = TextFieldScanBehavior.none,
     this.inputFormatters,
-    // this.prefillWithDefault = true,
-    this.capitalized = true,
     this.textCapitalization = TextCapitalization.none,
   });
 
   /// Unique identifier for the text field, necessary for [PersistedTextField]
-  final String? id;
+  final String id;
 
   /// Label of the text field
   final String label;
@@ -55,21 +52,8 @@ class TextFieldData {
   /// Keyboard type for the text field
   final TextInputType? keyboardType;
 
-  /// Scan behavior for the text field
-  /// Default is [TextFieldScanBehavior.none]
-  // final TextFieldScanBehavior scanBehavior;
-
   /// Input formatters for the text field
   final List<TextInputFormatter>? inputFormatters;
-
-  /// Interesting if used in [PersistedTextField]
-  /// Whether to prefill the [PersistedTextField] with default value
-  /// Default is true
-  // final bool prefillWithDefault;
-
-  /// Whether the text field is capitalized
-  /// Default is true
-  final bool capitalized;
 
   /// Text capitalization for the text field
   /// Default is [TextCapitalization.none]

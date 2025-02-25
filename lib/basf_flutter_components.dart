@@ -1,4 +1,7 @@
-export 'src/extensions/extensions.dart';
+export 'src/extensions/list_extensions.dart';
+export 'src/extensions/object_extensions.dart';
+export 'src/extensions/other_extensions.dart';
+export 'src/extensions/string_extensions.dart';
 export 'src/theme/buttons.dart';
 export 'src/theme/colors.dart';
 export 'src/theme/dimens.dart';
