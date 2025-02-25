@@ -25,16 +25,14 @@ class _OptionsScreenState extends State<OptionsScreen> {
           children: [
             BasfDropDownInput(
               controller: TextEditingController(),
-              values: ['Optionasdf aföaksdj fölajsdklfjlökajdflkjaösd 1', 'Option2', 'Option3'],
+              values: const ['Option1', 'Option2', 'Option3'],
             ),
             RadioOptions(
               title: 'BASF Radio',
               selectedValue: selectedValue,
               labelGenerator: (o) => o,
               values: values,
-              onSelected: (value) {
-                setState(() => selectedValue = value);
-              },
+              onSelected: (value) => setState(() => selectedValue = value),
             ),
             const Text('CheckBox'),
             BasfCheckbox(value: selected, onChanged: change),
@@ -49,9 +47,7 @@ class _OptionsScreenState extends State<OptionsScreen> {
             const LinearProgressIndicator(value: 0.2),
             Slider(
               value: sliderValue,
-              onChanged: (val) {
-                setState(() => sliderValue = val);
-              },
+              onChanged: (val) => setState(() => sliderValue = val),
             ),
           ].joinWithSeparator(const VerticalSpacer(height: 20)),
         ),
