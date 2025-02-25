@@ -20,6 +20,7 @@ class BasfDropDownInput extends StatefulWidget {
     this.unselectedText = 'Select value',
     this.allowUnselected = false,
     this.itemColor,
+    this.maxWidth,
     this.onChanged,
   });
 
@@ -64,7 +65,9 @@ class BasfDropDownInput extends StatefulWidget {
   /// based on the value of the item
   final Color? Function(String)? itemColor;
 
-  /// Special value to represent the unselected
+  /// Set the width constrains of the dropdown, especially useful when placed
+  /// in Row
+  final double? maxWidth;
 
   @override
   State<BasfDropDownInput> createState() => _BasfDropDownInputState();
@@ -140,23 +143,14 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.labelText != null) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          title(),
-          popupMenuButton(context),
-        ].joinWithSeparator(VerticalSpacer.semi()),
-      );
-    } else {
-      return popupMenuButton(context);
-    }
-  }
-
-  Widget title() {
-    return Text(
-      widget.labelText!,
-      style: Theme.of(context).textTheme.bodyMedium,
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxWidth: widget.maxWidth ?? double.infinity),
+      child: IntrinsicWidth(
+        child: LabeledWidget(
+          labelText: widget.labelText,
+          child: popupMenuButton(context),
+        ),
+      ),
     );
   }
 
