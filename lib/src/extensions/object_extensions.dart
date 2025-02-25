@@ -6,7 +6,7 @@ extension Checks on Object? {
   bool get isNullOrEmpty {
     return this == null ||
         this!.toString().isEmpty ||
-        (this is Iterable && (this as Iterable).isEmpty);
+        (this is Iterable && (this! as Iterable).isEmpty);
   }
 
   ///Checks if the object is not null or empty, or if it is not an empty list

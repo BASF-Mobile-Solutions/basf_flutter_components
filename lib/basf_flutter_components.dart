@@ -1,3 +1,4 @@
+export 'src/dto/text_field_data.dart';
 export 'src/extensions/list_extensions.dart';
 export 'src/extensions/object_extensions.dart';
 export 'src/extensions/other_extensions.dart';

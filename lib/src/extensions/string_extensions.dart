@@ -1,5 +1,4 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
-import 'package:flutter/material.dart';
 
 /// A collection of usefull extensions on [String]
 extension StringCasingExtension on String {

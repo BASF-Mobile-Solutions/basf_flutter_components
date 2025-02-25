@@ -584,7 +584,7 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
       greyWhenDisabled: widget.greyWhenDisabled,
       focusNode: _focusNode,
       controller: widget.controller,
-      initialValue: widget.initialValue,
+      // initialValue: widget.initialValue, //TODO: Remove unused?
       decoration: widget.decoration,
       keyboardType: widget.keyboardType,
       textCapitalization: widget.textCapitalization,
@@ -619,8 +619,8 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
         widget.onTap?.call();
         _showOverlay();
       },
-      onFieldSubmitted: widget.onFieldSubmitted,
-      onSaved: widget.onSaved,
+      // onFieldSubmitted: widget.onFieldSubmitted, //TODO: Remove unused?
+      // onSaved: widget.onSaved, //TODO: Remove unused?
       validator: widget.validator,
       inputFormatters: widget.inputFormatters,
       enabled: widget.enabled,

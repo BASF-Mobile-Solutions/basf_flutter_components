@@ -25,7 +25,7 @@ class TextFieldData {
   /// Can be used to make text fields depending on same behavior
   TextFieldData({
     required this.id,
-    required this.label,
+    required this.labelText,
     required this.controller,
     this.validator,
     this.autovalidateMode,
@@ -38,7 +38,7 @@ class TextFieldData {
   final String id;
 
   /// Label of the text field
-  final String label;
+  final String labelText;
 
   /// Controller for the text field
   final TextEditingController controller;
