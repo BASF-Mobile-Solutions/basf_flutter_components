@@ -6,40 +6,34 @@ import '../../../helpers/pump_app.dart';
 
 void main() {
   group('Alert Dialog types', () {
-    testWidgets(
-      'Alert dialog with description shows up',
-      (tester) async {
-        const tapTarget = Key('tap-target');
-        await tester.pumpApp(
-          const Scaffold(body: MyWidget(finderKey: tapTarget)),
-          BasfThemes.lightMainTheme(),
-        );
-        expect(find.byIcon(Icons.abc), findsOneWidget);
-        await tester.tap(
-          find.byKey(tapTarget),
-          warnIfMissed: false, // Added to remove unnecesary warning
-        );
-        await tester.pumpAndSettle();
-        // here it should not be visible
-        // ! figure out why it does not change the visibility
-        // ! and fix the didUpdateWidget test part
-        await tester.tap(
-          find.byKey(tapTarget),
-          warnIfMissed: false, // Added to remove unnecesary warning
-        );
-        // here it should be visible
-        await tester.pumpAndSettle();
-        expect(find.byIcon(Icons.abc), findsOneWidget);
-      },
-    );
+    testWidgets('Alert dialog with description shows up', (tester) async {
+      const tapTarget = Key('tap-target');
+      await tester.pumpApp(
+        const Scaffold(body: MyWidget(finderKey: tapTarget)),
+        BasfThemes.lightMainTheme(),
+      );
+      expect(find.byIcon(Icons.abc), findsOneWidget);
+      await tester.tap(
+        find.byKey(tapTarget),
+        warnIfMissed: false, // Added to remove unnecesary warning
+      );
+      await tester.pumpAndSettle();
+      // here it should not be visible
+      // ! figure out why it does not change the visibility
+      // ! and fix the didUpdateWidget test part
+      await tester.tap(
+        find.byKey(tapTarget),
+        warnIfMissed: false, // Added to remove unnecesary warning
+      );
+      // here it should be visible
+      await tester.pumpAndSettle();
+      expect(find.byIcon(Icons.abc), findsOneWidget);
+    });
   });
 }
 
 class MyWidget extends StatefulWidget {
-  const MyWidget({
-    required this.finderKey,
-    super.key,
-  });
+  const MyWidget({required this.finderKey, super.key});
   final Key finderKey;
 
   @override

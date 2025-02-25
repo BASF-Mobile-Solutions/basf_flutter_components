@@ -48,17 +48,13 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
           children: [
             const SizedBox(height: 15),
             BasfTextField(
-              decoration: const InputDecoration(
-                hintText: 'Enabled',
-              ),
+              decoration: const InputDecoration(hintText: 'Enabled'),
               controller: _enabledController,
             ),
             const SizedBox(height: 15),
             BasfTextField(
               enabled: false,
-              decoration: const InputDecoration(
-                hintText: 'Disabled',
-              ),
+              decoration: const InputDecoration(hintText: 'Disabled'),
               controller: _disabledController,
             ),
             const SizedBox(height: 15),
@@ -70,9 +66,7 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
                 }
                 return null;
               },
-              decoration: const InputDecoration(
-                hintText: 'Error',
-              ),
+              decoration: const InputDecoration(hintText: 'Error'),
               controller: _errorController,
             ),
             const SizedBox(height: 15),
@@ -83,15 +77,11 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
               onEditingComplete: () {
                 saveTriggerNotifier.value = !saveTriggerNotifier.value;
               },
-              decoration: const InputDecoration(
-                hintText: 'Persistent input',
-              ),
+              decoration: const InputDecoration(hintText: 'Persistent input'),
             ),
             const SizedBox(height: 15),
             BasfTextField(
-              decoration: const InputDecoration(
-                labelText: 'Obscured',
-              ),
+              decoration: const InputDecoration(labelText: 'Obscured'),
               obscureText: true,
               controller: _obscureController,
             ),
@@ -137,9 +127,7 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
                   child: Center(
                     child: Text(
                       'Dropdown examples',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: TextStyle(fontWeight: FontWeight.w600),
                     ),
                   ),
                 ),

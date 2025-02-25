@@ -358,9 +358,9 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
 
   void saveValue() {
     if (widget.controller.text.trim().isNotEmpty) {
-      _textFieldKey.currentContext
-          ?.read<PersistedInputCubit>()
-          .addValue(widget.controller.text);
+      _textFieldKey.currentContext?.read<PersistedInputCubit>().addValue(
+        widget.controller.text,
+      );
     }
     if (_focusNode.hasFocus) {
       _focusNode.unfocus();
@@ -374,9 +374,12 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
       HydratedBloc.storage.toString();
     } catch (e) {
       HydratedBloc.storage = await HydratedStorage.build(
-        storageDirectory: kIsWeb
-            ? HydratedStorageDirectory.web
-            : HydratedStorageDirectory((await getTemporaryDirectory()).path),
+        storageDirectory:
+            kIsWeb
+                ? HydratedStorageDirectory.web
+                : HydratedStorageDirectory(
+                  (await getTemporaryDirectory()).path,
+                ),
       );
     }
 
@@ -402,10 +405,7 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
   @override
   Widget build(BuildContext context) {
     if (widget.persistentCubit != null) {
-      return BlocProvider.value(
-        value: widget.persistentCubit!,
-        child: body(),
-      );
+      return BlocProvider.value(value: widget.persistentCubit!, child: body());
     } else {
       return BlocProvider(
         create: (context) => PersistedInputCubit(id: widget.uniqueId),
@@ -456,10 +456,7 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
           return const SizedBox();
         }
 
-        return overlayContainer(
-          snapshot.data!.width,
-          context,
-        );
+        return overlayContainer(snapshot.data!.width, context);
       },
     );
   }
@@ -470,14 +467,14 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
     return ValueListenableBuilder(
       valueListenable: textNotifier,
       builder: (context, text, _) {
-        final showFavorite = cubit.state.favoriteValue != null &&
+        final showFavorite =
+            cubit.state.favoriteValue != null &&
             cubit.state.favoriteValue!.contains(text);
 
-        final lastValues = cubit.state.lastValues
-            .where(
-              (value) => value.contains(text),
-            )
-            .toList();
+        final lastValues =
+            cubit.state.lastValues
+                .where((value) => value.contains(text))
+                .toList();
 
         if (!showFavorite && lastValues.isEmpty) {
           return const SizedBox();
@@ -510,11 +507,7 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
   }
 
   Widget favoriteItem(BuildContext context, String favoriteValue) {
-    return item(
-      context: context,
-      value: favoriteValue,
-      isFavorite: true,
-    );
+    return item(context: context, value: favoriteValue, isFavorite: true);
   }
 
   Widget lastValuesList({
@@ -527,16 +520,8 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
       children: [
         if (favoriteExists) separator(context: context, isFavorite: true),
         ...List.generate(lastValues.length, (index) {
-          return item(
-            context: context,
-            value: lastValues[index],
-          );
-        }).joinWithSeparator(
-          separator(
-            context: context,
-            isFavorite: false,
-          ),
-        ),
+          return item(context: context, value: lastValues[index]);
+        }).joinWithSeparator(separator(context: context, isFavorite: false)),
       ],
     );
   }
@@ -582,15 +567,13 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
     );
   }
 
-  Widget separator({
-    required BuildContext context,
-    required bool isFavorite,
-  }) {
+  Widget separator({required BuildContext context, required bool isFavorite}) {
     return Container(
       height: 1,
-      color: isFavorite
-          ? Theme.of(context).primaryColor
-          : Theme.of(context).splashColor,
+      color:
+          isFavorite
+              ? Theme.of(context).primaryColor
+              : Theme.of(context).splashColor,
     );
   }
 
@@ -664,7 +647,7 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
       magnifierConfiguration: widget.magnifierConfiguration,
       onAppPrivateCommand: widget.onAppPrivateCommand,
       onSubmitted: widget.onSubmitted,
-      scribbleEnabled: widget.scribbleEnabled,
+      stylusHandwritingEnabled: widget.scribbleEnabled,
       selectionHeightStyle: widget.selectionHeightStyle,
       selectionWidthStyle: widget.selectionWidthStyle,
       spellCheckConfiguration: widget.spellCheckConfiguration,

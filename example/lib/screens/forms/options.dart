@@ -9,12 +9,10 @@ class OptionsScreen extends StatefulWidget {
 }
 
 class _OptionsScreenState extends State<OptionsScreen> {
-  List<String> values = [
-    'Option1',
-    'Option2',
-  ];
+  List<String> values = ['Option1', 'Option2'];
   String selectedValue = 'Option1';
   bool selected = true;
+  double sliderValue = 0.5;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +45,15 @@ class _OptionsScreenState extends State<OptionsScreen> {
               reverse: true,
               onChanged: change,
             ),
-          ],
+            const Center(child: CircularProgressIndicator(value: 0.4)),
+            const LinearProgressIndicator(value: 0.2),
+            Slider(
+              value: sliderValue,
+              onChanged: (val) {
+                setState(() => sliderValue = val);
+              },
+            ),
+          ].joinWithSeparator(const VerticalSpacer(height: 20)),
         ),
       ),
     );

@@ -43,12 +43,12 @@ class PersistedInputCubit extends HydratedCubit<PersistedInputData> {
             if (state.favoriteValue != null) state.favoriteValue!,
             ...state.lastValues,
           ]..removeWhere((v) {
-              if (value != state.favoriteValue) {
-                return v == value;
-              } else {
-                return false;
-              }
-            }),
+            if (value != state.favoriteValue) {
+              return v == value;
+            } else {
+              return false;
+            }
+          }),
         ),
       );
     }

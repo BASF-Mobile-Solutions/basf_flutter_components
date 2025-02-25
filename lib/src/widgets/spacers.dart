@@ -28,10 +28,7 @@ import 'package:flutter/material.dart';
 ///  * [HorizontalSpacerWithText]
 class VerticalSpacer extends SizedBox {
   /// [VerticalSpacer] with custom paddings
-  const VerticalSpacer({
-    required double super.height,
-    super.key,
-  });
+  const VerticalSpacer({required double super.height, super.key});
 
   /// [VerticalSpacer] with [2.0] as padding
   factory VerticalSpacer.xSmall() =>
@@ -107,10 +104,7 @@ class VerticalSpacer extends SizedBox {
 ///  * [HorizontalSpacerWithText]
 class HorizontalSpacer extends SizedBox {
   /// [HorizontalSpacer] with custom paddings
-  const HorizontalSpacer({
-    required double super.width,
-    super.key,
-  });
+  const HorizontalSpacer({required double super.width, super.key});
 
   /// [HorizontalSpacer] with [2.0] as padding
   factory HorizontalSpacer.xSmall() =>
@@ -210,27 +204,16 @@ class HorizontalSpacerWithText extends StatelessWidget {
         Expanded(
           child: Container(
             margin: const EdgeInsets.all(20),
-            child: Divider(
-              thickness: thickness,
-              color: color,
-              height: height,
-            ),
+            child: Divider(thickness: thickness, color: color, height: height),
           ),
         ),
         VerticalSpacer.small(),
-        Text(
-          text,
-          style: textStyle,
-        ),
+        Text(text, style: textStyle),
         VerticalSpacer.small(),
         Expanded(
           child: Container(
             margin: const EdgeInsets.all(20),
-            child: Divider(
-              thickness: thickness,
-              color: color,
-              height: height,
-            ),
+            child: Divider(thickness: thickness, color: color, height: height),
           ),
         ),
       ],

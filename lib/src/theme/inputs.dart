@@ -17,40 +17,43 @@ abstract class BasfInputThemes {
       iconColor: color,
       prefixIconColor: color,
       suffixIconColor: color,
-      hintStyle:
-          BasfThemes.mainTextTheme.titleMedium!.copyWith(color: color.shade400),
+      hintStyle: BasfThemes.mainTextTheme.titleMedium!.copyWith(
+        color: color.shade400,
+      ),
     );
   }
 
   /// Error input theme
   static ThemeData errorInputTheme(ThemeData theme) => theme.copyWith(
-        textSelectionTheme: _errorTextSelectionTheme,
-        iconTheme: const IconThemeData(color: BasfColors.red),
-        hintColor: BasfColors.red.shade400,
-        inputDecorationTheme: theme.inputDecorationTheme.copyWith(
-          hintStyle: theme.inputDecorationTheme.hintStyle
-              ?.copyWith(color: BasfColors.red.shade400),
-        ),
-      );
+    textSelectionTheme: _errorTextSelectionTheme,
+    iconTheme: const IconThemeData(color: BasfColors.red),
+    hintColor: BasfColors.red.shade400,
+    inputDecorationTheme: theme.inputDecorationTheme.copyWith(
+      hintStyle: theme.inputDecorationTheme.hintStyle?.copyWith(
+        color: BasfColors.red.shade400,
+      ),
+    ),
+  );
 
   /// Disabled input theme
   static ThemeData disabledInputTheme(ThemeData theme) => theme.copyWith(
-        iconTheme: IconThemeData(color: BasfColors.grey.shade400),
-        hintColor: BasfColors.grey.shade400,
-        inputDecorationTheme: theme.inputDecorationTheme.copyWith(
-          hintStyle: theme.inputDecorationTheme.hintStyle
-              ?.copyWith(color: BasfColors.grey.shade400),
-          fillColor: BasfColors.grey.shade100,
-          filled: true,
-        ),
-      );
+    iconTheme: IconThemeData(color: BasfColors.grey.shade400),
+    hintColor: BasfColors.grey.shade400,
+    inputDecorationTheme: theme.inputDecorationTheme.copyWith(
+      hintStyle: theme.inputDecorationTheme.hintStyle?.copyWith(
+        color: BasfColors.grey.shade400,
+      ),
+      fillColor: BasfColors.grey.shade100,
+      filled: true,
+    ),
+  );
 
   static final TextSelectionThemeData _errorTextSelectionTheme =
       TextSelectionThemeData(
-    cursorColor: BasfColors.red,
-    selectionHandleColor: BasfColors.red,
-    selectionColor: BasfColors.red.shade200,
-  );
+        cursorColor: BasfColors.red,
+        selectionHandleColor: BasfColors.red,
+        selectionColor: BasfColors.red.shade200,
+      );
 
   static OutlineInputBorder _focusedBorder(MaterialColor color) =>
       OutlineInputBorder(

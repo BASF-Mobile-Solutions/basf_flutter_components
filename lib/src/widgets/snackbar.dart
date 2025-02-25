@@ -16,10 +16,8 @@ class AppSnackBar extends StatelessWidget {
 
   /// {@macro app_snackbar}
   /// info
-  factory AppSnackBar.info({required String message}) => AppSnackBar(
-        message: message,
-        prefixIcon: Icons.info,
-      );
+  factory AppSnackBar.info({required String message}) =>
+      AppSnackBar(message: message, prefixIcon: Icons.info);
 
   /// {@macro app_snackbar}
   /// error
@@ -46,13 +44,7 @@ class AppSnackBar extends StatelessWidget {
   }
 
   Widget _content() {
-    return Row(
-      children: [
-        _leftIcon(),
-        HorizontalSpacer.semi(),
-        _text(),
-      ],
-    );
+    return Row(children: [_leftIcon(), HorizontalSpacer.semi(), _text()]);
   }
 
   Widget _leftIcon() {

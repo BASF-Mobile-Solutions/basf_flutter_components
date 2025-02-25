@@ -75,10 +75,7 @@ class BasfCheckbox extends StatelessWidget {
   Widget _checkBoxLayout() {
     final leading = reverse ? _text() : _checkbox();
     final trailing = reverse ? _checkbox() : _text();
-    return Row(
-      mainAxisAlignment: alignment,
-      children: [leading, trailing],
-    );
+    return Row(mainAxisAlignment: alignment, children: [leading, trailing]);
   }
 
   Widget _checkbox() {
@@ -86,23 +83,22 @@ class BasfCheckbox extends StatelessWidget {
       builder: (context) {
         return MaterialButton(
           minWidth: 0,
-          splashColor: !value
-              ? activeSplashColor ?? Theme.of(context).colorScheme.primary
-              : inactiveSplashColor ?? BasfColors.middleGrey,
+          splashColor:
+              !value
+                  ? activeSplashColor ?? Theme.of(context).colorScheme.primary
+                  : inactiveSplashColor ?? BasfColors.middleGrey,
           shape: const CircleBorder(),
           onPressed: () => onChanged(value),
           child: Container(
             padding: const EdgeInsets.all(3),
             decoration: BoxDecoration(
-              color: value
-                  ? color ?? Theme.of(context).colorScheme.primary
-                  : inactiveColor ?? BasfColors.middleGrey,
+              color:
+                  value
+                      ? color ?? Theme.of(context).colorScheme.primary
+                      : inactiveColor ?? BasfColors.middleGrey,
               borderRadius: BorderRadius.circular(20),
             ),
-            child: Icon(
-              icon ?? Icons.check,
-              color: iconColor ?? Colors.white,
-            ),
+            child: Icon(icon ?? Icons.check, color: iconColor ?? Colors.white),
           ),
         );
       },
@@ -110,8 +106,6 @@ class BasfCheckbox extends StatelessWidget {
   }
 
   Widget _text() {
-    return Expanded(
-      child: Text(text ?? ''),
-    );
+    return Expanded(child: Text(text ?? ''));
   }
 }

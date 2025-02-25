@@ -8,10 +8,7 @@ class FontsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('BASF demo'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text('BASF demo'), centerTitle: true),
       body: body(),
     );
   }

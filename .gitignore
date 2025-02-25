@@ -40,3 +40,6 @@ app.*.map.json
 
 # Code coverage
 coverage/
+/devtools_options.yaml
+/example/android/app/.cxx/
+/example/devtools_options.yaml

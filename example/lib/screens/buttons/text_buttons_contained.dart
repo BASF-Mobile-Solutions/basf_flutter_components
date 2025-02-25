@@ -53,9 +53,7 @@ class TextButtonsContainedScreen extends StatelessWidget {
         child: const SizedBox(
           width: 15,
           height: 15,
-          child: CircularProgressIndicator(
-            color: BasfColors.white,
-          ),
+          child: CircularProgressIndicator(color: BasfColors.white),
         ),
       ),
 
@@ -69,20 +67,14 @@ class TextButtonsContainedScreen extends StatelessWidget {
       ),
 
       ///Disabled Button
-      BasfTextButton.contained(
-        text: 'Disabled Button',
-      ),
+      BasfTextButton.contained(text: 'Disabled Button'),
 
       ///Disabled Button
-      BasfTextButton.hint(
-        text: 'hint Button',
-      ),
+      BasfTextButton.hint(text: 'hint Button'),
     ];
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Contained Text Buttons'),
-      ),
+      appBar: AppBar(title: const Text('Contained Text Buttons')),
       body: SafeArea(
         child: ListView.separated(
           padding: const EdgeInsets.all(Dimens.paddingMedium20),

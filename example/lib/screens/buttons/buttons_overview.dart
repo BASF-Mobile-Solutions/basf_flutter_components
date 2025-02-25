@@ -10,13 +10,9 @@ class ButtonsOverviewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('BASF Buttons'),
-      ),
+      appBar: AppBar(title: const Text('BASF Buttons')),
       body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: Dimens.paddingMedium20,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: Dimens.paddingMedium20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -53,10 +49,7 @@ class ButtonsOverviewScreen extends StatelessWidget {
                 );
               },
             ),
-            SliderButton(
-              text: 'Basf Slider button',
-              onConfirmation: () {},
-            ),
+            SliderButton(text: 'Basf Slider button', onConfirmation: () {}),
           ].joinWithSeparator(VerticalSpacer.medium20()),
         ),
       ),
