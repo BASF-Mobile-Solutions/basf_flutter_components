@@ -13,7 +13,6 @@ class BasfDropDownInput extends StatefulWidget {
     this.labelText,
     this.crossAxisAlignment = CrossAxisAlignment.center,
     this.mainAxisAlignment = MainAxisAlignment.end,
-    this.isExpanded = false,
     this.isLoading = false,
     this.isDisabled = false,
     this.isMandatory = false,
@@ -38,9 +37,6 @@ class BasfDropDownInput extends StatefulWidget {
 
   /// Main alignment
   final MainAxisAlignment mainAxisAlignment;
-
-  /// Whether or not the dropdown should expand itself
-  final bool isExpanded;
 
   /// Whether or not the dropdown is loading
   final bool isLoading;
@@ -242,17 +238,20 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
         crossAxisAlignment: widget.crossAxisAlignment,
         mainAxisAlignment: widget.mainAxisAlignment,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(left: Dimens.paddingMedium),
-            child: Text(
-              _selectedValue == _unselectedValue
-                  ? widget.unselectedText
-                  : _selectedValue,
-              style: BasfThemes.mainTextTheme.titleLarge
-                  ?.copyWith(color: textColor),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(left: Dimens.paddingMedium),
+              child: Text(
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                _selectedValue == _unselectedValue
+                    ? widget.unselectedText
+                    : _selectedValue,
+                style: BasfThemes.mainTextTheme.titleLarge
+                    ?.copyWith(color: textColor),
+              ),
             ),
           ),
-          if (widget.isExpanded) const Spacer(),
           if (!widget.isLoading) menuButton(borderColor),
           if (widget.isLoading) loader(theme),
         ],
