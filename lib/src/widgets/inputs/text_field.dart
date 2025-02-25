@@ -324,6 +324,8 @@ class _BasfTextFieldState extends State<BasfTextField> {
   late final ValueNotifier<bool> deleteButtonNotifier;
 
   late final labelText = widget.labelText ?? widget.textFieldData?.labelText;
+  late final hintText =
+      widget.decoration?.hintText ?? widget.textFieldData?.hintText;
 
   late final controller =
       widget.controller ??
@@ -473,7 +475,7 @@ class _BasfTextFieldState extends State<BasfTextField> {
       prefixIcon: _getThemedPrefixIcon(theme),
       error: errorText != null && errorText.isEmpty ? const SizedBox() : null,
       errorText: errorText == null || errorText.isEmpty ? null : errorText,
-      hintText: widget.decoration?.hintText,
+      hintText: hintText,
       labelStyle:
           widget.decoration?.labelStyle ??
           BasfThemes.mainTextTheme.bodyLarge?.copyWith(
@@ -499,7 +501,7 @@ class _BasfTextFieldState extends State<BasfTextField> {
                     : null,
             errorText:
                 errorText == null || errorText.isEmpty ? null : errorText,
-            hintText: widget.decoration?.hintText,
+            hintText: hintText,
             labelStyle:
                 widget.decoration?.labelStyle ??
                 BasfThemes.mainTextTheme.bodyLarge?.copyWith(

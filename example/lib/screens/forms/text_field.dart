@@ -9,25 +9,28 @@ class TextFieldScreen extends StatefulWidget {
 }
 
 class _TextFieldScreenState extends State<TextFieldScreen> {
-  late final TextEditingController _enabledController;
-  late final TextEditingController _disabledController;
-  late final TextEditingController _errorController;
-  late final TextEditingController _obscureController;
-  late final TextEditingController _iconsController;
-  late final GlobalKey<FormState> _formKey;
-  final ValueNotifier<bool> saveTriggerNotifier = ValueNotifier(false);
+  late final _enabledController = TextEditingController();
+  late final _disabledController = TextEditingController();
+  late final _errorController = TextEditingController();
+  late final _obscureController = TextEditingController(text: 'obscured');
+  late final _iconsController = TextEditingController();
+  late final GlobalKey<FormState> _formKey = GlobalKey();
+  final saveTriggerNotifier = ValueNotifier(false);
 
-  @override
-  void initState() {
-    _enabledController = TextEditingController();
-    _disabledController = TextEditingController();
-    _errorController = TextEditingController();
-    _obscureController = TextEditingController();
-    _obscureController.text = 'obscured';
-    _iconsController = TextEditingController();
-    _formKey = GlobalKey();
-    super.initState();
-  }
+  final textFieldData = TextFieldData(
+    id: 'id',
+    labelText: 'labelText',
+    controller: TextEditingController(),
+    hintText: 'hintText',
+    validator: (value) {
+      if (value?.isEmpty ?? false) return 'Please enter some text';
+      return null;
+    },
+    autovalidateMode: AutovalidateMode.always,
+    keyboardType: TextInputType.emailAddress,
+    // inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]'))],
+    textCapitalization: TextCapitalization.words,
+  );
 
   @override
   void dispose() {
@@ -46,30 +49,25 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
           physics: const ClampingScrollPhysics(),
           padding: const EdgeInsets.all(8),
           children: [
-            const SizedBox(height: 15),
+            BasfTextField(textFieldData: textFieldData),
             BasfTextField(
               decoration: const InputDecoration(hintText: 'Enabled'),
               controller: _enabledController,
             ),
-            const SizedBox(height: 15),
             BasfTextField(
               enabled: false,
               decoration: const InputDecoration(hintText: 'Disabled'),
               controller: _disabledController,
             ),
-            const SizedBox(height: 15),
             BasfTextField(
               formKey: _formKey,
               validator: (value) {
-                if (value?.isEmpty ?? false) {
-                  return 'Please enter some text';
-                }
+                if (value?.isEmpty ?? false) return 'Please enter some text';
                 return null;
               },
               decoration: const InputDecoration(hintText: 'Error'),
               controller: _errorController,
             ),
-            const SizedBox(height: 15),
             PersistedTextField(
               uniqueId: 'uniqueId',
               saveTriggerNotifier: saveTriggerNotifier,
@@ -79,13 +77,11 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
               },
               decoration: const InputDecoration(hintText: 'Persistent input'),
             ),
-            const SizedBox(height: 15),
             BasfTextField(
               decoration: const InputDecoration(labelText: 'Obscured'),
               obscureText: true,
               controller: _obscureController,
             ),
-            const SizedBox(height: 15),
             BasfTextField(
               controller: _iconsController,
               decoration: InputDecoration(
@@ -98,7 +94,6 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 15),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -119,7 +114,6 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 10),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -167,7 +161,7 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
                 ),
               ],
             ),
-          ],
+          ].joinWithSeparator(const SizedBox(height: 15)),
         ),
       ),
     );

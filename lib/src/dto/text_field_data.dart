@@ -27,6 +27,7 @@ class TextFieldData {
     required this.id,
     required this.labelText,
     required this.controller,
+    this.hintText,
     this.validator,
     this.autovalidateMode,
     this.keyboardType,
@@ -39,6 +40,9 @@ class TextFieldData {
 
   /// Label of the text field
   final String labelText;
+
+  /// Hint in the text field
+  final String? hintText;
 
   /// Controller for the text field
   final TextEditingController controller;
