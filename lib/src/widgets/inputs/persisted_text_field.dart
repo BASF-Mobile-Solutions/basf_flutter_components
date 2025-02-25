@@ -14,15 +14,16 @@ import 'package:path_provider/path_provider.dart';
 class PersistedTextField extends StatefulWidget {
   /// Default constructor
   const PersistedTextField({
-    required this.uniqueId,
-    required this.controller,
-
     /// You provide a bool notifier, when it becomes true,
     /// save value is triggered
     required this.saveTriggerNotifier,
+    this.uniqueId,
+    this.textFieldData,
+    this.labelText,
+    this.controller,
     this.dropdownBackgroundColor = Colors.white,
     this.formKey,
-    this.initialValue,
+    // this.initialValue,//TODO: Remove unused?
     this.decoration,
     this.keyboardType,
     this.textCapitalization = TextCapitalization.none,
@@ -52,8 +53,8 @@ class PersistedTextField extends StatefulWidget {
     this.onChanged,
     this.onTap,
     this.onEditingComplete,
-    this.onFieldSubmitted,
-    this.onSaved,
+    // this.onFieldSubmitted,//TODO: Remove unused?
+    // this.onSaved,//TODO: Remove unused?
     this.validator,
     this.inputFormatters,
     this.enabled,
@@ -88,7 +89,20 @@ class PersistedTextField extends StatefulWidget {
     this.undoController,
     this.persistentCubit,
     super.key,
-  });
+  }) : assert(
+         controller != null || textFieldData != null,
+         'Either controller or textFieldData.controller must be provided.',
+       ),
+       assert(
+         uniqueId != null || textFieldData != null,
+         'Either uniqueId or textFieldData.id must be provided.',
+       );
+
+  /// Provide common text field data
+  final TextFieldData? textFieldData;
+
+  /// Label of the [BasfTextField]
+  final String? labelText;
 
   /// Cubit to work with persistent state from outside,
   /// if not provided will be auto-created
@@ -98,7 +112,7 @@ class PersistedTextField extends StatefulWidget {
   final Color dropdownBackgroundColor;
 
   /// Id for unique bloc cache
-  final String uniqueId;
+  final String? uniqueId;
 
   /// You provide a bool notifier, when it changes to true or false,
   /// save value is triggered
@@ -108,10 +122,10 @@ class PersistedTextField extends StatefulWidget {
   final GlobalKey<FormState>? formKey;
 
   /// Text field controller
-  final TextEditingController controller;
+  final TextEditingController? controller;
 
   /// Initial value
-  final String? initialValue;
+  // final String? initialValue; //TODO: Remove unused?
 
   /// Input decoration
   final InputDecoration? decoration;
@@ -201,10 +215,10 @@ class PersistedTextField extends StatefulWidget {
   final VoidCallback? onEditingComplete;
 
   /// Field submitted value
-  final ValueChanged<String>? onFieldSubmitted;
+  // final ValueChanged<String>? onFieldSubmitted; //TODO: Remove unused?
 
   /// Field submitted on saved
-  final FormFieldSetter<String>? onSaved;
+  // final FormFieldSetter<String>? onSaved; //TODO: Remove unused?
 
   /// Field validator
   final FormFieldValidator<String>? validator;
@@ -314,13 +328,20 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
   final ValueNotifier<String> textNotifier = ValueNotifier('');
   final ValueNotifier<bool> overlayShownNotifier = ValueNotifier(false);
 
+  late final id = widget.uniqueId ?? widget.textFieldData?.id ?? '';
+
+  late final controller =
+      widget.controller ??
+      widget.textFieldData?.controller ??
+      TextEditingController();
+
   @override
   void initState() {
     _initStorage = _initHydratedStorage();
     _focusNode = FocusNode();
     _focusNode.addListener(_handleFocusChange);
     widget.saveTriggerNotifier.addListener(saveValue);
-    widget.controller.addListener(textControllerListener);
+    controller.addListener(textControllerListener);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       setFavoriteValueAsDefault();
     });
@@ -333,7 +354,7 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
       ..removeListener(_handleFocusChange)
       ..dispose();
     widget.saveTriggerNotifier.removeListener(saveValue);
-    widget.controller.removeListener(textControllerListener);
+    controller.removeListener(textControllerListener);
     _removeOverlay();
     textNotifier.dispose();
     overlayShownNotifier.dispose();
@@ -341,7 +362,7 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
   }
 
   void textControllerListener() {
-    textNotifier.value = widget.controller.text;
+    textNotifier.value = controller.text;
   }
 
   Future<void> setFavoriteValueAsDefault() async {
@@ -349,22 +370,20 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
       final cubit =
           _futureBuilderKey.currentContext!.read<PersistedInputCubit>();
 
-      if (cubit.state.favoriteValue != null && widget.controller.text.isEmpty) {
-        widget.controller.text = cubit.state.favoriteValue!;
-        textNotifier.value = widget.controller.text;
+      if (cubit.state.favoriteValue != null && controller.text.isEmpty) {
+        controller.text = cubit.state.favoriteValue!;
+        textNotifier.value = controller.text;
       }
     });
   }
 
   void saveValue() {
-    if (widget.controller.text.trim().isNotEmpty) {
+    if (controller.text.trim().isNotEmpty) {
       _textFieldKey.currentContext?.read<PersistedInputCubit>().addValue(
-        widget.controller.text,
+        controller.text,
       );
     }
-    if (_focusNode.hasFocus) {
-      _focusNode.unfocus();
-    }
+    if (_focusNode.hasFocus) _focusNode.unfocus();
   }
 
   Future<bool> _initHydratedStorage() async {
@@ -408,7 +427,7 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
       return BlocProvider.value(value: widget.persistentCubit!, child: body());
     } else {
       return BlocProvider(
-        create: (context) => PersistedInputCubit(id: widget.uniqueId),
+        create: (context) => PersistedInputCubit(id: id),
         child: body(),
       );
     }
@@ -541,7 +560,7 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
           _showOverlay();
         }
       },
-      onTap: () => widget.controller.text = value,
+      onTap: () => controller.text = value,
       trailing: bookmarkIcon(
         context: context,
         value: value,
@@ -559,7 +578,7 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
       icon: Icon(isFavorite ? Icons.bookmark : Icons.bookmark_add_outlined),
       color: Theme.of(context).primaryColor,
       onPressed: () {
-        if (!isFavorite) widget.controller.text = value;
+        if (!isFavorite) controller.text = value;
         context.read<PersistedInputCubit>().setFavoriteValue(value);
         _removeOverlay();
         _showOverlay();
@@ -579,11 +598,13 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
 
   Widget textField(BuildContext context) {
     return BasfTextField(
+      textFieldData: widget.textFieldData,
+      labelText: widget.labelText,
       key: _textFieldKey,
       formKey: widget.formKey,
       greyWhenDisabled: widget.greyWhenDisabled,
       focusNode: _focusNode,
-      controller: widget.controller,
+      controller: controller,
       // initialValue: widget.initialValue, //TODO: Remove unused?
       decoration: widget.decoration,
       keyboardType: widget.keyboardType,
