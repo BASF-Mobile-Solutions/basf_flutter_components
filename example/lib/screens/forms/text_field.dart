@@ -1,5 +1,6 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class TextFieldScreen extends StatefulWidget {
   const TextFieldScreen({super.key});
@@ -26,9 +27,9 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
       if (value?.isEmpty ?? false) return 'Please enter some text';
       return null;
     },
+    inputFormatters: InputFormatter.onlyDigits,
     autovalidateMode: AutovalidateMode.always,
     keyboardType: TextInputType.emailAddress,
-    // inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]'))],
     textCapitalization: TextCapitalization.words,
   );
 
