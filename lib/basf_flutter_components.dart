@@ -19,6 +19,7 @@ export 'src/widgets/inputs/logic/persisted_data.dart';
 export 'src/widgets/inputs/logic/persisted_input_cubit.dart';
 export 'src/widgets/inputs/persisted_text_field.dart';
 export 'src/widgets/inputs/text_field.dart';
+export 'src/widgets/layout/label.dart';
 export 'src/widgets/options/checkboxes.dart';
 export 'src/widgets/options/dropdown_input.dart';
 export 'src/widgets/options/option_button.dart';

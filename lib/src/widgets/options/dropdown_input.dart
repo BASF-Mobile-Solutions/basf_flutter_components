@@ -13,7 +13,6 @@ class BasfDropDownInput extends StatefulWidget {
     this.labelText,
     this.crossAxisAlignment = CrossAxisAlignment.center,
     this.mainAxisAlignment = MainAxisAlignment.end,
-    this.isExpanded = false,
     this.isLoading = false,
     this.isDisabled = false,
     this.isMandatory = false,
@@ -21,6 +20,7 @@ class BasfDropDownInput extends StatefulWidget {
     this.unselectedText = 'Select value',
     this.allowUnselected = false,
     this.itemColor,
+    this.maxWidth,
     this.onChanged,
   });
 
@@ -38,9 +38,6 @@ class BasfDropDownInput extends StatefulWidget {
 
   /// Main alignment
   final MainAxisAlignment mainAxisAlignment;
-
-  /// Whether or not the dropdown should expand itself
-  final bool isExpanded;
 
   /// Whether or not the dropdown is loading
   final bool isLoading;
@@ -68,7 +65,9 @@ class BasfDropDownInput extends StatefulWidget {
   /// based on the value of the item
   final Color? Function(String)? itemColor;
 
-  /// Special value to represent the unselected
+  /// Set the width constrains of the dropdown, especially useful when placed
+  /// in Row
+  final double? maxWidth;
 
   @override
   State<BasfDropDownInput> createState() => _BasfDropDownInputState();
@@ -146,20 +145,14 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.labelText != null) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [title(), VerticalSpacer.semi(), popupMenuButton(context)],
-      );
-    } else {
-      return popupMenuButton(context);
-    }
-  }
-
-  Widget title() {
-    return Text(
-      widget.labelText!,
-      style: Theme.of(context).textTheme.bodyMedium,
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxWidth: widget.maxWidth ?? double.infinity),
+      child: IntrinsicWidth(
+        child: LabeledWidget(
+          labelText: widget.labelText,
+          child: popupMenuButton(context),
+        ),
+      ),
     );
   }
 
@@ -247,18 +240,21 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
         crossAxisAlignment: widget.crossAxisAlignment,
         mainAxisAlignment: widget.mainAxisAlignment,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(left: Dimens.paddingMedium),
-            child: Text(
-              _selectedValue == _unselectedValue
-                  ? widget.unselectedText
-                  : _selectedValue,
-              style: BasfThemes.mainTextTheme.titleLarge?.copyWith(
-                color: textColor,
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(left: Dimens.paddingMedium),
+              child: Text(
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                _selectedValue == _unselectedValue
+                    ? widget.unselectedText
+                    : _selectedValue,
+                style: BasfThemes.mainTextTheme.titleLarge?.copyWith(
+                  color: textColor,
+                ),
               ),
             ),
           ),
-          if (widget.isExpanded) const Spacer(),
           if (!widget.isLoading) menuButton(borderColor),
           if (widget.isLoading) loader(theme),
         ],
