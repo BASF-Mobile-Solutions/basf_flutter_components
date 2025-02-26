@@ -120,15 +120,17 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
   }
 
   void _updateController() {
-    widget.controller.text = _selectedValue == _unselectedValue
-        ? widget.unselectedText
-        : _selectedValue;
+    widget.controller.text =
+        _selectedValue == _unselectedValue
+            ? widget.unselectedText
+            : _selectedValue;
   }
 
   void _updateSelectedColor() {
-    _selectedColor = _selectedValue == _unselectedValue
-        ? null
-        : widget.itemColor?.call(_selectedValue);
+    _selectedColor =
+        _selectedValue == _unselectedValue
+            ? null
+            : widget.itemColor?.call(_selectedValue);
   }
 
   void _onChanged(String? value) {
@@ -185,9 +187,10 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
                 child: Text(
                   value,
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: widget.itemColor?.call(value) ??
-                            Theme.of(context).primaryColor,
-                      ),
+                    color:
+                        widget.itemColor?.call(value) ??
+                        Theme.of(context).primaryColor,
+                  ),
                 ),
               ),
             ),
@@ -204,10 +207,15 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
     final theme = Theme.of(context);
     final disabledTheme = BasfInputThemes.disabledInputTheme(theme);
 
-    final borderColor = isDisabled
-        ? disabledTheme.inputDecorationTheme.disabledBorder?.borderSide.color ??
-            theme.disabledColor
-        : widget.isMandatory && _selectedValue == _unselectedValue
+    final borderColor =
+        isDisabled
+            ? disabledTheme
+                    .inputDecorationTheme
+                    .disabledBorder
+                    ?.borderSide
+                    .color ??
+                theme.disabledColor
+            : widget.isMandatory && _selectedValue == _unselectedValue
             ? theme.colorScheme.error
             : _selectedColor ??
                 theme.inputDecorationTheme.enabledBorder?.borderSide.color ??
@@ -220,11 +228,12 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
       height: 48,
       decoration: BoxDecoration(
         borderRadius: BasfThemes.defaultBorderRadius,
-        color: isDisabled
-            ? BasfInputThemes.disabledInputTheme(theme)
-                .inputDecorationTheme
-                .fillColor
-            : null,
+        color:
+            isDisabled
+                ? BasfInputThemes.disabledInputTheme(
+                  theme,
+                ).inputDecorationTheme.fillColor
+                : null,
         border: Border.all(color: borderColor),
       ),
       child: Row(
@@ -240,8 +249,9 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
                 _selectedValue == _unselectedValue
                     ? widget.unselectedText
                     : _selectedValue,
-                style: BasfThemes.mainTextTheme.titleLarge
-                    ?.copyWith(color: textColor),
+                style: BasfThemes.mainTextTheme.titleLarge?.copyWith(
+                  color: textColor,
+                ),
               ),
             ),
           ),

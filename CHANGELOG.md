@@ -1,3 +1,6 @@
+## 2.5.1
+- Changes to dropdown input widget
+
 ## 2.5.0
 - Flutter 3.29
 - Snackbar clears previous snackbars before showing
