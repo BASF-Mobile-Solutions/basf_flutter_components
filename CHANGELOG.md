@@ -1,3 +1,6 @@
+## 2.5.2
+- Textfield updates
+
 ## 2.5.1
 - Changes to dropdown input widget
 
@@ -10,6 +13,7 @@
 - New android animations
 
 **BREAKING CHANGES:**
+
 instead of Theme.of(context).dialogBackgroundColor now use BasfThemes.primaryPaleBackgroundColor()
 
 ## 2.4.4
