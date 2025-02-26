@@ -323,7 +323,11 @@ class _BasfTextFieldState extends State<BasfTextField> {
   bool isFirstValidation = true;
   late final ValueNotifier<bool> deleteButtonNotifier;
 
-  late final labelText = widget.labelText ?? widget.textFieldData?.labelText;
+  late final labelText =
+      widget.labelText ??
+      widget.decoration?.labelText ??
+      widget.textFieldData?.labelText;
+
   late final hintText =
       widget.decoration?.hintText ?? widget.textFieldData?.hintText;
 
