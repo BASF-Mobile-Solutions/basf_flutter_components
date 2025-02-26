@@ -1,6 +1,5 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class TextFieldScreen extends StatefulWidget {
   const TextFieldScreen({super.key});
@@ -62,8 +61,9 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
             ),
             BasfTextField(
               formKey: _formKey,
+              autovalidateMode: AutovalidateMode.always,
               validator: (value) {
-                if (value?.isEmpty ?? false) return 'Please enter some text';
+                if (value?.isEmpty ?? true) return 'Please enter some text';
                 return null;
               },
               decoration: const InputDecoration(hintText: 'Error'),
