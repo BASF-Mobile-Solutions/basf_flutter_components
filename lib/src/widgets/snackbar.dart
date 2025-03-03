@@ -10,14 +10,14 @@ class AppSnackBar extends StatelessWidget {
   const AppSnackBar({
     required this.message,
     super.key,
-    this.prefixIcon,
+    this.prefixIcon = Icons.info,
     this.backgroundColor,
   });
 
   /// {@macro app_snackbar}
   /// info
   factory AppSnackBar.info({required String message}) =>
-      AppSnackBar(message: message, prefixIcon: Icons.info);
+      AppSnackBar(message: message);
 
   /// {@macro app_snackbar}
   /// error
@@ -28,6 +28,14 @@ class AppSnackBar extends StatelessWidget {
       backgroundColor: BasfColors.red,
     );
   }
+
+  /// {@macro app_snackbar}
+  /// warning
+  factory AppSnackBar.warning({required String message}) => AppSnackBar(
+    message: message,
+    prefixIcon: Icons.error,
+    backgroundColor: BasfColors.orange,
+  );
 
   /// Prefix icon of the snackbar
   final IconData? prefixIcon;
@@ -40,11 +48,12 @@ class AppSnackBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _content();
-  }
-
-  Widget _content() {
-    return Row(children: [_leftIcon(), HorizontalSpacer.semi(), _text()]);
+    return Row(
+      children: [
+        _leftIcon(),
+        _text(),
+      ].joinWithSeparator(HorizontalSpacer.semi()),
+    );
   }
 
   Widget _leftIcon() {
