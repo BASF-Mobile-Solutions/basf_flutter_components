@@ -1,5 +1,12 @@
 ## 2.5.1
-- Changes to dropdown input widget
+- Changes to dropdown input widget: Added maxWidth to define constrains 
+- Added LabeledWidget, which can be used to label text fields, dropdown and others
+
+**BREAKING CHANGES:**
+
+remove used 'isExpanded' dropdown attributes. 
+Dropdown will occupy the minimum needed space, but can be stretched by the parent widget
+
 
 ## 2.5.0
 - Flutter 3.29
@@ -10,6 +17,7 @@
 - New android animations
 
 **BREAKING CHANGES:**
+
 instead of Theme.of(context).dialogBackgroundColor now use BasfThemes.primaryPaleBackgroundColor()
 
 ## 2.4.4
