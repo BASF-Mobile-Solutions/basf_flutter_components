@@ -14,11 +14,13 @@ class BasfTextField extends StatefulWidget {
     required this.controller,
     super.key,
     this.formKey,
-    this.initialValue,
+    this.labelText,
+    this.onScanPressed,
+    // this.initialValue, //TODO: Remove unused?
     this.focusNode,
     this.decoration,
     this.keyboardType,
-    this.textCapitalization = TextCapitalization.none,
+    this.textCapitalization,
     this.textInputAction,
     this.style,
     this.strutStyle,
@@ -45,8 +47,8 @@ class BasfTextField extends StatefulWidget {
     this.onChanged,
     this.onTap,
     this.onEditingComplete,
-    this.onFieldSubmitted,
-    this.onSaved,
+    // this.onFieldSubmitted, //TODO: Remove unused?
+    // this.onSaved, //TODO: Remove unused?
     this.validator,
     this.inputFormatters,
     this.enabled,
@@ -61,11 +63,11 @@ class BasfTextField extends StatefulWidget {
     this.buildCounter,
     this.scrollPhysics,
     this.autofillHints,
-    this.autovalidateMode,
+    this.autovalidateMode = AutovalidateMode.always,
     this.scrollController,
     this.restorationId,
     this.enableIMEPersonalizedLearning = true,
-    this.greyWhenDisabled = true,
+    // this.greyWhenDisabled = true,
     this.canRequestFocus = true,
     this.clipBehavior = Clip.hardEdge,
     this.contentInsertionConfiguration,
@@ -84,17 +86,23 @@ class BasfTextField extends StatefulWidget {
     this.statesController,
     this.ignorePointers,
     this.onTapUpOutside,
-    this.validatorForceErrorText,
   });
+
+  /// Label of the [BasfTextField]
+  /// Prefer this instead of the [decoration] property for the label
+  final String? labelText;
 
   /// Form key
   final GlobalKey<FormState>? formKey;
 
   /// Text field controller
-  final TextEditingController? controller;
+  final TextEditingController controller;
+
+  /// If provided, a scan icon is shown if the BasfTextField is empty
+  final VoidCallback? onScanPressed;
 
   /// Initial value
-  final String? initialValue;
+  // final String? initialValue; //TODO: Remove unused?
 
   /// Current focus node
   final FocusNode? focusNode;
@@ -106,7 +114,7 @@ class BasfTextField extends StatefulWidget {
   final TextInputType? keyboardType;
 
   /// Text capitalization
-  final TextCapitalization textCapitalization;
+  final TextCapitalization? textCapitalization;
 
   /// Text input action
   final TextInputAction? textInputAction;
@@ -187,10 +195,10 @@ class BasfTextField extends StatefulWidget {
   final VoidCallback? onEditingComplete;
 
   /// Field submitted value
-  final ValueChanged<String>? onFieldSubmitted;
+  // final ValueChanged<String>? onFieldSubmitted; //TODO: Remove unused?
 
   /// Field submitted on saved
-  final FormFieldSetter<String>? onSaved;
+  // final FormFieldSetter<String>? onSaved; //TODO: Remove unused?
 
   /// Field validator
   final FormFieldValidator<String>? validator;
@@ -223,7 +231,7 @@ class BasfTextField extends StatefulWidget {
   final bool enableInteractiveSelection;
 
   /// If the color should be changed to grey when disabled
-  final bool greyWhenDisabled;
+  // final bool greyWhenDisabled;
 
   /// Controls
   final TextSelectionControls? selectionControls;
@@ -303,231 +311,68 @@ class BasfTextField extends StatefulWidget {
   /// ignore pointers
   final bool? ignorePointers;
 
-  /// Show error
-  final String? validatorForceErrorText;
-
   @override
   State<BasfTextField> createState() => _BasfTextFieldState();
 }
 
 class _BasfTextFieldState extends State<BasfTextField> {
-  GlobalKey<FormState>? _formKey;
+  late final hasValidation = widget.validator != null;
   bool isFirstValidation = true;
-  late final ValueNotifier<bool> deleteButtonNotifier;
+  late final emptyTextFieldNotifier = ValueNotifier(
+    widget.controller.text.isEmpty,
+  );
 
   @override
   void initState() {
-    if (widget.validator != null) {
-      _formKey = widget.formKey ?? GlobalKey<FormState>();
-      widget.controller?.addListener(redrawToChangeThemeBasedOnState);
-      redrawToChangeThemeBasedOnState();
+    if (hasValidation) {
+      widget.controller.addListener(redrawToChangeThemeBasedOnState);
     }
-    widget.controller?.addListener(checkDeleteButtonVisibility);
-    deleteButtonNotifier = ValueNotifier(
-      widget.controller?.text.isNotEmpty ?? false,
-    );
+    widget.controller.addListener(checkDeleteButtonVisibility);
     super.initState();
   }
 
-  @override
-  void dispose() {
-    widget.controller?.removeListener(redrawToChangeThemeBasedOnState);
-    widget.controller?.removeListener(checkDeleteButtonVisibility);
-    super.dispose();
-  }
-
   void checkDeleteButtonVisibility() {
-    deleteButtonNotifier.value = widget.controller?.text.isNotEmpty ?? false;
+    emptyTextFieldNotifier.value = widget.controller.text.isEmpty;
   }
 
   void redrawToChangeThemeBasedOnState() {
     if (mounted) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        setState(() {});
-      });
+      WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
     }
   }
+
+  bool get isEnabled => widget.enabled ?? widget.decoration?.enabled ?? true;
+
+  String? get errorText =>
+      hasValidation ? widget.validator!(widget.controller.text) : null;
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = _getTheme(Theme.of(context));
 
     return Theme(
-      data: _getTheme(theme),
-      child:
-          widget.decoration?.labelText == null
-              ? inputForm(theme)
-              : inputFormWithTitle(theme),
+      data: theme,
+      child: LabeledWidget(
+        labelText: widget.labelText,
+        child: textField(theme),
+      ),
     );
   }
 
-  Widget inputFormWithTitle(ThemeData theme) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        title(),
-        VerticalSpacer.semi(),
-        if (widget.validator != null)
-          validationFormField(theme)
-        else
-          textField(theme: theme), //verde
-      ],
-    );
-  }
-
-  Widget inputForm(ThemeData theme) {
-    return widget.validator != null
-        ? validationFormField(theme)
-        : textField(theme: theme);
-  }
-
-  Widget title() {
-    return Text(
-      widget.decoration?.labelText ?? '',
-      maxLines: 2,
-      style: Theme.of(context).textTheme.bodyMedium,
-    );
-  }
-
-  Widget? _getThemedPrefixIcon(ThemeData theme) {
-    if (widget.decoration?.prefixIcon != null) {
-      return Theme(
-        data: _getTheme(theme),
-        child: widget.decoration!.prefixIcon!,
-      );
-    } else {
-      return null;
-    }
-  }
-
-  ThemeData _getTheme(ThemeData theme) {
-    switch (widget.autovalidateMode) {
-      case AutovalidateMode.always:
-        if (_formKey?.currentState?.validate() == false) {
-          return BasfInputThemes.errorInputTheme(theme);
-        }
-      case AutovalidateMode.onUserInteraction:
-        if (!isFirstValidation && _formKey?.currentState?.validate() == false) {
-          return BasfInputThemes.errorInputTheme(theme);
-        }
-      case null:
-        if (widget.validator != null &&
-            !isFirstValidation &&
-            _formKey?.currentState?.validate() == false) {
-          return BasfInputThemes.errorInputTheme(theme);
-        }
-      default:
-        break;
-    }
-
-    if (!isEnabled()) {
-      return BasfInputThemes.disabledInputTheme(theme);
-    } else {
-      return Theme.of(context);
-    }
-  }
-
-  Widget validationFormField(ThemeData theme) {
-    return FormField<String>(
-      key: _formKey,
-      autovalidateMode: widget.autovalidateMode,
-      validator: widget.validator,
-      builder: (FormFieldState<String> state) {
-        return textField(theme: theme, state: state);
-      },
-    );
-  }
-
-  TextStyle _getTextStyle() {
-    return widget.greyWhenDisabled
-        ? widget.style?.copyWith(
-              color:
-                  isEnabled()
-                      ? Theme.of(context).primaryColor
-                      : BasfColors.darkGrey,
-            ) ??
-            TextStyle(
-              color:
-                  isEnabled()
-                      ? Theme.of(context).primaryColor
-                      : BasfColors.darkGrey,
-            )
-        : widget.style ?? const TextStyle();
-  }
-
-  bool isEnabled() {
-    return widget.enabled ?? widget.decoration?.enabled ?? true;
-  }
-
-  Widget deleteIconButton() {
-    return ValueListenableBuilder(
-      valueListenable: deleteButtonNotifier,
-      builder: (context, visible, _) {
-        return Visibility(
-          visible: visible,
-          child: IconButton(
-            icon: const Icon(Icons.delete_sweep_outlined),
-            color: Theme.of(context).iconTheme.color,
-            splashRadius: 25,
-            splashColor: Theme.of(context).dialogTheme.backgroundColor,
-            highlightColor: Theme.of(context).dialogTheme.backgroundColor,
-            onPressed: () {
-              widget.controller?.text = '';
-              widget.focusNode?.requestFocus();
-            },
-          ),
-        );
-      },
-    );
-  }
-
-  InputDecoration _getDefaultDecoration({
-    required ThemeData theme,
-    String? errorText,
-  }) {
-    return InputDecoration(
-      suffixIcon: deleteIconButton(),
-      prefixIcon: _getThemedPrefixIcon(theme),
-      error: errorText != null && errorText.isEmpty ? const SizedBox() : null,
-      errorText: errorText == null || errorText.isEmpty ? null : errorText,
-      hintText: widget.decoration?.hintText,
-      labelStyle:
-          widget.decoration?.labelStyle ??
-          BasfThemes.mainTextTheme.bodyLarge?.copyWith(
-            color: BasfColors.darkGrey,
-          ),
-      floatingLabelBehavior: FloatingLabelBehavior.never,
-    );
-  }
-
-  Widget textField({required ThemeData theme, FormFieldState<String>? state}) {
-    final errorText = state?.errorText ?? widget.validatorForceErrorText;
-
+  Widget textField(ThemeData theme) {
     return TextField(
       focusNode: widget.focusNode,
       controller: widget.controller,
-      decoration:
-          widget.decoration?.copyWith(
-            suffixIcon: widget.decoration?.suffixIcon ?? deleteIconButton(),
-            prefixIcon: _getThemedPrefixIcon(theme),
-            error:
-                errorText != null && errorText.isEmpty
-                    ? const SizedBox()
-                    : null,
-            errorText:
-                errorText == null || errorText.isEmpty ? null : errorText,
-            hintText: widget.decoration?.hintText,
-            labelStyle:
-                widget.decoration?.labelStyle ??
-                BasfThemes.mainTextTheme.bodyLarge?.copyWith(
-                  color: BasfColors.darkGrey,
-                ),
-            floatingLabelBehavior: FloatingLabelBehavior.never,
-          ) ??
-          _getDefaultDecoration(theme: theme, errorText: state?.errorText),
+      decoration: (widget.decoration ?? const InputDecoration()).copyWith(
+        suffixIcon: widget.decoration?.suffixIcon ?? actionIcon(theme),
+        prefixIcon: _getThemedWidget(theme, widget.decoration?.prefixIcon),
+        error: errorText == '' ? const SizedBox() : null,
+        errorText: errorText.isNullOrEmpty ? null : errorText,
+        hintText: widget.decoration?.hintText,
+        floatingLabelBehavior: FloatingLabelBehavior.never,
+      ),
       keyboardType: widget.keyboardType,
-      textCapitalization: widget.textCapitalization,
+      textCapitalization: widget.textCapitalization ?? TextCapitalization.none,
       textInputAction: widget.textInputAction,
       style: _getTextStyle(),
       strutStyle: widget.strutStyle,
@@ -549,7 +394,6 @@ class _BasfTextFieldState extends State<BasfTextField> {
       expands: widget.expands,
       maxLength: widget.maxLength,
       onChanged: (text) {
-        state?.didChange(text);
         widget.onChanged?.call(text);
         isFirstValidation = false;
       },
@@ -594,5 +438,95 @@ class _BasfTextFieldState extends State<BasfTextField> {
       ignorePointers: widget.ignorePointers,
       onTapUpOutside: widget.onTapUpOutside,
     );
+  }
+
+  Widget actionIcon(ThemeData theme) {
+    return ValueListenableBuilder(
+      valueListenable: emptyTextFieldNotifier,
+      builder: (context, emptyTextField, _) {
+        if (widget.onScanPressed != null) {
+          return emptyTextField
+              ? _scanIconButton(theme)
+              : _deleteIconButton(theme);
+        }
+
+        return Visibility(
+          visible: !emptyTextField,
+          child: _deleteIconButton(theme),
+        );
+      },
+    );
+  }
+
+  Widget _scanIconButton(ThemeData theme) {
+    return IconButton(
+      icon: const Icon(Icons.qr_code_2_sharp),
+      color: theme.iconTheme.color,
+      splashRadius: 25,
+      splashColor: Theme.of(context).dialogTheme.backgroundColor,
+      highlightColor: Theme.of(context).dialogTheme.backgroundColor,
+      onPressed: widget.onScanPressed,
+    );
+  }
+
+  Widget _deleteIconButton(ThemeData theme) {
+    return IconButton(
+      icon: const Icon(Icons.delete_sweep_outlined),
+      color: theme.iconTheme.color,
+      splashRadius: 25,
+      splashColor: Theme.of(context).dialogTheme.backgroundColor,
+      highlightColor: Theme.of(context).dialogTheme.backgroundColor,
+      onPressed: () {
+        widget.controller.clear();
+        widget.focusNode?.requestFocus();
+        widget.onChanged?.call('');
+        isFirstValidation = false;
+        // redrawToChangeThemeBasedOnState();
+      },
+    );
+  }
+
+  TextStyle? _getTextStyle() {
+    return (widget.style ?? const TextStyle()).copyWith(
+      color: isEnabled ? Theme.of(context).primaryColor : BasfColors.darkGrey,
+    );
+  }
+
+  Widget? _getThemedWidget(ThemeData theme, Widget? widget) {
+    if (widget == null) return null;
+
+    return Theme(data: _getTheme(theme), child: widget);
+  }
+
+  ThemeData _getTheme(ThemeData theme) {
+    if (!isEnabled) return BasfInputThemes.disabledInputTheme(theme);
+    if (!hasValidation) return Theme.of(context);
+
+    switch (widget.autovalidateMode) {
+      case AutovalidateMode.always:
+        if (errorText != null) {
+          return BasfInputThemes.errorInputTheme(theme);
+        }
+      case AutovalidateMode.onUserInteraction:
+        if (!isFirstValidation && errorText != null) {
+          return BasfInputThemes.errorInputTheme(theme);
+        }
+      case AutovalidateMode.onUnfocus:
+        if (widget.focusNode?.hasFocus == false && errorText != null) {
+          return BasfInputThemes.errorInputTheme(theme);
+        }
+      default:
+        break;
+    }
+
+    return Theme.of(context);
+  }
+
+  @override
+  void dispose() {
+    widget.controller
+      ..removeListener(redrawToChangeThemeBasedOnState)
+      ..removeListener(checkDeleteButtonVisibility);
+    super.dispose();
   }
 }

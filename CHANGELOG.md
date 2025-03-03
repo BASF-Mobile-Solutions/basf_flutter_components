@@ -1,3 +1,18 @@
+## 2.5.4
+- Fixes to minimize conflicts by last changes
+
+## 2.5.3
+- Minor fixes
+
+## 2.5.2
+- Added TextFieldData to provide common data to BasfTextField and PersistedTextField
+- Added  'isNullOrEmpty' and 'isNotNullOrEmpty' object extension
+- Added default cases of TextInputFormatters
+
+**BREAKING CHANGES:**
+removed initialValue, onFieldSubmitted and onSaved from BasfTextField and PersistedTextField, because it had no effect.
+
+
 ## 2.5.1
 - Changes to dropdown input widget: Added maxWidth to define constrains 
 - Added LabeledWidget, which can be used to label text fields, dropdown and others

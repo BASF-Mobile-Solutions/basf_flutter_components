@@ -14,15 +14,16 @@ import 'package:path_provider/path_provider.dart';
 class PersistedTextField extends StatefulWidget {
   /// Default constructor
   const PersistedTextField({
-    required this.uniqueId,
+    required this.persistenceId,
     required this.controller,
 
     /// You provide a bool notifier, when it becomes true,
     /// save value is triggered
     required this.saveTriggerNotifier,
+    this.labelText,
     this.dropdownBackgroundColor = Colors.white,
     this.formKey,
-    this.initialValue,
+    // this.initialValue,//TODO: Remove unused?
     this.decoration,
     this.keyboardType,
     this.textCapitalization = TextCapitalization.none,
@@ -52,8 +53,8 @@ class PersistedTextField extends StatefulWidget {
     this.onChanged,
     this.onTap,
     this.onEditingComplete,
-    this.onFieldSubmitted,
-    this.onSaved,
+    // this.onFieldSubmitted,//TODO: Remove unused?
+    // this.onSaved,//TODO: Remove unused?
     this.validator,
     this.inputFormatters,
     this.enabled,
@@ -72,7 +73,7 @@ class PersistedTextField extends StatefulWidget {
     this.scrollController,
     this.restorationId,
     this.enableIMEPersonalizedLearning = true,
-    this.greyWhenDisabled = true,
+    // this.greyWhenDisabled = true,
     this.canRequestFocus = true,
     this.clipBehavior = Clip.hardEdge,
     this.contentInsertionConfiguration,
@@ -90,6 +91,9 @@ class PersistedTextField extends StatefulWidget {
     super.key,
   });
 
+  /// Label of the [BasfTextField]
+  final String? labelText;
+
   /// Cubit to work with persistent state from outside,
   /// if not provided will be auto-created
   final PersistedInputCubit? persistentCubit;
@@ -98,7 +102,7 @@ class PersistedTextField extends StatefulWidget {
   final Color dropdownBackgroundColor;
 
   /// Id for unique bloc cache
-  final String uniqueId;
+  final String persistenceId;
 
   /// You provide a bool notifier, when it changes to true or false,
   /// save value is triggered
@@ -111,7 +115,7 @@ class PersistedTextField extends StatefulWidget {
   final TextEditingController controller;
 
   /// Initial value
-  final String? initialValue;
+  // final String? initialValue; //TODO: Remove unused?
 
   /// Input decoration
   final InputDecoration? decoration;
@@ -201,10 +205,10 @@ class PersistedTextField extends StatefulWidget {
   final VoidCallback? onEditingComplete;
 
   /// Field submitted value
-  final ValueChanged<String>? onFieldSubmitted;
+  // final ValueChanged<String>? onFieldSubmitted; //TODO: Remove unused?
 
   /// Field submitted on saved
-  final FormFieldSetter<String>? onSaved;
+  // final FormFieldSetter<String>? onSaved; //TODO: Remove unused?
 
   /// Field validator
   final FormFieldValidator<String>? validator;
@@ -237,7 +241,7 @@ class PersistedTextField extends StatefulWidget {
   final bool enableInteractiveSelection;
 
   /// If the color should be changed to grey when disabled
-  final bool greyWhenDisabled;
+  // final bool greyWhenDisabled;
 
   /// Controls
   final TextSelectionControls? selectionControls;
@@ -362,9 +366,7 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
         widget.controller.text,
       );
     }
-    if (_focusNode.hasFocus) {
-      _focusNode.unfocus();
-    }
+    if (_focusNode.hasFocus) _focusNode.unfocus();
   }
 
   Future<bool> _initHydratedStorage() async {
@@ -408,7 +410,7 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
       return BlocProvider.value(value: widget.persistentCubit!, child: body());
     } else {
       return BlocProvider(
-        create: (context) => PersistedInputCubit(id: widget.uniqueId),
+        create: (context) => PersistedInputCubit(id: widget.persistenceId),
         child: body(),
       );
     }
@@ -419,9 +421,7 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
       key: _futureBuilderKey,
       future: _initStorage,
       builder: (context, snapshot) {
-        if (!snapshot.hasData) {
-          return const SizedBox();
-        }
+        if (!snapshot.hasData) return const SizedBox();
 
         return ValueListenableBuilder<bool>(
           valueListenable: overlayShownNotifier,
@@ -476,9 +476,7 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
                 .where((value) => value.contains(text))
                 .toList();
 
-        if (!showFavorite && lastValues.isEmpty) {
-          return const SizedBox();
-        }
+        if (!showFavorite && lastValues.isEmpty) return const SizedBox();
 
         return Container(
           width: width,
@@ -579,12 +577,13 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
 
   Widget textField(BuildContext context) {
     return BasfTextField(
+      labelText: widget.labelText,
       key: _textFieldKey,
       formKey: widget.formKey,
-      greyWhenDisabled: widget.greyWhenDisabled,
+      // greyWhenDisabled: widget.greyWhenDisabled,
       focusNode: _focusNode,
       controller: widget.controller,
-      initialValue: widget.initialValue,
+      // initialValue: widget.initialValue, //TODO: Remove unused?
       decoration: widget.decoration,
       keyboardType: widget.keyboardType,
       textCapitalization: widget.textCapitalization,
@@ -619,8 +618,8 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
         widget.onTap?.call();
         _showOverlay();
       },
-      onFieldSubmitted: widget.onFieldSubmitted,
-      onSaved: widget.onSaved,
+      // onFieldSubmitted: widget.onFieldSubmitted, //TODO: Remove unused?
+      // onSaved: widget.onSaved, //TODO: Remove unused?
       validator: widget.validator,
       inputFormatters: widget.inputFormatters,
       enabled: widget.enabled,
