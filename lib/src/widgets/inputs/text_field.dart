@@ -341,10 +341,10 @@ class _BasfTextFieldState extends State<BasfTextField> {
     }
   }
 
-  bool get isEnabled => widget.enabled ?? widget.decoration?.enabled ?? true;
-
   String? get errorText =>
       hasValidation ? widget.validator!(widget.controller.text) : null;
+
+  bool get isEnabled => widget.enabled ?? widget.decoration?.enabled ?? true;
 
   @override
   Widget build(BuildContext context) {
@@ -356,6 +356,88 @@ class _BasfTextFieldState extends State<BasfTextField> {
         labelText: widget.labelText,
         child: textField(theme),
       ),
+    );
+  }
+
+  ThemeData _getTheme(ThemeData theme) {
+    if (!isEnabled) return BasfInputThemes.disabledInputTheme(theme);
+    if (!hasValidation) return Theme.of(context);
+
+    switch (widget.autovalidateMode) {
+      case AutovalidateMode.always:
+        if (errorText != null) {
+          return BasfInputThemes.errorInputTheme(theme);
+        }
+      case AutovalidateMode.onUserInteraction:
+        if (!isFirstValidation && errorText != null) {
+          return BasfInputThemes.errorInputTheme(theme);
+        }
+      case AutovalidateMode.onUnfocus:
+        if (widget.focusNode?.hasFocus == false && errorText != null) {
+          return BasfInputThemes.errorInputTheme(theme);
+        }
+      default:
+        break;
+    }
+
+    return Theme.of(context);
+  }
+
+  Widget actionIcon(ThemeData theme) {
+    return ValueListenableBuilder(
+      valueListenable: emptyTextFieldNotifier,
+      builder: (context, emptyTextField, _) {
+        if (widget.onScanPressed != null) {
+          return emptyTextField
+              ? _scanIconButton(theme)
+              : _deleteIconButton(theme);
+        }
+
+        return Visibility(
+          visible: !emptyTextField,
+          child: _deleteIconButton(theme),
+        );
+      },
+    );
+  }
+
+  Widget _scanIconButton(ThemeData theme) {
+    return IconButton(
+      icon: const Icon(Icons.qr_code_2_sharp),
+      color: theme.iconTheme.color,
+      splashRadius: 25,
+      splashColor: Theme.of(context).dialogTheme.backgroundColor,
+      highlightColor: Theme.of(context).dialogTheme.backgroundColor,
+      onPressed: widget.onScanPressed,
+    );
+  }
+
+  Widget _deleteIconButton(ThemeData theme) {
+    return IconButton(
+      icon: const Icon(Icons.delete_sweep_outlined),
+      color: theme.iconTheme.color,
+      splashRadius: 25,
+      splashColor: Theme.of(context).dialogTheme.backgroundColor,
+      highlightColor: Theme.of(context).dialogTheme.backgroundColor,
+      onPressed: () {
+        widget.controller.clear();
+        widget.focusNode?.requestFocus();
+        widget.onChanged?.call('');
+        isFirstValidation = false;
+        // redrawToChangeThemeBasedOnState();
+      },
+    );
+  }
+
+  Widget? _getThemedWidget(ThemeData theme, Widget? widget) {
+    if (widget == null) return null;
+
+    return Theme(data: _getTheme(theme), child: widget);
+  }
+
+  TextStyle? _getTextStyle() {
+    return (widget.style ?? const TextStyle()).copyWith(
+      color: isEnabled ? Theme.of(context).primaryColor : BasfColors.darkGrey,
     );
   }
 
@@ -438,88 +520,6 @@ class _BasfTextFieldState extends State<BasfTextField> {
       ignorePointers: widget.ignorePointers,
       onTapUpOutside: widget.onTapUpOutside,
     );
-  }
-
-  Widget actionIcon(ThemeData theme) {
-    return ValueListenableBuilder(
-      valueListenable: emptyTextFieldNotifier,
-      builder: (context, emptyTextField, _) {
-        if (widget.onScanPressed != null) {
-          return emptyTextField
-              ? _scanIconButton(theme)
-              : _deleteIconButton(theme);
-        }
-
-        return Visibility(
-          visible: !emptyTextField,
-          child: _deleteIconButton(theme),
-        );
-      },
-    );
-  }
-
-  Widget _scanIconButton(ThemeData theme) {
-    return IconButton(
-      icon: const Icon(Icons.qr_code_2_sharp),
-      color: theme.iconTheme.color,
-      splashRadius: 25,
-      splashColor: Theme.of(context).dialogTheme.backgroundColor,
-      highlightColor: Theme.of(context).dialogTheme.backgroundColor,
-      onPressed: widget.onScanPressed,
-    );
-  }
-
-  Widget _deleteIconButton(ThemeData theme) {
-    return IconButton(
-      icon: const Icon(Icons.delete_sweep_outlined),
-      color: theme.iconTheme.color,
-      splashRadius: 25,
-      splashColor: Theme.of(context).dialogTheme.backgroundColor,
-      highlightColor: Theme.of(context).dialogTheme.backgroundColor,
-      onPressed: () {
-        widget.controller.clear();
-        widget.focusNode?.requestFocus();
-        widget.onChanged?.call('');
-        isFirstValidation = false;
-        // redrawToChangeThemeBasedOnState();
-      },
-    );
-  }
-
-  TextStyle? _getTextStyle() {
-    return (widget.style ?? const TextStyle()).copyWith(
-      color: isEnabled ? Theme.of(context).primaryColor : BasfColors.darkGrey,
-    );
-  }
-
-  Widget? _getThemedWidget(ThemeData theme, Widget? widget) {
-    if (widget == null) return null;
-
-    return Theme(data: _getTheme(theme), child: widget);
-  }
-
-  ThemeData _getTheme(ThemeData theme) {
-    if (!isEnabled) return BasfInputThemes.disabledInputTheme(theme);
-    if (!hasValidation) return Theme.of(context);
-
-    switch (widget.autovalidateMode) {
-      case AutovalidateMode.always:
-        if (errorText != null) {
-          return BasfInputThemes.errorInputTheme(theme);
-        }
-      case AutovalidateMode.onUserInteraction:
-        if (!isFirstValidation && errorText != null) {
-          return BasfInputThemes.errorInputTheme(theme);
-        }
-      case AutovalidateMode.onUnfocus:
-        if (widget.focusNode?.hasFocus == false && errorText != null) {
-          return BasfInputThemes.errorInputTheme(theme);
-        }
-      default:
-        break;
-    }
-
-    return Theme.of(context);
   }
 
   @override

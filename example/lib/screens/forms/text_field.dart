@@ -16,20 +16,19 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
   late final _iconsController = TextEditingController();
   final saveTriggerNotifier = ValueNotifier(false);
 
-  // final textFieldData = TextFieldData(
-  //   persistenceId: 'id',
-  //   labelText: 'labelText',
-  //   controller: TextEditingController(),
-  //   hintText: 'hintText',
-  //   validator: (value) {
-  //     if (value.isNullOrEmpty) return 'Please enter some text';
-  //     return null;
-  //   },
-  //   inputFormatters: InputFormatter.onlyDigits,
-  //   autovalidateMode: AutovalidateMode.always,
-  //   keyboardType: TextInputType.emailAddress,
-  //   textCapitalization: TextCapitalization.words,
-  // );
+  final textFieldData = TextFieldData(
+    persistenceId: 'textFieldData',
+    labelText: 'Persisted from TextFieldData',
+    controller: TextEditingController(),
+    validator: (value) {
+      if (value.isNullOrEmpty) return 'Please enter some text';
+      return null;
+    },
+    inputFormatters: InputFormatter.onlyDigits,
+    autovalidateMode: AutovalidateMode.always,
+    keyboardType: TextInputType.emailAddress,
+    textCapitalization: TextCapitalization.words,
+  );
 
   @override
   void dispose() {
@@ -89,6 +88,15 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
                 saveTriggerNotifier.value = !saveTriggerNotifier.value;
               },
               decoration: const InputDecoration(hintText: 'Persistent input'),
+            ),
+            PersistedTextField.fromTextFieldData(
+              data: textFieldData,
+              saveTriggerNotifier: saveTriggerNotifier,
+            ),
+            BasfOutlinedButton(
+              text: 'Save persistent fields',
+              onPressed:
+                  () => saveTriggerNotifier.value = !saveTriggerNotifier.value,
             ),
             BasfTextField(
               decoration: const InputDecoration(labelText: 'Obscured'),
