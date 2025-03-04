@@ -13,7 +13,7 @@ class BasfTextField extends StatefulWidget {
   const BasfTextField({
     required this.controller,
     super.key,
-    this.formKey,
+    // this.formKey,//TODO: Remove unused?
     this.labelText,
     this.onScanPressed,
     // this.initialValue, //TODO: Remove unused?
@@ -93,7 +93,7 @@ class BasfTextField extends StatefulWidget {
   final String? labelText;
 
   /// Form key
-  final GlobalKey<FormState>? formKey;
+  // final GlobalKey<FormState>? formKey;//TODO: Remove unused?
 
   /// Text field controller
   final TextEditingController controller;

@@ -21,8 +21,9 @@ class PersistedTextField extends StatefulWidget {
     /// save value is triggered
     required this.saveTriggerNotifier,
     this.labelText,
+    this.onScanPressed,
     this.dropdownBackgroundColor = Colors.white,
-    this.formKey,
+    // this.formKey,//TODO: Remove unused?
     // this.initialValue,//TODO: Remove unused?
     this.decoration,
     this.keyboardType,
@@ -108,8 +109,11 @@ class PersistedTextField extends StatefulWidget {
   /// save value is triggered
   final ValueNotifier<bool> saveTriggerNotifier;
 
+  /// If provided, a scan icon is shown if the BasfTextField is empty
+  final VoidCallback? onScanPressed;
+
   /// Form key
-  final GlobalKey<FormState>? formKey;
+  // final GlobalKey<FormState>? formKey;//TODO: Remove unused?
 
   /// Text field controller
   final TextEditingController controller;
@@ -579,11 +583,12 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
     return BasfTextField(
       labelText: widget.labelText,
       key: _textFieldKey,
-      formKey: widget.formKey,
+      // formKey: widget.formKey,//TODO: Remove unused?
       // greyWhenDisabled: widget.greyWhenDisabled,
       focusNode: _focusNode,
       controller: widget.controller,
       // initialValue: widget.initialValue, //TODO: Remove unused?
+      onScanPressed: widget.onScanPressed,
       decoration: widget.decoration,
       keyboardType: widget.keyboardType,
       textCapitalization: widget.textCapitalization,
@@ -652,6 +657,7 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
       spellCheckConfiguration: widget.spellCheckConfiguration,
       undoController: widget.undoController,
       onEditingComplete: widget.onEditingComplete,
+      //TODO: Add missing properties
     );
   }
 }
