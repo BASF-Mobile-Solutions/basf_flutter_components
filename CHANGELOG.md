@@ -1,4 +1,4 @@
-## 2.5.4
+## 2.6.0
 - Fixes to minimize conflicts by last changes
 - Generally improved implementations of last changes
 - Improved theming and validation in BasfTextField and PersistedTextField
