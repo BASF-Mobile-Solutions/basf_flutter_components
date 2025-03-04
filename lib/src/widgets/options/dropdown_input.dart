@@ -16,6 +16,7 @@ class BasfDropDownInput extends StatefulWidget {
     this.isLoading = false,
     this.isDisabled = false,
     this.isMandatory = false,
+    @Deprecated('Use controller value instead')
     this.initialValue,
     this.unselectedText = 'Select value',
     this.allowUnselected = false,
@@ -50,6 +51,8 @@ class BasfDropDownInput extends StatefulWidget {
   final bool isMandatory;
 
   /// Initial value for the dropdown
+  /// initial value should be provided by controller
+  @Deprecated('Use controller value instead')
   final String? initialValue;
 
   /// Text to display for the unselected option
@@ -96,24 +99,28 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
   }
 
   String _generateUniqueUnselectedValue() {
-    var unselectedValue = '____UNSELECTED____';
+    var unselectedValue = widget.unselectedText;
     var counter = 0;
     while (widget.values.contains(unselectedValue)) {
       counter++;
-      unselectedValue = '____UNSELECTED_${counter}____';
+      unselectedValue = '${widget.unselectedText}-$counter';
     }
     return unselectedValue;
   }
 
   void _initializeSelectedValue() {
-    if (widget.initialValue != null &&
-        widget.values.contains(widget.initialValue)) {
-      _selectedValue = widget.initialValue!;
-    } else if (widget.allowUnselected) {
-      _selectedValue = _unselectedValue;
+    if (widget.values.length == 1) {
+      _selectedValue = widget.values.first;
     } else {
-      _selectedValue =
-          widget.values.isNotEmpty ? widget.values.first : _unselectedValue;
+      final initValue = widget.initialValue ?? widget.controller.text;
+      if (widget.values.contains(initValue)) {
+        _selectedValue = initValue;
+      } else if (widget.allowUnselected) {
+        _selectedValue = _unselectedValue;
+      } else {
+        _selectedValue =
+            widget.values.isNotEmpty ? widget.values.first : _unselectedValue;
+      }
     }
     _updateController();
     _updateSelectedColor();

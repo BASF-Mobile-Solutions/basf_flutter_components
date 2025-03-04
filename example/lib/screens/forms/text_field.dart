@@ -148,7 +148,9 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
                     const SizedBox(height: 10),
                     BasfDropDownInput(
                       controller: TextEditingController(text: 'PK'),
-                      isLoading: true,
+                      isMandatory: true,
+                      unselectedText: 'Select now!',
+                      // initialValue: 'PK',
                       values: const ['PC', 'PK'],
                     ),
                     const SizedBox(height: 10),
