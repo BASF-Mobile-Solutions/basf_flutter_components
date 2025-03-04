@@ -102,6 +102,13 @@ class PersistedTextField extends StatefulWidget {
     required TextFieldData data,
     required this.saveTriggerNotifier,
     String? persistenceId,
+    String? labelText,
+    TextEditingController? controller,
+    String? Function(String?)? validator,
+    AutovalidateMode? autovalidateMode,
+    TextInputType? keyboardType,
+    List<TextInputFormatter>? inputFormatters,
+    TextCapitalization? textCapitalization,
     this.onScanPressed,
     this.dropdownBackgroundColor = Colors.white,
     this.textInputAction,
@@ -166,18 +173,15 @@ class PersistedTextField extends StatefulWidget {
     this.onTapUpOutside,
     this.statesController,
     super.key,
-  }) : persistenceId = persistenceId ?? data.persistenceId ?? '',
-       labelText = data.labelText,
-       controller = data.controller,
-       validator = data.validator,
-       autovalidateMode = data.autovalidateMode,
-       keyboardType = data.keyboardType,
-       inputFormatters = data.inputFormatters,
-       textCapitalization = data.textCapitalization,
-       assert(
-         persistenceId != null || data.persistenceId != null,
-         'persistenceId must be provided',
-       );
+  }) : persistenceId =
+           persistenceId ?? data.persistenceId ?? labelText ?? data.labelText,
+       labelText = labelText ?? data.labelText,
+       controller = controller ?? data.controller,
+       validator = validator ?? data.validator,
+       autovalidateMode = autovalidateMode ?? data.autovalidateMode,
+       keyboardType = keyboardType ?? data.keyboardType,
+       inputFormatters = inputFormatters ?? data.inputFormatters,
+       textCapitalization = textCapitalization ?? data.textCapitalization;
 
   /// Label of the [BasfTextField]
   final String? labelText;

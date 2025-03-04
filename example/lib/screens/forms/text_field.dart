@@ -17,11 +17,11 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
   final saveTriggerNotifier = ValueNotifier(false);
 
   final textFieldData = TextFieldData(
-    persistenceId: 'textFieldData',
+    // persistenceId: 'textFieldData',
     labelText: 'Persisted from TextFieldData',
     controller: TextEditingController(),
     validator: (value) {
-      if (value.isNullOrEmpty) return 'Please enter some text';
+      if (value.isNullOrEmpty) return 'Please enter some numbers';
       return null;
     },
     inputFormatters: InputFormatter.onlyDigits,
