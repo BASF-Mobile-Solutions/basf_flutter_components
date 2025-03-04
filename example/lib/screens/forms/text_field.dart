@@ -98,6 +98,11 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
               onPressed:
                   () => saveTriggerNotifier.value = !saveTriggerNotifier.value,
             ),
+            BasfTextField.fromTextFieldData(
+              data: textFieldData,
+              labelText: 'BasfTextField from TextFieldData',
+              controller: TextEditingController(),
+            ),
             BasfTextField(
               decoration: const InputDecoration(labelText: 'Obscured'),
               obscureText: true,
