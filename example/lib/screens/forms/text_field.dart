@@ -126,7 +126,6 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
                 Expanded(
                   child: BasfTextField(
                     controller: TextEditingController(),
-                    autovalidateMode: AutovalidateMode.always,
                     validator: (text) {
                       if (text?.isEmpty ?? true) return 'Must not be empty';
                       return null;
