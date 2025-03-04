@@ -89,6 +89,11 @@ class PersistedTextField extends StatefulWidget {
     this.spellCheckConfiguration,
     this.undoController,
     this.persistentCubit,
+    this.cursorErrorColor,
+    this.ignorePointers,
+    this.onTapAlwaysCalled = false,
+    this.onTapUpOutside,
+    this.statesController,
     super.key,
   });
 
@@ -309,6 +314,21 @@ class PersistedTextField extends StatefulWidget {
 
   /// Undo controller
   final UndoHistoryController? undoController;
+
+  /// cursor error color
+  final Color? cursorErrorColor;
+
+  /// on tap always called
+  final bool onTapAlwaysCalled;
+
+  /// states controller
+  final WidgetStatesController? statesController;
+
+  /// on tap outside callback
+  final TapRegionUpCallback? onTapUpOutside;
+
+  /// ignore pointers
+  final bool? ignorePointers;
 
   @override
   State<PersistedTextField> createState() => _PersistedTextFieldState();
@@ -657,7 +677,11 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
       spellCheckConfiguration: widget.spellCheckConfiguration,
       undoController: widget.undoController,
       onEditingComplete: widget.onEditingComplete,
-      //TODO: Add missing properties
+      cursorErrorColor: widget.cursorErrorColor,
+      ignorePointers: widget.ignorePointers,
+      onTapAlwaysCalled: widget.onTapAlwaysCalled,
+      onTapUpOutside: widget.onTapUpOutside,
+      statesController: widget.statesController,
     );
   }
 }
