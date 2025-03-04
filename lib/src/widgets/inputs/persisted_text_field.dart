@@ -99,7 +99,7 @@ class PersistedTextField extends StatefulWidget {
 
   /// Constructor to create a [PersistedTextField] from a [TextFieldData]
   PersistedTextField.fromTextFieldData({
-    required TextFieldData data,
+    required TextFieldData textFieldData,
     required this.saveTriggerNotifier,
     String? persistenceId,
     String? labelText,
@@ -174,14 +174,19 @@ class PersistedTextField extends StatefulWidget {
     this.statesController,
     super.key,
   }) : persistenceId =
-           persistenceId ?? data.persistenceId ?? labelText ?? data.labelText,
-       labelText = labelText ?? data.labelText,
-       controller = controller ?? data.controller,
-       validator = validator ?? data.validator,
-       autovalidateMode = autovalidateMode ?? data.autovalidateMode,
-       keyboardType = keyboardType ?? data.keyboardType,
-       inputFormatters = inputFormatters ?? data.inputFormatters,
-       textCapitalization = textCapitalization ?? data.textCapitalization;
+           persistenceId ??
+           textFieldData.persistenceId ??
+           labelText ??
+           decoration?.labelText ??
+           textFieldData.labelText,
+       labelText = labelText ?? textFieldData.labelText,
+       controller = controller ?? textFieldData.controller,
+       validator = validator ?? textFieldData.validator,
+       autovalidateMode = autovalidateMode ?? textFieldData.autovalidateMode,
+       keyboardType = keyboardType ?? textFieldData.keyboardType,
+       inputFormatters = inputFormatters ?? textFieldData.inputFormatters,
+       textCapitalization =
+           textCapitalization ?? textFieldData.textCapitalization;
 
   /// Label of the [BasfTextField]
   final String? labelText;

@@ -90,7 +90,7 @@ class BasfTextField extends StatefulWidget {
 
   /// Constructor to create a [BasfTextField] from a [TextFieldData]
   BasfTextField.fromTextFieldData({
-    required TextFieldData data,
+    required TextFieldData textFieldData,
     String? labelText,
     TextEditingController? controller,
     String? Function(String?)? validator,
@@ -161,14 +161,14 @@ class BasfTextField extends StatefulWidget {
     this.onTapUpOutside,
     this.statesController,
     super.key,
-  }) :
-        labelText = labelText ?? data.labelText,
-        controller = controller ?? data.controller,
-        validator = validator ?? data.validator,
-        autovalidateMode = autovalidateMode ?? data.autovalidateMode,
-        keyboardType = keyboardType ?? data.keyboardType,
-        inputFormatters = inputFormatters ?? data.inputFormatters,
-        textCapitalization = textCapitalization ?? data.textCapitalization;
+  }) : labelText = labelText ?? textFieldData.labelText,
+       controller = controller ?? textFieldData.controller,
+       validator = validator ?? textFieldData.validator,
+       autovalidateMode = autovalidateMode ?? textFieldData.autovalidateMode,
+       keyboardType = keyboardType ?? textFieldData.keyboardType,
+       inputFormatters = inputFormatters ?? textFieldData.inputFormatters,
+       textCapitalization =
+           textCapitalization ?? textFieldData.textCapitalization;
 
   /// Label of the [BasfTextField]
   /// Prefer this instead of the [decoration] property for the label
@@ -435,7 +435,7 @@ class _BasfTextFieldState extends State<BasfTextField> {
     return Theme(
       data: theme,
       child: LabeledWidget(
-        labelText: widget.labelText,
+        labelText: widget.labelText ?? widget.decoration?.labelText,
         child: textField(theme),
       ),
     );
@@ -533,6 +533,9 @@ class _BasfTextFieldState extends State<BasfTextField> {
         error: errorText == '' ? const SizedBox() : null,
         errorText: errorText.isNullOrEmpty ? null : errorText,
         hintText: widget.decoration?.hintText,
+        hintStyle: theme.inputDecorationTheme.hintStyle,
+        labelStyle: theme.inputDecorationTheme.hintStyle,
+        //Sometimes, label is still provided via decoration, so we show it as hint..
         floatingLabelBehavior: FloatingLabelBehavior.never,
       ),
       keyboardType: widget.keyboardType,

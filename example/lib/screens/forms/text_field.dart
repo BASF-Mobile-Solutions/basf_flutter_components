@@ -90,7 +90,7 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
               decoration: const InputDecoration(hintText: 'Persistent input'),
             ),
             PersistedTextField.fromTextFieldData(
-              data: textFieldData,
+              textFieldData: textFieldData,
               saveTriggerNotifier: saveTriggerNotifier,
             ),
             BasfOutlinedButton(
@@ -99,7 +99,7 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
                   () => saveTriggerNotifier.value = !saveTriggerNotifier.value,
             ),
             BasfTextField.fromTextFieldData(
-              data: textFieldData,
+              textFieldData: textFieldData,
               labelText: 'BasfTextField from TextFieldData',
               controller: TextEditingController(),
             ),

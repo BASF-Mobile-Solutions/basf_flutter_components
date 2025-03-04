@@ -16,8 +16,7 @@ class BasfDropDownInput extends StatefulWidget {
     this.isLoading = false,
     this.isDisabled = false,
     this.isMandatory = false,
-    @Deprecated('Use controller value instead')
-    this.initialValue,
+    @Deprecated('Use controller value instead') this.initialValue,
     this.unselectedText = 'Select value',
     this.allowUnselected = false,
     this.itemColor,
