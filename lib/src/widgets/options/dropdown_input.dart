@@ -141,11 +141,14 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
 
   void _onChanged(String? value) {
     widget.onChanged?.call(value == _unselectedValue ? null : value);
-
-    setState(() {
-      _selectedValue = value ?? '';
-      _updateSelectedColor();
-      _updateController();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        setState(() {
+          _selectedValue = value ?? '';
+          _updateSelectedColor();
+          _updateController();
+        });
+      }
     });
   }
 
