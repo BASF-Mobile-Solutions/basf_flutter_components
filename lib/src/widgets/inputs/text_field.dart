@@ -432,12 +432,9 @@ class _BasfTextFieldState extends State<BasfTextField> {
   Widget build(BuildContext context) {
     final theme = _getTheme(Theme.of(context));
 
-    return Theme(
-      data: theme,
-      child: LabeledWidget(
-        labelText: widget.labelText ?? widget.decoration?.labelText,
-        child: textField(theme),
-      ),
+    return LabeledWidget(
+      labelText: widget.labelText ?? widget.decoration?.labelText,
+      child: textField(theme),
     );
   }
 
@@ -511,12 +508,6 @@ class _BasfTextFieldState extends State<BasfTextField> {
     );
   }
 
-  Widget? _getThemedWidget(ThemeData theme, Widget? widget) {
-    if (widget == null) return null;
-
-    return Theme(data: _getTheme(theme), child: widget);
-  }
-
   TextStyle? _getTextStyle() {
     return (widget.style ?? const TextStyle()).copyWith(
       color: isEnabled ? Theme.of(context).primaryColor : BasfColors.darkGrey,
@@ -529,13 +520,13 @@ class _BasfTextFieldState extends State<BasfTextField> {
       controller: widget.controller,
       decoration: (widget.decoration ?? const InputDecoration()).copyWith(
         suffixIcon: widget.decoration?.suffixIcon ?? actionIcon(theme),
-        prefixIcon: _getThemedWidget(theme, widget.decoration?.prefixIcon),
+        prefixIcon: widget.decoration?.prefixIcon,
+        prefixIconColor: theme.iconTheme.color,
         error: errorText == '' ? const SizedBox() : null,
         errorText: errorText.isNullOrEmpty ? null : errorText,
         hintText: widget.decoration?.hintText ?? widget.labelText,
         hintStyle: theme.inputDecorationTheme.hintStyle,
         labelStyle: theme.inputDecorationTheme.hintStyle,
-        //Sometimes, label is still provided via decoration, so we show it as hint..
         floatingLabelBehavior: FloatingLabelBehavior.never,
       ),
       keyboardType: widget.keyboardType,
