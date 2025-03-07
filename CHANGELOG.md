@@ -1,9 +1,17 @@
+## 2.6.0
+- Fixes to minimize conflicts by last changes
+- Generally improved implementations of last changes
+- Improved theming and validation in BasfTextField and PersistedTextField
+- Added fromTextFieldData constructors to BasfTextField and PersistedTextField
+- Improvements by providing initial value to BasfDropDownInput
+- Improve AppSnackBar
+
 ## 2.5.3
-- minor fixes
+- Minor fixes
 
 ## 2.5.2
 - Added TextFieldData to provide common data to BasfTextField and PersistedTextField
-- Added  'isNullOrEmpty' and 'isNotNullOrEmpty' object extension
+- Added 'isNullOrEmpty' and 'isNotNullOrEmpty' object extension
 - Added default cases of TextInputFormatters
 
 **BREAKING CHANGES:**

@@ -2,20 +2,6 @@ import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-/// {@template text_field_scan_behavior}
-/// Enum for text field scan behavior
-/// {@endtemplate}
-// enum TextFieldScanBehavior {
-//   /// No scan icon in the text field
-//   none,
-//
-//   /// Scan icon in the text field. Will be closed after scanning
-//   scan,
-//
-//   /// Scan icon in the text field. Will not be closed after scanning
-//   multiScan,
-// }
-
 /// {@template text_field_data}
 /// Class representing data for a text field
 /// Can be used to make text fields depending on same behavior
@@ -24,10 +10,9 @@ class TextFieldData {
   /// Class representing data for a text field
   /// Can be used to make text fields depending on same behavior
   TextFieldData({
-    required this.id,
     required this.labelText,
     required this.controller,
-    this.hintText,
+    this.persistenceId,
     this.validator,
     this.autovalidateMode,
     this.keyboardType,
@@ -36,13 +21,10 @@ class TextFieldData {
   });
 
   /// Unique identifier for the text field, necessary for [PersistedTextField]
-  final String id;
+  final String? persistenceId;
 
   /// Label of the text field
   final String labelText;
-
-  /// Hint in the text field
-  final String? hintText;
 
   /// Controller for the text field
   final TextEditingController controller;

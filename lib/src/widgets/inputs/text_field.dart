@@ -11,9 +11,11 @@ import 'package:flutter/services.dart';
 class BasfTextField extends StatefulWidget {
   /// {@macro basf_text_field}
   const BasfTextField({
-    this.textFieldData,
-    this.controller,
-    this.formKey,
+    required this.controller,
+    super.key,
+    // this.formKey,//TODO: Remove unused?
+    this.labelText,
+    this.onScanPressed,
     // this.initialValue, //TODO: Remove unused?
     this.focusNode,
     this.decoration,
@@ -61,11 +63,11 @@ class BasfTextField extends StatefulWidget {
     this.buildCounter,
     this.scrollPhysics,
     this.autofillHints,
-    this.autovalidateMode,
+    this.autovalidateMode = AutovalidateMode.always,
     this.scrollController,
     this.restorationId,
     this.enableIMEPersonalizedLearning = true,
-    this.greyWhenDisabled = true,
+    // this.greyWhenDisabled = true, //TODO: Remove unused?
     this.canRequestFocus = true,
     this.clipBehavior = Clip.hardEdge,
     this.contentInsertionConfiguration,
@@ -84,22 +86,102 @@ class BasfTextField extends StatefulWidget {
     this.statesController,
     this.ignorePointers,
     this.onTapUpOutside,
-    this.validatorForceErrorText,
-    super.key,
-    this.labelText,
   });
 
-  /// Provide common text field data
-  final TextFieldData? textFieldData;
+  /// Constructor to create a [BasfTextField] from a [TextFieldData]
+  BasfTextField.fromTextFieldData({
+    required TextFieldData textFieldData,
+    String? labelText,
+    TextEditingController? controller,
+    String? Function(String?)? validator,
+    AutovalidateMode? autovalidateMode,
+    TextInputType? keyboardType,
+    List<TextInputFormatter>? inputFormatters,
+    TextCapitalization? textCapitalization,
+    this.onScanPressed,
+    this.focusNode,
+    this.textInputAction,
+    this.decoration,
+    this.style,
+    this.strutStyle,
+    this.textDirection,
+    this.textAlign = TextAlign.start,
+    this.textAlignVertical,
+    this.autofocus = false,
+    this.readOnly = false,
+    this.contextMenuBuilder,
+    this.mouseCursor,
+    this.onTapOutside,
+    this.showCursor,
+    this.obscuringCharacter = '•',
+    this.obscureText = false,
+    this.autocorrect = true,
+    this.smartDashesType,
+    this.smartQuotesType,
+    this.enableSuggestions = true,
+    this.maxLengthEnforcement,
+    this.maxLines = 1,
+    this.minLines,
+    this.expands = false,
+    this.maxLength,
+    this.onChanged,
+    this.onTap,
+    this.onEditingComplete,
+    this.enabled,
+    this.cursorWidth = 2.0,
+    this.cursorHeight,
+    this.cursorRadius,
+    this.cursorColor,
+    this.keyboardAppearance,
+    this.scrollPadding = const EdgeInsets.all(30),
+    this.enableInteractiveSelection = true,
+    this.selectionControls,
+    this.buildCounter,
+    this.scrollPhysics,
+    this.autofillHints,
+    this.scrollController,
+    this.restorationId,
+    this.enableIMEPersonalizedLearning = true,
+    this.canRequestFocus = true,
+    this.clipBehavior = Clip.hardEdge,
+    this.contentInsertionConfiguration,
+    this.cursorOpacityAnimates,
+    this.dragStartBehavior = DragStartBehavior.start,
+    this.magnifierConfiguration,
+    this.onAppPrivateCommand,
+    this.onSubmitted,
+    this.stylusHandwritingEnabled = true,
+    this.selectionHeightStyle = BoxHeightStyle.tight,
+    this.selectionWidthStyle = BoxWidthStyle.tight,
+    this.spellCheckConfiguration,
+    this.undoController,
+    this.cursorErrorColor,
+    this.ignorePointers,
+    this.onTapAlwaysCalled = false,
+    this.onTapUpOutside,
+    this.statesController,
+    super.key,
+  }) : labelText = labelText ?? textFieldData.labelText,
+       controller = controller ?? textFieldData.controller,
+       validator = validator ?? textFieldData.validator,
+       autovalidateMode = autovalidateMode ?? textFieldData.autovalidateMode,
+       keyboardType = keyboardType ?? textFieldData.keyboardType,
+       inputFormatters = inputFormatters ?? textFieldData.inputFormatters,
+       textCapitalization =
+           textCapitalization ?? textFieldData.textCapitalization;
 
   /// Label of the [BasfTextField]
+  /// Prefer this instead of the [decoration] property for the label
   final String? labelText;
 
   /// Form key
-  final GlobalKey<FormState>? formKey;
+  // final GlobalKey<FormState>? formKey;//TODO: Remove unused?
 
   /// Text field controller
-  final TextEditingController? controller;
+  final TextEditingController controller;
+
+  /// If provided, a scan icon is shown if the BasfTextField is empty
+  final VoidCallback? onScanPressed;
 
   /// Initial value
   // final String? initialValue; //TODO: Remove unused?
@@ -231,7 +313,7 @@ class BasfTextField extends StatefulWidget {
   final bool enableInteractiveSelection;
 
   /// If the color should be changed to grey when disabled
-  final bool greyWhenDisabled;
+  // final bool greyWhenDisabled; //TODO: Remove unused?
 
   /// Controls
   final TextSelectionControls? selectionControls;
@@ -311,58 +393,28 @@ class BasfTextField extends StatefulWidget {
   /// ignore pointers
   final bool? ignorePointers;
 
-  /// Show error
-  final String? validatorForceErrorText;
-
   @override
   State<BasfTextField> createState() => _BasfTextFieldState();
 }
 
 class _BasfTextFieldState extends State<BasfTextField> {
-  GlobalKey<FormState>? _formKey;
+  late final hasValidation = widget.validator != null;
   bool isFirstValidation = true;
-  late final ValueNotifier<bool> deleteButtonNotifier;
-
-  late final labelText =
-      widget.labelText ??
-      widget.decoration?.labelText ??
-      widget.textFieldData?.labelText;
-
-  late final hintText =
-      widget.decoration?.hintText ?? widget.textFieldData?.hintText;
-
-  late final controller =
-      widget.controller ??
-      widget.textFieldData?.controller ??
-      TextEditingController();
-
-  late final autovalidateMode =
-      widget.autovalidateMode ?? widget.textFieldData?.autovalidateMode;
-
-  late final validator = widget.validator ?? widget.textFieldData?.validator;
+  late final emptyTextFieldNotifier = ValueNotifier(
+    widget.controller.text.isEmpty,
+  );
 
   @override
   void initState() {
-    if (validator != null) {
-      _formKey = widget.formKey ?? GlobalKey<FormState>();
-      controller.addListener(redrawToChangeThemeBasedOnState);
-      redrawToChangeThemeBasedOnState();
+    if (hasValidation) {
+      widget.controller.addListener(redrawToChangeThemeBasedOnState);
     }
-    controller.addListener(checkDeleteButtonVisibility);
-    deleteButtonNotifier = ValueNotifier(controller.text.isNotEmpty);
+    widget.controller.addListener(checkDeleteButtonVisibility);
     super.initState();
   }
 
-  @override
-  void dispose() {
-    controller
-      ..removeListener(redrawToChangeThemeBasedOnState)
-      ..removeListener(checkDeleteButtonVisibility);
-    super.dispose();
-  }
-
   void checkDeleteButtonVisibility() {
-    deleteButtonNotifier.value = controller.text.isNotEmpty;
+    emptyTextFieldNotifier.value = widget.controller.text.isEmpty;
   }
 
   void redrawToChangeThemeBasedOnState() {
@@ -371,44 +423,36 @@ class _BasfTextFieldState extends State<BasfTextField> {
     }
   }
 
+  String? get errorText =>
+      hasValidation ? widget.validator!(widget.controller.text) : null;
+
+  bool get isEnabled => widget.enabled ?? widget.decoration?.enabled ?? true;
+
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = _getTheme(Theme.of(context));
 
-    return Theme(
-      data: _getTheme(theme),
-      child: LabeledWidget(labelText: labelText, child: inputForm(theme)),
+    return LabeledWidget(
+      labelText: widget.labelText ?? widget.decoration?.labelText,
+      child: textField(theme),
     );
   }
 
-  Widget inputForm(ThemeData theme) {
-    return validator != null
-        ? validationFormField(theme)
-        : textField(theme: theme);
-  }
-
-  Widget? _getThemedPrefixIcon(ThemeData theme) {
-    if (widget.decoration?.prefixIcon == null) return null;
-
-    return Theme(data: _getTheme(theme), child: widget.decoration!.prefixIcon!);
-  }
-
   ThemeData _getTheme(ThemeData theme) {
-    if (!isEnabled) {
-      return BasfInputThemes.disabledInputTheme(theme);
-    }
-    switch (autovalidateMode) {
+    if (!isEnabled) return BasfInputThemes.disabledInputTheme(theme);
+    if (!hasValidation) return Theme.of(context);
+
+    switch (widget.autovalidateMode) {
       case AutovalidateMode.always:
-        if (_formKey?.currentState?.validate() == false) {
+        if (errorText != null) {
           return BasfInputThemes.errorInputTheme(theme);
         }
       case AutovalidateMode.onUserInteraction:
-        if (!isFirstValidation && _formKey?.currentState?.validate() == false) {
+        if (!isFirstValidation && errorText != null) {
           return BasfInputThemes.errorInputTheme(theme);
         }
       case AutovalidateMode.onUnfocus:
-        if (widget.focusNode?.hasFocus == false &&
-            _formKey?.currentState?.validate() == false) {
+        if (widget.focusNode?.hasFocus == false && errorText != null) {
           return BasfInputThemes.errorInputTheme(theme);
         }
       default:
@@ -418,107 +462,75 @@ class _BasfTextFieldState extends State<BasfTextField> {
     return Theme.of(context);
   }
 
-  Widget validationFormField(ThemeData theme) {
-    return FormField<String>(
-      key: _formKey,
-      autovalidateMode: autovalidateMode,
-      validator: validator,
-      builder: (FormFieldState<String> state) {
-        return textField(theme: theme, state: state);
-      },
-    );
-  }
-
-  TextStyle _getTextStyle() {
-    return widget.greyWhenDisabled
-        ? widget.style?.copyWith(
-              color:
-                  isEnabled
-                      ? Theme.of(context).primaryColor
-                      : BasfColors.darkGrey,
-            ) ??
-            TextStyle(
-              color:
-                  isEnabled
-                      ? Theme.of(context).primaryColor
-                      : BasfColors.darkGrey,
-            )
-        : widget.style ?? const TextStyle();
-  }
-
-  bool get isEnabled => widget.enabled ?? widget.decoration?.enabled ?? true;
-
-  Widget deleteIconButton() {
+  Widget actionIcon(ThemeData theme) {
     return ValueListenableBuilder(
-      valueListenable: deleteButtonNotifier,
-      builder: (context, visible, _) {
+      valueListenable: emptyTextFieldNotifier,
+      builder: (context, emptyTextField, _) {
+        if (widget.onScanPressed != null) {
+          return emptyTextField
+              ? _scanIconButton(theme)
+              : _deleteIconButton(theme);
+        }
+
         return Visibility(
-          visible: visible,
-          child: IconButton(
-            icon: const Icon(Icons.delete_sweep_outlined),
-            color: Theme.of(context).iconTheme.color,
-            splashRadius: 25,
-            splashColor: Theme.of(context).dialogTheme.backgroundColor,
-            highlightColor: Theme.of(context).dialogTheme.backgroundColor,
-            onPressed: () {
-              controller.text = '';
-              widget.focusNode?.requestFocus();
-            },
-          ),
+          visible: !emptyTextField,
+          child: _deleteIconButton(theme),
         );
       },
     );
   }
 
-  InputDecoration _getDefaultDecoration({
-    required ThemeData theme,
-    String? errorText,
-  }) {
-    return InputDecoration(
-      suffixIcon: deleteIconButton(),
-      prefixIcon: _getThemedPrefixIcon(theme),
-      error: errorText != null && errorText.isEmpty ? const SizedBox() : null,
-      errorText: errorText == null || errorText.isEmpty ? null : errorText,
-      hintText: hintText,
-      labelStyle:
-          widget.decoration?.labelStyle ??
-          BasfThemes.mainTextTheme.bodyLarge?.copyWith(
-            color: BasfColors.darkGrey,
-          ),
-      floatingLabelBehavior: FloatingLabelBehavior.never,
+  Widget _scanIconButton(ThemeData theme) {
+    return IconButton(
+      icon: const Icon(Icons.qr_code_2_sharp),
+      color: theme.iconTheme.color,
+      splashRadius: 25,
+      splashColor: Theme.of(context).dialogTheme.backgroundColor,
+      highlightColor: Theme.of(context).dialogTheme.backgroundColor,
+      onPressed: widget.onScanPressed,
     );
   }
 
-  Widget textField({required ThemeData theme, FormFieldState<String>? state}) {
-    final errorText = state?.errorText ?? widget.validatorForceErrorText;
+  Widget _deleteIconButton(ThemeData theme) {
+    return IconButton(
+      icon: const Icon(Icons.delete_sweep_outlined),
+      color: theme.iconTheme.color,
+      splashRadius: 25,
+      splashColor: Theme.of(context).dialogTheme.backgroundColor,
+      highlightColor: Theme.of(context).dialogTheme.backgroundColor,
+      onPressed: () {
+        widget.controller.clear();
+        widget.focusNode?.requestFocus();
+        widget.onChanged?.call('');
+        isFirstValidation = false;
+        // redrawToChangeThemeBasedOnState();
+      },
+    );
+  }
 
+  TextStyle? _getTextStyle() {
+    return (widget.style ?? const TextStyle()).copyWith(
+      color: isEnabled ? Theme.of(context).primaryColor : BasfColors.darkGrey,
+    );
+  }
+
+  Widget textField(ThemeData theme) {
     return TextField(
       focusNode: widget.focusNode,
-      controller: controller,
-      decoration:
-          widget.decoration?.copyWith(
-            suffixIcon: widget.decoration?.suffixIcon ?? deleteIconButton(),
-            prefixIcon: _getThemedPrefixIcon(theme),
-            error:
-                errorText != null && errorText.isEmpty
-                    ? const SizedBox()
-                    : null,
-            errorText:
-                errorText == null || errorText.isEmpty ? null : errorText,
-            hintText: hintText,
-            labelStyle:
-                widget.decoration?.labelStyle ??
-                BasfThemes.mainTextTheme.bodyLarge?.copyWith(
-                  color: BasfColors.darkGrey,
-                ),
-            floatingLabelBehavior: FloatingLabelBehavior.never,
-          ) ??
-          _getDefaultDecoration(theme: theme, errorText: state?.errorText),
-      keyboardType: widget.keyboardType ?? widget.textFieldData?.keyboardType,
-      textCapitalization:
-          widget.textCapitalization ??
-          widget.textFieldData?.textCapitalization ??
-          TextCapitalization.none,
+      controller: widget.controller,
+      decoration: (widget.decoration ?? const InputDecoration()).copyWith(
+        suffixIcon: widget.decoration?.suffixIcon ?? actionIcon(theme),
+        prefixIcon: widget.decoration?.prefixIcon,
+        prefixIconColor: theme.iconTheme.color,
+        error: errorText == '' ? const SizedBox() : null,
+        errorText: errorText.isNullOrEmpty ? null : errorText,
+        hintText: widget.decoration?.hintText ?? widget.labelText,
+        hintStyle: theme.inputDecorationTheme.hintStyle,
+        labelStyle: theme.inputDecorationTheme.hintStyle,
+        floatingLabelBehavior: FloatingLabelBehavior.never,
+      ),
+      keyboardType: widget.keyboardType,
+      textCapitalization: widget.textCapitalization ?? TextCapitalization.none,
       textInputAction: widget.textInputAction,
       style: _getTextStyle(),
       strutStyle: widget.strutStyle,
@@ -540,14 +552,12 @@ class _BasfTextFieldState extends State<BasfTextField> {
       expands: widget.expands,
       maxLength: widget.maxLength,
       onChanged: (text) {
-        state?.didChange(text);
         widget.onChanged?.call(text);
         isFirstValidation = false;
       },
       onTap: widget.onTap,
       onEditingComplete: widget.onEditingComplete,
-      inputFormatters:
-          widget.inputFormatters ?? widget.textFieldData?.inputFormatters,
+      inputFormatters: widget.inputFormatters,
       enabled: widget.enabled,
       cursorWidth: widget.cursorWidth,
       cursorHeight: widget.cursorHeight,
@@ -586,5 +596,13 @@ class _BasfTextFieldState extends State<BasfTextField> {
       ignorePointers: widget.ignorePointers,
       onTapUpOutside: widget.onTapUpOutside,
     );
+  }
+
+  @override
+  void dispose() {
+    widget.controller
+      ..removeListener(redrawToChangeThemeBasedOnState)
+      ..removeListener(checkDeleteButtonVisibility);
+    super.dispose();
   }
 }

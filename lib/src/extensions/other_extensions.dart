@@ -53,10 +53,16 @@ extension DetailedWhere<K, V> on Map<K, V> {
 /// {@endtemplate}
 extension SnackbarActions on AppSnackBar {
   /// {@macro show_app_snackbar}
-  void show(BuildContext context) {
+  void show(BuildContext context, {Duration? duration}) {
     ScaffoldMessenger.of(context)
       ..clearSnackBars()
-      ..showSnackBar(SnackBar(backgroundColor: backgroundColor, content: this));
+      ..showSnackBar(
+        SnackBar(
+          backgroundColor: backgroundColor,
+          content: this,
+          duration: duration ?? const Duration(seconds: 4),
+        ),
+      );
   }
 }
 

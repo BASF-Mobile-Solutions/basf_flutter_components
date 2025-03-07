@@ -90,7 +90,6 @@ class BasfThemes {
       inputDecorationTheme: BasfInputThemes.getMainInputDecorationTheme(
         basfThemeType.primaryColor,
       ),
-      hintColor: basfThemeType.primaryColor.shade400,
       bottomNavigationBarTheme: _bottomNavigationBarTheme(basfThemeType),
     );
   }

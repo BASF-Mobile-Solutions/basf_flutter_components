@@ -14,15 +14,16 @@ import 'package:path_provider/path_provider.dart';
 class PersistedTextField extends StatefulWidget {
   /// Default constructor
   const PersistedTextField({
+    required this.persistenceId,
+    required this.controller,
+
     /// You provide a bool notifier, when it becomes true,
     /// save value is triggered
     required this.saveTriggerNotifier,
-    this.uniqueId,
-    this.textFieldData,
     this.labelText,
-    this.controller,
+    this.onScanPressed,
     this.dropdownBackgroundColor = Colors.white,
-    this.formKey,
+    // this.formKey,//TODO: Remove unused?
     // this.initialValue,//TODO: Remove unused?
     this.decoration,
     this.keyboardType,
@@ -73,7 +74,7 @@ class PersistedTextField extends StatefulWidget {
     this.scrollController,
     this.restorationId,
     this.enableIMEPersonalizedLearning = true,
-    this.greyWhenDisabled = true,
+    // this.greyWhenDisabled = true,
     this.canRequestFocus = true,
     this.clipBehavior = Clip.hardEdge,
     this.contentInsertionConfiguration,
@@ -88,18 +89,104 @@ class PersistedTextField extends StatefulWidget {
     this.spellCheckConfiguration,
     this.undoController,
     this.persistentCubit,
+    this.cursorErrorColor,
+    this.ignorePointers,
+    this.onTapAlwaysCalled = false,
+    this.onTapUpOutside,
+    this.statesController,
     super.key,
-  }) : assert(
-         controller != null || textFieldData != null,
-         'Either controller or textFieldData.controller must be provided.',
-       ),
-       assert(
-         uniqueId != null || textFieldData != null,
-         'Either uniqueId or textFieldData.id must be provided.',
-       );
+  });
 
-  /// Provide common text field data
-  final TextFieldData? textFieldData;
+  /// Constructor to create a [PersistedTextField] from a [TextFieldData]
+  PersistedTextField.fromTextFieldData({
+    required TextFieldData textFieldData,
+    required this.saveTriggerNotifier,
+    String? persistenceId,
+    String? labelText,
+    TextEditingController? controller,
+    String? Function(String?)? validator,
+    AutovalidateMode? autovalidateMode,
+    TextInputType? keyboardType,
+    List<TextInputFormatter>? inputFormatters,
+    TextCapitalization? textCapitalization,
+    this.onScanPressed,
+    this.dropdownBackgroundColor = Colors.white,
+    this.textInputAction,
+    this.decoration,
+    this.style,
+    this.strutStyle,
+    this.textDirection,
+    this.textAlign = TextAlign.start,
+    this.textAlignVertical,
+    this.autofocus = false,
+    this.readOnly = false,
+    this.contextMenuBuilder,
+    this.mouseCursor,
+    this.onTapOutside,
+    this.showCursor,
+    this.obscuringCharacter = '•',
+    this.obscureText = false,
+    this.autocorrect = true,
+    this.smartDashesType,
+    this.smartQuotesType,
+    this.enableSuggestions = true,
+    this.maxLengthEnforcement,
+    this.maxLines = 1,
+    this.minLines,
+    this.expands = false,
+    this.maxLength,
+    this.onChanged,
+    this.onTap,
+    this.onEditingComplete,
+    this.enabled,
+    this.cursorWidth = 2.0,
+    this.cursorHeight,
+    this.cursorRadius,
+    this.cursorColor,
+    this.keyboardAppearance,
+    this.scrollPadding = const EdgeInsets.all(30),
+    this.enableInteractiveSelection = true,
+    this.selectionControls,
+    this.buildCounter,
+    this.scrollPhysics,
+    this.autofillHints,
+    this.scrollController,
+    this.restorationId,
+    this.enableIMEPersonalizedLearning = true,
+    this.canRequestFocus = true,
+    this.clipBehavior = Clip.hardEdge,
+    this.contentInsertionConfiguration,
+    this.cursorOpacityAnimates,
+    this.dragStartBehavior = DragStartBehavior.start,
+    this.magnifierConfiguration,
+    this.onAppPrivateCommand,
+    this.onSubmitted,
+    this.scribbleEnabled = true,
+    this.selectionHeightStyle = BoxHeightStyle.tight,
+    this.selectionWidthStyle = BoxWidthStyle.tight,
+    this.spellCheckConfiguration,
+    this.undoController,
+    this.persistentCubit,
+    this.cursorErrorColor,
+    this.ignorePointers,
+    this.onTapAlwaysCalled = false,
+    this.onTapUpOutside,
+    this.statesController,
+    super.key,
+  }) : persistenceId =
+           persistenceId ??
+           textFieldData.persistenceId ??
+           labelText ??
+           decoration?.labelText ??
+           textFieldData.labelText,
+       labelText = labelText ?? textFieldData.labelText,
+       controller = controller ?? textFieldData.controller,
+       validator = validator ?? textFieldData.validator,
+       autovalidateMode = autovalidateMode ?? textFieldData.autovalidateMode,
+       keyboardType = keyboardType ?? textFieldData.keyboardType,
+       inputFormatters = inputFormatters ?? textFieldData.inputFormatters,
+       textCapitalization =
+           textCapitalization ?? textFieldData.textCapitalization;
 
   /// Label of the [BasfTextField]
   final String? labelText;
@@ -112,17 +199,20 @@ class PersistedTextField extends StatefulWidget {
   final Color dropdownBackgroundColor;
 
   /// Id for unique bloc cache
-  final String? uniqueId;
+  final String persistenceId;
 
   /// You provide a bool notifier, when it changes to true or false,
   /// save value is triggered
   final ValueNotifier<bool> saveTriggerNotifier;
 
+  /// If provided, a scan icon is shown if the BasfTextField is empty
+  final VoidCallback? onScanPressed;
+
   /// Form key
-  final GlobalKey<FormState>? formKey;
+  // final GlobalKey<FormState>? formKey;//TODO: Remove unused?
 
   /// Text field controller
-  final TextEditingController? controller;
+  final TextEditingController controller;
 
   /// Initial value
   // final String? initialValue; //TODO: Remove unused?
@@ -251,7 +341,7 @@ class PersistedTextField extends StatefulWidget {
   final bool enableInteractiveSelection;
 
   /// If the color should be changed to grey when disabled
-  final bool greyWhenDisabled;
+  // final bool greyWhenDisabled;
 
   /// Controls
   final TextSelectionControls? selectionControls;
@@ -316,6 +406,21 @@ class PersistedTextField extends StatefulWidget {
   /// Undo controller
   final UndoHistoryController? undoController;
 
+  /// cursor error color
+  final Color? cursorErrorColor;
+
+  /// on tap always called
+  final bool onTapAlwaysCalled;
+
+  /// states controller
+  final WidgetStatesController? statesController;
+
+  /// on tap outside callback
+  final TapRegionUpCallback? onTapUpOutside;
+
+  /// ignore pointers
+  final bool? ignorePointers;
+
   @override
   State<PersistedTextField> createState() => _PersistedTextFieldState();
 }
@@ -328,20 +433,13 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
   final ValueNotifier<String> textNotifier = ValueNotifier('');
   final ValueNotifier<bool> overlayShownNotifier = ValueNotifier(false);
 
-  late final id = widget.uniqueId ?? widget.textFieldData?.id ?? '';
-
-  late final controller =
-      widget.controller ??
-      widget.textFieldData?.controller ??
-      TextEditingController();
-
   @override
   void initState() {
     _initStorage = _initHydratedStorage();
     _focusNode = FocusNode();
     _focusNode.addListener(_handleFocusChange);
     widget.saveTriggerNotifier.addListener(saveValue);
-    controller.addListener(textControllerListener);
+    widget.controller.addListener(textControllerListener);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       setFavoriteValueAsDefault();
     });
@@ -354,7 +452,7 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
       ..removeListener(_handleFocusChange)
       ..dispose();
     widget.saveTriggerNotifier.removeListener(saveValue);
-    controller.removeListener(textControllerListener);
+    widget.controller.removeListener(textControllerListener);
     _removeOverlay();
     textNotifier.dispose();
     overlayShownNotifier.dispose();
@@ -362,7 +460,7 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
   }
 
   void textControllerListener() {
-    textNotifier.value = controller.text;
+    textNotifier.value = widget.controller.text;
   }
 
   Future<void> setFavoriteValueAsDefault() async {
@@ -370,17 +468,17 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
       final cubit =
           _futureBuilderKey.currentContext!.read<PersistedInputCubit>();
 
-      if (cubit.state.favoriteValue != null && controller.text.isEmpty) {
-        controller.text = cubit.state.favoriteValue!;
-        textNotifier.value = controller.text;
+      if (cubit.state.favoriteValue != null && widget.controller.text.isEmpty) {
+        widget.controller.text = cubit.state.favoriteValue!;
+        textNotifier.value = widget.controller.text;
       }
     });
   }
 
   void saveValue() {
-    if (controller.text.trim().isNotEmpty) {
+    if (widget.controller.text.trim().isNotEmpty) {
       _textFieldKey.currentContext?.read<PersistedInputCubit>().addValue(
-        controller.text,
+        widget.controller.text,
       );
     }
     if (_focusNode.hasFocus) _focusNode.unfocus();
@@ -427,7 +525,7 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
       return BlocProvider.value(value: widget.persistentCubit!, child: body());
     } else {
       return BlocProvider(
-        create: (context) => PersistedInputCubit(id: id),
+        create: (context) => PersistedInputCubit(id: widget.persistenceId),
         child: body(),
       );
     }
@@ -438,9 +536,7 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
       key: _futureBuilderKey,
       future: _initStorage,
       builder: (context, snapshot) {
-        if (!snapshot.hasData) {
-          return const SizedBox();
-        }
+        if (!snapshot.hasData) return const SizedBox();
 
         return ValueListenableBuilder<bool>(
           valueListenable: overlayShownNotifier,
@@ -495,9 +591,7 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
                 .where((value) => value.contains(text))
                 .toList();
 
-        if (!showFavorite && lastValues.isEmpty) {
-          return const SizedBox();
-        }
+        if (!showFavorite && lastValues.isEmpty) return const SizedBox();
 
         return Container(
           width: width,
@@ -560,7 +654,7 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
           _showOverlay();
         }
       },
-      onTap: () => controller.text = value,
+      onTap: () => widget.controller.text = value,
       trailing: bookmarkIcon(
         context: context,
         value: value,
@@ -578,7 +672,7 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
       icon: Icon(isFavorite ? Icons.bookmark : Icons.bookmark_add_outlined),
       color: Theme.of(context).primaryColor,
       onPressed: () {
-        if (!isFavorite) controller.text = value;
+        if (!isFavorite) widget.controller.text = value;
         context.read<PersistedInputCubit>().setFavoriteValue(value);
         _removeOverlay();
         _showOverlay();
@@ -598,14 +692,14 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
 
   Widget textField(BuildContext context) {
     return BasfTextField(
-      textFieldData: widget.textFieldData,
       labelText: widget.labelText,
       key: _textFieldKey,
-      formKey: widget.formKey,
-      greyWhenDisabled: widget.greyWhenDisabled,
+      // formKey: widget.formKey,//TODO: Remove unused?
+      // greyWhenDisabled: widget.greyWhenDisabled,
       focusNode: _focusNode,
-      controller: controller,
+      controller: widget.controller,
       // initialValue: widget.initialValue, //TODO: Remove unused?
+      onScanPressed: widget.onScanPressed,
       decoration: widget.decoration,
       keyboardType: widget.keyboardType,
       textCapitalization: widget.textCapitalization,
@@ -674,6 +768,11 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
       spellCheckConfiguration: widget.spellCheckConfiguration,
       undoController: widget.undoController,
       onEditingComplete: widget.onEditingComplete,
+      cursorErrorColor: widget.cursorErrorColor,
+      ignorePointers: widget.ignorePointers,
+      onTapAlwaysCalled: widget.onTapAlwaysCalled,
+      onTapUpOutside: widget.onTapUpOutside,
+      statesController: widget.statesController,
     );
   }
 }

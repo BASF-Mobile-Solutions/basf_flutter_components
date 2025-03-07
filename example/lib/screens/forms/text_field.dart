@@ -11,19 +11,17 @@ class TextFieldScreen extends StatefulWidget {
 class _TextFieldScreenState extends State<TextFieldScreen> {
   late final _enabledController = TextEditingController();
   late final _disabledController = TextEditingController();
-  late final _errorController = TextEditingController();
+  late final _errorController = TextEditingController(text: 'test');
   late final _obscureController = TextEditingController(text: 'obscured');
   late final _iconsController = TextEditingController();
-  late final GlobalKey<FormState> _formKey = GlobalKey();
   final saveTriggerNotifier = ValueNotifier(false);
 
   final textFieldData = TextFieldData(
-    id: 'id',
-    labelText: 'labelText',
+    // persistenceId: 'textFieldData',
+    labelText: 'Persisted from TextFieldData',
     controller: TextEditingController(),
-    hintText: 'hintText',
     validator: (value) {
-      if (value?.isEmpty ?? false) return 'Please enter some text';
+      if (value.isNullOrEmpty) return 'Please enter some numbers';
       return null;
     },
     inputFormatters: InputFormatter.onlyDigits,
@@ -49,34 +47,61 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
           physics: const ClampingScrollPhysics(),
           padding: const EdgeInsets.all(8),
           children: [
-            BasfTextField(textFieldData: textFieldData),
+            // (textFieldData: textFieldData),
+            BasfTextField(
+              decoration: const InputDecoration(hintText: 'Scanned'),
+              controller: _enabledController,
+              onScanPressed: () {
+                _enabledController.text = 'Scanned';
+              },
+            ),
             BasfTextField(
               decoration: const InputDecoration(hintText: 'Enabled'),
               controller: _enabledController,
             ),
             BasfTextField(
-              enabled: false,
-              decoration: const InputDecoration(hintText: 'Disabled'),
-              controller: _disabledController,
-            ),
-            BasfTextField(
-              formKey: _formKey,
-              autovalidateMode: AutovalidateMode.always,
+              // enabled: false,
+              decoration: const InputDecoration(
+                prefixIcon: Icon(Icons.ac_unit),
+                hintText: 'Max 4 characters',
+              ),
               validator: (value) {
-                if (value?.isEmpty ?? true) return 'Please enter some text';
+                if ((value?.length ?? 0) > 4) return 'Max 4 characters';
                 return null;
               },
-              decoration: const InputDecoration(hintText: 'Error'),
+              controller: _errorController,
+            ),
+            BasfTextField(
+              enabled: false,
+              decoration: const InputDecoration(
+                prefixIcon: Icon(Icons.warning),
+                hintText: 'Always error and disabled',
+              ),
+              validator: (value) => '',
               controller: _errorController,
             ),
             PersistedTextField(
-              uniqueId: 'uniqueId',
+              persistenceId: 'uniqueId',
               saveTriggerNotifier: saveTriggerNotifier,
               controller: TextEditingController(),
               onEditingComplete: () {
                 saveTriggerNotifier.value = !saveTriggerNotifier.value;
               },
               decoration: const InputDecoration(hintText: 'Persistent input'),
+            ),
+            PersistedTextField.fromTextFieldData(
+              textFieldData: textFieldData,
+              saveTriggerNotifier: saveTriggerNotifier,
+            ),
+            BasfOutlinedButton(
+              text: 'Save persistent fields',
+              onPressed:
+                  () => saveTriggerNotifier.value = !saveTriggerNotifier.value,
+            ),
+            BasfTextField.fromTextFieldData(
+              textFieldData: textFieldData,
+              labelText: 'BasfTextField from TextFieldData',
+              controller: TextEditingController(),
             ),
             BasfTextField(
               decoration: const InputDecoration(labelText: 'Obscured'),
@@ -101,7 +126,6 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
                 Expanded(
                   child: BasfTextField(
                     controller: TextEditingController(),
-                    autovalidateMode: AutovalidateMode.always,
                     validator: (text) {
                       if (text?.isEmpty ?? true) return 'Must not be empty';
                       return null;
@@ -136,7 +160,9 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
                     const SizedBox(height: 10),
                     BasfDropDownInput(
                       controller: TextEditingController(text: 'PK'),
-                      isLoading: true,
+                      isMandatory: true,
+                      unselectedText: 'Select now!',
+                      // initialValue: 'PK',
                       values: const ['PC', 'PK'],
                     ),
                     const SizedBox(height: 10),
