@@ -466,14 +466,14 @@ class _BasfTextFieldState extends State<BasfTextField> {
     return ValueListenableBuilder(
       valueListenable: emptyTextFieldNotifier,
       builder: (context, emptyTextField, _) {
-        if (widget.onScanPressed != null) {
+        if (isEnabled && widget.onScanPressed != null) {
           return emptyTextField
               ? _scanIconButton(theme)
               : _deleteIconButton(theme);
         }
 
         return Visibility(
-          visible: !emptyTextField,
+          visible: isEnabled && !emptyTextField,
           child: _deleteIconButton(theme),
         );
       },
@@ -509,9 +509,14 @@ class _BasfTextFieldState extends State<BasfTextField> {
   }
 
   TextStyle? _getTextStyle() {
-    return (widget.style ?? const TextStyle()).copyWith(
-      color: isEnabled ? Theme.of(context).primaryColor : BasfColors.darkGrey,
-    );
+    final currentTextStyle = widget.style ?? const TextStyle();
+
+    return isEnabled
+        ? currentTextStyle.copyWith(color: Theme.of(context).primaryColor)
+        : currentTextStyle.copyWith(
+          color: BasfColors.darkGrey,
+          fontWeight: FontWeight.w600,
+        );
   }
 
   Widget textField(ThemeData theme) {
@@ -528,6 +533,8 @@ class _BasfTextFieldState extends State<BasfTextField> {
         hintStyle: theme.inputDecorationTheme.hintStyle,
         labelStyle: theme.inputDecorationTheme.hintStyle,
         floatingLabelBehavior: FloatingLabelBehavior.never,
+        fillColor: theme.inputDecorationTheme.fillColor,
+        filled: theme.inputDecorationTheme.filled,
       ),
       keyboardType: widget.keyboardType,
       textCapitalization: widget.textCapitalization ?? TextCapitalization.none,

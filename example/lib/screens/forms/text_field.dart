@@ -10,14 +10,14 @@ class TextFieldScreen extends StatefulWidget {
 
 class _TextFieldScreenState extends State<TextFieldScreen> {
   late final _enabledController = TextEditingController();
+  late final _scanFieldController = TextEditingController();
   late final _disabledController = TextEditingController();
-  late final _errorController = TextEditingController(text: 'test');
+  late final _errorController = TextEditingController();
   late final _obscureController = TextEditingController(text: 'obscured');
   late final _iconsController = TextEditingController();
   final saveTriggerNotifier = ValueNotifier(false);
 
   final textFieldData = TextFieldData(
-    // persistenceId: 'textFieldData',
     labelText: 'Persisted from TextFieldData',
     controller: TextEditingController(),
     validator: (value) {
@@ -47,20 +47,18 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
           physics: const ClampingScrollPhysics(),
           padding: const EdgeInsets.all(8),
           children: [
-            // (textFieldData: textFieldData),
-            BasfTextField(
-              decoration: const InputDecoration(hintText: 'Scanned'),
-              controller: _enabledController,
-              onScanPressed: () {
-                _enabledController.text = 'Scanned';
-              },
-            ),
             BasfTextField(
               decoration: const InputDecoration(hintText: 'Enabled'),
               controller: _enabledController,
             ),
             BasfTextField(
-              // enabled: false,
+              decoration: const InputDecoration(hintText: 'Scanned'),
+              controller: _scanFieldController,
+              onScanPressed: () {
+                _enabledController.text = 'Scan button pressed';
+              },
+            ),
+            BasfTextField(
               decoration: const InputDecoration(
                 prefixIcon: Icon(Icons.ac_unit),
                 hintText: 'Max 4 characters',
@@ -75,10 +73,26 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
               enabled: false,
               decoration: const InputDecoration(
                 prefixIcon: Icon(Icons.warning),
-                hintText: 'Always error and disabled',
+                hintText: 'Always error and disabled hint',
               ),
               validator: (value) => '',
               controller: _errorController,
+            ),
+            BasfTextField(
+              enabled: false,
+              decoration: const InputDecoration(
+                prefixIcon: Icon(Icons.warning),
+                hintText: 'disabled hint',
+              ),
+              controller: TextEditingController(),
+            ),
+            BasfTextField(
+              enabled: false,
+              decoration: const InputDecoration(
+                prefixIcon: Icon(Icons.warning),
+                hintText: 'disabled filled',
+              ),
+              controller: TextEditingController(text: 'disabled filled'),
             ),
             PersistedTextField(
               persistenceId: 'uniqueId',
