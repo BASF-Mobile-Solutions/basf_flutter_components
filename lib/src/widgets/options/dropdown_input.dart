@@ -111,6 +111,7 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
     if (widget.values.length == 1) {
       _selectedValue = widget.values.first;
     } else {
+      // ignore: deprecated_member_use_from_same_package //TODO: Remove after refactoring GM
       final initValue = widget.initialValue ?? widget.controller.text;
       if (widget.values.contains(initValue)) {
         _selectedValue = initValue;

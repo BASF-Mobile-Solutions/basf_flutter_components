@@ -67,7 +67,7 @@ class BasfTextField extends StatefulWidget {
     this.scrollController,
     this.restorationId,
     this.enableIMEPersonalizedLearning = true,
-    // this.greyWhenDisabled = true,
+    // this.greyWhenDisabled = true, //TODO: Remove unused?
     this.canRequestFocus = true,
     this.clipBehavior = Clip.hardEdge,
     this.contentInsertionConfiguration,
@@ -313,7 +313,7 @@ class BasfTextField extends StatefulWidget {
   final bool enableInteractiveSelection;
 
   /// If the color should be changed to grey when disabled
-  // final bool greyWhenDisabled;
+  // final bool greyWhenDisabled; //TODO: Remove unused?
 
   /// Controls
   final TextSelectionControls? selectionControls;
