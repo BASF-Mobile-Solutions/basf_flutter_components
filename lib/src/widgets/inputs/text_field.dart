@@ -532,7 +532,7 @@ class _BasfTextFieldState extends State<BasfTextField> {
         prefixIcon: _getThemedWidget(theme, widget.decoration?.prefixIcon),
         error: errorText == '' ? const SizedBox() : null,
         errorText: errorText.isNullOrEmpty ? null : errorText,
-        hintText: widget.decoration?.hintText,
+        hintText: widget.decoration?.hintText ?? widget.labelText,
         hintStyle: theme.inputDecorationTheme.hintStyle,
         labelStyle: theme.inputDecorationTheme.hintStyle,
         //Sometimes, label is still provided via decoration, so we show it as hint..

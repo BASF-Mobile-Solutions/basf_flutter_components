@@ -34,11 +34,7 @@ class LabeledWidget extends StatelessWidget {
             labelText!,
             overflow: TextOverflow.ellipsis,
             maxLines: maxLines,
-            style:
-                style ??
-                Theme.of(
-                  context,
-                ).textTheme.labelSmall?.copyWith(color: BasfColors.grey[900]),
+            style: style ?? Theme.of(context).textTheme.bodyMedium,
           ),
         child,
       ].joinWithSeparator(VerticalSpacer.normal()),
