@@ -37,7 +37,7 @@ class LabeledWidget extends StatelessWidget {
             style: style ?? Theme.of(context).textTheme.bodyMedium,
           ),
         child,
-      ].joinWithSeparator(VerticalSpacer.normal()),
+      ].joinWithSeparator(VerticalSpacer.small()),
     );
   }
 }
