@@ -1,3 +1,6 @@
+## 2.6.1
+- Improved Appearance of TextFields
+
 ## 2.6.0
 - Fixes to minimize conflicts by last changes
 - Generally improved implementations of last changes

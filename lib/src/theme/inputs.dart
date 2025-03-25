@@ -17,8 +17,7 @@ abstract class BasfInputThemes {
       iconColor: color,
       prefixIconColor: color,
       suffixIconColor: color,
-      hintStyle: BasfThemes.mainTextTheme.bodyMedium!.copyWith(
-        fontSize: 16,
+      hintStyle: BasfThemes.mainTextTheme.bodyLarge!.copyWith(
         color: BasfColors.darkGrey,
       ),
     );
@@ -28,16 +27,14 @@ abstract class BasfInputThemes {
   static ThemeData errorInputTheme(ThemeData theme) => theme.copyWith(
     textSelectionTheme: _errorTextSelectionTheme,
     iconTheme: const IconThemeData(color: BasfColors.red),
-    hintColor: BasfColors.red.shade200,
   );
 
   /// Disabled input theme
   static ThemeData disabledInputTheme(ThemeData theme) => theme.copyWith(
     iconTheme: IconThemeData(color: BasfColors.grey.shade400),
-    hintColor: BasfColors.grey.shade200,
     inputDecorationTheme: theme.inputDecorationTheme.copyWith(
       hintStyle: theme.inputDecorationTheme.hintStyle?.copyWith(
-        color: BasfColors.grey.shade200,
+        color: BasfColors.middleGrey,
       ),
       fillColor: BasfColors.grey.shade100,
       filled: true,
