@@ -193,7 +193,7 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
                       unselectedText: 'Select a value',
                       allowUnselected: true,
                       itemColor: (value) {
-                        if (value == 'PC') return Colors.red;
+                        if (value == 'PC') return BasfColors.red;
                         if (value == 'PK') return Colors.green;
                         return null;
                       },
