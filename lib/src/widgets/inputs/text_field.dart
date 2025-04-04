@@ -67,7 +67,7 @@ class BasfTextField extends StatefulWidget {
     this.scrollController,
     this.restorationId,
     this.enableIMEPersonalizedLearning = true,
-    // this.greyWhenDisabled = true, //TODO: Remove unused?
+    this.greyWhenDisabled = true,
     this.canRequestFocus = true,
     this.clipBehavior = Clip.hardEdge,
     this.contentInsertionConfiguration,
@@ -142,6 +142,7 @@ class BasfTextField extends StatefulWidget {
     this.scrollController,
     this.restorationId,
     this.enableIMEPersonalizedLearning = true,
+    this.greyWhenDisabled = true,
     this.canRequestFocus = true,
     this.clipBehavior = Clip.hardEdge,
     this.contentInsertionConfiguration,
@@ -312,9 +313,6 @@ class BasfTextField extends StatefulWidget {
   /// Enable interactive selection
   final bool enableInteractiveSelection;
 
-  /// If the color should be changed to grey when disabled
-  // final bool greyWhenDisabled; //TODO: Remove unused?
-
   /// Controls
   final TextSelectionControls? selectionControls;
 
@@ -338,6 +336,9 @@ class BasfTextField extends StatefulWidget {
 
   /// Enable IMEPersonalized learning
   final bool enableIMEPersonalizedLearning;
+
+  /// If the color should be changed to grey when disabled
+  final bool greyWhenDisabled;
 
   /// Request focus
   final bool canRequestFocus;
@@ -439,7 +440,9 @@ class _BasfTextFieldState extends State<BasfTextField> {
   }
 
   ThemeData _getTheme(ThemeData theme) {
-    if (!isEnabled) return BasfInputThemes.disabledInputTheme(theme);
+    if (!isEnabled && widget.greyWhenDisabled) {
+      return BasfInputThemes.disabledInputTheme(theme);
+    }
     if (!hasValidation) return Theme.of(context);
 
     switch (widget.autovalidateMode) {
