@@ -446,7 +446,7 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
   void textControllerListener() => textNotifier.value = widget.controller.text;
 
   Future<void> setFavoriteValueAsDefault() async {
-    if(!widget.prefillWithFavorite) return;
+    if (!widget.prefillWithFavorite) return;
     await _initHydratedStorage().then((value) {
       final cubit =
           _futureBuilderKey.currentContext!.read<PersistedInputCubit>();
