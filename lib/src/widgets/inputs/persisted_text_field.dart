@@ -28,6 +28,7 @@ class PersistedTextField extends StatefulWidget {
     this.decoration,
     this.keyboardType,
     this.textCapitalization = TextCapitalization.none,
+    this.prefillWithFavorite = true,
     this.textInputAction,
     this.style,
     this.strutStyle,
@@ -74,7 +75,7 @@ class PersistedTextField extends StatefulWidget {
     this.scrollController,
     this.restorationId,
     this.enableIMEPersonalizedLearning = true,
-    // this.greyWhenDisabled = true,
+    this.greyWhenDisabled = true,
     this.canRequestFocus = true,
     this.clipBehavior = Clip.hardEdge,
     this.contentInsertionConfiguration,
@@ -98,6 +99,8 @@ class PersistedTextField extends StatefulWidget {
   });
 
   /// Constructor to create a [PersistedTextField] from a [TextFieldData]
+  /// With this constructor, the favorite value is not used by default,
+  /// because it should already be requested by the TextFieldData.
   PersistedTextField.fromTextFieldData({
     required TextFieldData textFieldData,
     required this.saveTriggerNotifier,
@@ -109,6 +112,7 @@ class PersistedTextField extends StatefulWidget {
     TextInputType? keyboardType,
     List<TextInputFormatter>? inputFormatters,
     TextCapitalization? textCapitalization,
+    this.prefillWithFavorite = false,
     this.onScanPressed,
     this.dropdownBackgroundColor = Colors.white,
     this.textInputAction,
@@ -153,6 +157,7 @@ class PersistedTextField extends StatefulWidget {
     this.scrollController,
     this.restorationId,
     this.enableIMEPersonalizedLearning = true,
+    this.greyWhenDisabled = true,
     this.canRequestFocus = true,
     this.clipBehavior = Clip.hardEdge,
     this.contentInsertionConfiguration,
@@ -208,14 +213,8 @@ class PersistedTextField extends StatefulWidget {
   /// If provided, a scan icon is shown if the BasfTextField is empty
   final VoidCallback? onScanPressed;
 
-  /// Form key
-  // final GlobalKey<FormState>? formKey;//TODO: Remove unused?
-
   /// Text field controller
   final TextEditingController controller;
-
-  /// Initial value
-  // final String? initialValue; //TODO: Remove unused?
 
   /// Input decoration
   final InputDecoration? decoration;
@@ -225,6 +224,10 @@ class PersistedTextField extends StatefulWidget {
 
   /// Text capitalization
   final TextCapitalization textCapitalization;
+
+  /// Prefill controller text to favorite value
+  /// This can be used to e.g. only to it at the initial state
+  final bool prefillWithFavorite;
 
   /// Text input action
   final TextInputAction? textInputAction;
@@ -265,10 +268,10 @@ class PersistedTextField extends StatefulWidget {
   /// Obscuring character
   final String obscuringCharacter;
 
-  /// Wheter or not to hide the text
+  /// Whether or not to hide the text
   final bool obscureText;
 
-  /// Wheter or not to correct the text automatically
+  /// Whether or not to correct the text automatically
   final bool autocorrect;
 
   /// Smart dashes type
@@ -277,7 +280,7 @@ class PersistedTextField extends StatefulWidget {
   /// Smart quotes type
   final SmartQuotesType? smartQuotesType;
 
-  /// Wheter or not to show suggestions
+  /// Whether or not to show suggestions
   final bool enableSuggestions;
 
   /// Max length setter
@@ -303,12 +306,6 @@ class PersistedTextField extends StatefulWidget {
 
   /// Void callback when editing is completed
   final VoidCallback? onEditingComplete;
-
-  /// Field submitted value
-  // final ValueChanged<String>? onFieldSubmitted; //TODO: Remove unused?
-
-  /// Field submitted on saved
-  // final FormFieldSetter<String>? onSaved; //TODO: Remove unused?
 
   /// Field validator
   final FormFieldValidator<String>? validator;
@@ -340,9 +337,6 @@ class PersistedTextField extends StatefulWidget {
   /// Enable interactive selection
   final bool enableInteractiveSelection;
 
-  /// If the color should be changed to grey when disabled
-  // final bool greyWhenDisabled;
-
   /// Controls
   final TextSelectionControls? selectionControls;
 
@@ -366,6 +360,9 @@ class PersistedTextField extends StatefulWidget {
 
   /// Enable IMEPersonalized learning
   final bool enableIMEPersonalizedLearning;
+
+  /// If the color should be changed to grey when disabled
+  final bool greyWhenDisabled;
 
   /// Request focus
   final bool canRequestFocus;
@@ -446,24 +443,10 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
     super.initState();
   }
 
-  @override
-  void dispose() {
-    _focusNode
-      ..removeListener(_handleFocusChange)
-      ..dispose();
-    widget.saveTriggerNotifier.removeListener(saveValue);
-    widget.controller.removeListener(textControllerListener);
-    _removeOverlay();
-    textNotifier.dispose();
-    overlayShownNotifier.dispose();
-    super.dispose();
-  }
-
-  void textControllerListener() {
-    textNotifier.value = widget.controller.text;
-  }
+  void textControllerListener() => textNotifier.value = widget.controller.text;
 
   Future<void> setFavoriteValueAsDefault() async {
+    if (!widget.prefillWithFavorite) return;
     await _initHydratedStorage().then((value) {
       final cubit =
           _futureBuilderKey.currentContext!.read<PersistedInputCubit>();
@@ -504,20 +487,12 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
   }
 
   void _handleFocusChange() {
-    if (_focusNode.hasFocus) {
-      _showOverlay();
-    } else {
-      _removeOverlay();
-    }
+    _focusNode.hasFocus ? _showOverlay() : _removeOverlay();
   }
 
-  void _removeOverlay() {
-    overlayShownNotifier.value = false;
-  }
+  void _removeOverlay() => overlayShownNotifier.value = false;
 
-  void _showOverlay() {
-    overlayShownNotifier.value = true;
-  }
+  void _showOverlay() => overlayShownNotifier.value = true;
 
   @override
   Widget build(BuildContext context) {
@@ -567,9 +542,7 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
         );
       }),
       builder: (context, snapshot) {
-        if (!snapshot.hasData) {
-          return const SizedBox();
-        }
+        if (!snapshot.hasData) return const SizedBox();
 
         return overlayContainer(snapshot.data!.width, context);
       },
@@ -694,11 +667,8 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
     return BasfTextField(
       labelText: widget.labelText,
       key: _textFieldKey,
-      // formKey: widget.formKey,//TODO: Remove unused?
-      // greyWhenDisabled: widget.greyWhenDisabled,
       focusNode: _focusNode,
       controller: widget.controller,
-      // initialValue: widget.initialValue, //TODO: Remove unused?
       onScanPressed: widget.onScanPressed,
       decoration: widget.decoration,
       keyboardType: widget.keyboardType,
@@ -734,8 +704,6 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
         widget.onTap?.call();
         _showOverlay();
       },
-      // onFieldSubmitted: widget.onFieldSubmitted, //TODO: Remove unused?
-      // onSaved: widget.onSaved, //TODO: Remove unused?
       validator: widget.validator,
       inputFormatters: widget.inputFormatters,
       enabled: widget.enabled,
@@ -774,5 +742,18 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
       onTapUpOutside: widget.onTapUpOutside,
       statesController: widget.statesController,
     );
+  }
+
+  @override
+  void dispose() {
+    _focusNode
+      ..removeListener(_handleFocusChange)
+      ..dispose();
+    widget.saveTriggerNotifier.removeListener(saveValue);
+    widget.controller.removeListener(textControllerListener);
+    _removeOverlay();
+    textNotifier.dispose();
+    overlayShownNotifier.dispose();
+    super.dispose();
   }
 }

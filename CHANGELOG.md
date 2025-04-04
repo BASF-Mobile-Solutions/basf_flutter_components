@@ -1,3 +1,7 @@
+## 2.6.2
+- Add function to TextFieldData, to set the controller text to the favorite value of persisted input
+- Add greyWhenDisabled attribute to BasfTextField, to show or hide the grey color when disabled
+
 ## 2.6.1
 - Improved Appearance of TextFields
 

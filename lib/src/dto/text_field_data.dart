@@ -44,4 +44,12 @@ class TextFieldData {
   /// Text capitalization for the text field
   /// Default is [TextCapitalization.none]
   final TextCapitalization textCapitalization;
+
+  /// Call this function to set the text field controller with a favorite value
+  void setControllerWithFavorite({bool dependency = true}) {
+    if (!dependency || persistenceId.isNullOrEmpty) return;
+    final cubit = PersistedInputCubit(id: persistenceId!);
+    final favoriteValue = cubit.state.favoriteValue;
+    if (favoriteValue.isNotNullOrEmpty) controller.text = favoriteValue!;
+  }
 }
