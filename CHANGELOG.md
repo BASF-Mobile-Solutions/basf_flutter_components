@@ -1,4 +1,4 @@
-## 2.6.2
+## 2.6.3
 - Added getter to TextFieldData to better get and set the controller text
 
 ## 2.6.2
