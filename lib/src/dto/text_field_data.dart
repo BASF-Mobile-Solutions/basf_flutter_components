@@ -45,11 +45,22 @@ class TextFieldData {
   /// Default is [TextCapitalization.none]
   final TextCapitalization textCapitalization;
 
-  /// Call this function to set the text field controller with a favorite value
+  /// Call this function to set the empty text field controller
+  /// with the favorite value
   void setControllerWithFavorite({bool dependency = true}) {
-    if (!dependency || persistenceId.isNullOrEmpty) return;
+    if (!dependency ||
+        persistenceId.isNullOrEmpty ||
+        controller.text.isNotEmpty) {
+      return;
+    }
     final cubit = PersistedInputCubit(id: persistenceId!);
     final favoriteValue = cubit.state.favoriteValue;
     if (favoriteValue.isNotNullOrEmpty) controller.text = favoriteValue!;
   }
+
+  /// This is to directly get the text from the controller
+  String get text => controller.text;
+
+  /// This is to directly set the text from the controller
+  set text(String value) => controller.text = value;
 }
