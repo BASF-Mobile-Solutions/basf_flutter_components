@@ -186,7 +186,8 @@ class BasfTextField extends StatefulWidget {
   /// If provided, a scan icon is shown if the BasfTextField is empty
   final VoidCallback? onScanPressed;
 
-  /// If true, the scan icon is shown even if the BasfTextField is not empty if `onScanPressed` is provided
+  /// If true, the scan icon is shown even if the BasfTextField is not empty if
+  /// `onScanPressed` is provided
   final bool multiScanEnabled;
 
   /// Initial value
