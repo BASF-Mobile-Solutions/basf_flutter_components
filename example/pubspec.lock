@@ -7,7 +7,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "2.6.1"
+    version: "2.6.4"
   bloc:
     dependency: transitive
     description:
