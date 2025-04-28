@@ -1,3 +1,6 @@
+## 2.6.4
+- Added the option `multiScanEnabled` in the BasfTextField
+
 ## 2.6.3
 - Added getter to TextFieldData to better get and set the controller text
 

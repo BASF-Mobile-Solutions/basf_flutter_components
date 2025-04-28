@@ -16,6 +16,7 @@ class BasfTextField extends StatefulWidget {
     // this.formKey,//TODO: Remove unused?
     this.labelText,
     this.onScanPressed,
+    this.multiScanEnabled = false,
     // this.initialValue, //TODO: Remove unused?
     this.focusNode,
     this.decoration,
@@ -99,6 +100,7 @@ class BasfTextField extends StatefulWidget {
     List<TextInputFormatter>? inputFormatters,
     TextCapitalization? textCapitalization,
     this.onScanPressed,
+    this.multiScanEnabled = false,
     this.focusNode,
     this.textInputAction,
     this.decoration,
@@ -183,6 +185,10 @@ class BasfTextField extends StatefulWidget {
 
   /// If provided, a scan icon is shown if the BasfTextField is empty
   final VoidCallback? onScanPressed;
+
+  /// If true, the scan icon is shown even if the BasfTextField is not empty if
+  /// `onScanPressed` is provided
+  final bool multiScanEnabled;
 
   /// Initial value
   // final String? initialValue; //TODO: Remove unused?
@@ -470,6 +476,9 @@ class _BasfTextFieldState extends State<BasfTextField> {
       valueListenable: emptyTextFieldNotifier,
       builder: (context, emptyTextField, _) {
         if (isEnabled && widget.onScanPressed != null) {
+          if (widget.multiScanEnabled) {
+            return _scanIconButton(theme);
+          }
           return emptyTextField
               ? _scanIconButton(theme)
               : _deleteIconButton(theme);
