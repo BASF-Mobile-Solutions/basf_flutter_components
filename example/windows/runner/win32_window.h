@@ -39,7 +39,7 @@ class Win32Window {
   // Show the current window. Returns true if the window was successfully shown.
   bool Show();
 
-  // Release OS resources associated with window.
+  // Release OS assets associated with window.
   void Destroy();
 
   // Inserts |content| into the window tree.

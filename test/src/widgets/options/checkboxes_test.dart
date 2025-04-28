@@ -10,8 +10,7 @@ void main() {
     testWidgets('Active checkbox', (tester) async {
       FlutterError.onError = ignoreOverflowErrors;
 
-      // ignore: prefer_function_declarations_over_variables
-      final onChanged = (myBool) => true;
+      bool onChanged(myBool) => true;
 
       const checkboxText = 'Hi Checkbox!';
       await tester.pumpApp(
@@ -46,8 +45,7 @@ void main() {
             builder: (context) {
               return BasfCheckbox(
                 text: checkboxText,
-                // ignore: avoid_returning_null_for_void
-                onChanged: (_) => null,
+                onChanged: (_) {},
                 value: false,
               );
             },

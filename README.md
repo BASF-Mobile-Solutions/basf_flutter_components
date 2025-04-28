@@ -67,14 +67,14 @@ Use your IDE IntelliSense to import any of the [Components](#components) built i
 theme: BasfThemes.lightMainTheme(BasfThemeType.darkBlue),
 /// etc...
 ```
-![themes](./assets/screenshots/themes.gif)
+![themes](assets/screenshots/themes.gif)
 
 #### Colors
 ```dart
 BasfColors.red,
 /// etc...
 ```
-![colors](./assets/screenshots/colors.png)
+![colors](assets/screenshots/colors.png)
 
 #### Fonts
 ```dart
@@ -92,7 +92,7 @@ Theme.of(context).textTheme.headline1!,
                          // button
                          // overline
 ```
-![fonts](./assets/screenshots/fonts.png)
+![fonts](assets/screenshots/fonts.png)
 
 ---
 
@@ -104,8 +104,8 @@ AppSnackBar.info(message: 'Button pressed').show(context);
 AppSnackBar.error(message: 'Button pressed').show(context);
 ```
 
-![snackbar](./assets/screenshots/info.png)
-![snackbar_error](./assets/screenshots/error.png)
+![snackbar](assets/screenshots/info.png)
+![snackbar_error](assets/screenshots/error.png)
 
 #### BasfTextButton
 ```dart
@@ -132,7 +132,7 @@ BasfTextButton.hint(
 ),
 ```
 
-![text_buttons](./assets/screenshots/text_buttons.png)
+![text_buttons](assets/screenshots/text_buttons.png)
 
 #### OutlinedButton
 ```dart
@@ -142,7 +142,7 @@ BasfOutlinedButton(
             );
 ```
 
-![outlined_buttons](./assets/screenshots/outlined_buttons.png)
+![outlined_buttons](assets/screenshots/outlined_buttons.png)
 
 #### TransparentButton
 ```dart
@@ -153,7 +153,7 @@ BasfTextButton.transparent(
 ),
 ```
 
-![transaparent_buttons](./assets/screenshots/transaparent_buttons.png)
+![transaparent_buttons](assets/screenshots/transaparent_buttons.png)
 
 #### SliderButton
 ```dart
@@ -162,7 +162,7 @@ SliderButton(
     onConfirmation: () {},
 ),
 ```
-![slider_button](./assets/screenshots/slider_button.png)
+![slider_button](assets/screenshots/slider_button.png)
 
 #### Dialogs
 ```dart
@@ -184,7 +184,7 @@ BasfTextButton.contained(
     },
 );
 ```
-![alert_dialog](./assets/screenshots/dialog.png)
+![alert_dialog](assets/screenshots/dialog.png)
 
 #### Text fields
 ```dart
@@ -195,7 +195,7 @@ BasfTextField(
     controller: _enabledController,
 ),
 ```
-![text_fields](./assets/screenshots/text_fields.png)
+![text_fields](assets/screenshots/text_fields.png)
 
 
 #### Dropdown
@@ -205,7 +205,7 @@ BasfDropDownInput(
     values: const ['Option1', 'Option2', 'Option3'],
 ),
 ```
-![drop_down](./assets/screenshots/drop_down.gif)
+![drop_down](assets/screenshots/drop_down.gif)
 
 #### Radio
 ```dart
@@ -219,7 +219,7 @@ RadioOptions(
     },
 ),
 ```
-![radio](./assets/screenshots/radio.gif)
+![radio](assets/screenshots/radio.gif)
 
 #### CheckBox
 ```dart
@@ -229,7 +229,7 @@ BasfCheckbox(
     // reverse: true, Optional
 ),
 ```
-![checkbox](./assets/screenshots/checkbox.gif)
+![checkbox](assets/screenshots/checkbox.gif)
 
 #### Icons
 ```dart
@@ -237,7 +237,7 @@ Icon(BasfIcons.add),
 // or
 Icon(BasfIconsData(code /* e842 */)),
 ```
-![icons](./assets/screenshots/icons.gif)
+![icons](assets/screenshots/icons.gif)
 
 ---
 
@@ -249,7 +249,7 @@ Fade(
     child: Text('Sup'),
 );
 ```
-![fade](./assets/screenshots/fade.gif)
+![fade](assets/screenshots/fade.gif)
 
 ---
 

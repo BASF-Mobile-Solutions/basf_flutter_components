@@ -1,5 +1,3 @@
-// ignore_for_file: public_member_api_docs
-
 import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:basf_flutter_components_example/screens/overview.dart';
 import 'package:flutter/material.dart';
