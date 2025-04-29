@@ -14,7 +14,7 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// English (United States) resources
+// English (United States) assets
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
@@ -52,7 +52,7 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDI_APP_ICON            ICON                    "resources\\app_icon.ico"
+IDI_APP_ICON            ICON                    "assets\\app_icon.ico"
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -105,7 +105,7 @@ BEGIN
     END
 END
 
-#endif    // English (United States) resources
+#endif    // English (United States) assets
 /////////////////////////////////////////////////////////////////////////////
 
 

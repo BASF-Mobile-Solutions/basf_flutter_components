@@ -1,3 +1,6 @@
+## 2.6.5
+- Various components from BASF apps added for merge
+
 ## 2.6.4
 - Added the option `multiScanEnabled` in the BasfTextField
 

@@ -1,9 +1,14 @@
-include: package:very_good_analysis/analysis_options.4.0.0.yaml
+include: package:very_good_analysis/analysis_options.7.0.0.yaml
 
 linter:
   rules:
     no_default_cases: false
+    sort_pub_dependencies: false
+    avoid_catches_without_on_clauses: false
+    avoid_dynamic_calls: false
 
 analyzer:
+  errors:
+    strict_raw_type: ignore
   exclude:
     - "**/icons.dart"

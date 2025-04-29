@@ -10,9 +10,9 @@ void main() {
     testWidgets('Active checkbox', (tester) async {
       FlutterError.onError = ignoreOverflowErrors;
 
-      // ignore: prefer_function_declarations_over_variables
-      final onChanged = (myBool) => true;
+      bool onChanged(myBool) => true;
       const radioText = 'Hi Radio!';
+
       await tester.pumpApp(
         Scaffold(
           body: Builder(
@@ -42,8 +42,8 @@ void main() {
     testWidgets('Active checkbox', (tester) async {
       FlutterError.onError = ignoreOverflowErrors;
 
-      // ignore: prefer_function_declarations_over_variables
-      final onChanged = (myBool) => true;
+      bool onChanged(myBool) => true;
+
       const radioText = 'Hi Radio!';
       await tester.pumpApp(
         Scaffold(
