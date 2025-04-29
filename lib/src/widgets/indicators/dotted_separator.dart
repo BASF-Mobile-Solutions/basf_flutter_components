@@ -4,10 +4,7 @@ import 'package:flutter/material.dart';
 /// Dotted separator
 class DottedSeparator extends StatelessWidget {
   /// Dotted separator
-  const DottedSeparator({
-    required this.padding,
-    super.key,
-  });
+  const DottedSeparator({required this.padding, super.key});
 
   ///
   final EdgeInsetsGeometry padding;

@@ -14,10 +14,13 @@ class SettingsTile extends StatelessWidget {
 
   ///
   final String title;
+
   ///
   final IconData icon;
+
   ///
   final VoidCallback onPressed;
+
   ///
   final EdgeInsetsGeometry padding;
 
@@ -38,8 +41,12 @@ class SettingsTile extends StatelessWidget {
             children: [
               Icon(icon, size: 19),
               HorizontalSpacer.xLarge(),
-              Text(title, style: Theme.of(context).textTheme.bodyMedium
-                  ?.copyWith(color: BasfColors.darkGrey),),
+              Text(
+                title,
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyMedium?.copyWith(color: BasfColors.darkGrey),
+              ),
             ],
           ),
           Icon(

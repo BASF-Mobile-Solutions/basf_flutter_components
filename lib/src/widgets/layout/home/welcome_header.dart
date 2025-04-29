@@ -12,6 +12,7 @@ class WelcomeHeader extends StatelessWidget {
 
   ///
   final String welcomeText;
+
   ///
   final String name;
 
@@ -27,12 +28,13 @@ class WelcomeHeader extends StatelessWidget {
             color: theme.primaryColor,
           ),
         ),
-        if (name.trim().isNotEmpty) Text(
-          name.toTitleCase(),
-          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-            fontWeight: FontWeight.normal,
+        if (name.trim().isNotEmpty)
+          Text(
+            name.toTitleCase(),
+            style: Theme.of(
+              context,
+            ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.normal),
           ),
-        ),
       ],
     );
   }

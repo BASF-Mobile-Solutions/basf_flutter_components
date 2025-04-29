@@ -14,12 +14,16 @@ class DottedLine extends StatelessWidget {
 
   ///
   final double height;
+
   ///
   final Color color;
+
   ///
   final Color backgroundColor;
+
   ///
   final double dashWidth;
+
   ///
   final double dashSpace;
 
@@ -38,7 +42,6 @@ class DottedLine extends StatelessWidget {
 }
 
 class _DottedLinePainter extends CustomPainter {
-
   _DottedLinePainter({
     required this.color,
     required this.backgroundColor,
@@ -52,15 +55,17 @@ class _DottedLinePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final backgroundPaint = Paint()
-      ..color = backgroundColor
-      ..strokeWidth = size.height
-      ..style = PaintingStyle.fill;
+    final backgroundPaint =
+        Paint()
+          ..color = backgroundColor
+          ..strokeWidth = size.height
+          ..style = PaintingStyle.fill;
 
-    final paint = Paint()
-      ..color = color
-      ..strokeWidth = size.height
-      ..style = PaintingStyle.stroke;
+    final paint =
+        Paint()
+          ..color = color
+          ..strokeWidth = size.height
+          ..style = PaintingStyle.stroke;
 
     // Draw the background line
     canvas.drawLine(Offset.zero, Offset(size.width, 0), backgroundPaint);
@@ -75,5 +80,4 @@ class _DottedLinePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
-
 }

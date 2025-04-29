@@ -13,10 +13,13 @@ class CentralInfoMessage extends StatelessWidget {
 
   ///
   final IconData iconData;
+
   ///
   final double iconSize;
+
   ///
   final String message;
+
   ///
   final TextStyle? textStyle;
 

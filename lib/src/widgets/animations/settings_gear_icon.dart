@@ -3,19 +3,15 @@ import 'package:rive/rive.dart';
 
 /// Settings gear icon animated
 class SettingsGearIcon extends StatelessWidget {
-
   /// Settings gear icon animated
-  const SettingsGearIcon({
-    super.key,
-    this.size = 25,
-    this.onTap,
-    this.color,
-  });
+  const SettingsGearIcon({super.key, this.size = 25, this.onTap, this.color});
 
   ///
   final double size;
+
   ///
   final VoidCallback? onTap;
+
   ///
   final Color? color;
 
@@ -50,16 +46,16 @@ class SettingsGearIcon extends StatelessWidget {
           artBoard.forEachComponent((shape) {
             if (shape is Shape) {
               fillComponent++;
-              switch(fillComponent) {
-                case 1: shape.fills.first.paint.color = color
-                    .withValues(alpha: 0.8);
-                case 2: shape.fills.first.paint.color = color
-                    .withValues(alpha: 0.9);
-                case 3: shape.fills.first.paint.color = color;
+              switch (fillComponent) {
+                case 1:
+                  shape.fills.first.paint.color = color.withValues(alpha: 0.8);
+                case 2:
+                  shape.fills.first.paint.color = color.withValues(alpha: 0.9);
+                case 3:
+                  shape.fills.first.paint.color = color;
               }
             }
-          },
-          );
+          });
         },
       ),
     );

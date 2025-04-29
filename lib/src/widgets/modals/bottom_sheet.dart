@@ -19,10 +19,12 @@ Future<T?> showCustomModalBottomSheet<T>({
     enableDrag: isDismissible,
     showDragHandle: isDismissible,
     barrierColor: Colors.black54,
-    constraints: constraints ?? BoxConstraints(
-      maxWidth: 500,
-      maxHeight: MediaQuery.of(context).size.height * ratio,
-    ),
+    constraints:
+        constraints ??
+        BoxConstraints(
+          maxWidth: 500,
+          maxHeight: MediaQuery.of(context).size.height * ratio,
+        ),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(BasfThemes.defaultBorderRadius.topLeft.y),

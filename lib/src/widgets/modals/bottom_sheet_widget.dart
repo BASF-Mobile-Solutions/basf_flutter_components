@@ -1,4 +1,3 @@
-
 import 'package:basf_flutter_components/src/theme/colors.dart' show BasfColors;
 import 'package:basf_flutter_components/src/widgets/buttons/outlined_button.dart';
 import 'package:basf_flutter_components/src/widgets/buttons/text_button.dart';
@@ -22,16 +21,22 @@ class ModalBottomSheetWidget extends StatelessWidget {
 
   ///
   final String title;
+
   ///
   final String description;
+
   ///
   final String buttonText;
+
   ///
   final Color buttonColor;
+
   ///
   final bool withCancelButton;
+
   ///
   final VoidCallback onPressed;
+
   ///
   final String cancelText;
 
@@ -48,10 +53,9 @@ class ModalBottomSheetWidget extends StatelessWidget {
         VerticalSpacer.medium(),
         Text(
           description,
-          style: Theme.of(context)
-              .textTheme
-              .bodyMedium!
-              .copyWith(color: Colors.black),
+          style: Theme.of(
+            context,
+          ).textTheme.bodyMedium!.copyWith(color: Colors.black),
           textAlign: TextAlign.center,
         ),
         VerticalSpacer.large(),
@@ -63,9 +67,10 @@ class ModalBottomSheetWidget extends StatelessWidget {
         ),
         VerticalSpacer.mediumSmall(),
         BasfTextButton.contained(
-          style: withCancelButton
-              ? null
-              : TextButton.styleFrom(backgroundColor: buttonColor),
+          style:
+              withCancelButton
+                  ? null
+                  : TextButton.styleFrom(backgroundColor: buttonColor),
           expanded: true,
           onPressed: onPressed,
           text: buttonText,

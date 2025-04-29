@@ -22,22 +22,31 @@ class HomeTile extends StatelessWidget {
 
   ///
   final String titleText;
+
   ///
   final String? appBarTitleText;
+
   ///
   final String description;
+
   ///
   final String leadingImage;
+
   /// Mostly used as an id
   final AppRoute? route;
+
   ///
   final List<BlocProvider> blocProviders;
+
   ///
   final VoidCallback onPressed;
+
   ///
   final double borderRadius;
+
   ///
   final Widget? unfinishedProcessNotification;
+
   ///
   final FavoriteData? favoriteData;
 
@@ -67,12 +76,7 @@ class HomeTile extends StatelessWidget {
             boxShadow: const [BasfShadows.smallShadow],
             borderRadius: BorderRadius.circular(borderRadius),
           ),
-          child: Row(
-            children: [
-              image(),
-              Expanded(child: _body()),
-            ],
-          ),
+          child: Row(children: [image(), Expanded(child: _body())]),
         ),
         BasfTextButton.contained(
           size: Size(double.maxFinite, _height),
@@ -94,7 +98,6 @@ class HomeTile extends StatelessWidget {
       ],
     );
   }
-
 
   ///
   Widget image() {
@@ -145,7 +148,8 @@ class HomeTile extends StatelessWidget {
 
   ///
   Widget title(BuildContext context) {
-    return Text(titleText,
+    return Text(
+      titleText,
       maxLines: 2,
       style: Theme.of(context).textTheme.bodySmall!.copyWith(
         color: BasfColors.black,

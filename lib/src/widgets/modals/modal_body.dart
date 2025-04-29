@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 
 /// Modal body
 class ModalBody extends StatelessWidget {
-
   /// Modal body
   const ModalBody({
     required this.bodyWidgets,
@@ -23,20 +22,28 @@ class ModalBody extends StatelessWidget {
 
   ///
   final String? title;
+
   ///
   final String? description;
+
   ///
   final List<Widget> bodyWidgets;
+
   ///
   final List<Widget>? actions;
+
   ///
   final Widget? bottomButton;
+
   ///
   final Widget? titleIcon;
+
   ///
   final bool showCloseButton;
+
   ///
   final bool noSafeArea;
+
   ///
   final EdgeInsetsGeometry? bodyPadding;
 
@@ -52,9 +59,10 @@ class ModalBody extends StatelessWidget {
       child: Padding(
         padding: MediaQuery.of(context).viewInsets,
         child: SafeArea(
-          minimum: noSafeArea
-              ? EdgeInsets.zero
-              : const EdgeInsets.only(bottom: Dimens.paddingMedium20),
+          minimum:
+              noSafeArea
+                  ? EdgeInsets.zero
+                  : const EdgeInsets.only(bottom: Dimens.paddingMedium20),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,10 +88,8 @@ class ModalBody extends StatelessWidget {
                 ),
               Flexible(child: body()),
               if (bottomButton != null) VerticalSpacer.medium20(),
-              if (bottomButton != null) Padding(
-                padding: _horizontalPadding,
-                child: bottomButton,
-              ),
+              if (bottomButton != null)
+                Padding(padding: _horizontalPadding, child: bottomButton),
             ],
           ),
         ),

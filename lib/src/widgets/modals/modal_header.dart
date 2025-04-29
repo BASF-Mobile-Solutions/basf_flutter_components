@@ -14,10 +14,13 @@ class ModalHeader extends StatelessWidget {
 
   ///
   final String title;
+
   ///
   final bool showCloseButton;
+
   ///
   final Widget? icon;
+
   ///
   final List<Widget>? actions;
 
@@ -26,20 +29,21 @@ class ModalHeader extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        if (icon != null) Expanded(child: titleWithIcon(context))
-        else Expanded(child: sectionTitle(context)),
-        if (actions != null) closeButtonWithActions(context)
-        else if (showCloseButton) closeButton(context),
+        if (icon != null)
+          Expanded(child: titleWithIcon(context))
+        else
+          Expanded(child: sectionTitle(context)),
+        if (actions != null)
+          closeButtonWithActions(context)
+        else if (showCloseButton)
+          closeButton(context),
       ],
     );
   }
 
   /// Title
   Widget sectionTitle(BuildContext context) {
-    return Text(
-      title,
-      style: Theme.of(context).textTheme.headlineMedium,
-    );
+    return Text(title, style: Theme.of(context).textTheme.headlineMedium);
   }
 
   /// Title with icon
@@ -57,10 +61,7 @@ class ModalHeader extends StatelessWidget {
   Widget closeButtonWithActions(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        ...actions!,
-        if (showCloseButton) closeButton(context),
-      ],
+      children: [...actions!, if (showCloseButton) closeButton(context)],
     );
   }
 

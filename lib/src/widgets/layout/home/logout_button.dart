@@ -17,14 +17,19 @@ class LogoutButton extends StatelessWidget {
 
   /// on logout pressed
   final VoidCallback onPressed;
+
   /// logout text
   final String logoutTitle;
+
   /// Confirm logout
   final String logoutDescription;
+
   /// Confirm button text
   final String confirmText;
+
   /// Cancel button text
   final String cancelText;
+
   /// To show on the left
   final String? leadingText;
 
@@ -40,19 +45,12 @@ class LogoutButton extends StatelessWidget {
     if (leadingText != null) {
       return GestureDetector(
         onTap: () => showBottomSheet(context),
-        child: Row(
-          children: [
-            Text(leadingText!),
-            iconButton,
-          ],
-        ),
+        child: Row(children: [Text(leadingText!), iconButton]),
       );
     }
 
     return IconButton(
-      onPressed: leadingText == null
-          ? () => showBottomSheet(context)
-          : null,
+      onPressed: leadingText == null ? () => showBottomSheet(context) : null,
       iconSize: 20,
       tooltip: logoutTitle,
       icon: const Icon(Icons.lock_open_outlined),
@@ -63,19 +61,21 @@ class LogoutButton extends StatelessWidget {
   void showBottomSheet(BuildContext context) {
     showCustomModalBottomSheet<void>(
       context: context,
-      backgroundColor: Theme.of(context).bottomNavigationBarTheme
-          .backgroundColor ?? Colors.white,
+      backgroundColor:
+          Theme.of(context).bottomNavigationBarTheme.backgroundColor ??
+          Colors.white,
       constraints: BoxConstraints(
         maxHeight: MediaQuery.of(context).size.height * 0.8,
         maxWidth: 500,
       ),
-      builder: (context) => ModalBottomSheetWidget(
-        title: logoutTitle,
-        description: logoutDescription,
-        buttonText: confirmText,
-        cancelText: cancelText,
-        onPressed: onPressed,
-      ),
+      builder:
+          (context) => ModalBottomSheetWidget(
+            title: logoutTitle,
+            description: logoutDescription,
+            buttonText: confirmText,
+            cancelText: cancelText,
+            onPressed: onPressed,
+          ),
     );
   }
 }

@@ -3,13 +3,11 @@
 /// same behavior as with the enums
 class AppRoute {
   /// App Route for router
-  const AppRoute({
-    required this.path,
-    required this.name,
-  });
+  const AppRoute({required this.path, required this.name});
 
   /// Path for the route
   final String path;
+
   /// Name of the route
   final String name;
 
