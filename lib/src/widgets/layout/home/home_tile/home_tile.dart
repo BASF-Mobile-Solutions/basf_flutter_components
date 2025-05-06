@@ -39,7 +39,7 @@ class HomeTile extends StatelessWidget {
   final List<BlocProvider> blocProviders;
 
   ///
-  final VoidCallback onPressed;
+  final void Function(BuildContext) onPressed;
 
   ///
   final double borderRadius;
@@ -87,7 +87,7 @@ class HomeTile extends StatelessWidget {
               borderRadius: BorderRadius.circular(borderRadius),
             ),
           ),
-          onPressed: onPressed,
+          onPressed: () => onPressed(context),
         ),
         if (favoriteData != null)
           Positioned(
