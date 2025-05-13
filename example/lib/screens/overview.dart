@@ -1,4 +1,5 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
+import 'package:basf_flutter_components_example/screens/scanner/scanner_screen.dart';
 import 'package:basf_flutter_components_example/screens/screens.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: Dimens.paddingMedium20),
         child: ListView(
-          padding: const EdgeInsets.symmetric(vertical: Dimens.paddingMedium),
+          padding: const EdgeInsets.symmetric(vertical: Dimens.paddingMedium20),
           children: [
             BasfTextButton.contained(
               text: 'BASF Alerts',
@@ -114,6 +115,17 @@ class _OverviewScreenState extends State<OverviewScreen> {
                   context,
                   MaterialPageRoute<void>(
                     builder: (context) => const ThemesOverviewScreen(),
+                  ),
+                );
+              },
+            ),
+            BasfTextButton.contained(
+              text: 'Scanner',
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (context) => const ScannerScreen(),
                   ),
                 );
               },

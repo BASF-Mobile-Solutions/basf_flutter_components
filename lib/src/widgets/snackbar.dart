@@ -9,15 +9,16 @@ class AppSnackBar extends StatelessWidget {
   /// default
   const AppSnackBar({
     required this.message,
-    super.key,
     this.prefixIcon = Icons.info,
     this.backgroundColor,
+    super.key,
   });
 
   /// {@macro app_snackbar}
   /// info
-  factory AppSnackBar.info({required String message}) =>
-      AppSnackBar(message: message);
+  factory AppSnackBar.info({required String message}) {
+    return AppSnackBar(message: message);
+  }
 
   /// {@macro app_snackbar}
   /// error
@@ -49,36 +50,49 @@ class AppSnackBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      spacing: Dimens.paddingSemi,
       children: [
-        _leftIcon(),
-        _text(),
-      ].joinWithSeparator(HorizontalSpacer.semi()),
+        leftIcon(context),
+        text(context),
+      ],
     );
   }
 
-  Widget _leftIcon() {
-    return Builder(
-      builder: (context) {
-        return Icon(
-          prefixIcon,
-          size: 22,
-          color: Theme.of(context).snackBarTheme.contentTextStyle?.color,
-        );
-      },
+  ///
+  Widget leftIcon(BuildContext context) {
+    return Icon(
+      prefixIcon,
+      size: 22,
+      color: Theme.of(context).snackBarTheme.contentTextStyle?.color,
     );
   }
 
-  Widget _text() {
-    return Builder(
-      builder: (context) {
-        return Expanded(
-          child: Text(
-            message,
-            maxLines: 4,
-            style: Theme.of(context).snackBarTheme.contentTextStyle,
-          ),
-        );
-      },
+  ///
+  Widget text(BuildContext context) {
+    return Expanded(
+      child: Text(
+        message,
+        maxLines: 4,
+        style: Theme.of(context).snackBarTheme.contentTextStyle,
+      ),
     );
   }
+  //
+  // /// Shows snackbar
+  // void show({
+  //   required ScaffoldMessengerState scaffoldMessenger,
+  //   Duration? duration,
+  // }) {
+  //   scaffoldMessenger.showSnackBar(
+  //     SnackBar(
+  //       backgroundColor: backgroundColor,
+  //       duration: duration ?? const Duration(seconds: 4),
+  //       content: AppSnackBar(
+  //         message: message,
+  //         prefixIcon: prefixIcon,
+  //         backgroundColor: backgroundColor,
+  //       ),
+  //     ),
+  //   );
+  // }
 }

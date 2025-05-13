@@ -42,5 +42,6 @@ export 'src/widgets/options/checkboxes.dart';
 export 'src/widgets/options/dropdown_input.dart';
 export 'src/widgets/options/option_button.dart';
 export 'src/widgets/options/radio.dart';
+export 'src/widgets/scanner/scanner.dart';
 export 'src/widgets/snackbar.dart';
 export 'src/widgets/spacers.dart';

@@ -1,3 +1,6 @@
+## 2.6.6
+- Camera core and UI
+
 ## 2.6.5
 - Various components from BASF apps added for merge
 
