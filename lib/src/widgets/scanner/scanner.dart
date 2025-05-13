@@ -1,6 +1,7 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:basf_flutter_components/src/widgets/scanner/layouts/scanner_default_error_layout.dart';
 import 'package:basf_flutter_components/src/widgets/scanner/layouts/scanner_no_camera_layout.dart';
+import 'package:basf_flutter_components/src/widgets/scanner/layouts/scanner_no_permission_layout.dart';
 import 'package:basf_flutter_components/src/widgets/scanner/widgets/scanner_cool_down.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -15,7 +16,8 @@ class Scanner extends StatefulWidget {
     required this.onScan,
     this.cooldownSeconds,
     this.overlay,
-    this.cameraNotAvailableText,
+    this.cameraNotAvailableText = 'Camera is not available',
+    this.provideCameraPermissionText = 'Provide camera permission',
     super.key,
   });
 
@@ -27,8 +29,12 @@ class Scanner extends StatefulWidget {
   /// Scanner design
   final Widget? overlay;
 
-  ///Translations
-  final String? cameraNotAvailableText;
+  /// < -- Translations
+  ///
+  final String cameraNotAvailableText;
+  ///
+  final String provideCameraPermissionText;
+  /// Translations -- >
 
   @override
   State<Scanner> createState() => _ScannerState();
@@ -66,23 +72,23 @@ class _ScannerState extends State<Scanner> {
 
   @override
   Widget build(BuildContext context) {
-    return ColoredBox(
-      color: Colors.red,
-        child: scanner(context),
-    );
+    return scanner(context);
   }
 
   Widget scanner(BuildContext context) {
     return MobileScanner(
       controller: cameraController,
       errorBuilder: (context, error) {
-        final message = error.errorCode.message;
         return switch (error.errorCode) {
-          MobileScannerErrorCode.unsupported => ScannerNoCameraLayout(
-            cameraNotAvailableText: widget.cameraNotAvailableText ?? message,
+          MobileScannerErrorCode.unsupported ||
+          MobileScannerErrorCode.controllerAlreadyInitialized
+          => ScannerDefaultErrorLayout(
+            message: error.errorCode.message,
           ),
-          // MobileScannerErrorCode.permissionDenied => throw UnimplementedError(),
-          _ => ScannerDefaultErrorLayout(message: message),
+          MobileScannerErrorCode.permissionDenied => ScannerNoPermissionLayout(
+            provideCameraPermissionText: widget.provideCameraPermissionText,
+          ),
+          _ => ScannerDefaultErrorLayout(message: error.errorCode.message),
         };
       },
       overlayBuilder: (context, constrains) {

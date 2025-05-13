@@ -17,7 +17,11 @@ class ScannerDefaultErrorLayout extends StatelessWidget {
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(Dimens.paddingMedium),
-        child: Text(message, textAlign: TextAlign.center),
+        child: Text(
+          message,
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
       ),
     );
   }

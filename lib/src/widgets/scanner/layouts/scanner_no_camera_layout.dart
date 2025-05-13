@@ -25,7 +25,7 @@ class ScannerNoCameraLayout extends StatelessWidget {
           child: Text(
             cameraNotAvailableText,
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.titleSmall,
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
         ),
       ],
