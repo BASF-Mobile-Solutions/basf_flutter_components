@@ -2,6 +2,7 @@ import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:basf_flutter_components/src/widgets/scanner/layouts/scanner_default_error_layout.dart';
 import 'package:basf_flutter_components/src/widgets/scanner/layouts/scanner_no_camera_layout.dart';
 import 'package:basf_flutter_components/src/widgets/scanner/layouts/scanner_no_permission_layout.dart';
+import 'package:basf_flutter_components/src/widgets/scanner/layouts/scanner_success_layout.dart';
 import 'package:basf_flutter_components/src/widgets/scanner/widgets/scanner_cool_down.dart';
 import 'package:basf_flutter_components/utils/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
@@ -20,8 +21,11 @@ class Scanner extends StatefulWidget {
     this.cooldownSeconds,
     this.overlay,
     this.offlinePlaceholder,
+    //Translations
     this.cameraNotAvailableText = 'Camera is not available',
     this.provideCameraPermissionText = 'Provide camera permission',
+    this.rescanText = 'Rescan',
+    this.codeScanSuccessText = 'Code scanned successfully',
     super.key,
   });
 
@@ -40,6 +44,10 @@ class Scanner extends StatefulWidget {
   final String cameraNotAvailableText;
   ///
   final String provideCameraPermissionText;
+  ///
+  final String rescanText;
+  ///
+  final String codeScanSuccessText;
   /// Translations -- >
 
   @override
@@ -49,20 +57,17 @@ class Scanner extends StatefulWidget {
 class _ScannerState extends State<Scanner> {
   late final ScannerCubit scannerCubit;
   late final ValueNotifier<bool> coolDownVisibilityNotifier;
-  late final ValueNotifier<bool> codeScannedNotifier;
 
   @override
   void initState() {
     super.initState();
     scannerCubit = context.read<ScannerCubit>();
     coolDownVisibilityNotifier = ValueNotifier(false);
-    codeScannedNotifier = ValueNotifier(false);
   }
 
   @override
   Future<void> dispose() async {
     coolDownVisibilityNotifier.dispose();
-    codeScannedNotifier.dispose();
     super.dispose();
     await scannerCubit.cameraController.stop();
   }
@@ -75,7 +80,7 @@ class _ScannerState extends State<Scanner> {
         return AnimatedSwitcher(
           duration: const Duration(milliseconds: 500),
           child: switch(state) {
-            ScannerEnabled() => scanner(context),
+            ScannerEnabled() => scanner(),
             ScannerDisabled() => widget.offlinePlaceholder ?? basfLogo(context),
           },
         );
@@ -83,7 +88,24 @@ class _ScannerState extends State<Scanner> {
     );
   }
 
-  Widget scanner(BuildContext context) {
+  Widget scanner() {
+    return ValueListenableBuilder(
+      valueListenable: scannerCubit.codeScannedNotifier,
+      builder: (context, scanned, _) {
+        return AnimatedSwitcher(
+          duration: const Duration(milliseconds: 500),
+          child: !scanned
+              ? scannerCamera(context)
+              : ScannerSuccessLayout(
+                  rescanText: widget.rescanText,
+                  codeScanSuccessText: widget.codeScanSuccessText,
+                ),
+        );
+      },
+    );
+  }
+
+  Widget scannerCamera(BuildContext context) {
     return MobileScanner(
       controller: scannerCubit.cameraController,
       errorBuilder: (context, error) {
@@ -125,18 +147,18 @@ class _ScannerState extends State<Scanner> {
 
   Future<void> stopCameraAfterScan(BuildContext context, String barcode) async {
     final cooldownIsVisible = coolDownVisibilityNotifier.value;
-    final codeScanned = codeScannedNotifier.value;
+    final codeScanned = scannerCubit.codeScannedNotifier.value;
 
     if (!cooldownIsVisible && !codeScanned) {
       try {
         widget.onScan(barcode);
-        codeScannedNotifier.value = true;
+        scannerCubit.codeScannedNotifier.value = true;
         await vibrate(VibrationPreset.singleShortBuzz);
 
         if (widget.cooldownSeconds == null) {
           await scannerCubit.cameraController.stop();
         } else {
-          codeScannedNotifier.value = false;
+          scannerCubit.codeScannedNotifier.value = false;
           coolDownVisibilityNotifier.value = true;
         }
       } catch (e) {
@@ -147,7 +169,9 @@ class _ScannerState extends State<Scanner> {
               .show(context, duration: const Duration(milliseconds: 1700));
         }
       } finally {
-        if (widget.cooldownSeconds != null) codeScannedNotifier.value = false;
+        if (widget.cooldownSeconds != null) {
+          scannerCubit.codeScannedNotifier.value = false;
+        }
       }
     }
   }

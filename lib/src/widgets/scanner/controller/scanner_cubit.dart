@@ -19,6 +19,7 @@ class ScannerCubit extends HydratedCubit<ScannerState> {
       ..addListener(_directionListener);
     flashlightNotifier = ValueNotifier(cameraController.value.torchState);
     directionNotifier = ValueNotifier(cameraController.value.cameraDirection);
+    codeScannedNotifier = ValueNotifier(false);
   }
 
   @override
@@ -30,6 +31,8 @@ class ScannerCubit extends HydratedCubit<ScannerState> {
   late final ValueNotifier<TorchState> flashlightNotifier;
   /// Flashlight controller
   late final ValueNotifier<CameraFacing> directionNotifier;
+  /// Code scanned notifier
+  late final ValueNotifier<bool> codeScannedNotifier;
 
   /// Enables/Shows scanner
   void enableCamera() => emit(const ScannerEnabled());
@@ -74,6 +77,7 @@ class ScannerCubit extends HydratedCubit<ScannerState> {
   Future<void> close() async {
     flashlightNotifier.dispose();
     directionNotifier.dispose();
+    codeScannedNotifier.dispose();
     await cameraController.dispose();
     return super.close();
   }

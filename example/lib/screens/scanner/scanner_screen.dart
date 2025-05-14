@@ -15,7 +15,6 @@ class ScannerScreen extends StatelessWidget {
       body: SizedBox(
         height: MediaQuery.sizeOf(context).height * 0.5,
         child: Scanner(
-          cooldownSeconds: 2,
           onScan: (barcode) {
             AppSnackBar.info(message: barcode).show(context);
           },
@@ -36,8 +35,8 @@ class ScannerScreen extends StatelessWidget {
             }
           },
           icon: switch(state) {
-            ScannerEnabled() => const Icon(Icons.no_photography),
-            ScannerDisabled() => const Icon(Icons.camera_alt),
+            ScannerEnabled() => const Icon(Icons.camera_alt),
+            ScannerDisabled() => const Icon(Icons.no_photography),
           },
         );
       },
