@@ -1,9 +1,10 @@
+import 'dart:async';
+
 import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 /// Layout for no permission to use camera
-class ScannerNoPermissionLayout extends StatelessWidget {
+class ScannerNoPermissionLayout extends StatefulWidget {
   ///
   const ScannerNoPermissionLayout({
     required this.provideCameraPermissionText,
@@ -14,6 +15,40 @@ class ScannerNoPermissionLayout extends StatelessWidget {
   final String provideCameraPermissionText;
 
   @override
+  State<ScannerNoPermissionLayout> createState()
+    => _ScannerNoPermissionLayoutState();
+}
+
+class _ScannerNoPermissionLayoutState extends State<ScannerNoPermissionLayout>
+    with WidgetsBindingObserver {
+
+  bool recheckPermissionsAfterResume = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
+    switch(state) {
+      case AppLifecycleState.resumed when recheckPermissionsAfterResume:
+        recheckPermissionsAfterResume = false;
+        unawaited(context.read<ScannerCubit>()
+            .checkPermissionOrOpenSettings(isRecheck: true),);
+      case AppLifecycleState.paused: recheckPermissionsAfterResume = true;
+      default: break;
+    }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       spacing: Dimens.paddingDefault,
@@ -21,8 +56,12 @@ class ScannerNoPermissionLayout extends StatelessWidget {
       children: [
         noCameraIcon(context),
         BasfTextButton.transparent(
-          text: provideCameraPermissionText,
-          onPressed: checkPermissionOrOpenSettings,
+          text: widget.provideCameraPermissionText,
+          style: TextButton.styleFrom(
+            backgroundColor: Theme.of(context)
+                .primaryColor.withValues(alpha: 0.05),
+          ),
+          onPressed: context.read<ScannerCubit>().checkPermissionOrOpenSettings,
         ),
       ],
     );
@@ -35,10 +74,5 @@ class ScannerNoPermissionLayout extends StatelessWidget {
       size: 30,
       color: Theme.of(context).primaryColor,
     );
-  }
-
-  ///
-  Future<void> checkPermissionOrOpenSettings() async {
-    if (!await Permission.camera.request().isGranted) await openAppSettings();
   }
 }

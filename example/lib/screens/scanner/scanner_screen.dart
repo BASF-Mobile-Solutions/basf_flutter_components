@@ -7,7 +7,11 @@ class ScannerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          cameraIconButton(),
+        ],
+      ),
       body: SizedBox(
         height: MediaQuery.sizeOf(context).height * 0.5,
         child: Scanner(
@@ -17,6 +21,26 @@ class ScannerScreen extends StatelessWidget {
           },
         ),
       ),
+    );
+  }
+
+  Widget cameraIconButton() {
+    return BlocBuilder<ScannerCubit, ScannerState>(
+      builder: (context, state) {
+        return IconButton(
+          onPressed: () {
+            final cubit = context.read<ScannerCubit>();
+            switch(state) {
+              case ScannerEnabled(): cubit.disable();
+              case ScannerDisabled(): cubit.enable();
+            }
+          },
+          icon: switch(state) {
+            ScannerEnabled() => const Icon(Icons.no_photography),
+            ScannerDisabled() => const Icon(Icons.camera_alt),
+          },
+        );
+      },
     );
   }
 }

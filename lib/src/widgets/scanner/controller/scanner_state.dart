@@ -1,19 +1,19 @@
-part of 'scan_camera_cubit.dart';
+part of 'scanner_cubit.dart';
 
 /// Camera controller state
 @immutable
-sealed class ScanCameraState {
-  const ScanCameraState();
+sealed class ScannerState {
+  const ScannerState();
 
   /// Deserialize based on the `type` field
-  factory ScanCameraState.fromJson(Map<String, dynamic> json) {
+  factory ScannerState.fromJson(Map<String, dynamic> json) {
     final type = json['type'] as String?;
     final saveState = json['saveState'] as bool? ?? true;
     switch (type) {
       case 'CameraEnabled':
-        return CameraEnabled(saveState: saveState);
+        return ScannerEnabled(saveState: saveState);
       case 'CameraDisabled':
-        return CameraDisabled(saveState: saveState);
+        return ScannerDisabled(saveState: saveState);
       default:
         throw UnsupportedError('Unknown ScanCameraState type: $type');
     }
@@ -24,9 +24,9 @@ sealed class ScanCameraState {
 }
 
 /// Enabled state
-final class CameraEnabled extends ScanCameraState {
+final class ScannerEnabled extends ScannerState {
   ///
-  const CameraEnabled({this.saveState = true});
+  const ScannerEnabled({this.saveState = true});
   ///
   final bool saveState;
 
@@ -38,9 +38,9 @@ final class CameraEnabled extends ScanCameraState {
 }
 
 /// Disabled state
-final class CameraDisabled extends ScanCameraState {
+final class ScannerDisabled extends ScannerState {
   ///
-  const CameraDisabled({this.saveState = true});
+  const ScannerDisabled({this.saveState = true});
   ///
   final bool saveState;
 

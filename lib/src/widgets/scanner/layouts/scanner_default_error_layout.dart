@@ -19,6 +19,7 @@ class ScannerDefaultErrorLayout extends StatelessWidget {
         padding: const EdgeInsets.all(Dimens.paddingMedium),
         child: Text(
           message,
+          maxLines: 4,
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.bodyMedium,
         ),

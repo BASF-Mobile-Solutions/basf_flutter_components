@@ -3,12 +3,15 @@ import 'package:basf_flutter_components/src/widgets/scanner/layouts/scanner_defa
 import 'package:basf_flutter_components/src/widgets/scanner/layouts/scanner_no_camera_layout.dart';
 import 'package:basf_flutter_components/src/widgets/scanner/layouts/scanner_no_permission_layout.dart';
 import 'package:basf_flutter_components/src/widgets/scanner/widgets/scanner_cool_down.dart';
+import 'package:basf_flutter_components/utils/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:vibration/vibration.dart';
 import 'package:vibration/vibration_presets.dart';
 
 /// !!! Read this to setup camera access https://pub.dev/packages/mobile_scanner
+/// !!! Requires [ScannerCubit] to be provided above this widget
+/// [HydratedStorage] must also be initialized on app launch
 /// Main launch logic for scanner
 class Scanner extends StatefulWidget {
   ///
@@ -16,6 +19,7 @@ class Scanner extends StatefulWidget {
     required this.onScan,
     this.cooldownSeconds,
     this.overlay,
+    this.offlinePlaceholder,
     this.cameraNotAvailableText = 'Camera is not available',
     this.provideCameraPermissionText = 'Provide camera permission',
     super.key,
@@ -28,6 +32,8 @@ class Scanner extends StatefulWidget {
   final int? cooldownSeconds;
   /// Scanner design
   final Widget? overlay;
+  /// Shows when camera is off
+  final Widget? offlinePlaceholder;
 
   /// < -- Translations
   ///
@@ -72,7 +78,25 @@ class _ScannerState extends State<Scanner> {
 
   @override
   Widget build(BuildContext context) {
-    return scanner(context);
+    return BlocConsumer<ScannerCubit, ScannerState>(
+      listener: (context, state) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          switch(state) {
+            case ScannerEnabled(): cameraController.start();
+            case ScannerDisabled(): cameraController.stop();
+          }
+        });
+      },
+      builder: (context, state) {
+        return AnimatedSwitcher(
+          duration: const Duration(milliseconds: 500),
+          child: switch(state) {
+            ScannerEnabled() => scanner(context),
+            ScannerDisabled() => widget.offlinePlaceholder ?? basfLogo(context),
+          },
+        );
+      },
+    );
   }
 
   Widget scanner(BuildContext context) {
@@ -82,8 +106,8 @@ class _ScannerState extends State<Scanner> {
         return switch (error.errorCode) {
           MobileScannerErrorCode.unsupported ||
           MobileScannerErrorCode.controllerAlreadyInitialized
-          => ScannerDefaultErrorLayout(
-            message: error.errorCode.message,
+          => ScannerNoCameraLayout(
+            cameraNotAvailableText: widget.cameraNotAvailableText,
           ),
           MobileScannerErrorCode.permissionDenied => ScannerNoPermissionLayout(
             provideCameraPermissionText: widget.provideCameraPermissionText,
@@ -128,13 +152,8 @@ class _ScannerState extends State<Scanner> {
         if (widget.cooldownSeconds == null) {
           await cameraController.stop();
         } else {
-          // TODO(Dima): check why delayed
-          await Future.delayed(const Duration(milliseconds: 500), () {
-            if (context.mounted) {
-              codeScannedNotifier.value = false;
-              coolDownVisibilityNotifier.value = true;
-            }
-          });
+          codeScannedNotifier.value = false;
+          coolDownVisibilityNotifier.value = true;
         }
       } catch (e) {
         coolDownVisibilityNotifier.value = true;
@@ -148,6 +167,22 @@ class _ScannerState extends State<Scanner> {
       }
     }
   }
+
+  Widget basfLogo(BuildContext context) {
+    return Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(
+          maxWidth: 150,
+          maxHeight: 150,
+        ),
+        child: Assets.images.basfLogo.image(
+          fit: BoxFit.contain,
+          color: Theme.of(context).primaryColor,
+        ),
+      ),
+    );
+  }
+
 
   Future<void> vibrate(VibrationPreset preset) async {
     if (await Vibration.hasVibrator()) await Vibration.vibrate(preset: preset);
