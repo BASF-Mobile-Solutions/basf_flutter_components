@@ -47,46 +47,30 @@ class Scanner extends StatefulWidget {
 }
 
 class _ScannerState extends State<Scanner> {
-  late final MobileScannerController cameraController;
-  late final ValueNotifier<TorchState> torchController;
-
+  late final ScannerCubit scannerCubit;
   late final ValueNotifier<bool> coolDownVisibilityNotifier;
   late final ValueNotifier<bool> codeScannedNotifier;
 
   @override
   void initState() {
     super.initState();
-    cameraController = MobileScannerController()..addListener(_torchListener);
-    torchController = ValueNotifier(cameraController.value.torchState);
-
+    scannerCubit = context.read<ScannerCubit>();
     coolDownVisibilityNotifier = ValueNotifier(false);
     codeScannedNotifier = ValueNotifier(false);
   }
 
-  void _torchListener() {
-    torchController.value = cameraController.value.torchState;
-  }
-
   @override
   Future<void> dispose() async {
-    torchController.dispose();
     coolDownVisibilityNotifier.dispose();
     codeScannedNotifier.dispose();
     super.dispose();
-    await cameraController.dispose();
+    await scannerCubit.cameraController.stop();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<ScannerCubit, ScannerState>(
-      listener: (context, state) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          switch(state) {
-            case ScannerEnabled(): cameraController.start();
-            case ScannerDisabled(): cameraController.stop();
-          }
-        });
-      },
+    return BlocBuilder<ScannerCubit, ScannerState>(
+      bloc: scannerCubit,
       builder: (context, state) {
         return AnimatedSwitcher(
           duration: const Duration(milliseconds: 500),
@@ -101,7 +85,7 @@ class _ScannerState extends State<Scanner> {
 
   Widget scanner(BuildContext context) {
     return MobileScanner(
-      controller: cameraController,
+      controller: scannerCubit.cameraController,
       errorBuilder: (context, error) {
         return switch (error.errorCode) {
           MobileScannerErrorCode.unsupported ||
@@ -150,7 +134,7 @@ class _ScannerState extends State<Scanner> {
         await vibrate(VibrationPreset.singleShortBuzz);
 
         if (widget.cooldownSeconds == null) {
-          await cameraController.stop();
+          await scannerCubit.cameraController.stop();
         } else {
           codeScannedNotifier.value = false;
           coolDownVisibilityNotifier.value = true;

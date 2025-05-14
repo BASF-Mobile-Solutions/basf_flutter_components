@@ -31,8 +31,8 @@ class ScannerScreen extends StatelessWidget {
           onPressed: () {
             final cubit = context.read<ScannerCubit>();
             switch(state) {
-              case ScannerEnabled(): cubit.disable();
-              case ScannerDisabled(): cubit.enable();
+              case ScannerEnabled(): cubit.disableCamera();
+              case ScannerDisabled(): cubit.enableCamera();
             }
           },
           icon: switch(state) {
