@@ -3,6 +3,7 @@ import 'package:basf_flutter_components/src/widgets/scanner/layouts/scanner_defa
 import 'package:basf_flutter_components/src/widgets/scanner/layouts/scanner_no_camera_layout.dart';
 import 'package:basf_flutter_components/src/widgets/scanner/layouts/scanner_no_permission_layout.dart';
 import 'package:basf_flutter_components/src/widgets/scanner/layouts/scanner_success_layout.dart';
+import 'package:basf_flutter_components/src/widgets/scanner/overlays/standard_scanner_overlay.dart';
 import 'package:basf_flutter_components/src/widgets/scanner/widgets/scanner_cool_down.dart';
 import 'package:basf_flutter_components/utils/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class Scanner extends StatefulWidget {
   const Scanner({
     required this.onScan,
     this.cooldownSeconds,
-    this.overlay,
+    this.overlay = const StandardScannerOverlay(),
     this.offlinePlaceholder,
     //Translations
     this.cameraNotAvailableText = 'Camera is not available',
@@ -35,7 +36,7 @@ class Scanner extends StatefulWidget {
   /// Camera does not stop after scan, just pauses for a period
   final int? cooldownSeconds;
   /// Scanner design
-  final Widget? overlay;
+  final Widget overlay;
   /// Shows when camera is off
   final Widget? offlinePlaceholder;
 
@@ -124,11 +125,14 @@ class _ScannerState extends State<Scanner> {
       overlayBuilder: (context, constrains) {
         return Stack(
           children: [
-            if (widget.overlay != null) widget.overlay!,
-            if (widget.cooldownSeconds != null) ScannerCoolDown(
-              coolDownVisibilityNotifier: coolDownVisibilityNotifier,
-              cooldownSeconds: widget.cooldownSeconds ?? 1,
-            ),
+            widget.overlay,
+            if (widget.cooldownSeconds != null) ...[
+              successIcon(),
+              ScannerCoolDown(
+                coolDownVisibilityNotifier: coolDownVisibilityNotifier,
+                cooldownSeconds: widget.cooldownSeconds ?? 1,
+              ),
+            ],
           ],
         );
       },
@@ -158,8 +162,11 @@ class _ScannerState extends State<Scanner> {
         if (widget.cooldownSeconds == null) {
           await scannerCubit.cameraController.stop();
         } else {
-          scannerCubit.codeScannedNotifier.value = false;
-          coolDownVisibilityNotifier.value = true;
+          // Delayed to show success icon first
+          await Future.delayed(const Duration(milliseconds: 500), () {
+            scannerCubit.codeScannedNotifier.value = false;
+            coolDownVisibilityNotifier.value = true;
+          });
         }
       } catch (e) {
         coolDownVisibilityNotifier.value = true;
@@ -174,6 +181,23 @@ class _ScannerState extends State<Scanner> {
         }
       }
     }
+  }
+
+  Widget successIcon() {
+    return ValueListenableBuilder(
+      valueListenable: scannerCubit.codeScannedNotifier,
+      builder: (context, scanned, _) {
+        return AnimatedOpacity(
+          opacity: scanned ? 1 : 0,
+          duration: const Duration(milliseconds: 250),
+          child: Icon(
+            Icons.check,
+            size: 70,
+            color: BasfColors.white.withValues(alpha: 0.9),
+          ),
+        );
+      },
+    );
   }
 
   Widget basfLogo(BuildContext context) {

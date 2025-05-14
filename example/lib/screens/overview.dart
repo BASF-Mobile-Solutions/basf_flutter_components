@@ -22,6 +22,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
           children: [
             BasfTextButton.contained(
               text: 'BASF Alerts',
+              expanded: true,
               onPressed: () {
                 Navigator.push(
                   context,
@@ -33,6 +34,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
             ),
             BasfTextButton.contained(
               text: 'BASF Animations',
+              expanded: true,
               onPressed: () {
                 Navigator.push(
                   context,
@@ -44,6 +46,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
             ),
             BasfTextButton.contained(
               text: 'BASF Buttons',
+              expanded: true,
               onPressed: () {
                 Navigator.push(
                   context,
@@ -55,6 +58,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
             ),
             BasfTextButton.contained(
               text: 'BASF Colors',
+              expanded: true,
               onPressed: () {
                 Navigator.push(
                   context,
@@ -66,6 +70,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
             ),
             BasfTextButton.contained(
               text: 'BASF Dialogs',
+              expanded: true,
               onPressed: () {
                 Navigator.push(
                   context,
@@ -77,6 +82,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
             ),
             BasfTextButton.contained(
               text: 'BASF Fonts',
+              expanded: true,
               onPressed: () {
                 Navigator.push(
                   context,
@@ -88,6 +94,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
             ),
             BasfTextButton.contained(
               text: 'BASF Forms',
+              expanded: true,
               onPressed: () {
                 Navigator.push(
                   context,
@@ -99,6 +106,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
             ),
             BasfTextButton.contained(
               text: 'BASF Icons',
+              expanded: true,
               onPressed: () {
                 Navigator.push(
                   context,
@@ -110,6 +118,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
             ),
             BasfTextButton.contained(
               text: 'BASF Themes',
+              expanded: true,
               onPressed: () {
                 Navigator.push(
                   context,
@@ -121,6 +130,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
             ),
             BasfTextButton.contained(
               text: 'Scanner',
+              expanded: true,
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute<void>(
                   builder: (context) {
