@@ -167,7 +167,10 @@ class _ScannerState extends State<Scanner> {
         if (widget.cooldownSeconds == null) {
           await scannerCubit.cameraController.stop();
         } else {
-          coolDownVisibilityNotifier.value = true;
+          await Future.delayed(const Duration(milliseconds: 500), () {
+            scannerCubit.codeScannedNotifier.value = false;
+            coolDownVisibilityNotifier.value = true;
+          });
         }
       } catch (e) {
         coolDownVisibilityNotifier.value = true;
@@ -190,7 +193,7 @@ class _ScannerState extends State<Scanner> {
       builder: (context, scanned, _) {
         return AnimatedOpacity(
           opacity: scanned ? 1 : 0,
-          duration: const Duration(milliseconds: 250),
+          duration: const Duration(milliseconds: 200),
           child: Icon(
             Icons.check,
             size: 60,

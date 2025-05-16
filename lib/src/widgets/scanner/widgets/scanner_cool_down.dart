@@ -61,36 +61,42 @@ class _ScannerCoolDownState extends State<ScannerCoolDown>
     return ValueListenableBuilder<bool>(
       valueListenable: widget.coolDownVisibilityNotifier,
       builder: (context, visible, _) {
-        if (!visible) return const SizedBox.shrink();
-        return Stack(
-          alignment: Alignment.center,
-          children: [
-            AnimatedBuilder(
-              animation: _controller,
-              builder: (_, __) => SizedBox(
-                height: widget.size,
-                width: widget.size,
-                child: CircularProgressIndicator(
-                  value: 1 - _controller.value,
-                  color: Colors.white.withAlpha(230),
-                  strokeWidth: 4,
-                ),
-              ),
-            ),
-            AnimatedBuilder(
-              animation: _countdown,
-              builder: (context, child) => Text(
-                '${_countdown.value}',
-                style: TextStyle(
-                  color: Colors.white.withAlpha(230),
-                  fontWeight: FontWeight.bold,
-                  fontSize: widget.size / 1.7,
-                ),
-              ),
-            ),
-          ],
+        return AnimatedSwitcher(
+          duration: const Duration(milliseconds: 300),
+          child: visible ? cooldown() : const SizedBox.shrink(),
         );
       },
+    );
+  }
+
+  Widget cooldown() {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        AnimatedBuilder(
+          animation: _controller,
+          builder: (_, __) => SizedBox(
+            height: widget.size,
+            width: widget.size,
+            child: CircularProgressIndicator(
+              value: 1 - _controller.value,
+              color: Colors.white.withAlpha(230),
+              strokeWidth: 4,
+            ),
+          ),
+        ),
+        AnimatedBuilder(
+          animation: _countdown,
+          builder: (context, child) => Text(
+            '${_countdown.value}',
+            style: TextStyle(
+              color: Colors.white.withAlpha(230),
+              fontWeight: FontWeight.bold,
+              fontSize: widget.size / 1.7,
+            ),
+          ),
+        ),
+      ],
     );
   }
 
