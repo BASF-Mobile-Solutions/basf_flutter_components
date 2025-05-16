@@ -3,6 +3,8 @@ import 'package:basf_flutter_components_example/screens/overview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+final RouteObserver<ModalRoute<void>> routeObserver = RouteObserver();
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   HydratedBloc.storage = await HydratedStorage.build(
@@ -24,6 +26,9 @@ class ExampleApp extends StatelessWidget {
       title: 'BASF Components',
       theme: BasfThemes.lightMainTheme(),
       home: const OverviewScreen(),
+      navigatorObservers: [
+        routeObserver,
+      ],
     );
   }
 }

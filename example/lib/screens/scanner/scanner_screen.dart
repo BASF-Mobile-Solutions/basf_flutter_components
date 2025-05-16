@@ -1,5 +1,6 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:basf_flutter_components/utils/gen/assets.gen.dart';
+import 'package:basf_flutter_components_example/main.dart';
 import 'package:flutter/material.dart';
 
 class ScannerScreen extends StatefulWidget {
@@ -19,6 +20,8 @@ class _ScannerScreenState extends State<ScannerScreen> {
     return Scaffold(
       appBar: AppBar(
         actions: [
+          openNewPageButton(context),
+          bottomSheetButton(),
           cameraSizeButton(),
           cameraCooldownMode(),
           cameraIconButton(),
@@ -31,6 +34,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
             duration: const Duration(milliseconds: 200),
             height: MediaQuery.sizeOf(context).height * (isBig ? 0.4 : 0.2),
             child: Scanner(
+              routeObserver: routeObserver,
               onScan: (barcode) {
                 AppSnackBar.info(message: barcode).show(context);
               },
@@ -41,6 +45,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
             height: MediaQuery.sizeOf(context).height * (isBig ? 0.4 : 0.2),
             child: Scanner(
               cooldownSeconds: 2,
+              routeObserver: routeObserver,
               overlay: UnitsScannerOverlay(
                 nextScanText: 'SSCC',
                 topLayout: topLayoutSecondScanner(context),
@@ -118,6 +123,37 @@ class _ScannerScreenState extends State<ScannerScreen> {
           ? Icons.timer_outlined
           : Icons.timer_off_outlined,
       ),
+    );
+  }
+
+  Widget bottomSheetButton() {
+    return IconButton(
+      onPressed: () {
+        showModalBottomSheet<void>(
+          context: context,
+          showDragHandle: true,
+          builder: (context) {
+            return const Center(child: Text('Scanner must be auto closed'));
+          },
+        );
+      },
+      icon: const Icon(Icons.open_in_browser),
+    );
+  }
+
+  Widget openNewPageButton(BuildContext context) {
+    return IconButton(
+      onPressed: () {
+        Navigator.of(context).push(
+          MaterialPageRoute<Widget>(builder: (context) {
+            return Scaffold(
+              appBar: AppBar(),
+              body: const Center(child: Text('Scanner must be auto deactivated')),
+            );
+          },),
+        );
+      },
+      icon: const Icon(Icons.mobile_screen_share),
     );
   }
 }

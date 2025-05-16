@@ -20,12 +20,9 @@ class Scanner extends StatefulWidget {
     required this.onScan,
     this.cooldownSeconds,
     this.overlay = const StandardScannerOverlay(),
+    this.translations = const ScannerTranslations(),
     this.offlinePlaceholder,
-    //Translations
-    this.cameraNotAvailableText = 'Camera is not available',
-    this.provideCameraPermissionText = 'Provide camera permission',
-    this.rescanText = 'Rescan',
-    this.codeScanSuccessText = 'Code scanned successfully',
+    this.routeObserver,
     super.key,
   });
 
@@ -36,25 +33,20 @@ class Scanner extends StatefulWidget {
   final int? cooldownSeconds;
   /// Scanner design
   final Widget overlay;
+  /// Translations
+  final ScannerTranslations translations;
   /// Shows when camera is off
   final Widget? offlinePlaceholder;
 
-  /// < -- Translations
-  ///
-  final String cameraNotAvailableText;
-  ///
-  final String provideCameraPermissionText;
-  ///
-  final String rescanText;
-  ///
-  final String codeScanSuccessText;
-  /// Translations -- >
+  /// Optional: if provided, we'll subscribe internally
+  /// and return SizedBox when covered by another route.
+  final RouteObserver<ModalRoute<void>>? routeObserver;
 
   @override
   State<Scanner> createState() => _ScannerState();
 }
 
-class _ScannerState extends State<Scanner> {
+class _ScannerState extends State<Scanner> with RouteAware {
   late final ScannerCubit scannerCubit;
   late final ValueNotifier<bool> coolDownVisibilityNotifier;
 
@@ -66,10 +58,34 @@ class _ScannerState extends State<Scanner> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    final obs = widget.routeObserver;
+    final route = ModalRoute.of(context);
+    if (obs != null && route is PageRoute) obs.subscribe(this, route);
+  }
+
+  @override
   Future<void> dispose() async {
+    // only unsubscribe if we previously subscribed
+    widget.routeObserver?.unsubscribe(this);
     coolDownVisibilityNotifier.dispose();
     super.dispose();
     await scannerCubit.cameraController.stop();
+  }
+
+
+  @override
+  void didPushNext() {
+    // we're covered by a new route
+    scannerCubit.disableCamera();
+  }
+
+  @override
+  void didPopNext() {
+    // the covering route went away
+    scannerCubit.enableCamera();
   }
 
   @override
@@ -104,8 +120,8 @@ class _ScannerState extends State<Scanner> {
 
   Widget successLayout() {
     return ScannerSuccessLayout(
-      rescanText: widget.rescanText,
-      codeScanSuccessText: widget.codeScanSuccessText,
+      rescanText: widget.translations.rescanText,
+      codeScanSuccessText: widget.translations.codeScanSuccessText,
     );
   }
 
@@ -117,10 +133,11 @@ class _ScannerState extends State<Scanner> {
           MobileScannerErrorCode.unsupported ||
           MobileScannerErrorCode.controllerAlreadyInitialized
           => ScannerNoCameraLayout(
-            cameraNotAvailableText: widget.cameraNotAvailableText,
+            cameraNotAvailableText: widget.translations.cameraNotAvailableText,
           ),
           MobileScannerErrorCode.permissionDenied => ScannerNoPermissionLayout(
-            provideCameraPermissionText: widget.provideCameraPermissionText,
+            provideCameraPermissionText: widget.translations
+                .provideCameraPermissionText,
           ),
           _ => ScannerDefaultErrorLayout(message: error.errorCode.message),
         };
