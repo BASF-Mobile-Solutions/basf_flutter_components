@@ -9,14 +9,14 @@ class UnitsScannerOverlay extends StatelessWidget {
   const UnitsScannerOverlay({
     required this.nextScanText,
     this.topLayout,
-    this.scanQRorBarcode = 'Scan QR or Barcode',
+    this.scanQRorBarcodeText = 'Scan QR or Barcode',
     super.key,
   });
 
   /// "Process order number"
   final Widget? topLayout;
   /// "Scan QR or Barcode"
-  final String scanQRorBarcode;
+  final String scanQRorBarcodeText;
   /// "SSCC"
   final String nextScanText;
 
@@ -47,7 +47,7 @@ class UnitsScannerOverlay extends StatelessWidget {
           padding: const EdgeInsets.only(left: 14),
           child: nexScanInfo(),
         ),
-        ScanSupportText(scanQRorBarcode: scanQRorBarcode),
+        ScanSupportText(scanQRorBarcode: scanQRorBarcodeText),
         const ToggleFlashIconButton(),
       ],
     );
