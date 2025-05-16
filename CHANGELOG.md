@@ -1,5 +1,5 @@
 ## 2.6.6
-- Camera core and UI
+- Barcode scanner added
 
 ## 2.6.5
 - Various components from BASF apps added for merge

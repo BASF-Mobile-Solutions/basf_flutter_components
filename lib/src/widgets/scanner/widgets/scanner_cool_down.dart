@@ -6,6 +6,7 @@ class ScannerCoolDown extends StatefulWidget {
   const ScannerCoolDown({
     required this.coolDownVisibilityNotifier,
     this.cooldownSeconds = 3,
+    this.size = 50,
     super.key,
   });
 
@@ -13,6 +14,8 @@ class ScannerCoolDown extends StatefulWidget {
   final ValueNotifier<bool> coolDownVisibilityNotifier;
   /// Time
   final int cooldownSeconds;
+  /// Size
+  final double size;
 
   @override
   State<ScannerCoolDown> createState() => _ScannerCoolDownState();
@@ -65,12 +68,12 @@ class _ScannerCoolDownState extends State<ScannerCoolDown>
             AnimatedBuilder(
               animation: _controller,
               builder: (_, __) => SizedBox(
-                height: 60,
-                width: 60,
+                height: widget.size,
+                width: widget.size,
                 child: CircularProgressIndicator(
                   value: 1 - _controller.value,
                   color: Colors.white.withAlpha(230),
-                  strokeWidth: 6,
+                  strokeWidth: 4,
                 ),
               ),
             ),
@@ -81,7 +84,7 @@ class _ScannerCoolDownState extends State<ScannerCoolDown>
                 style: TextStyle(
                   color: Colors.white.withAlpha(230),
                   fontWeight: FontWeight.bold,
-                  fontSize: 40,
+                  fontSize: widget.size / 1.7,
                 ),
               ),
             ),

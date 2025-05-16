@@ -1,4 +1,5 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
+import 'package:basf_flutter_components/utils/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 
 class ScannerScreen extends StatefulWidget {
@@ -11,6 +12,7 @@ class ScannerScreen extends StatefulWidget {
 class _ScannerScreenState extends State<ScannerScreen> {
 
   bool isBig = false;
+  bool isCooldownMode = true;
 
   @override
   Widget build(BuildContext context) {
@@ -18,18 +20,56 @@ class _ScannerScreenState extends State<ScannerScreen> {
       appBar: AppBar(
         actions: [
           cameraSizeButton(),
+          cameraCooldownMode(),
           cameraIconButton(),
         ],
       ),
-      body: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        height: MediaQuery.sizeOf(context).height * (isBig ? 0.4 : 0.2),
-        child: Scanner(
-          onScan: (barcode) {
-            AppSnackBar.info(message: barcode).show(context);
-          },
-        ),
+      body: Column(
+        spacing: 10,
+        children: [
+          if (!isCooldownMode) AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            height: MediaQuery.sizeOf(context).height * (isBig ? 0.4 : 0.2),
+            child: Scanner(
+              onScan: (barcode) {
+                AppSnackBar.info(message: barcode).show(context);
+              },
+            ),
+          ),
+          if (isCooldownMode) AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            height: MediaQuery.sizeOf(context).height * (isBig ? 0.4 : 0.2),
+            child: Scanner(
+              cooldownSeconds: 2,
+              overlay: UnitsScannerOverlay(
+                nextScanText: 'SSCC',
+                topLayout: topLayoutSecondScanner(context),
+              ),
+              onScan: print,
+            ),
+          ),
+        ],
       ),
+    );
+  }
+
+  Widget topLayoutSecondScanner(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        const ToggleDirectionIconButton(size: 20),
+        Text(
+          '700090897979979',
+          style: TextStyle(
+            color: Colors.white.withValues(alpha: 0.4),
+          ),
+        ),
+        SizedBox(
+          width: 50,
+          height: 30,
+          child: Assets.rive.emoji.rive(artboard: RiveEmoji.smiling.artBoard),
+        ),
+      ],
     );
   }
 
@@ -63,6 +103,20 @@ class _ScannerScreenState extends State<ScannerScreen> {
       icon: Icon(isBig
           ? Icons.photo_size_select_large
           : Icons.photo_size_select_small,
+      ),
+    );
+  }
+
+  Widget cameraCooldownMode() {
+    return IconButton(
+      onPressed: () {
+        setState(() {
+          isCooldownMode = !isCooldownMode;
+        });
+      },
+      icon: Icon(isCooldownMode
+          ? Icons.timer_outlined
+          : Icons.timer_off_outlined,
       ),
     );
   }

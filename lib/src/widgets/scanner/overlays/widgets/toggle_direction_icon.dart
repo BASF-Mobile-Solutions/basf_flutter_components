@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
 /// Toggle flashlight icon button
-class ToggleDirectionIconButton extends StatefulWidget {
+class ToggleDirectionIconButton extends StatelessWidget {
   ///
   const ToggleDirectionIconButton({
     this.size = 28,
@@ -12,14 +12,6 @@ class ToggleDirectionIconButton extends StatefulWidget {
 
   ///
   final double size;
-
-  @override
-  State<ToggleDirectionIconButton> createState()
-    => _ToggleDirectionIconButtonState();
-}
-
-class _ToggleDirectionIconButtonState extends State<ToggleDirectionIconButton> {
-  bool _isBackCamera = true;
 
   @override
   Widget build(BuildContext context) {
@@ -31,13 +23,16 @@ class _ToggleDirectionIconButtonState extends State<ToggleDirectionIconButton> {
         return IconButton(
           onPressed: () {
             cubit.cameraController.switchCamera();
-            _isBackCamera = !_isBackCamera;
           },
           color: Colors.white.withValues(alpha: 0.4),
-          iconSize: widget.size,
+          iconSize: size,
           icon: AnimatedRotation(
             duration: const Duration(milliseconds: 200),
-            turns: _isBackCamera ? 0 : -0.5,
+            turns: switch(facing) {
+              CameraFacing.front => -0.5,
+              CameraFacing.external => -0.75,
+              _ => 0,
+            },
             child: const Icon(Icons.cameraswitch),
           ),
         );

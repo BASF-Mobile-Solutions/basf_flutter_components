@@ -3,7 +3,6 @@ import 'package:basf_flutter_components/src/widgets/scanner/layouts/scanner_defa
 import 'package:basf_flutter_components/src/widgets/scanner/layouts/scanner_no_camera_layout.dart';
 import 'package:basf_flutter_components/src/widgets/scanner/layouts/scanner_no_permission_layout.dart';
 import 'package:basf_flutter_components/src/widgets/scanner/layouts/scanner_success_layout.dart';
-import 'package:basf_flutter_components/src/widgets/scanner/overlays/standard_scanner_overlay.dart';
 import 'package:basf_flutter_components/src/widgets/scanner/widgets/scanner_cool_down.dart';
 import 'package:basf_flutter_components/utils/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
@@ -95,14 +94,18 @@ class _ScannerState extends State<Scanner> {
       builder: (context, scanned, _) {
         return AnimatedSwitcher(
           duration: const Duration(milliseconds: 500),
-          child: !scanned
-              ? scannerCamera(context)
-              : ScannerSuccessLayout(
-                  rescanText: widget.rescanText,
-                  codeScanSuccessText: widget.codeScanSuccessText,
-                ),
+          child: scanned && widget.cooldownSeconds == null
+              ? successLayout()
+              : scannerCamera(context),
         );
       },
+    );
+  }
+
+  Widget successLayout() {
+    return ScannerSuccessLayout(
+      rescanText: widget.rescanText,
+      codeScanSuccessText: widget.codeScanSuccessText,
     );
   }
 
@@ -127,10 +130,12 @@ class _ScannerState extends State<Scanner> {
           children: [
             widget.overlay,
             if (widget.cooldownSeconds != null) ...[
-              successIcon(),
-              ScannerCoolDown(
-                coolDownVisibilityNotifier: coolDownVisibilityNotifier,
-                cooldownSeconds: widget.cooldownSeconds ?? 1,
+              Positioned.fill(child: successIcon()),
+              Positioned.fill(
+                child: ScannerCoolDown(
+                  coolDownVisibilityNotifier: coolDownVisibilityNotifier,
+                  cooldownSeconds: widget.cooldownSeconds ?? 1,
+                ),
               ),
             ],
           ],
@@ -162,11 +167,7 @@ class _ScannerState extends State<Scanner> {
         if (widget.cooldownSeconds == null) {
           await scannerCubit.cameraController.stop();
         } else {
-          // Delayed to show success icon first
-          await Future.delayed(const Duration(milliseconds: 500), () {
-            scannerCubit.codeScannedNotifier.value = false;
-            coolDownVisibilityNotifier.value = true;
-          });
+          coolDownVisibilityNotifier.value = true;
         }
       } catch (e) {
         coolDownVisibilityNotifier.value = true;
@@ -192,7 +193,7 @@ class _ScannerState extends State<Scanner> {
           duration: const Duration(milliseconds: 250),
           child: Icon(
             Icons.check,
-            size: 70,
+            size: 60,
             color: BasfColors.white.withValues(alpha: 0.9),
           ),
         );

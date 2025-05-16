@@ -1,5 +1,4 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
-import 'package:basf_flutter_components/src/widgets/scanner/widgets/no_camera_icon.dart';
 import 'package:flutter/material.dart';
 
 /// Shown when no camera is available
