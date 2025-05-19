@@ -19,7 +19,6 @@ class ScannerCubit extends HydratedCubit<ScannerState> {
       ..addListener(_directionListener);
     flashlightNotifier = ValueNotifier(cameraController.value.torchState);
     directionNotifier = ValueNotifier(cameraController.value.cameraDirection);
-    codeScannedNotifier = ValueNotifier(false);
   }
 
   @override
@@ -31,14 +30,16 @@ class ScannerCubit extends HydratedCubit<ScannerState> {
   late final ValueNotifier<TorchState> flashlightNotifier;
   /// Flashlight controller
   late final ValueNotifier<CameraFacing> directionNotifier;
-  /// Code scanned notifier
-  late final ValueNotifier<bool> codeScannedNotifier;
 
   /// Enables/Shows scanner
-  void enableCamera() => emit(const ScannerEnabled());
+  void enableCamera({bool save = true}) {
+    emit(ScannerEnabled(saveState: save));
+  }
 
   /// Disables/Hides scanner
-  void disableCamera() => emit(const ScannerDisabled());
+  void disableCamera({bool save = true}) {
+    emit(ScannerDisabled(saveState: save));
+  }
 
   /// Requests camera permission
   Future<void> checkPermissionOrOpenSettings({bool isRecheck = false}) async {
@@ -77,7 +78,6 @@ class ScannerCubit extends HydratedCubit<ScannerState> {
   Future<void> close() async {
     flashlightNotifier.dispose();
     directionNotifier.dispose();
-    codeScannedNotifier.dispose();
     await cameraController.dispose();
     return super.close();
   }
@@ -89,5 +89,11 @@ class ScannerCubit extends HydratedCubit<ScannerState> {
   }
 
   @override
-  Map<String, dynamic>? toJson(ScannerState state) => state.toJson();
+  Map<String, dynamic>? toJson(ScannerState state) {
+    return switch(state) {
+      ScannerEnabled() when state.saveState => state.toJson(),
+      ScannerDisabled() when state.saveState => state.toJson(),
+      _ => null,
+    };
+  }
 }

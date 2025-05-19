@@ -4,18 +4,18 @@ import 'package:flutter/material.dart';
 class ScannerCoolDown extends StatefulWidget {
   ///
   const ScannerCoolDown({
-    required this.coolDownVisibilityNotifier,
     this.cooldownSeconds = 3,
     this.size = 50,
+    this.endTime,
     super.key,
   });
 
-  /// Notifier
-  final ValueNotifier<bool> coolDownVisibilityNotifier;
   /// Time
   final int cooldownSeconds;
   /// Size
   final double size;
+  /// Current time + cooldown seconds to prevent recreation bugs during cooldown
+  final DateTime? endTime;
 
   @override
   State<ScannerCoolDown> createState() => _ScannerCoolDownState();
@@ -27,9 +27,15 @@ class _ScannerCoolDownState extends State<ScannerCoolDown>
   late AnimationController _controller;
   late Animation<int> _countdown;
 
+  bool _initialized = false;
+
   @override
   void initState() {
     super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) setState(() => _initialized = true);
+    });
 
     _controller = AnimationController(
       vsync: this,
@@ -41,68 +47,67 @@ class _ScannerCoolDownState extends State<ScannerCoolDown>
       end: 0,
     ).animate(_controller);
 
-    widget.coolDownVisibilityNotifier.addListener(startCoolDown);
 
-    _controller.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        widget.coolDownVisibilityNotifier.value = false;
-      }
+    startCoolDown();
+
+    Future.delayed(
+        Duration(milliseconds: widget.cooldownSeconds * 1000 - 200), () {
+          if (mounted) setState(() => _initialized = false);
     });
   }
 
   void startCoolDown() {
-    if (widget.coolDownVisibilityNotifier.value) {
-      _controller.forward(from: 0);
+    double from = 0;
+
+    if (widget.endTime != null) {
+      final diff = widget.endTime!.difference(DateTime.now()).inSeconds + 1;
+      final progress = diff / widget.cooldownSeconds;
+
+      from = 1 - progress.clamp(0.0, 1.0);
     }
+
+    _controller.forward(from: from);
   }
+
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<bool>(
-      valueListenable: widget.coolDownVisibilityNotifier,
-      builder: (context, visible, _) {
-        return AnimatedSwitcher(
-          duration: const Duration(milliseconds: 300),
-          child: visible ? cooldown() : const SizedBox.shrink(),
-        );
-      },
-    );
-  }
-
-  Widget cooldown() {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        AnimatedBuilder(
-          animation: _controller,
-          builder: (_, __) => SizedBox(
-            height: widget.size,
-            width: widget.size,
-            child: CircularProgressIndicator(
-              value: 1 - _controller.value,
-              color: Colors.white.withAlpha(230),
-              strokeWidth: 4,
+    return AnimatedScale(
+      duration: const Duration(milliseconds: 200),
+      scale: _initialized ? 1 : 0,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          AnimatedBuilder(
+            animation: _controller,
+            builder: (_, _) => SizedBox(
+              height: widget.size,
+              width: widget.size,
+              child: CircularProgressIndicator(
+                value: 1 - _controller.value,
+                color: Colors.white.withAlpha(230),
+                strokeWidth: 4,
+              ),
             ),
           ),
-        ),
-        AnimatedBuilder(
-          animation: _countdown,
-          builder: (context, child) => Text(
-            '${_countdown.value}',
-            style: TextStyle(
-              color: Colors.white.withAlpha(230),
-              fontWeight: FontWeight.bold,
-              fontSize: widget.size / 1.7,
+          AnimatedBuilder(
+            animation: _countdown,
+            builder: (context, child) => Text(
+              '${_countdown.value + 1}',
+              style: TextStyle(
+                color: Colors.white.withAlpha(230),
+                fontWeight: FontWeight.bold,
+                fontSize: widget.size / 1.7,
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
   @override
   void dispose() {
-    widget.coolDownVisibilityNotifier.removeListener(startCoolDown);
     _controller.dispose();
     super.dispose();
   }

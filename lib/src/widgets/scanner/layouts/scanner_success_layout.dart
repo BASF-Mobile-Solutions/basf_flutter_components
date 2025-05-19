@@ -8,6 +8,7 @@ class ScannerSuccessLayout extends StatelessWidget {
   const ScannerSuccessLayout({
     required this.rescanText,
     required this.codeScanSuccessText,
+    required this.onPressed,
     super.key,
   });
 
@@ -15,6 +16,8 @@ class ScannerSuccessLayout extends StatelessWidget {
   final String rescanText;
   /// "Code scanned successfully"
   final String codeScanSuccessText;
+  /// On pressed
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +28,7 @@ class ScannerSuccessLayout extends StatelessWidget {
         successInfo(context),
         BasfTextButton.transparent(
           text: rescanText,
-          onPressed: () {
-            context.read<ScannerCubit>().codeScannedNotifier.value = false;
-          },
+          onPressed: onPressed,
         ),
       ],
     );

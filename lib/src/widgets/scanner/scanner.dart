@@ -48,12 +48,17 @@ class Scanner extends StatefulWidget {
 
 class _ScannerState extends State<Scanner> with RouteAware {
   late final ScannerCubit scannerCubit;
+  late final ValueNotifier<bool> codeScannedNotifier;
   late final ValueNotifier<bool> coolDownVisibilityNotifier;
+
+  /// To prevent disable/enable cooldown restart when it's active
+  DateTime? coolDownEndTime;
 
   @override
   void initState() {
     super.initState();
     scannerCubit = context.read<ScannerCubit>();
+    codeScannedNotifier = ValueNotifier(false);
     coolDownVisibilityNotifier = ValueNotifier(false);
   }
 
@@ -70,6 +75,7 @@ class _ScannerState extends State<Scanner> with RouteAware {
   Future<void> dispose() async {
     // only unsubscribe if we previously subscribed
     widget.routeObserver?.unsubscribe(this);
+    codeScannedNotifier.dispose();
     coolDownVisibilityNotifier.dispose();
     super.dispose();
     await scannerCubit.cameraController.stop();
@@ -79,13 +85,13 @@ class _ScannerState extends State<Scanner> with RouteAware {
   @override
   void didPushNext() {
     // we're covered by a new route
-    scannerCubit.disableCamera();
+    scannerCubit.disableCamera(save: false);
   }
 
   @override
   void didPopNext() {
     // the covering route went away
-    scannerCubit.enableCamera();
+    scannerCubit.enableCamera(save: false);
   }
 
   @override
@@ -106,7 +112,7 @@ class _ScannerState extends State<Scanner> with RouteAware {
 
   Widget scanner() {
     return ValueListenableBuilder(
-      valueListenable: scannerCubit.codeScannedNotifier,
+      valueListenable: codeScannedNotifier,
       builder: (context, scanned, _) {
         return AnimatedSwitcher(
           duration: const Duration(milliseconds: 500),
@@ -122,6 +128,7 @@ class _ScannerState extends State<Scanner> with RouteAware {
     return ScannerSuccessLayout(
       rescanText: widget.translations.rescanText,
       codeScanSuccessText: widget.translations.codeScanSuccessText,
+      onPressed: () => codeScannedNotifier.value = false,
     );
   }
 
@@ -142,23 +149,18 @@ class _ScannerState extends State<Scanner> with RouteAware {
           _ => ScannerDefaultErrorLayout(message: error.errorCode.message),
         };
       },
+      onDetect: (capture) => onDetect(context, capture),
       overlayBuilder: (context, constrains) {
         return Stack(
           children: [
             widget.overlay,
             if (widget.cooldownSeconds != null) ...[
               Positioned.fill(child: successIcon()),
-              Positioned.fill(
-                child: ScannerCoolDown(
-                  coolDownVisibilityNotifier: coolDownVisibilityNotifier,
-                  cooldownSeconds: widget.cooldownSeconds ?? 1,
-                ),
-              ),
+              Positioned.fill(child: cooldown()),
             ],
           ],
         );
       },
-      onDetect: (capture) => onDetect(context, capture),
     );
   }
 
@@ -172,51 +174,80 @@ class _ScannerState extends State<Scanner> with RouteAware {
   }
 
   Future<void> stopCameraAfterScan(BuildContext context, String barcode) async {
-    final cooldownIsVisible = coolDownVisibilityNotifier.value;
-    final codeScanned = scannerCubit.codeScannedNotifier.value;
+    // Continue only if camera is ready for next scan
+    if (codeScannedNotifier.value || coolDownVisibilityNotifier.value) return;
+    codeScannedNotifier.value = true;
 
-    if (!cooldownIsVisible && !codeScanned) {
-      try {
-        widget.onScan(barcode);
-        scannerCubit.codeScannedNotifier.value = true;
-        await vibrate(VibrationPreset.singleShortBuzz);
+    try {
+      widget.onScan(barcode);
+      await vibrate(VibrationPreset.singleShortBuzz);
 
-        if (widget.cooldownSeconds == null) {
-          await scannerCubit.cameraController.stop();
-        } else {
-          await Future.delayed(const Duration(milliseconds: 500), () {
-            scannerCubit.codeScannedNotifier.value = false;
-            coolDownVisibilityNotifier.value = true;
-          });
-        }
-      } catch (e) {
-        coolDownVisibilityNotifier.value = true;
-        await vibrate(VibrationPreset.doubleBuzz);
-        if (context.mounted) {
-          AppSnackBar.error(message: e.toString())
-              .show(context, duration: const Duration(milliseconds: 1700));
-        }
-      } finally {
-        if (widget.cooldownSeconds != null) {
-          scannerCubit.codeScannedNotifier.value = false;
-        }
+      if (widget.cooldownSeconds == null) {
+        await scannerCubit.cameraController.stop();
+      } else {
+        await enableCooldown();
       }
+    } catch(e) {
+      final msg = e.toString();
+      const duration = Duration(milliseconds: 1700);
+      await vibrate(VibrationPreset.doubleBuzz);
+
+      if (context.mounted) {
+        AppSnackBar.error(message: msg).show(context, duration: duration);
+      }
+      if (widget.cooldownSeconds != null) await enableCooldown();
     }
+  }
+
+  Future<void> enableCooldown() async {
+    await Future.delayed(const Duration(milliseconds: 500), () {
+      coolDownVisibilityNotifier.value = true;
+      coolDownEndTime ??= DateTime.now()
+          .add(Duration(seconds: widget.cooldownSeconds!));
+    });
+
+    // Turn scanning back after cooldown
+    await Future.delayed(Duration(seconds: widget.cooldownSeconds!), () {
+      codeScannedNotifier.value = false;
+      coolDownVisibilityNotifier.value = false;
+      coolDownEndTime = null;
+    });
   }
 
   Widget successIcon() {
     return ValueListenableBuilder(
-      valueListenable: scannerCubit.codeScannedNotifier,
-      builder: (context, scanned, _) {
-        return AnimatedOpacity(
-          opacity: scanned ? 1 : 0,
-          duration: const Duration(milliseconds: 200),
-          child: Icon(
-            Icons.check,
-            size: 60,
-            color: BasfColors.white.withValues(alpha: 0.9),
-          ),
+      valueListenable: coolDownVisibilityNotifier,
+      builder: (context, cooldownVisible, _) {
+        return ValueListenableBuilder(
+          valueListenable: codeScannedNotifier,
+          builder: (context, scanned, _) {
+            return AnimatedOpacity(
+              opacity: scanned && !cooldownVisible ? 1 : 0,
+              duration: const Duration(milliseconds: 200),
+              child: Icon(
+                Icons.check,
+                size: 60,
+                color: BasfColors.white.withValues(alpha: 0.9),
+              ),
+            );
+          },
         );
+      },
+    );
+  }
+
+  Widget cooldown() {
+    return ValueListenableBuilder(
+      valueListenable: coolDownVisibilityNotifier,
+      builder: (context, visible, _) {
+        if (visible) {
+          return ScannerCoolDown(
+            endTime: coolDownEndTime,
+            cooldownSeconds: widget.cooldownSeconds ?? 3,
+          );
+        }
+
+        return const SizedBox();
       },
     );
   }

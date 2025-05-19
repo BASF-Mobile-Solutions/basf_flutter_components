@@ -44,7 +44,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
             duration: const Duration(milliseconds: 200),
             height: MediaQuery.sizeOf(context).height * (isBig ? 0.4 : 0.2),
             child: Scanner(
-              cooldownSeconds: 2,
+              cooldownSeconds: 3,
               routeObserver: routeObserver,
               overlay: UnitsScannerOverlay(
                 nextScanText: 'SSCC',
@@ -148,7 +148,9 @@ class _ScannerScreenState extends State<ScannerScreen> {
           MaterialPageRoute<Widget>(builder: (context) {
             return Scaffold(
               appBar: AppBar(),
-              body: const Center(child: Text('Scanner must be auto deactivated')),
+              body: const Center(
+                child: Text('Scanner must be auto deactivated'),
+              ),
             );
           },),
         );
