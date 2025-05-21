@@ -49,6 +49,7 @@ export 'src/widgets/options/option_button.dart';
 export 'src/widgets/options/radio.dart';
 export 'src/widgets/scanner/controller/scanner_cubit.dart';
 export 'src/widgets/scanner/data/scanner_translations.dart';
+export 'src/widgets/scanner/layouts/scanner_no_camera_layout.dart';
 export 'src/widgets/scanner/overlays/standard_scanner_overlay.dart';
 export 'src/widgets/scanner/overlays/units_scanner_overlay.dart';
 export 'src/widgets/scanner/overlays/widgets/scan_support_text.dart';

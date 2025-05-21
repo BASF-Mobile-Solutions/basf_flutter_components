@@ -1,6 +1,5 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:basf_flutter_components/src/widgets/scanner/layouts/scanner_default_error_layout.dart';
-import 'package:basf_flutter_components/src/widgets/scanner/layouts/scanner_no_camera_layout.dart';
 import 'package:basf_flutter_components/src/widgets/scanner/layouts/scanner_no_permission_layout.dart';
 import 'package:basf_flutter_components/src/widgets/scanner/layouts/scanner_success_layout.dart';
 import 'package:basf_flutter_components/src/widgets/scanner/widgets/scanner_cool_down.dart';
@@ -176,7 +175,7 @@ class _ScannerState extends State<Scanner> with RouteAware {
   Future<void> stopCameraAfterScan(BuildContext context, String barcode) async {
     // Continue only if camera is ready for next scan
     if (codeScannedNotifier.value || coolDownVisibilityNotifier.value) return;
-    codeScannedNotifier.value = true;
+    if (mounted) codeScannedNotifier.value = true;
 
     try {
       widget.onScan(barcode);
@@ -201,16 +200,20 @@ class _ScannerState extends State<Scanner> with RouteAware {
 
   Future<void> enableCooldown() async {
     await Future.delayed(const Duration(milliseconds: 500), () {
-      coolDownVisibilityNotifier.value = true;
-      coolDownEndTime ??= DateTime.now()
-          .add(Duration(seconds: widget.cooldownSeconds!));
+      if (mounted) {
+        coolDownVisibilityNotifier.value = true;
+        coolDownEndTime ??= DateTime.now()
+            .add(Duration(seconds: widget.cooldownSeconds!));
+      }
     });
 
     // Turn scanning back after cooldown
     await Future.delayed(Duration(seconds: widget.cooldownSeconds!), () {
-      codeScannedNotifier.value = false;
-      coolDownVisibilityNotifier.value = false;
-      coolDownEndTime = null;
+      if (mounted) {
+        codeScannedNotifier.value = false;
+        coolDownVisibilityNotifier.value = false;
+        coolDownEndTime = null;
+      }
     });
   }
 

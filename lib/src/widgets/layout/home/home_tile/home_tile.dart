@@ -10,7 +10,6 @@ class HomeTile extends StatelessWidget {
     required this.description,
     required this.leadingImage,
     required this.onPressed,
-    this.appBarTitleText,
     this.route,
     this.favoriteData,
     this.borderRadius = 0,
@@ -21,9 +20,6 @@ class HomeTile extends StatelessWidget {
 
   ///
   final String titleText;
-
-  ///
-  final String? appBarTitleText;
 
   ///
   final String description;

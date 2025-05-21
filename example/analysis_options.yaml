@@ -6,3 +6,4 @@ linter:
     sort_pub_dependencies: false
     avoid_catches_without_on_clauses: false
     avoid_dynamic_calls: false
+    use_null_aware_elements: true

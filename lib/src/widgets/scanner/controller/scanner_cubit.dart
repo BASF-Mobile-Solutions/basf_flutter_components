@@ -12,13 +12,9 @@ class ScannerCubit extends HydratedCubit<ScannerState> {
   ///
   ScannerCubit({
     required this.id,
-    bool enableOnStart = true,
-  }) : super(enableOnStart ? const ScannerEnabled() : const ScannerDisabled()) {
-    cameraController = MobileScannerController()
-      ..addListener(_torchListener)
-      ..addListener(_directionListener);
-    flashlightNotifier = ValueNotifier(cameraController.value.torchState);
-    directionNotifier = ValueNotifier(cameraController.value.cameraDirection);
+  }) : super(const ScannerEnabled()) {
+    // If you need to init camera later, just make Scanner widget creation later
+    init();
   }
 
   @override
@@ -31,9 +27,23 @@ class ScannerCubit extends HydratedCubit<ScannerState> {
   /// Flashlight controller
   late final ValueNotifier<CameraFacing> directionNotifier;
 
+  /// Initializes cubit
+  void init() {
+    cameraController = MobileScannerController()
+      ..addListener(_torchListener)
+      ..addListener(_directionListener);
+    flashlightNotifier = ValueNotifier(cameraController.value.torchState);
+    directionNotifier = ValueNotifier(cameraController.value.cameraDirection);
+  }
+
   /// Enables/Shows scanner
   void enableCamera({bool save = true}) {
-    emit(ScannerEnabled(saveState: save));
+    switch(state) {
+      case ScannerDisabled() when save: emit(ScannerEnabled(saveState: save));
+      case ScannerDisabled(saveState: final saveState) when !save:
+        if (!saveState) emit(ScannerEnabled(saveState: save));
+      default: break;
+    }
   }
 
   /// Disables/Hides scanner

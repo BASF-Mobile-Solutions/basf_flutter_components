@@ -1,5 +1,6 @@
 ## 2.6.6
 - Barcode scanner added
+- Flutter 3.32.0, Dart 3.8.0
 
 ## 2.6.5
 - Various components from BASF apps added for merge
