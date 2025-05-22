@@ -17,11 +17,11 @@ class Scanner extends StatefulWidget {
   ///
   const Scanner({
     required this.onScan,
+    required this.routeObserver,
     this.cooldownSeconds,
     this.overlay = const StandardScannerOverlay(),
     this.translations = const ScannerTranslations(),
     this.offlinePlaceholder,
-    this.routeObserver,
     super.key,
   });
 
@@ -37,8 +37,7 @@ class Scanner extends StatefulWidget {
   /// Shows when camera is off
   final Widget? offlinePlaceholder;
 
-  /// Optional: if provided, we'll subscribe internally
-  /// and return SizedBox when covered by another route.
+  /// Auto closes the scanner when it's not on the top screen in the stack
   final RouteObserver<ModalRoute<void>>? routeObserver;
 
   @override
@@ -98,16 +97,35 @@ class _ScannerState extends State<Scanner> with RouteAware {
     return BlocBuilder<ScannerCubit, ScannerState>(
       bloc: scannerCubit,
       builder: (context, state) {
-        return AnimatedSwitcher(
-          duration: const Duration(milliseconds: 500),
-          child: switch(state) {
-            ScannerEnabled() => scanner(),
-            ScannerDisabled() => widget.offlinePlaceholder ?? basfLogo(context),
+        return LayoutBuilder(
+          builder: (context, constraints) {
+            final width = constraints.maxWidth.isFinite
+                && constraints.maxWidth > 500
+                  ? constraints.maxWidth
+                  : 500.0;
+            final height = constraints.maxHeight.isFinite
+                && constraints.maxHeight > 170
+                  ? constraints.maxHeight
+                  : 170.0;
+
+            return SizedBox(
+              width: width,
+              height: height,
+              child: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 500),
+                child: switch(state) {
+                  ScannerEnabled() => scanner(),
+                  ScannerDisabled() => widget.offlinePlaceholder
+                      ?? basfLogo(context),
+                },
+              ),
+            );
           },
         );
       },
     );
   }
+
 
   Widget scanner() {
     return ValueListenableBuilder(

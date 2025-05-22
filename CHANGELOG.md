@@ -1,5 +1,6 @@
 ## 2.6.6
 - Barcode scanner added
+- Bloc and path provider libs can now be used in projects from this lib
 - Flutter 3.32.0, Dart 3.8.0
 
 ## 2.6.5
