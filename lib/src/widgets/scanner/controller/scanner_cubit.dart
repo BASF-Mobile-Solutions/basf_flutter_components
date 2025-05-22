@@ -10,9 +10,7 @@ part 'scanner_state.dart';
 /// Camera cubit
 class ScannerCubit extends HydratedCubit<ScannerState> {
   ///
-  ScannerCubit({
-    required this.id,
-  }) : super(const ScannerEnabled()) {
+  ScannerCubit({required this.id}) : super(const ScannerEnabled()) {
     // If you need to init camera later, just make Scanner widget creation later
     init();
   }
@@ -22,8 +20,10 @@ class ScannerCubit extends HydratedCubit<ScannerState> {
 
   /// Camera controller
   late final MobileScannerController cameraController;
+
   /// Flashlight controller
   late final ValueNotifier<TorchState> flashlightNotifier;
+
   /// Flashlight controller
   late final ValueNotifier<CameraFacing> directionNotifier;
 
@@ -38,11 +38,13 @@ class ScannerCubit extends HydratedCubit<ScannerState> {
 
   /// Enables/Shows scanner
   void enableCamera({bool save = true}) {
-    switch(state) {
-      case ScannerDisabled() when save: emit(ScannerEnabled(saveState: save));
+    switch (state) {
+      case ScannerDisabled() when save:
+        emit(ScannerEnabled(saveState: save));
       case ScannerDisabled(saveState: final saveState) when !save:
         if (!saveState) emit(ScannerEnabled(saveState: save));
-      default: break;
+      default:
+        break;
     }
   }
 
@@ -56,14 +58,15 @@ class ScannerCubit extends HydratedCubit<ScannerState> {
     final initialStatus = await Permission.camera.status;
     final status = await Permission.camera.request();
 
-    switch(status) {
+    switch (status) {
       case PermissionStatus.granted:
         emit(const ScannerDisabled());
         emit(const ScannerEnabled());
       case PermissionStatus.permanentlyDenied
-      when !isRecheck && initialStatus == status:
+          when !isRecheck && initialStatus == status:
         unawaited(openAppSettings());
-      default: break;
+      default:
+        break;
     }
   }
 
@@ -78,9 +81,11 @@ class ScannerCubit extends HydratedCubit<ScannerState> {
   @override
   Future<void> onChange(Change<ScannerState> change) async {
     super.onChange(change);
-    switch(change.nextState) {
-      case ScannerDisabled(): await cameraController.stop();
-      default: break;
+    switch (change.nextState) {
+      case ScannerDisabled():
+        await cameraController.stop();
+      default:
+        break;
     }
   }
 
@@ -100,7 +105,7 @@ class ScannerCubit extends HydratedCubit<ScannerState> {
 
   @override
   Map<String, dynamic>? toJson(ScannerState state) {
-    return switch(state) {
+    return switch (state) {
       ScannerEnabled() when state.saveState => state.toJson(),
       ScannerDisabled() when state.saveState => state.toJson(),
       _ => null,

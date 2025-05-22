@@ -6,10 +6,7 @@ import 'package:flutter/material.dart';
 /// Standard bottom actions
 class StandardBottomActions extends StatelessWidget {
   ///
-  const StandardBottomActions({
-    required this.scanQRorBarcode,
-    super.key,
-  });
+  const StandardBottomActions({required this.scanQRorBarcode, super.key});
 
   ///
   final String scanQRorBarcode;

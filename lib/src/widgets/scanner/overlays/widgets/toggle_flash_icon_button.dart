@@ -5,10 +5,7 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 /// Toggle flashlight icon button
 class ToggleFlashIconButton extends StatelessWidget {
   ///
-  const ToggleFlashIconButton({
-    this.size = 28,
-    super.key,
-  });
+  const ToggleFlashIconButton({this.size = 28, super.key});
 
   ///
   final double size;
@@ -26,13 +23,13 @@ class ToggleFlashIconButton extends StatelessWidget {
               ? Colors.white.withValues(alpha: 0.9)
               : Colors.white.withValues(alpha: 0.4),
           iconSize: size,
-          icon: Icon(torchState == TorchState.on
-              ? Icons.flash_on_rounded
-              : Icons.flash_off_rounded,
+          icon: Icon(
+            torchState == TorchState.on
+                ? Icons.flash_on_rounded
+                : Icons.flash_off_rounded,
           ),
         );
       },
     );
   }
-
 }

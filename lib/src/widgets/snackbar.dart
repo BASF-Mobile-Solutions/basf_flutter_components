@@ -51,10 +51,7 @@ class AppSnackBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       spacing: Dimens.paddingSemi,
-      children: [
-        leftIcon(context),
-        text(context),
-      ],
+      children: [leftIcon(context), text(context)],
     );
   }
 
@@ -77,6 +74,7 @@ class AppSnackBar extends StatelessWidget {
       ),
     );
   }
+
   //
   // /// Shows snackbar
   // void show({

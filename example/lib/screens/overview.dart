@@ -132,13 +132,16 @@ class _OverviewScreenState extends State<OverviewScreen> {
               text: 'Scanner',
               expanded: true,
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute<void>(
-                  builder: (context) {
-                    return BlocProvider<ScannerCubit>(
-                      create: (context) => ScannerCubit(id: 'scanner_1'),
-                      child: const ScannerScreen(),
-                    );
-                  },),
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (context) {
+                      return BlocProvider<ScannerCubit>(
+                        create: (context) => ScannerCubit(id: 'scanner_1'),
+                        child: const ScannerScreen(),
+                      );
+                    },
+                  ),
                 );
               },
             ),

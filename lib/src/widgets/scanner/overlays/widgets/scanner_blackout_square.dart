@@ -4,10 +4,7 @@ import 'package:flutter/material.dart';
 /// Black transparent overlay for scanner
 class ScannerBlackoutSquare extends StatelessWidget {
   ///
-  const ScannerBlackoutSquare({
-    super.key,
-    this.borderWidth = 50,
-  });
+  const ScannerBlackoutSquare({super.key, this.borderWidth = 50});
 
   /// Width of dark overlay
   final double borderWidth;

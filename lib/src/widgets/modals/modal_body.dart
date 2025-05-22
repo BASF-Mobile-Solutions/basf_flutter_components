@@ -59,10 +59,9 @@ class ModalBody extends StatelessWidget {
       child: Padding(
         padding: MediaQuery.of(context).viewInsets,
         child: SafeArea(
-          minimum:
-              noSafeArea
-                  ? EdgeInsets.zero
-                  : const EdgeInsets.only(bottom: Dimens.paddingMedium20),
+          minimum: noSafeArea
+              ? EdgeInsets.zero
+              : const EdgeInsets.only(bottom: Dimens.paddingMedium20),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,

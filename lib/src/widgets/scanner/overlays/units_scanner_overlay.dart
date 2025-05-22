@@ -15,8 +15,10 @@ class UnitsScannerOverlay extends StatelessWidget {
 
   /// "Process order number"
   final Widget? topLayout;
+
   /// "Scan QR or Barcode"
   final String scanQRorBarcodeText;
+
   /// "SSCC"
   final String nextScanText;
 
@@ -28,10 +30,7 @@ class UnitsScannerOverlay extends StatelessWidget {
           child: topLayout != null ? topLayout! : const SizedBox(),
         ),
         const Expanded(
-          child: Padding(
-            padding: EdgeInsets.all(5),
-            child: CameraEdges(),
-          ),
+          child: Padding(padding: EdgeInsets.all(5), child: CameraEdges()),
         ),
         horizontalBlackOut(child: bottomLayout()),
       ],
@@ -43,10 +42,7 @@ class UnitsScannerOverlay extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 14),
-          child: nexScanInfo(),
-        ),
+        Padding(padding: const EdgeInsets.only(left: 14), child: nexScanInfo()),
         ScanSupportText(scanQRorBarcode: scanQRorBarcodeText),
         const ToggleFlashIconButton(),
       ],
@@ -55,10 +51,9 @@ class UnitsScannerOverlay extends StatelessWidget {
 
   /// Next scan item text
   Widget nexScanInfo() {
-    return Text(nextScanText,
-      style: TextStyle(
-        color: Colors.white.withValues(alpha: 0.4),
-      ),
+    return Text(
+      nextScanText,
+      style: TextStyle(color: Colors.white.withValues(alpha: 0.4)),
     );
   }
 
@@ -70,5 +65,4 @@ class UnitsScannerOverlay extends StatelessWidget {
       child: child,
     );
   }
-
 }

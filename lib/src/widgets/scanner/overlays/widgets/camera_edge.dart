@@ -3,14 +3,11 @@ import 'package:flutter/material.dart';
 /// Camera edges
 class CameraEdges extends StatelessWidget {
   ///
-  const CameraEdges({
-    this.color = Colors.white54,
-    this.length = 20,
-    super.key,
-  });
+  const CameraEdges({this.color = Colors.white54, this.length = 20, super.key});
 
   /// Border color
   final Color color;
+
   ///
   final double length;
 
@@ -38,19 +35,14 @@ class CameraEdges extends StatelessWidget {
   }
 
   ///
-  BorderSide borderSide() => BorderSide(
-    color: color,
-    width: 2,
-  );
+  BorderSide borderSide() => BorderSide(color: color, width: 2);
 
   ///
   Widget edge(Border border) {
     return Container(
       height: length,
       width: length,
-      decoration: BoxDecoration(
-        border: border,
-      ),
+      decoration: BoxDecoration(border: border),
     );
   }
 }

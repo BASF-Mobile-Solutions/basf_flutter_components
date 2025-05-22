@@ -5,10 +5,7 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 /// Toggle flashlight icon button
 class ToggleDirectionIconButton extends StatelessWidget {
   ///
-  const ToggleDirectionIconButton({
-    this.size = 28,
-    super.key,
-  });
+  const ToggleDirectionIconButton({this.size = 28, super.key});
 
   ///
   final double size;
@@ -28,7 +25,7 @@ class ToggleDirectionIconButton extends StatelessWidget {
           iconSize: size,
           icon: AnimatedRotation(
             duration: const Duration(milliseconds: 200),
-            turns: switch(facing) {
+            turns: switch (facing) {
               CameraFacing.front => -0.5,
               CameraFacing.external => -0.75,
               _ => 0,

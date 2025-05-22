@@ -71,7 +71,12 @@ class HomeTile extends StatelessWidget {
             boxShadow: const [BasfShadows.smallShadow],
             borderRadius: BorderRadius.circular(borderRadius),
           ),
-          child: Row(children: [image(), Expanded(child: _body())]),
+          child: Row(
+            children: [
+              image(),
+              Expanded(child: _body()),
+            ],
+          ),
         ),
         BasfTextButton.contained(
           size: Size(double.maxFinite, _height),

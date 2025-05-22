@@ -28,12 +28,16 @@ class Scanner extends StatefulWidget {
   /// Scanner window size
   /// Callback for scanned barcode
   final void Function(String) onScan;
+
   /// Camera does not stop after scan, just pauses for a period
   final int? cooldownSeconds;
+
   /// Scanner design
   final Widget overlay;
+
   /// Translations
   final ScannerTranslations translations;
+
   /// Shows when camera is off
   final Widget? offlinePlaceholder;
 
@@ -79,7 +83,6 @@ class _ScannerState extends State<Scanner> with RouteAware {
     await scannerCubit.cameraController.stop();
   }
 
-
   @override
   void didPushNext() {
     // we're covered by a new route
@@ -99,24 +102,24 @@ class _ScannerState extends State<Scanner> with RouteAware {
       builder: (context, state) {
         return LayoutBuilder(
           builder: (context, constraints) {
-            final width = constraints.maxWidth.isFinite
-                && constraints.maxWidth > 500
-                  ? constraints.maxWidth
-                  : 500.0;
-            final height = constraints.maxHeight.isFinite
-                && constraints.maxHeight > 170
-                  ? constraints.maxHeight
-                  : 170.0;
+            final width =
+                constraints.maxWidth.isFinite && constraints.maxWidth > 500
+                ? constraints.maxWidth
+                : 500.0;
+            final height =
+                constraints.maxHeight.isFinite && constraints.maxHeight > 170
+                ? constraints.maxHeight
+                : 170.0;
 
             return SizedBox(
               width: width,
               height: height,
               child: AnimatedSwitcher(
                 duration: const Duration(milliseconds: 500),
-                child: switch(state) {
+                child: switch (state) {
                   ScannerEnabled() => scanner(),
-                  ScannerDisabled() => widget.offlinePlaceholder
-                      ?? basfLogo(context),
+                  ScannerDisabled() =>
+                    widget.offlinePlaceholder ?? basfLogo(context),
                 },
               ),
             );
@@ -125,7 +128,6 @@ class _ScannerState extends State<Scanner> with RouteAware {
       },
     );
   }
-
 
   Widget scanner() {
     return ValueListenableBuilder(
@@ -155,13 +157,13 @@ class _ScannerState extends State<Scanner> with RouteAware {
       errorBuilder: (context, error) {
         return switch (error.errorCode) {
           MobileScannerErrorCode.unsupported ||
-          MobileScannerErrorCode.controllerAlreadyInitialized
-          => ScannerNoCameraLayout(
+          MobileScannerErrorCode
+              .controllerAlreadyInitialized => ScannerNoCameraLayout(
             cameraNotAvailableText: widget.translations.cameraNotAvailableText,
           ),
           MobileScannerErrorCode.permissionDenied => ScannerNoPermissionLayout(
-            provideCameraPermissionText: widget.translations
-                .provideCameraPermissionText,
+            provideCameraPermissionText:
+                widget.translations.provideCameraPermissionText,
           ),
           _ => ScannerDefaultErrorLayout(message: error.errorCode.message),
         };
@@ -182,8 +184,9 @@ class _ScannerState extends State<Scanner> with RouteAware {
   }
 
   void onDetect(BuildContext context, BarcodeCapture capture) {
-    final valueExists = capture.barcodes.isNotEmpty
-        && capture.barcodes.first.rawValue?.isNotEmpty != null;
+    final valueExists =
+        capture.barcodes.isNotEmpty &&
+        capture.barcodes.first.rawValue?.isNotEmpty != null;
 
     if (valueExists) {
       stopCameraAfterScan(context, capture.barcodes.first.rawValue!);
@@ -204,7 +207,7 @@ class _ScannerState extends State<Scanner> with RouteAware {
       } else {
         await enableCooldown();
       }
-    } catch(e) {
+    } catch (e) {
       final msg = e.toString();
       const duration = Duration(milliseconds: 1700);
       await vibrate(VibrationPreset.doubleBuzz);
@@ -220,8 +223,9 @@ class _ScannerState extends State<Scanner> with RouteAware {
     await Future.delayed(const Duration(milliseconds: 500), () {
       if (mounted) {
         coolDownVisibilityNotifier.value = true;
-        coolDownEndTime ??= DateTime.now()
-            .add(Duration(seconds: widget.cooldownSeconds!));
+        coolDownEndTime ??= DateTime.now().add(
+          Duration(seconds: widget.cooldownSeconds!),
+        );
       }
     });
 
@@ -276,10 +280,7 @@ class _ScannerState extends State<Scanner> with RouteAware {
   Widget basfLogo(BuildContext context) {
     return Center(
       child: ConstrainedBox(
-        constraints: const BoxConstraints(
-          maxWidth: 150,
-          maxHeight: 150,
-        ),
+        constraints: const BoxConstraints(maxWidth: 150, maxHeight: 150),
         child: Assets.images.basfLogo.image(
           fit: BoxFit.contain,
           color: Theme.of(context).primaryColor,
@@ -287,7 +288,6 @@ class _ScannerState extends State<Scanner> with RouteAware {
       ),
     );
   }
-
 
   Future<void> vibrate(VibrationPreset preset) async {
     if (await Vibration.hasVibrator()) await Vibration.vibrate(preset: preset);

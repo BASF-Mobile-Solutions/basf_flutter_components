@@ -26,9 +26,7 @@ class ExampleApp extends StatelessWidget {
       title: 'BASF Components',
       theme: BasfThemes.lightMainTheme(),
       home: const OverviewScreen(),
-      navigatorObservers: [
-        routeObserver,
-      ],
+      navigatorObservers: [routeObserver],
     );
   }
 }

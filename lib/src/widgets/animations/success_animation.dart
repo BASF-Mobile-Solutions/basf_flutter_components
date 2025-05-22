@@ -13,6 +13,7 @@ class SuccessAnimation extends StatelessWidget {
 
   ///
   final Size size;
+
   ///
   final Color? color;
 
@@ -25,8 +26,8 @@ class SuccessAnimation extends StatelessWidget {
         onInit: (artBoard) {
           artBoard.forEachComponent((shape) {
             if (shape is Shape && shape.fills.isNotEmpty) {
-              shape.fills.first.paint
-                  .color = color ?? Theme.of(context).primaryColor;
+              shape.fills.first.paint.color =
+                  color ?? Theme.of(context).primaryColor;
             }
           });
         },

@@ -10,11 +10,13 @@ class ScannerTranslations {
 
   ///
   final String cameraNotAvailableText;
+
   ///
   final String provideCameraPermissionText;
+
   ///
   final String rescanText;
+
   ///
   final String codeScanSuccessText;
-
 }

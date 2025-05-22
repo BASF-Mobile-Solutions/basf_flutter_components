@@ -12,8 +12,10 @@ class ScannerCoolDown extends StatefulWidget {
 
   /// Time
   final int cooldownSeconds;
+
   /// Size
   final double size;
+
   /// Current time + cooldown seconds to prevent recreation bugs during cooldown
   final DateTime? endTime;
 
@@ -23,7 +25,6 @@ class ScannerCoolDown extends StatefulWidget {
 
 class _ScannerCoolDownState extends State<ScannerCoolDown>
     with SingleTickerProviderStateMixin {
-
   late AnimationController _controller;
   late Animation<int> _countdown;
 
@@ -47,13 +48,14 @@ class _ScannerCoolDownState extends State<ScannerCoolDown>
       end: 0,
     ).animate(_controller);
 
-
     startCoolDown();
 
     Future.delayed(
-        Duration(milliseconds: widget.cooldownSeconds * 1000 - 200), () {
-          if (mounted) setState(() => _initialized = false);
-    });
+      Duration(milliseconds: widget.cooldownSeconds * 1000 - 200),
+      () {
+        if (mounted) setState(() => _initialized = false);
+      },
+    );
   }
 
   void startCoolDown() {
@@ -68,7 +70,6 @@ class _ScannerCoolDownState extends State<ScannerCoolDown>
 
     _controller.forward(from: from);
   }
-
 
   @override
   Widget build(BuildContext context) {

@@ -4,10 +4,7 @@ import 'package:flutter/material.dart';
 /// Default error layout
 class ScannerDefaultErrorLayout extends StatelessWidget {
   ///
-  const ScannerDefaultErrorLayout({
-    required this.message,
-    super.key,
-  });
+  const ScannerDefaultErrorLayout({required this.message, super.key});
 
   ///
   final String message;

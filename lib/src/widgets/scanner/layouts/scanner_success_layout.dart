@@ -14,8 +14,10 @@ class ScannerSuccessLayout extends StatelessWidget {
 
   /// "Rescan"
   final String rescanText;
+
   /// "Code scanned successfully"
   final String codeScanSuccessText;
+
   /// On pressed
   final VoidCallback onPressed;
 
@@ -26,10 +28,7 @@ class ScannerSuccessLayout extends StatelessWidget {
       spacing: 10,
       children: [
         successInfo(context),
-        BasfTextButton.transparent(
-          text: rescanText,
-          onPressed: onPressed,
-        ),
+        BasfTextButton.transparent(text: rescanText, onPressed: onPressed),
       ],
     );
   }
@@ -42,11 +41,11 @@ class ScannerSuccessLayout extends StatelessWidget {
         VerticalSpacer.normal(),
         Text(
           codeScanSuccessText,
-          style: Theme.of(context).textTheme.bodyMedium
-              ?.copyWith(color: BasfColors.copyTextGrey),
+          style: Theme.of(
+            context,
+          ).textTheme.bodyMedium?.copyWith(color: BasfColors.copyTextGrey),
         ),
       ],
     );
   }
-
 }

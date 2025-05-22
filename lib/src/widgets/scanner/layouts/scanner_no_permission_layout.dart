@@ -15,13 +15,12 @@ class ScannerNoPermissionLayout extends StatefulWidget {
   final String provideCameraPermissionText;
 
   @override
-  State<ScannerNoPermissionLayout> createState()
-    => _ScannerNoPermissionLayoutState();
+  State<ScannerNoPermissionLayout> createState() =>
+      _ScannerNoPermissionLayoutState();
 }
 
 class _ScannerNoPermissionLayoutState extends State<ScannerNoPermissionLayout>
     with WidgetsBindingObserver {
-
   bool recheckPermissionsAfterResume = false;
 
   @override
@@ -32,13 +31,18 @@ class _ScannerNoPermissionLayoutState extends State<ScannerNoPermissionLayout>
 
   @override
   Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
-    switch(state) {
+    switch (state) {
       case AppLifecycleState.resumed when recheckPermissionsAfterResume:
         recheckPermissionsAfterResume = false;
-        unawaited(context.read<ScannerCubit>()
-            .checkPermissionOrOpenSettings(isRecheck: true),);
-      case AppLifecycleState.paused: recheckPermissionsAfterResume = true;
-      default: break;
+        unawaited(
+          context.read<ScannerCubit>().checkPermissionOrOpenSettings(
+            isRecheck: true,
+          ),
+        );
+      case AppLifecycleState.paused:
+        recheckPermissionsAfterResume = true;
+      default:
+        break;
     }
   }
 
@@ -58,8 +62,9 @@ class _ScannerNoPermissionLayoutState extends State<ScannerNoPermissionLayout>
         BasfTextButton.transparent(
           text: widget.provideCameraPermissionText,
           style: TextButton.styleFrom(
-            backgroundColor: Theme.of(context)
-                .primaryColor.withValues(alpha: 0.05),
+            backgroundColor: Theme.of(
+              context,
+            ).primaryColor.withValues(alpha: 0.05),
           ),
           onPressed: context.read<ScannerCubit>().checkPermissionOrOpenSettings,
         ),

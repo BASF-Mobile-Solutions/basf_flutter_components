@@ -3,14 +3,11 @@ import 'package:flutter/material.dart';
 /// No camera icon
 class NoCameraIcon extends StatelessWidget {
   ///
-  const NoCameraIcon({
-    super.key,
-    this.size = 30,
-    this.color,
-  });
+  const NoCameraIcon({super.key, this.size = 30, this.color});
 
   ///
   final double size;
+
   ///
   final Color? color;
 

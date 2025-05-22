@@ -27,6 +27,7 @@ sealed class ScannerState {
 final class ScannerEnabled extends ScannerState {
   ///
   const ScannerEnabled({this.saveState = true});
+
   ///
   final bool saveState;
 
@@ -41,6 +42,7 @@ final class ScannerEnabled extends ScannerState {
 final class ScannerDisabled extends ScannerState {
   ///
   const ScannerDisabled({this.saveState = true});
+
   ///
   final bool saveState;
 

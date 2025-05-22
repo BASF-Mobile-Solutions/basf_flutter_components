@@ -85,7 +85,10 @@ abstract class BasfButton extends StatelessWidget {
   /// Button child content
   Widget buttonChildContent() {
     if (expanded) {
-      return SizedBox(width: double.infinity, child: Align(child: child));
+      return SizedBox(
+        width: double.infinity,
+        child: Align(child: child),
+      );
     } else {
       return child!;
     }
@@ -124,8 +127,9 @@ abstract class BasfButton extends StatelessWidget {
     }
 
     final buttonStyle = style ?? this.style ?? getButtonStyle();
-    final buttonSize =
-        size == null ? null : WidgetStateProperty.all<Size>(size!);
+    final buttonSize = size == null
+        ? null
+        : WidgetStateProperty.all<Size>(size!);
 
     return buttonStyle.copyWith(
       maximumSize: buttonSize ?? buttonStyle.maximumSize,

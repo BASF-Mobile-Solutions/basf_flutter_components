@@ -445,8 +445,8 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
   Future<void> setFavoriteValueAsDefault() async {
     if (!widget.prefillWithFavorite) return;
     await _initHydratedStorage().then((value) {
-      final cubit =
-          _futureBuilderKey.currentContext!.read<PersistedInputCubit>();
+      final cubit = _futureBuilderKey.currentContext!
+          .read<PersistedInputCubit>();
 
       if (cubit.state.favoriteValue != null && widget.controller.text.isEmpty) {
         widget.controller.text = cubit.state.favoriteValue!;
@@ -471,12 +471,9 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
       HydratedBloc.storage.toString();
     } catch (e) {
       HydratedBloc.storage = await HydratedStorage.build(
-        storageDirectory:
-            kIsWeb
-                ? HydratedStorageDirectory.web
-                : HydratedStorageDirectory(
-                  (await getTemporaryDirectory()).path,
-                ),
+        storageDirectory: kIsWeb
+            ? HydratedStorageDirectory.web
+            : HydratedStorageDirectory((await getTemporaryDirectory()).path),
       );
     }
 
@@ -556,10 +553,9 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
             cubit.state.favoriteValue != null &&
             cubit.state.favoriteValue!.contains(text);
 
-        final lastValues =
-            cubit.state.lastValues
-                .where((value) => value.contains(text))
-                .toList();
+        final lastValues = cubit.state.lastValues
+            .where((value) => value.contains(text))
+            .toList();
 
         if (!showFavorite && lastValues.isEmpty) return const SizedBox();
 
@@ -653,10 +649,9 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
   Widget separator({required BuildContext context, required bool isFavorite}) {
     return Container(
       height: 1,
-      color:
-          isFavorite
-              ? Theme.of(context).primaryColor
-              : Theme.of(context).splashColor,
+      color: isFavorite
+          ? Theme.of(context).primaryColor
+          : Theme.of(context).splashColor,
     );
   }
 

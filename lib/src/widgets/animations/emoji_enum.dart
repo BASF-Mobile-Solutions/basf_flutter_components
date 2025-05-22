@@ -4,14 +4,19 @@ import 'package:basf_flutter_components/utils/gen/assets.gen.dart';
 enum RiveEmoji {
   ///
   smiling('Smiling'),
+
   ///
   happy('Happy'),
+
   ///
   winking('Winking'),
+
   ///
   crying('Crying'),
+
   ///
   laughing('Laughing'),
+
   ///
   surprise('Surprise');
 

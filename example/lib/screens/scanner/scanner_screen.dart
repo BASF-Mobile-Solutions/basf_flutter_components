@@ -11,7 +11,6 @@ class ScannerScreen extends StatefulWidget {
 }
 
 class _ScannerScreenState extends State<ScannerScreen> {
-
   bool isBig = false;
   bool isCooldownMode = true;
 
@@ -30,29 +29,31 @@ class _ScannerScreenState extends State<ScannerScreen> {
       body: Column(
         spacing: 10,
         children: [
-          if (!isCooldownMode) AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
-            height: MediaQuery.sizeOf(context).height * (isBig ? 0.4 : 0.2),
-            child: Scanner(
-              routeObserver: routeObserver,
-              onScan: (barcode) {
-                AppSnackBar.info(message: barcode).show(context);
-              },
-            ),
-          ),
-          if (isCooldownMode) AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
-            height: MediaQuery.sizeOf(context).height * (isBig ? 0.4 : 0.2),
-            child: Scanner(
-              cooldownSeconds: 3,
-              routeObserver: routeObserver,
-              overlay: UnitsScannerOverlay(
-                nextScanText: 'SSCC',
-                topLayout: topLayoutSecondScanner(context),
+          if (!isCooldownMode)
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              height: MediaQuery.sizeOf(context).height * (isBig ? 0.4 : 0.2),
+              child: Scanner(
+                routeObserver: routeObserver,
+                onScan: (barcode) {
+                  AppSnackBar.info(message: barcode).show(context);
+                },
               ),
-              onScan: print,
             ),
-          ),
+          if (isCooldownMode)
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              height: MediaQuery.sizeOf(context).height * (isBig ? 0.4 : 0.2),
+              child: Scanner(
+                cooldownSeconds: 3,
+                routeObserver: routeObserver,
+                overlay: UnitsScannerOverlay(
+                  nextScanText: 'SSCC',
+                  topLayout: topLayoutSecondScanner(context),
+                ),
+                onScan: print,
+              ),
+            ),
         ],
       ),
     );
@@ -65,9 +66,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
         const ToggleDirectionIconButton(size: 20),
         Text(
           '700090897979979',
-          style: TextStyle(
-            color: Colors.white.withValues(alpha: 0.4),
-          ),
+          style: TextStyle(color: Colors.white.withValues(alpha: 0.4)),
         ),
         SizedBox(
           width: 50,
@@ -84,12 +83,14 @@ class _ScannerScreenState extends State<ScannerScreen> {
         return IconButton(
           onPressed: () {
             final cubit = context.read<ScannerCubit>();
-            switch(state) {
-              case ScannerEnabled(): cubit.disableCamera();
-              case ScannerDisabled(): cubit.enableCamera();
+            switch (state) {
+              case ScannerEnabled():
+                cubit.disableCamera();
+              case ScannerDisabled():
+                cubit.enableCamera();
             }
           },
-          icon: switch(state) {
+          icon: switch (state) {
             ScannerEnabled() => const Icon(Icons.camera_alt),
             ScannerDisabled() => const Icon(Icons.no_photography),
           },
@@ -105,9 +106,8 @@ class _ScannerScreenState extends State<ScannerScreen> {
           isBig = !isBig;
         });
       },
-      icon: Icon(isBig
-          ? Icons.photo_size_select_large
-          : Icons.photo_size_select_small,
+      icon: Icon(
+        isBig ? Icons.photo_size_select_large : Icons.photo_size_select_small,
       ),
     );
   }
@@ -119,9 +119,8 @@ class _ScannerScreenState extends State<ScannerScreen> {
           isCooldownMode = !isCooldownMode;
         });
       },
-      icon: Icon(isCooldownMode
-          ? Icons.timer_outlined
-          : Icons.timer_off_outlined,
+      icon: Icon(
+        isCooldownMode ? Icons.timer_outlined : Icons.timer_off_outlined,
       ),
     );
   }
@@ -145,14 +144,16 @@ class _ScannerScreenState extends State<ScannerScreen> {
     return IconButton(
       onPressed: () {
         Navigator.of(context).push(
-          MaterialPageRoute<Widget>(builder: (context) {
-            return Scaffold(
-              appBar: AppBar(),
-              body: const Center(
-                child: Text('Scanner must be auto deactivated'),
-              ),
-            );
-          },),
+          MaterialPageRoute<Widget>(
+            builder: (context) {
+              return Scaffold(
+                appBar: AppBar(),
+                body: const Center(
+                  child: Text('Scanner must be auto deactivated'),
+                ),
+              );
+            },
+          ),
         );
       },
       icon: const Icon(Icons.mobile_screen_share),

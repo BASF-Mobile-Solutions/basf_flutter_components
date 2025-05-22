@@ -68,14 +68,13 @@ class LogoutButton extends StatelessWidget {
         maxHeight: MediaQuery.of(context).size.height * 0.8,
         maxWidth: 500,
       ),
-      builder:
-          (context) => ModalBottomSheetWidget(
-            title: logoutTitle,
-            description: logoutDescription,
-            buttonText: confirmText,
-            cancelText: cancelText,
-            onPressed: onPressed,
-          ),
+      builder: (context) => ModalBottomSheetWidget(
+        title: logoutTitle,
+        description: logoutDescription,
+        buttonText: confirmText,
+        cancelText: cancelText,
+        onPressed: onPressed,
+      ),
     );
   }
 }
