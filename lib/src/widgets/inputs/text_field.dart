@@ -526,9 +526,9 @@ class _BasfTextFieldState extends State<BasfTextField> {
     return isEnabled
         ? currentTextStyle.copyWith(color: Theme.of(context).primaryColor)
         : currentTextStyle.copyWith(
-          color: BasfColors.darkGrey,
-          fontWeight: FontWeight.w600,
-        );
+            color: BasfColors.darkGrey,
+            fontWeight: FontWeight.w600,
+          );
   }
 
   Widget textField(ThemeData theme) {

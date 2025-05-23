@@ -1,3 +1,4 @@
+import 'package:basf_flutter_components/utils/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
 
@@ -38,8 +39,7 @@ class SettingsGearIcon extends StatelessWidget {
     return SizedBox(
       height: size,
       width: size,
-      child: RiveAnimation.asset(
-        'packages/basf_flutter_components/assets/rive/gears.riv',
+      child: Assets.rive.gears.rive(
         animations: const ['spin1'],
         onInit: (artBoard) {
           var fillComponent = 0;

@@ -39,16 +39,17 @@ class PersistedInputCubit extends HydratedCubit<PersistedInputData> {
       emit(
         PersistedInputData(
           favoriteValue: value == state.favoriteValue ? null : value,
-          lastValues: [
-            if (state.favoriteValue != null) state.favoriteValue!,
-            ...state.lastValues,
-          ]..removeWhere((v) {
-            if (value != state.favoriteValue) {
-              return v == value;
-            } else {
-              return false;
-            }
-          }),
+          lastValues:
+              [
+                if (state.favoriteValue != null) state.favoriteValue!,
+                ...state.lastValues,
+              ]..removeWhere((v) {
+                if (value != state.favoriteValue) {
+                  return v == value;
+                } else {
+                  return false;
+                }
+              }),
         ),
       );
     }

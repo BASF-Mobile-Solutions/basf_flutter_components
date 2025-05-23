@@ -1,6 +1,5 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 /// Home tile
@@ -11,7 +10,6 @@ class HomeTile extends StatelessWidget {
     required this.description,
     required this.leadingImage,
     required this.onPressed,
-    this.appBarTitleText,
     this.route,
     this.favoriteData,
     this.borderRadius = 0,
@@ -22,9 +20,6 @@ class HomeTile extends StatelessWidget {
 
   ///
   final String titleText;
-
-  ///
-  final String? appBarTitleText;
 
   ///
   final String description;
@@ -39,7 +34,7 @@ class HomeTile extends StatelessWidget {
   final List<BlocProvider> blocProviders;
 
   ///
-  final VoidCallback onPressed;
+  final void Function(BuildContext) onPressed;
 
   ///
   final double borderRadius;
@@ -76,7 +71,12 @@ class HomeTile extends StatelessWidget {
             boxShadow: const [BasfShadows.smallShadow],
             borderRadius: BorderRadius.circular(borderRadius),
           ),
-          child: Row(children: [image(), Expanded(child: _body())]),
+          child: Row(
+            children: [
+              image(),
+              Expanded(child: _body()),
+            ],
+          ),
         ),
         BasfTextButton.contained(
           size: Size(double.maxFinite, _height),
@@ -87,7 +87,7 @@ class HomeTile extends StatelessWidget {
               borderRadius: BorderRadius.circular(borderRadius),
             ),
           ),
-          onPressed: onPressed,
+          onPressed: () => onPressed(context),
         ),
         if (favoriteData != null)
           Positioned(

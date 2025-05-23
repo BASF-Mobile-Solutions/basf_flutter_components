@@ -13,9 +13,9 @@ import 'package:rive/rive.dart' as _rive;
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
-  /// File path: assets/images/basf_logo.png
+  /// File path: assets/images/basf_logo.webp
   AssetGenImage get basfLogo =>
-      const AssetGenImage('assets/images/basf_logo.png');
+      const AssetGenImage('assets/images/basf_logo.webp');
 
   /// List of all assets
   List<AssetGenImage> get values => [basfLogo];

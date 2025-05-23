@@ -109,8 +109,8 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
             ),
             BasfOutlinedButton(
               text: 'Save persistent fields',
-              onPressed:
-                  () => saveTriggerNotifier.value = !saveTriggerNotifier.value,
+              onPressed: () =>
+                  saveTriggerNotifier.value = !saveTriggerNotifier.value,
             ),
             BasfTextField.fromTextFieldData(
               textFieldData: textFieldData,

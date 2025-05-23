@@ -93,10 +93,9 @@ class _SliderButtonState extends State<SliderButton> {
       padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
         borderRadius: widget.backgroundShape ?? BasfThemes.defaultBorderRadius,
-        color:
-            widget.backgroundColorEnd != null
-                ? _calculateBackground()
-                : widget.backgroundColor,
+        color: widget.backgroundColorEnd != null
+            ? _calculateBackground()
+            : widget.backgroundColor,
         boxShadow: [
           widget.shadow ??
               const BoxShadow(
@@ -135,10 +134,9 @@ class _SliderButtonState extends State<SliderButton> {
           borderRadius:
               widget.backgroundShape ??
               BorderRadius.all(Radius.circular(widget.height)),
-          color:
-              widget.backgroundColorEnd != null
-                  ? _calculateBackground()
-                  : widget.backgroundColor,
+          color: widget.backgroundColorEnd != null
+              ? _calculateBackground()
+              : widget.backgroundColor,
         ),
       ),
     );

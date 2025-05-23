@@ -55,17 +55,15 @@ class _DottedLinePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final backgroundPaint =
-        Paint()
-          ..color = backgroundColor
-          ..strokeWidth = size.height
-          ..style = PaintingStyle.fill;
+    final backgroundPaint = Paint()
+      ..color = backgroundColor
+      ..strokeWidth = size.height
+      ..style = PaintingStyle.fill;
 
-    final paint =
-        Paint()
-          ..color = color
-          ..strokeWidth = size.height
-          ..style = PaintingStyle.stroke;
+    final paint = Paint()
+      ..color = color
+      ..strokeWidth = size.height
+      ..style = PaintingStyle.stroke;
 
     // Draw the background line
     canvas.drawLine(Offset.zero, Offset(size.width, 0), backgroundPaint);

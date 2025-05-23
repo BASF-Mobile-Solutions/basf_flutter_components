@@ -62,11 +62,10 @@ class RadioOptions<T> extends StatelessWidget {
               child: OptionButton(
                 labelText: labelGenerator(values[index]),
                 description: descriptionGenerator?.call(values[index]),
-                isSelected:
-                    identityHelperFunction != null
-                        ? identityHelperFunction?.call(selectedValue) ==
-                            identityHelperFunction?.call(values[index])
-                        : selectedValue == values[index],
+                isSelected: identityHelperFunction != null
+                    ? identityHelperFunction?.call(selectedValue) ==
+                          identityHelperFunction?.call(values[index])
+                    : selectedValue == values[index],
                 onPressed: () {
                   onSelected(values[index]);
                 },

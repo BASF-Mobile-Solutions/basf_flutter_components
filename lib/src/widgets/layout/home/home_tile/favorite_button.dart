@@ -17,10 +17,9 @@ class FavoriteButton extends StatelessWidget {
       padding: EdgeInsets.zero,
       icon: Icon(
         Icons.star,
-        color:
-            favoriteData.isFavorite
-                ? Theme.of(context).primaryColor
-                : BasfColors.boxGrey,
+        color: favoriteData.isFavorite
+            ? Theme.of(context).primaryColor
+            : BasfColors.boxGrey,
       ),
       iconSize: 20,
       onPressed: favoriteData.onPressed,
