@@ -27,6 +27,9 @@ class ScannerCubit extends HydratedCubit<ScannerState> {
   /// Flashlight controller
   late final ValueNotifier<CameraFacing> directionNotifier;
 
+  /// For cases where scanner is disabled using route observer
+  bool _scannerDisabledAutomatically = false;
+
   /// Initializes cubit
   void init() {
     cameraController = MobileScannerController()
@@ -37,20 +40,32 @@ class ScannerCubit extends HydratedCubit<ScannerState> {
   }
 
   /// Enables/Shows scanner
-  void enableCamera({bool save = true}) {
+  /// /// [automatic] - enabled camera automatically by router observer for example
+  void enableCamera({bool automatic = false, bool save = true}) {
     switch (state) {
-      case ScannerDisabled() when save:
-        emit(ScannerEnabled(saveState: save));
-      case ScannerDisabled(saveState: final saveState) when !save:
-        if (!saveState) emit(ScannerEnabled(saveState: save));
-      default:
+      case ScannerDisabled(saveState: final permanentlySaved):
+        if (automatic && !_scannerDisabledAutomatically) {
+          break;
+        } else if (save) {
+          emit(ScannerEnabled(saveState: save));
+        } else if (!permanentlySaved) {
+          emit(ScannerEnabled(saveState: save));
+        }
+      case ScannerEnabled():
         break;
     }
   }
 
   /// Disables/Hides scanner
-  void disableCamera({bool save = true}) {
-    emit(ScannerDisabled(saveState: save));
+  /// [automatic] - disabled camera automatically by router observer for example
+  void disableCamera({bool automatic = false, bool save = true}) {
+    switch (state) {
+      case ScannerEnabled():
+        if (automatic) _scannerDisabledAutomatically = true;
+        emit(ScannerDisabled(saveState: save));
+      case ScannerDisabled():
+        break;
+    }
   }
 
   /// Requests camera permission
@@ -84,8 +99,8 @@ class ScannerCubit extends HydratedCubit<ScannerState> {
     switch (change.nextState) {
       case ScannerDisabled():
         await cameraController.stop();
-      default:
-        break;
+      case ScannerEnabled():
+        _scannerDisabledAutomatically = false;
     }
   }
 

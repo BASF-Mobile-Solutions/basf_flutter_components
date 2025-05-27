@@ -407,7 +407,7 @@ class BasfTextField extends StatefulWidget {
 class _BasfTextFieldState extends State<BasfTextField> {
   late final hasValidation = widget.validator != null;
   bool isFirstValidation = true;
-  late final emptyTextFieldNotifier = ValueNotifier(
+  late final ValueNotifier<bool> emptyTextFieldNotifier = ValueNotifier(
     widget.controller.text.isEmpty,
   );
 
