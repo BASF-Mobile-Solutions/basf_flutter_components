@@ -8,6 +8,9 @@ linter:
     avoid_dynamic_calls: false
     use_null_aware_elements: true
 
+formatter:
+  trailing_commas: preserve
+
 analyzer:
   errors:
     strict_raw_type: ignore
