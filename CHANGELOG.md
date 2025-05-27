@@ -1,3 +1,6 @@
+## 2.7.0
+- Camera fixes
+
 ## 2.6.6
 - Barcode scanner added
 - Bloc and path provider libs can now be used in projects from this lib

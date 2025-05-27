@@ -86,13 +86,13 @@ class _ScannerState extends State<Scanner> with RouteAware {
   @override
   void didPushNext() {
     // we're covered by a new route
-    scannerCubit.disableCamera(save: false);
+    scannerCubit.disableCamera(save: false, automatic: true);
   }
 
   @override
   void didPopNext() {
     // the covering route went away
-    scannerCubit.enableCamera(save: false);
+    scannerCubit.enableCamera(save: false, automatic: true);
   }
 
   @override

@@ -115,20 +115,22 @@ abstract class BasfColors {
   static const Color lightGreenPale = Color(0xFFE0EED2);
 
   /// Light green MaterialColor
-  static const MaterialColor lightGreen =
-      MaterialColor(0xFF65AC1E, <int, Color>{
-        50: lightGreenPale,
-        100: lightGreenPale,
-        200: Color(0xFFC1DEA5),
-        300: Color(0xFFA3CD78),
-        375: Color(0xFF8CC156),
-        400: Color(0xFF84BD4B),
-        500: Color(0xFF65AC1E),
-        600: Color(0xFF518A18),
-        700: Color(0xFF3D6712),
-        800: Color(0xFF28450C),
-        900: Color(0xFF142206),
-      });
+  static const MaterialColor lightGreen = MaterialColor(
+    0xFF65AC1E,
+    <int, Color>{
+      50: lightGreenPale,
+      100: lightGreenPale,
+      200: Color(0xFFC1DEA5),
+      300: Color(0xFFA3CD78),
+      375: Color(0xFF8CC156),
+      400: Color(0xFF84BD4B),
+      500: Color(0xFF65AC1E),
+      600: Color(0xFF518A18),
+      700: Color(0xFF3D6712),
+      800: Color(0xFF28450C),
+      900: Color(0xFF142206),
+    },
+  );
 
   // BASF - Dark Green Swatches
   /// Dark green color
