@@ -1,16 +1,13 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
+import 'package:basf_flutter_components/l10n/localizations/basf_components_localizations.dart';
 import 'package:flutter/material.dart';
 
 /// Shown when no camera is available
 class ScannerNoCameraLayout extends StatelessWidget {
   ///
   const ScannerNoCameraLayout({
-    required this.cameraNotAvailableText,
     super.key,
   });
-
-  /// "Camera is not available"
-  final String cameraNotAvailableText;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +19,7 @@ class ScannerNoCameraLayout extends StatelessWidget {
         const NoCameraIcon(),
         Flexible(
           child: Text(
-            cameraNotAvailableText,
+            BasfComponentsLocalizations.of(context).cameraNotAvailable,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodyMedium,
           ),

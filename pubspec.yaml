@@ -12,9 +12,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
 
   flutter_bloc: ^9.1.1
-  hydrated_bloc: ^10.0.0
+  hydrated_bloc: ^10.1.0
 
   url_launcher: ^6.3.2
   path_provider: ^2.1.5

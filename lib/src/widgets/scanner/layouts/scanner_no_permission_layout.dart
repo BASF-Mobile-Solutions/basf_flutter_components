@@ -1,18 +1,15 @@
 import 'dart:async';
 
 import 'package:basf_flutter_components/basf_flutter_components.dart';
+import 'package:basf_flutter_components/l10n/localizations/basf_components_localizations.dart';
 import 'package:flutter/material.dart';
 
 /// Layout for no permission to use camera
 class ScannerNoPermissionLayout extends StatefulWidget {
   ///
   const ScannerNoPermissionLayout({
-    required this.provideCameraPermissionText,
     super.key,
   });
-
-  /// "Provide camera permission"
-  final String provideCameraPermissionText;
 
   @override
   State<ScannerNoPermissionLayout> createState() =>
@@ -60,7 +57,7 @@ class _ScannerNoPermissionLayoutState extends State<ScannerNoPermissionLayout>
       children: [
         noCameraIcon(context),
         BasfTextButton.transparent(
-          text: widget.provideCameraPermissionText,
+          text: BasfComponentsLocalizations.of(context).provideCameraPermission,
           style: TextButton.styleFrom(
             backgroundColor: Theme.of(
               context,

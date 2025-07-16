@@ -1,4 +1,5 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
+import 'package:basf_flutter_components/l10n/localizations/basf_components_localizations.dart';
 import 'package:basf_flutter_components/src/widgets/animations/success_animation.dart';
 import 'package:flutter/material.dart';
 
@@ -6,17 +7,9 @@ import 'package:flutter/material.dart';
 class ScannerSuccessLayout extends StatelessWidget {
   ///
   const ScannerSuccessLayout({
-    required this.rescanText,
-    required this.codeScanSuccessText,
     required this.onPressed,
     super.key,
   });
-
-  /// "Rescan"
-  final String rescanText;
-
-  /// "Code scanned successfully"
-  final String codeScanSuccessText;
 
   /// On pressed
   final VoidCallback onPressed;
@@ -28,7 +21,10 @@ class ScannerSuccessLayout extends StatelessWidget {
       spacing: 10,
       children: [
         successInfo(context),
-        BasfTextButton.transparent(text: rescanText, onPressed: onPressed),
+        BasfTextButton.transparent(
+          text: BasfComponentsLocalizations.of(context).rescan,
+          onPressed: onPressed,
+        ),
       ],
     );
   }
@@ -40,7 +36,7 @@ class ScannerSuccessLayout extends StatelessWidget {
         const SuccessAnimation(),
         VerticalSpacer.normal(),
         Text(
-          codeScanSuccessText,
+          BasfComponentsLocalizations.of(context).codeScanSuccessPhrase,
           style: Theme.of(
             context,
           ).textTheme.bodyMedium?.copyWith(color: BasfColors.copyTextGrey),
