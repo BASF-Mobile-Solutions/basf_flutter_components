@@ -1,5 +1,4 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
-import 'package:basf_flutter_components/src/widgets/modals/modal_header.dart';
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
 

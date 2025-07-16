@@ -1,5 +1,4 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
-import 'package:basf_flutter_components/src/widgets/layout/single_item.dart';
 import 'package:flutter/material.dart';
 
 /// Double items row

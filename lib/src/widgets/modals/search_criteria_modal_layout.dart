@@ -1,18 +1,6 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
-import 'package:basf_flutter_components/src/widgets/modals/modal_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-Future<bool?> editSearchCriteria({
-  required BuildContext context,
-  required Widget modalSheetLayout,
-}) async {
-  return await showCustomModalBottomSheet(
-    context: context,
-    ratio: 0.95,
-    builder: (context) => modalSheetLayout,
-  );
-}
 
 /// Modal layout for search criteria.
 class SearchCriteriaModalLayout extends StatefulWidget {

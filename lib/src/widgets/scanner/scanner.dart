@@ -1,5 +1,4 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
-import 'package:basf_flutter_components/l10n/localizations/basf_components_localizations.dart';
 import 'package:basf_flutter_components/src/widgets/scanner/layouts/scanner_default_error_layout.dart';
 import 'package:basf_flutter_components/src/widgets/scanner/layouts/scanner_no_permission_layout.dart';
 import 'package:basf_flutter_components/src/widgets/scanner/layouts/scanner_success_layout.dart';
@@ -141,14 +140,12 @@ class _ScannerState extends State<Scanner> with RouteAware {
   }
 
   Widget successLayout(BuildContext context) {
-    final localizations = BasfComponentsLocalizations.of(context);
     return ScannerSuccessLayout(
       onPressed: () => codeScannedNotifier.value = false,
     );
   }
 
   Widget scannerCamera(BuildContext context) {
-    final localizations = BasfComponentsLocalizations.of(context);
     return MobileScanner(
       controller: scannerCubit.cameraController,
       errorBuilder: (context, error) {
@@ -157,7 +154,7 @@ class _ScannerState extends State<Scanner> with RouteAware {
           MobileScannerErrorCode.controllerAlreadyInitialized
             => const ScannerNoCameraLayout(),
           MobileScannerErrorCode.permissionDenied
-            => ScannerNoPermissionLayout(),
+            => const ScannerNoPermissionLayout(),
           _ => ScannerDefaultErrorLayout(message: error.errorCode.message),
         };
       },

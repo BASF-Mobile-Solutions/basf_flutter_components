@@ -15,7 +15,8 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
   late final _errorController = TextEditingController();
   late final _obscureController = TextEditingController(text: 'obscured');
   late final _iconsController = TextEditingController();
-  final saveTriggerNotifier = ValueNotifier(false);
+
+  final ValueNotifier<bool> saveTriggerNotifier = ValueNotifier(false);
 
   final textFieldData = TextFieldData(
     labelText: 'Persisted from TextFieldData',
