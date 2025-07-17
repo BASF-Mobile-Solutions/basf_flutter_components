@@ -1,6 +1,4 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
-import 'package:basf_flutter_components/l10n/localizations/basf_components_localizations.dart';
-import 'package:basf_flutter_components/src/widgets/animations/success_animation.dart';
 import 'package:flutter/material.dart';
 
 /// Shown after scan if no cooldown

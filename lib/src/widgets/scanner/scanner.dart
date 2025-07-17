@@ -1,9 +1,4 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
-import 'package:basf_flutter_components/src/widgets/scanner/layouts/scanner_default_error_layout.dart';
-import 'package:basf_flutter_components/src/widgets/scanner/layouts/scanner_no_permission_layout.dart';
-import 'package:basf_flutter_components/src/widgets/scanner/layouts/scanner_success_layout.dart';
-import 'package:basf_flutter_components/src/widgets/scanner/widgets/scanner_cool_down.dart';
-import 'package:basf_flutter_components/utils/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:vibration/vibration.dart';

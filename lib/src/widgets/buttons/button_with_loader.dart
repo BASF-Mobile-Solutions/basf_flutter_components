@@ -1,5 +1,4 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
-import 'package:basf_flutter_components/src/widgets/indicators/app_circular_progress.dart';
 import 'package:flutter/material.dart';
 
 /// A custom button widget that can display a loading indicator.

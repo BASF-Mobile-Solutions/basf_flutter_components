@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:basf_flutter_components/basf_flutter_components.dart';
-import 'package:basf_flutter_components/l10n/localizations/basf_components_localizations.dart';
 import 'package:flutter/material.dart';
 
 /// Layout for no permission to use camera
