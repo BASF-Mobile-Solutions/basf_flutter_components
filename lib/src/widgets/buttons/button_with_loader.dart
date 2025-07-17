@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 /// When `isLoading` is true, the button displays a circular progress indicator
 /// instead of the text and becomes disabled.
 class ButtonWithLoader extends StatelessWidget {
-
   /// Creates a button with a loading indicator.
   const ButtonWithLoader({
     super.key,

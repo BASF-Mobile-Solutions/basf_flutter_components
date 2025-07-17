@@ -3,7 +3,6 @@ import 'package:flutter/scheduler.dart';
 
 /// Auto adjusts space
 class AdaptiveSpacer extends StatefulWidget {
-
   /// Creates an [AdaptiveSpacer].
   const AdaptiveSpacer({
     required this.bottomWidgetKey,
@@ -55,15 +54,12 @@ class _AdaptiveSpacerState extends State<AdaptiveSpacer> {
   }
 
   double getSpacerHeight() {
-    final listHeight = widget.listviewContentKey
-        .currentContext?.size?.height;
-    final bottomBoxHeight = widget.bottomWidgetKey
-        .currentContext?.size?.height;
+    final listHeight = widget.listviewContentKey.currentContext?.size?.height;
+    final bottomBoxHeight = widget.bottomWidgetKey.currentContext?.size?.height;
 
     if (bottomBoxHeight != null && listHeight != null) {
-      final difference = widget.listViewHeight
-          - listHeight
-          - widget.bottomPaddingCorrection;
+      final difference =
+          widget.listViewHeight - listHeight - widget.bottomPaddingCorrection;
 
       return difference > 0 ? difference : 0;
     } else {

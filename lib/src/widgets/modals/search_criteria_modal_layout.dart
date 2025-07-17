@@ -31,6 +31,7 @@ class SearchCriteriaModalLayout extends StatefulWidget {
 
   /// Translation
   final String searchLocalization;
+
   /// Translation
   final String saveCriteriaLocalization;
 
@@ -65,17 +66,21 @@ class _SearchCriteriaModalLayoutState extends State<SearchCriteriaModalLayout> {
       final controller = TextEditingController()
         ..text = widget.textFieldItems[index].controller.text;
 
-      if (widget.relatedControllers
-          .contains(widget.textFieldItems[index].controller)) {
-        enabledControllers.add(TextFieldUpdateData(
-          controller: controller,
-          notifier: ValueNotifier(controllerEnabled(controller)),
-        ));
+      if (widget.relatedControllers.contains(
+        widget.textFieldItems[index].controller,
+      )) {
+        enabledControllers.add(
+          TextFieldUpdateData(
+            controller: controller,
+            notifier: ValueNotifier(controllerEnabled(controller)),
+          ),
+        );
 
         controller.addListener(() {
           for (final controller in enabledControllers) {
-            controller.notifier.value =
-                controllerEnabled(controller.controller);
+            controller.notifier.value = controllerEnabled(
+              controller.controller,
+            );
           }
         });
       }
@@ -95,8 +100,9 @@ class _SearchCriteriaModalLayoutState extends State<SearchCriteriaModalLayout> {
 
     for (final data in tempTextFieldItems) {
       data.controller.addListener(() {
-        buttonNotifier.value = tempTextFieldItems
-            .any((e) => e.controller.text.trim().isNotEmpty);
+        buttonNotifier.value = tempTextFieldItems.any(
+          (e) => e.controller.text.trim().isNotEmpty,
+        );
       });
     }
   }
@@ -149,7 +155,8 @@ class _SearchCriteriaModalLayoutState extends State<SearchCriteriaModalLayout> {
   List<Widget> textFields() {
     return List.generate(tempTextFieldItems.length, (index) {
       return enabledControllers.any(
-              (k) => k.controller == tempTextFieldItems[index].controller)
+            (k) => k.controller == tempTextFieldItems[index].controller,
+          )
           ? switchableTextField(index)
           : textField(index: index);
     }).joinWithSeparator(VerticalSpacer.medium());
@@ -157,12 +164,15 @@ class _SearchCriteriaModalLayoutState extends State<SearchCriteriaModalLayout> {
 
   Widget switchableTextField(int index) {
     return ValueListenableBuilder<bool>(
-        valueListenable: enabledControllers.firstWhere(
-                (e) => e.controller == tempTextFieldItems[index].controller)
-            .notifier,
-        builder: (context, enabled, _) {
-          return textField(index: index, enabled: enabled);
-        });
+      valueListenable: enabledControllers
+          .firstWhere(
+            (e) => e.controller == tempTextFieldItems[index].controller,
+          )
+          .notifier,
+      builder: (context, enabled, _) {
+        return textField(index: index, enabled: enabled);
+      },
+    );
   }
 
   Widget textField({required int index, bool enabled = true}) {
@@ -175,8 +185,8 @@ class _SearchCriteriaModalLayoutState extends State<SearchCriteriaModalLayout> {
         labelText: tempTextFieldItems[index].labelText,
       ),
       validator: tempTextFieldItems[index].validator,
-      keyboardType: tempTextFieldItems[index].keyboardType
-          ?? TextInputType.text,
+      keyboardType:
+          tempTextFieldItems[index].keyboardType ?? TextInputType.text,
       scrollPadding: const EdgeInsets.only(bottom: 70),
       inputFormatters: [
         ...?tempTextFieldItems[index].inputFormatters,
@@ -188,14 +198,17 @@ class _SearchCriteriaModalLayoutState extends State<SearchCriteriaModalLayout> {
 
   void saveCriteria() {
     for (final data in widget.textFieldItems) {
-      final item = tempTextFieldItems
-          .firstWhere((d) => d.labelText == data.labelText);
+      final item = tempTextFieldItems.firstWhere(
+        (d) => d.labelText == data.labelText,
+      );
       data.controller.text = item.controller.text.trim();
     }
 
     saveTriggerNotifier.value = !saveTriggerNotifier.value;
 
-    Navigator.pop(context, tempTextFieldItems
-        .any((i) => i.controller.text.trim().isNotEmpty));
+    Navigator.pop(
+      context,
+      tempTextFieldItems.any((i) => i.controller.text.trim().isNotEmpty),
+    );
   }
 }

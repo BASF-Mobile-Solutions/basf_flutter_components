@@ -19,4 +19,13 @@ class BasfComponentsLocalizationsDe extends BasfComponentsLocalizations {
 
   @override
   String get rescan => 'Erneut scannen';
+
+  @override
+  String get warning => 'Warnung';
+
+  @override
+  String get generalAbort => 'Abbrechen';
+
+  @override
+  String get generalConfirm => 'Bestätigen';
 }

@@ -22,17 +22,21 @@ class EditableInfoTile extends StatelessWidget {
     this.icon,
     super.key,
   }) : child = Column(
-    children: _getGridRows(items),
-  );
+         children: _getGridRows(items),
+       );
 
   /// Callback to be called when the tile is clicked
   final VoidCallback? onClick;
+
   /// Callback to be called when the delete button is clicked
   final VoidCallback? onDelete;
+
   /// Title of the tile
   final String title;
+
   /// Optional icon to be displayed on the right side of the tile
   final Widget? icon;
+
   /// Child widget to be displayed below the title
   final Widget child;
 
@@ -42,10 +46,8 @@ class EditableInfoTile extends StatelessWidget {
         Row(
           children: [
             Expanded(child: items[i]),
-            if (i + 1 < items.length)
-              Expanded(child: items[i + 1]),
-            if (i + 1 >= items.length)
-              const Expanded(child: SizedBox()),
+            if (i + 1 < items.length) Expanded(child: items[i + 1]),
+            if (i + 1 >= items.length) const Expanded(child: SizedBox()),
           ],
         ),
     ].joinWithSeparator(VerticalSpacer.semi());
@@ -88,7 +90,8 @@ class EditableInfoTile extends StatelessWidget {
 
   ///
   Widget tileTitle(BuildContext context) {
-    return Text(title,
+    return Text(
+      title,
       style: Theme.of(context).textTheme.titleMedium,
     );
   }

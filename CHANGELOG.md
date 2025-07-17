@@ -1,3 +1,6 @@
+## 2.8.0
+- Elements for checklist process
+
 ## 2.7.0
 - Camera fixes
 

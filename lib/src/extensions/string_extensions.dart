@@ -27,3 +27,13 @@ extension StringCasingExtension on String {
     ' ',
   ).split(' ').map((str) => str.toCapitalized()).join(' ');
 }
+
+///
+extension StringNullableExtensions on String? {
+  ///
+  String get unwrappedString {
+    return (this is String && this!.isEmpty) || this?.toString() == 'null'
+        ? '-'
+        : this?.toString() ?? '-';
+  }
+}

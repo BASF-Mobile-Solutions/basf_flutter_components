@@ -124,6 +124,24 @@ abstract class BasfComponentsLocalizations {
   /// In en, this message translates to:
   /// **'Rescan'**
   String get rescan;
+
+  /// No description provided for @warning.
+  ///
+  /// In en, this message translates to:
+  /// **'Warning'**
+  String get warning;
+
+  /// No description provided for @generalAbort.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get generalAbort;
+
+  /// No description provided for @generalConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get generalConfirm;
 }
 
 class _BasfComponentsLocalizationsDelegate

@@ -21,22 +21,31 @@ class WarningModalLayout extends StatefulWidget {
 
   /// Message to show
   final String warningMessage;
+
   /// Additional information to show after expanding
   final List<String>? additionalInfo;
+
   /// Custom label for close button
   final String? customButtonLabel;
+
   /// If modal will show a retry button
   final bool withRetryButton;
+
   /// If message is an error or a warning
   final bool isError;
+
   /// Error text
   final String errorLocalization;
+
   /// Warning text
   final String warningLocalization;
+
   /// Show more
   final String showMoreLocalization;
+
   /// Retry
   final String retryLocalization;
+
   /// Close
   final String closeLocalization;
 
@@ -101,10 +110,12 @@ class _WarningModalLayoutState extends State<WarningModalLayout> {
     return Fade(
       visible: showAdditionalInfo,
       child: Column(
-        children: widget.additionalInfo
-            ?.map(Text.new)
-            .toList()
-            .joinWithSeparator(paddedDivider()) ?? [],
+        children:
+            widget.additionalInfo
+                ?.map(Text.new)
+                .toList()
+                .joinWithSeparator(paddedDivider()) ??
+            [],
       ),
     );
   }

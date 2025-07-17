@@ -32,8 +32,8 @@ class AnimatedSegmentedProgress extends StatefulWidget {
   final Duration animationDuration;
 
   @override
-  State<AnimatedSegmentedProgress> createState()
-  => _AnimatedSegmentedProgressState();
+  State<AnimatedSegmentedProgress> createState() =>
+      _AnimatedSegmentedProgressState();
 }
 
 class _AnimatedSegmentedProgressState extends State<AnimatedSegmentedProgress> {

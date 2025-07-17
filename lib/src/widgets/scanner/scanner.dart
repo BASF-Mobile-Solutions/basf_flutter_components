@@ -151,10 +151,10 @@ class _ScannerState extends State<Scanner> with RouteAware {
       errorBuilder: (context, error) {
         return switch (error.errorCode) {
           MobileScannerErrorCode.unsupported ||
-          MobileScannerErrorCode.controllerAlreadyInitialized
-            => const ScannerNoCameraLayout(),
-          MobileScannerErrorCode.permissionDenied
-            => const ScannerNoPermissionLayout(),
+          MobileScannerErrorCode.controllerAlreadyInitialized =>
+            const ScannerNoCameraLayout(),
+          MobileScannerErrorCode.permissionDenied =>
+            const ScannerNoPermissionLayout(),
           _ => ScannerDefaultErrorLayout(message: error.errorCode.message),
         };
       },

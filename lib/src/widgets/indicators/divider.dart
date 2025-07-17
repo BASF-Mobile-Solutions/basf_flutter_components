@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 enum AppDividerType {
   /// thin line
   thin,
+
   /// thick line
   thick,
+
   /// double line
   double,
 }
@@ -28,7 +30,7 @@ class AppDivider extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return switch(_type) {
+    return switch (_type) {
       AppDividerType.thin => Divider(color: theme.primaryColor, thickness: 0.2),
       AppDividerType.thick => Divider(color: theme.primaryColor, thickness: 1),
       AppDividerType.double => Column(

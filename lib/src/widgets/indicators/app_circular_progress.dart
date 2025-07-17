@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 /// Circular progress
 class AppCircularProgress extends StatelessWidget {
-
   /// Bigger for buttons
   const AppCircularProgress.button({
     super.key,
