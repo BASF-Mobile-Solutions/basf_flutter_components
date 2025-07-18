@@ -53,8 +53,7 @@ class _LogisticsBoxAnimationState extends State<LogisticsBoxAnimation> {
   }
 
   Widget animation(BuildContext context) {
-    return RiveAnimation.asset(
-      BasfAssets.rive.logisticsBox.path,
+    return BasfAssets.rive.logisticsBox.rive(
       animations: const ['Idle'],
       onInit: _onInit,
     );
