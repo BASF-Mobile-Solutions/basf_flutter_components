@@ -31,7 +31,7 @@ extension StringCasingExtension on String {
 ///
 extension StringNullableExtensions on String? {
   ///
-  String get unwrappedString {
+  String get unwrapString {
     return (this is String && this!.isEmpty) || this?.toString() == 'null'
         ? '-'
         : this?.toString() ?? '-';

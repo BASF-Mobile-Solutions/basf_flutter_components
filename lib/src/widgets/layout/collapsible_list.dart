@@ -1,4 +1,10 @@
-import 'package:basf_flutter_components/basf_flutter_components.dart';
+import 'package:basf_flutter_components/src/extensions/list_extensions.dart';
+import 'package:basf_flutter_components/src/extensions/string_extensions.dart';
+import 'package:basf_flutter_components/src/theme/dimens.dart';
+import 'package:basf_flutter_components/src/widgets/animations/fade.dart';
+import 'package:basf_flutter_components/src/widgets/buttons/text_button.dart';
+import 'package:basf_flutter_components/src/widgets/indicators/dotted_separator.dart';
+import 'package:basf_flutter_components/src/widgets/layout/double_items_row.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
@@ -54,14 +60,14 @@ class CollapsibleList extends StatefulWidget {
 
     for (var i = 0; i < entries.length; i += 2) {
       final titleOne = entries[i].key;
-      final valueOne = entries[i].value.toString().unwrappedString;
+      final valueOne = entries[i].value.toString().unwrapString;
 
       var titleTwo = '';
       var valueTwo = '';
 
       if (i + 1 < entries.length) {
         titleTwo = entries[i + 1].key;
-        valueTwo = entries[i + 1].value.toString().unwrappedString;
+        valueTwo = entries[i + 1].value.toString().unwrapString;
       }
 
       doubleItemsRows.add(
