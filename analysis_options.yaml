@@ -14,5 +14,6 @@ formatter:
 analyzer:
   errors:
     strict_raw_type: ignore
+    use_setters_to_change_properties: ignore
   exclude:
     - "**/icons.dart"
