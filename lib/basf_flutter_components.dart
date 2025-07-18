@@ -5,8 +5,7 @@ export 'package:flutter_bloc/flutter_bloc.dart';
 export 'package:hydrated_bloc/hydrated_bloc.dart';
 export 'package:path_provider/path_provider.dart';
 
-// GENERATED – do not edit by hand
-
+export 'l10n/localizations/basf_components_localization_utils.dart';
 export 'l10n/localizations/basf_components_localizations.dart' ;
 export 'l10n/localizations/basf_components_localizations_de.dart' ;
 export 'l10n/localizations/basf_components_localizations_en.dart' ;
