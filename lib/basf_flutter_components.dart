@@ -31,7 +31,7 @@ export 'src/widgets/animations/emoji_enum.dart' ;
 export 'src/widgets/animations/fade.dart' ;
 export 'src/widgets/animations/logistics_box_animation.dart' ;
 export 'src/widgets/animations/search_loop_animation.dart' ;
-export 'src/widgets/animations/settings_gear_icon.dart' ;
+export 'src/widgets/animations/animated_gear_icon.dart';
 export 'src/widgets/animations/success_animation.dart' ;
 export 'src/widgets/buttons/basf_button.dart' ;
 export 'src/widgets/buttons/button_with_loader.dart' ;

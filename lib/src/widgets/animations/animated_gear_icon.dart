@@ -3,9 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
 
 /// Settings gear icon animated
-class SettingsGearIcon extends StatelessWidget {
+class AnimatedGearIcon extends StatelessWidget {
   /// Settings gear icon animated
-  const SettingsGearIcon({super.key, this.size = 25, this.onTap, this.color});
+  const AnimatedGearIcon({
+    this.size = 25,
+    this.onTap,
+    this.color,
+    super.key,
+  });
 
   ///
   final double size;
