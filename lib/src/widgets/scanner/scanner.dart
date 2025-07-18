@@ -266,7 +266,7 @@ class _ScannerState extends State<Scanner> with RouteAware {
     return Center(
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 150, maxHeight: 150),
-        child: Assets.images.basfLogo.image(
+        child: BasfAssets.images.basfLogo.image(
           fit: BoxFit.contain,
           color: Theme.of(context).primaryColor,
         ),

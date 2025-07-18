@@ -66,7 +66,7 @@ class _SearchLoopAnimationState extends State<SearchLoopAnimation> {
 
   Widget animation(BuildContext context) {
     return RiveAnimation.asset(
-      Assets.rive.searchLoop.path,
+      BasfAssets.rive.searchLoop.path,
       animations: const ['Searching', 'Flipping'],
       onInit: _onInit,
     );

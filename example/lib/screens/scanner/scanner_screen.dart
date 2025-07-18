@@ -70,7 +70,9 @@ class _ScannerScreenState extends State<ScannerScreen> {
         SizedBox(
           width: 50,
           height: 30,
-          child: Assets.rive.emoji.rive(artboard: RiveEmoji.smiling.artBoard),
+          child: BasfAssets.rive.emoji.rive(
+            artboard: RiveEmoji.smiling.artBoard,
+          ),
         ),
       ],
     );

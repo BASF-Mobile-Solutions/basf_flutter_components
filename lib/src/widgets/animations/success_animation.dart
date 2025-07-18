@@ -21,7 +21,7 @@ class SuccessAnimation extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox.fromSize(
       size: size,
-      child: Assets.rive.successIcon.rive(
+      child: BasfAssets.rive.successIcon.rive(
         animations: const ['show'],
         onInit: (artBoard) {
           artBoard.forEachComponent((shape) {

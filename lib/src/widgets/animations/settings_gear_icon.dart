@@ -39,7 +39,7 @@ class SettingsGearIcon extends StatelessWidget {
     return SizedBox(
       height: size,
       width: size,
-      child: Assets.rive.gears.rive(
+      child: BasfAssets.rive.gears.rive(
         animations: const ['spin1'],
         onInit: (artBoard) {
           var fillComponent = 0;
