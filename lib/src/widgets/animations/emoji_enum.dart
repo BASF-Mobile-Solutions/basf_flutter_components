@@ -26,6 +26,7 @@ enum RiveEmoji {
   final String artBoard;
 
   ///
-  String get path => 'packages/${BasfAssets.package}'
+  String get path =>
+      'packages/${BasfAssets.package}'
       '/${BasfAssets.rive.emoji.path}';
 }

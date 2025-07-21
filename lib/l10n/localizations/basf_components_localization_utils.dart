@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 ///
 class BasfComponentsLocalizationUtils {
-
   ///
   static void setNavigatorKey(GlobalKey<NavigatorState> key) {
     appNavigatorKey = key;
@@ -13,7 +12,6 @@ class BasfComponentsLocalizationUtils {
   static late GlobalKey<NavigatorState> appNavigatorKey;
 
   ///
-  static BasfComponentsLocalizations get localizations
-  => BasfComponentsLocalizations.of(appNavigatorKey.currentContext!);
-
+  static BasfComponentsLocalizations get localizations =>
+      BasfComponentsLocalizations.of(appNavigatorKey.currentContext!);
 }
