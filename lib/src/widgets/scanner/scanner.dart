@@ -1,9 +1,4 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
-import 'package:basf_flutter_components/src/widgets/scanner/layouts/scanner_default_error_layout.dart';
-import 'package:basf_flutter_components/src/widgets/scanner/layouts/scanner_no_permission_layout.dart';
-import 'package:basf_flutter_components/src/widgets/scanner/layouts/scanner_success_layout.dart';
-import 'package:basf_flutter_components/src/widgets/scanner/widgets/scanner_cool_down.dart';
-import 'package:basf_flutter_components/utils/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:vibration/vibration.dart';
@@ -20,7 +15,6 @@ class Scanner extends StatefulWidget {
     required this.routeObserver,
     this.cooldownSeconds,
     this.overlay = const StandardScannerOverlay(),
-    this.translations = const ScannerTranslations(),
     this.offlinePlaceholder,
     super.key,
   });
@@ -34,9 +28,6 @@ class Scanner extends StatefulWidget {
 
   /// Scanner design
   final Widget overlay;
-
-  /// Translations
-  final ScannerTranslations translations;
 
   /// Shows when camera is off
   final Widget? offlinePlaceholder;
@@ -136,17 +127,15 @@ class _ScannerState extends State<Scanner> with RouteAware {
         return AnimatedSwitcher(
           duration: const Duration(milliseconds: 500),
           child: scanned && widget.cooldownSeconds == null
-              ? successLayout()
+              ? successLayout(context)
               : scannerCamera(context),
         );
       },
     );
   }
 
-  Widget successLayout() {
+  Widget successLayout(BuildContext context) {
     return ScannerSuccessLayout(
-      rescanText: widget.translations.rescanText,
-      codeScanSuccessText: widget.translations.codeScanSuccessText,
       onPressed: () => codeScannedNotifier.value = false,
     );
   }
@@ -157,14 +146,10 @@ class _ScannerState extends State<Scanner> with RouteAware {
       errorBuilder: (context, error) {
         return switch (error.errorCode) {
           MobileScannerErrorCode.unsupported ||
-          MobileScannerErrorCode
-              .controllerAlreadyInitialized => ScannerNoCameraLayout(
-            cameraNotAvailableText: widget.translations.cameraNotAvailableText,
-          ),
-          MobileScannerErrorCode.permissionDenied => ScannerNoPermissionLayout(
-            provideCameraPermissionText:
-                widget.translations.provideCameraPermissionText,
-          ),
+          MobileScannerErrorCode.controllerAlreadyInitialized =>
+            const ScannerNoCameraLayout(),
+          MobileScannerErrorCode.permissionDenied =>
+            const ScannerNoPermissionLayout(),
           _ => ScannerDefaultErrorLayout(message: error.errorCode.message),
         };
       },
@@ -281,7 +266,7 @@ class _ScannerState extends State<Scanner> with RouteAware {
     return Center(
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 150, maxHeight: 150),
-        child: Assets.images.basfLogo.image(
+        child: BasfAssets.images.basfLogo.image(
           fit: BoxFit.contain,
           color: Theme.of(context).primaryColor,
         ),

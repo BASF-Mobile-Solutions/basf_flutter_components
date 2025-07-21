@@ -1,3 +1,7 @@
+## 2.8.0
+- Elements for checklist process
+- Lib Localization support
+
 ## 2.7.0
 - Camera fixes
 

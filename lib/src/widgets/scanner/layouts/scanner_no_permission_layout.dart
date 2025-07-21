@@ -7,12 +7,8 @@ import 'package:flutter/material.dart';
 class ScannerNoPermissionLayout extends StatefulWidget {
   ///
   const ScannerNoPermissionLayout({
-    required this.provideCameraPermissionText,
     super.key,
   });
-
-  /// "Provide camera permission"
-  final String provideCameraPermissionText;
 
   @override
   State<ScannerNoPermissionLayout> createState() =>
@@ -60,7 +56,7 @@ class _ScannerNoPermissionLayoutState extends State<ScannerNoPermissionLayout>
       children: [
         noCameraIcon(context),
         BasfTextButton.transparent(
-          text: widget.provideCameraPermissionText,
+          text: BasfComponentsLocalizations.of(context).provideCameraPermission,
           style: TextButton.styleFrom(
             backgroundColor: Theme.of(
               context,

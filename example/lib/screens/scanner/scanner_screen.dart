@@ -1,5 +1,4 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
-import 'package:basf_flutter_components/utils/gen/assets.gen.dart';
 import 'package:basf_flutter_components_example/main.dart';
 import 'package:flutter/material.dart';
 
@@ -71,7 +70,9 @@ class _ScannerScreenState extends State<ScannerScreen> {
         SizedBox(
           width: 50,
           height: 30,
-          child: Assets.rive.emoji.rive(artboard: RiveEmoji.smiling.artBoard),
+          child: BasfAssets.rive.emoji.rive(
+            artboard: RiveEmoji.smiling.artBoard,
+          ),
         ),
       ],
     );

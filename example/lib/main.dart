@@ -27,6 +27,9 @@ class ExampleApp extends StatelessWidget {
       theme: BasfThemes.lightMainTheme(),
       home: const OverviewScreen(),
       navigatorObservers: [routeObserver],
+      localizationsDelegates:
+          BasfComponentsLocalizations.localizationsDelegates,
+      supportedLocales: BasfComponentsLocalizations.supportedLocales,
     );
   }
 }

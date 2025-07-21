@@ -55,8 +55,6 @@ class DialogOverviewScreen extends StatelessWidget {
                     return const BasfAlertDialog(
                       title: 'Title',
                       description: 'Body Text',
-                      confirmText: 'Confirm Text',
-                      dismissText: 'Dismiss Text',
                     );
                   },
                 );

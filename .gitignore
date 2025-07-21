@@ -43,3 +43,4 @@ coverage/
 /devtools_options.yaml
 /example/android/app/.cxx/
 /example/devtools_options.yaml
+/lib/scripts/build/.last_build_id

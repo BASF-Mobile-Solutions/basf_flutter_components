@@ -5,12 +5,8 @@ import 'package:flutter/material.dart';
 class ScannerNoCameraLayout extends StatelessWidget {
   ///
   const ScannerNoCameraLayout({
-    required this.cameraNotAvailableText,
     super.key,
   });
-
-  /// "Camera is not available"
-  final String cameraNotAvailableText;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +18,7 @@ class ScannerNoCameraLayout extends StatelessWidget {
         const NoCameraIcon(),
         Flexible(
           child: Text(
-            cameraNotAvailableText,
+            BasfComponentsLocalizations.of(context).cameraNotAvailable,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodyMedium,
           ),

@@ -1,0 +1,10 @@
+{
+  "@@locale": "en",
+  "cameraNotAvailable": "Camera is not available",
+  "codeScanSuccessPhrase": "Code scanned successfully",
+  "provideCameraPermission": "Provide Camera Permission",
+  "rescan": "Rescan",
+  "warning": "Warning",
+  "generalAbort": "Cancel",
+  "generalConfirm": "Confirm"
+}

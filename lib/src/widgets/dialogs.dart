@@ -9,25 +9,17 @@ class BasfAlertDialog extends StatelessWidget {
   const BasfAlertDialog({
     required this.description,
     super.key,
-    this.title = 'Warning',
-    this.dismissText = 'Cancel',
-    this.confirmText = 'Confirm',
     this.onConfirmed,
     this.onDismissed,
     this.onlyConfirm = false,
+    this.title,
   });
 
-  /// Alert title
-  final String title;
+  ///
+  final String? title;
 
   /// Alert description
   final String description;
-
-  /// Dismiss text action
-  final String dismissText;
-
-  /// Confirm text action
-  final String confirmText;
 
   /// Action to be performed when its confirmed
   final Function? onConfirmed;
@@ -45,7 +37,7 @@ class BasfAlertDialog extends StatelessWidget {
         borderRadius: BasfThemes.defaultBorderRadius,
       ),
       title: Text(
-        title,
+        title ?? BasfComponentsLocalizations.of(context).warning,
         textAlign: TextAlign.center,
         style: BasfThemes.mainTextTheme.titleLarge,
       ),
@@ -69,7 +61,7 @@ class BasfAlertDialog extends StatelessWidget {
           padding: const EdgeInsets.only(left: Dimens.paddingMedium),
           child: BasfOutlinedButton(
             expanded: true,
-            text: dismissText,
+            text: BasfComponentsLocalizations.of(context).generalAbort,
             style: OutlinedButton.styleFrom(
               foregroundColor: BasfColors.red,
               side: const BorderSide(color: BasfColors.red),
@@ -90,7 +82,7 @@ class BasfAlertDialog extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.only(left: Dimens.paddingMedium),
           child: BasfTextButton.contained(
-            text: confirmText,
+            text: BasfComponentsLocalizations.of(context).generalConfirm,
             expanded: true,
             onPressed: () {
               final dynamic result = onConfirmed?.call();
