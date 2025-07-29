@@ -1,3 +1,6 @@
+## 2.8.1
+- Appbar back button fix
+
 ## 2.8.0
 - Elements for checklist process
 - Lib Localization support
