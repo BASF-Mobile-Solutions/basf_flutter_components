@@ -56,16 +56,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  ///
-  Widget backButton() {
-    if (showBackButton &&
-        previousScreenCall != null &&
-        backButtonIsVisibleNotifier != null) {
-      return leadingIcon();
-    }
-    return const SizedBox.shrink();
-  }
-
   /// Leading Icon
   Widget leadingIcon() {
     if (backButtonIsVisibleNotifier != null) {
