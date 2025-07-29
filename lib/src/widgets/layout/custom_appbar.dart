@@ -44,7 +44,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       title: titleText(context),
       leading: showBackButton
-          ? previousScreenCall != null && backButtonIsVisibleNotifier != null
+          ? previousScreenCall != null || backButtonIsVisibleNotifier != null
                 ? leadingIcon()
                 : null
           : const SizedBox.shrink(),
@@ -58,15 +58,19 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   /// Leading Icon
   Widget leadingIcon() {
-    return ValueListenableBuilder(
-      valueListenable: backButtonIsVisibleNotifier!,
-      builder: (context, isVisible, _) {
-        return Visibility(
-          visible: isVisible,
-          child: _CustomLeadingIcon(previousScreenCall: previousScreenCall),
-        );
-      },
-    );
+    if (backButtonIsVisibleNotifier != null) {
+      return ValueListenableBuilder(
+        valueListenable: backButtonIsVisibleNotifier!,
+        builder: (context, isVisible, _) {
+          return Visibility(
+            visible: isVisible,
+            child: _CustomLeadingIcon(previousScreenCall: previousScreenCall),
+          );
+        },
+      );
+    } else {
+      return _CustomLeadingIcon(previousScreenCall: previousScreenCall);
+    }
   }
 
   /// Title text
