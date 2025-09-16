@@ -7,6 +7,12 @@ import 'package:intl/intl.dart' as intl;
 
 import 'basf_components_localizations_de.dart';
 import 'basf_components_localizations_en.dart';
+import 'basf_components_localizations_es.dart';
+import 'basf_components_localizations_fr.dart';
+import 'basf_components_localizations_it.dart';
+import 'basf_components_localizations_ko.dart';
+import 'basf_components_localizations_pt.dart';
+import 'basf_components_localizations_zh.dart';
 
 // ignore_for_file: type=lint
 
@@ -98,7 +104,16 @@ abstract class BasfComponentsLocalizations {
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
     Locale('de'),
+    Locale('de', 'rlp'),
     Locale('en'),
+    Locale('es'),
+    Locale('fr'),
+    Locale('it'),
+    Locale('ko'),
+    Locale('pt'),
+    Locale('zh'),
+    Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hans'),
+    Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hant'),
   ];
 
   /// No description provided for @cameraNotAvailable.
@@ -156,20 +171,66 @@ class _BasfComponentsLocalizationsDelegate
   }
 
   @override
-  bool isSupported(Locale locale) =>
-      <String>['de', 'en'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>[
+    'de',
+    'en',
+    'es',
+    'fr',
+    'it',
+    'ko',
+    'pt',
+    'zh',
+  ].contains(locale.languageCode);
 
   @override
   bool shouldReload(_BasfComponentsLocalizationsDelegate old) => false;
 }
 
 BasfComponentsLocalizations lookupBasfComponentsLocalizations(Locale locale) {
+  // Lookup logic when language+script codes are specified.
+  switch (locale.languageCode) {
+    case 'zh':
+      {
+        switch (locale.scriptCode) {
+          case 'Hans':
+            return BasfComponentsLocalizationsZhHans();
+          case 'Hant':
+            return BasfComponentsLocalizationsZhHant();
+        }
+        break;
+      }
+  }
+
+  // Lookup logic when language+country codes are specified.
+  switch (locale.languageCode) {
+    case 'de':
+      {
+        switch (locale.countryCode) {
+          case 'rlp':
+            return BasfComponentsLocalizationsDeRlp();
+        }
+        break;
+      }
+  }
+
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
     case 'de':
       return BasfComponentsLocalizationsDe();
     case 'en':
       return BasfComponentsLocalizationsEn();
+    case 'es':
+      return BasfComponentsLocalizationsEs();
+    case 'fr':
+      return BasfComponentsLocalizationsFr();
+    case 'it':
+      return BasfComponentsLocalizationsIt();
+    case 'ko':
+      return BasfComponentsLocalizationsKo();
+    case 'pt':
+      return BasfComponentsLocalizationsPt();
+    case 'zh':
+      return BasfComponentsLocalizationsZh();
   }
 
   throw FlutterError(

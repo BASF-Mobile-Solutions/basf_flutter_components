@@ -1,3 +1,6 @@
+## 2.8.2
+- More localization languages support added
+
 ## 2.8.1
 - Appbar back button fix
 

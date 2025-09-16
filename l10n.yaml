@@ -5,4 +5,3 @@ output-localization-file: basf_components_localizations.dart
 output-class: BasfComponentsLocalizations
 nullable-getter: false
 use-escaping: true
-synthetic-package: false
