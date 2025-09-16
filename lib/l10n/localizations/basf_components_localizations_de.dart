@@ -29,3 +29,8 @@ class BasfComponentsLocalizationsDe extends BasfComponentsLocalizations {
   @override
   String get generalConfirm => 'Bestätigen';
 }
+
+/// The translations for German (`de_rlp`).
+class BasfComponentsLocalizationsDeRlp extends BasfComponentsLocalizationsDe {
+  BasfComponentsLocalizationsDeRlp() : super('de_rlp');
+}
