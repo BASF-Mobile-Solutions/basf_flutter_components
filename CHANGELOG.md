@@ -1,4 +1,4 @@
-## 2.8.2
+## 2.9.0
 - More localization languages support added
 
 ## 2.8.1
