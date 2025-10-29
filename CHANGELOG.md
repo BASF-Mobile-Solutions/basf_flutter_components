@@ -1,3 +1,7 @@
+## 2.9.1
+- Camera lib update
+- Add Chinese translations
+
 ## 2.9.0
 - More localization languages support added
 

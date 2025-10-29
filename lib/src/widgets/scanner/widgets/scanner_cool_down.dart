@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 /// Cooldown widget
@@ -68,7 +70,7 @@ class _ScannerCoolDownState extends State<ScannerCoolDown>
       from = 1 - progress.clamp(0.0, 1.0);
     }
 
-    _controller.forward(from: from);
+    unawaited(_controller.forward(from: from));
   }
 
   @override

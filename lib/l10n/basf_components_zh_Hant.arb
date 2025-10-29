@@ -1,3 +1,10 @@
 {
-  "@@locale": "zh_Hant"
+  "@@locale": "zh_Hant",
+  "cameraNotAvailable": "相機不可用",
+  "codeScanSuccessPhrase": "代碼掃描成功",
+  "provideCameraPermission": "授予相機權限",
+  "rescan": "重新掃描",
+  "warning": "警告",
+  "generalAbort": "中止",
+  "generalConfirm": "確認"
 }

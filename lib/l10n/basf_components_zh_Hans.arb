@@ -1,3 +1,10 @@
 {
-  "@@locale": "zh_Hans"
+  "@@locale": "zh_Hans",
+  "cameraNotAvailable": "相机不可用",
+  "codeScanSuccessPhrase": "代码扫描成功",
+  "provideCameraPermission": "授予相机权限",
+  "rescan": "重新扫描",
+  "warning": "警告",
+  "generalAbort": "中止",
+  "generalConfirm": "确认"
 }

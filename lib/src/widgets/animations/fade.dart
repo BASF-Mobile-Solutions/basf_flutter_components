@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 /// {@template fade_widget}
@@ -54,9 +56,9 @@ class _FadeState extends State<Fade> with SingleTickerProviderStateMixin {
     super.didUpdateWidget(oldWidget);
 
     if (!oldWidget.visible && widget.visible) {
-      _animationController.forward();
+      unawaited(_animationController.forward());
     } else if (oldWidget.visible && !widget.visible) {
-      _animationController.reverse();
+      unawaited(_animationController.reverse());
     }
   }
 

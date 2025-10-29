@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -19,7 +21,7 @@ class ToggleDirectionIconButton extends StatelessWidget {
       builder: (context, facing, _) {
         return IconButton(
           onPressed: () {
-            cubit.cameraController.switchCamera();
+            unawaited(cubit.cameraController.switchCamera());
           },
           color: Colors.white.withValues(alpha: 0.4),
           iconSize: size,

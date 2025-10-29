@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:basf_flutter_components/src/widgets/modals/bottom_sheet.dart';
 import 'package:basf_flutter_components/src/widgets/modals/bottom_sheet_widget.dart';
 import 'package:flutter/material.dart';
@@ -59,21 +61,23 @@ class LogoutButton extends StatelessWidget {
 
   /// show logout confirmation
   void showBottomSheet(BuildContext context) {
-    showCustomModalBottomSheet<void>(
-      context: context,
-      backgroundColor:
-          Theme.of(context).bottomNavigationBarTheme.backgroundColor ??
-          Colors.white,
-      constraints: BoxConstraints(
-        maxHeight: MediaQuery.of(context).size.height * 0.8,
-        maxWidth: 500,
-      ),
-      builder: (context) => ModalBottomSheetWidget(
-        title: logoutTitle,
-        description: logoutDescription,
-        buttonText: confirmText,
-        cancelText: cancelText,
-        onPressed: onPressed,
+    unawaited(
+      showCustomModalBottomSheet<void>(
+        context: context,
+        backgroundColor:
+            Theme.of(context).bottomNavigationBarTheme.backgroundColor ??
+            Colors.white,
+        constraints: BoxConstraints(
+          maxHeight: MediaQuery.of(context).size.height * 0.8,
+          maxWidth: 500,
+        ),
+        builder: (context) => ModalBottomSheetWidget(
+          title: logoutTitle,
+          description: logoutDescription,
+          buttonText: confirmText,
+          cancelText: cancelText,
+          onPressed: onPressed,
+        ),
       ),
     );
   }
