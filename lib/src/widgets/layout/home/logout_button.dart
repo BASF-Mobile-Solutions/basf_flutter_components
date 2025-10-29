@@ -61,22 +61,24 @@ class LogoutButton extends StatelessWidget {
 
   /// show logout confirmation
   void showBottomSheet(BuildContext context) {
-    unawaited(showCustomModalBottomSheet<void>(
-      context: context,
-      backgroundColor:
-          Theme.of(context).bottomNavigationBarTheme.backgroundColor ??
-          Colors.white,
-      constraints: BoxConstraints(
-        maxHeight: MediaQuery.of(context).size.height * 0.8,
-        maxWidth: 500,
+    unawaited(
+      showCustomModalBottomSheet<void>(
+        context: context,
+        backgroundColor:
+            Theme.of(context).bottomNavigationBarTheme.backgroundColor ??
+            Colors.white,
+        constraints: BoxConstraints(
+          maxHeight: MediaQuery.of(context).size.height * 0.8,
+          maxWidth: 500,
+        ),
+        builder: (context) => ModalBottomSheetWidget(
+          title: logoutTitle,
+          description: logoutDescription,
+          buttonText: confirmText,
+          cancelText: cancelText,
+          onPressed: onPressed,
+        ),
       ),
-      builder: (context) => ModalBottomSheetWidget(
-        title: logoutTitle,
-        description: logoutDescription,
-        buttonText: confirmText,
-        cancelText: cancelText,
-        onPressed: onPressed,
-      ),
-    ));
+    );
   }
 }
