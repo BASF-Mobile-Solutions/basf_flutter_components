@@ -1,3 +1,10 @@
 {
-  "@@locale": "de_rlp"
+  "@@locale": "de_rlp",
+  "cameraNotAvailable": "Kamera ist nicht verfügbar",
+  "codeScanSuccessPhrase": "Code erfolgreich gescannt",
+  "provideCameraPermission": "Kameraberechtigung erteilen",
+  "rescan": "Erneut scannen",
+  "warning": "Warnung",
+  "generalAbort": "Abbrechen",
+  "generalConfirm": "Bestätigen"
 }
