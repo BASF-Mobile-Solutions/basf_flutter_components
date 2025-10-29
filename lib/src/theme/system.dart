@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -47,6 +49,8 @@ class SystemThemes {
 
   /// Set portrait mode for the app
   static void setSystemOrientations() {
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    unawaited(
+      SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]),
+    );
   }
 }

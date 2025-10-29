@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -174,7 +176,7 @@ class _ScannerState extends State<Scanner> with RouteAware {
         capture.barcodes.first.rawValue?.isNotEmpty != null;
 
     if (valueExists) {
-      stopCameraAfterScan(context, capture.barcodes.first.rawValue!);
+      unawaited(stopCameraAfterScan(context, capture.barcodes.first.rawValue!));
     }
   }
 

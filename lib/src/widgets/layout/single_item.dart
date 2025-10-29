@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -116,7 +118,7 @@ class _SingleItemState extends State<SingleItem> {
   }
 
   void copyOrderNumber() {
-    Clipboard.setData(ClipboardData(text: widget.value));
+    unawaited(Clipboard.setData(ClipboardData(text: widget.value)));
 
     if (!copyIconIsVisible) {
       setState(() {

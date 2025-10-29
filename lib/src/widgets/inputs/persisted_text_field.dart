@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:basf_flutter_components/basf_flutter_components.dart';
@@ -435,7 +436,7 @@ class _PersistedTextFieldState extends State<PersistedTextField> {
     widget.saveTriggerNotifier.addListener(saveValue);
     widget.controller.addListener(textControllerListener);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      setFavoriteValueAsDefault();
+      unawaited(setFavoriteValueAsDefault());
     });
     super.initState();
   }
