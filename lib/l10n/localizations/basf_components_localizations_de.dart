@@ -28,6 +28,9 @@ class BasfComponentsLocalizationsDe extends BasfComponentsLocalizations {
 
   @override
   String get generalConfirm => 'Bestätigen';
+
+  @override
+  String get scanQRorBarcode => 'QR oder Barcode scannen';
 }
 
 /// The translations for German (`de_rlp`).
@@ -54,4 +57,7 @@ class BasfComponentsLocalizationsDeRlp extends BasfComponentsLocalizationsDe {
 
   @override
   String get generalConfirm => 'Bestätigen';
+
+  @override
+  String get scanQRorBarcode => 'QR- oder Barcode scannen';
 }

@@ -28,4 +28,7 @@ class BasfComponentsLocalizationsKo extends BasfComponentsLocalizations {
 
   @override
   String get generalConfirm => 'Confirm';
+
+  @override
+  String get scanQRorBarcode => 'Scan QR or Barcode';
 }

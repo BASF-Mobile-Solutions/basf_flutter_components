@@ -1,3 +1,4 @@
+import 'package:basf_flutter_components/l10n/localizations/basf_components_localizations.dart';
 import 'package:basf_flutter_components/src/widgets/scanner/overlays/widgets/camera_edge.dart';
 import 'package:basf_flutter_components/src/widgets/scanner/overlays/widgets/scan_support_text.dart';
 import 'package:basf_flutter_components/src/widgets/scanner/overlays/widgets/toggle_flash_icon_button.dart';
@@ -9,7 +10,7 @@ class UnitsScannerOverlay extends StatelessWidget {
   const UnitsScannerOverlay({
     required this.nextScanText,
     this.topLayout,
-    this.scanQRorBarcodeText = 'Scan QR or Barcode',
+    this.scanQRorBarcodeText,
     super.key,
   });
 
@@ -17,7 +18,7 @@ class UnitsScannerOverlay extends StatelessWidget {
   final Widget? topLayout;
 
   /// "Scan QR or Barcode"
-  final String scanQRorBarcodeText;
+  final String? scanQRorBarcodeText;
 
   /// "SSCC"
   final String nextScanText;
@@ -32,18 +33,22 @@ class UnitsScannerOverlay extends StatelessWidget {
         const Expanded(
           child: Padding(padding: EdgeInsets.all(5), child: CameraEdges()),
         ),
-        horizontalBlackOut(child: bottomLayout()),
+        horizontalBlackOut(child: bottomLayout(context)),
       ],
     );
   }
 
   /// Top part
-  Widget bottomLayout() {
+  Widget bottomLayout(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Padding(padding: const EdgeInsets.only(left: 14), child: nexScanInfo()),
-        ScanSupportText(scanQRorBarcode: scanQRorBarcodeText),
+        ScanSupportText(
+          scanQRorBarcode:
+              scanQRorBarcodeText ??
+              BasfComponentsLocalizations.of(context).scanQRorBarcode,
+        ),
         const ToggleFlashIconButton(),
       ],
     );

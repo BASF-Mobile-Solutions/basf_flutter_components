@@ -6,5 +6,6 @@
   "rescan": "重新扫描",
   "warning": "警告",
   "generalAbort": "中止",
-  "generalConfirm": "确认"
+  "generalConfirm": "确认",
+  "scanQRorBarcode": "扫描二维码或条形码"
 }

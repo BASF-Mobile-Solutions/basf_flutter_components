@@ -6,5 +6,6 @@
   "rescan": "Rescan",
   "warning": "Warning",
   "generalAbort": "Cancel",
-  "generalConfirm": "Confirm"
+  "generalConfirm": "Confirm",
+  "scanQRorBarcode": "Scan QR or Barcode"
 }

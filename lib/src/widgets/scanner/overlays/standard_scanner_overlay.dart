@@ -1,3 +1,4 @@
+import 'package:basf_flutter_components/l10n/localizations/basf_components_localizations.dart';
 import 'package:basf_flutter_components/src/widgets/scanner/overlays/widgets/scanner_blackout_square.dart';
 import 'package:basf_flutter_components/src/widgets/scanner/overlays/widgets/standard_bottom_actions.dart';
 import 'package:flutter/material.dart';
@@ -7,11 +8,11 @@ class StandardScannerOverlay extends StatelessWidget {
   ///
   const StandardScannerOverlay({
     super.key,
-    this.scanQRorBarcode = 'Scan QR or Barcode',
+    this.scanQRorBarcode,
   });
 
   /// "Scan QR or Barcode"
-  final String scanQRorBarcode;
+  final String? scanQRorBarcode;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,11 @@ class StandardScannerOverlay extends StatelessWidget {
           bottom: 5,
           left: 3,
           right: 3,
-          child: StandardBottomActions(scanQRorBarcode: scanQRorBarcode),
+          child: StandardBottomActions(
+            scanQRorBarcode:
+                scanQRorBarcode ??
+                BasfComponentsLocalizations.of(context).scanQRorBarcode,
+          ),
         ),
       ],
     );
