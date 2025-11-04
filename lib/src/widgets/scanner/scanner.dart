@@ -143,30 +143,28 @@ class _ScannerState extends State<Scanner> with RouteAware {
   }
 
   Widget scannerCamera(BuildContext context) {
-    return MobileScanner(
-      controller: scannerCubit.cameraController,
-      errorBuilder: (context, error) {
-        return switch (error.errorCode) {
-          MobileScannerErrorCode.unsupported ||
-          MobileScannerErrorCode.controllerAlreadyInitialized =>
-            const ScannerNoCameraLayout(),
-          MobileScannerErrorCode.permissionDenied =>
-            const ScannerNoPermissionLayout(),
-          _ => ScannerDefaultErrorLayout(message: error.errorCode.message),
-        };
-      },
-      onDetect: (capture) => onDetect(context, capture),
-      overlayBuilder: (context, constrains) {
-        return Stack(
-          children: [
-            widget.overlay,
-            if (widget.cooldownSeconds != null) ...[
-              Positioned.fill(child: successIcon()),
-              Positioned.fill(child: cooldown()),
-            ],
-          ],
-        );
-      },
+    return Stack(
+      children: [
+        MobileScanner(
+          controller: scannerCubit.cameraController,
+          errorBuilder: (context, error) {
+            return switch (error.errorCode) {
+              MobileScannerErrorCode.unsupported ||
+              MobileScannerErrorCode.controllerAlreadyInitialized =>
+                const ScannerNoCameraLayout(),
+              MobileScannerErrorCode.permissionDenied =>
+                const ScannerNoPermissionLayout(),
+              _ => ScannerDefaultErrorLayout(message: error.errorCode.message),
+            };
+          },
+          onDetect: (capture) => onDetect(context, capture),
+        ),
+        widget.overlay,
+        if (widget.cooldownSeconds != null) ...[
+          Positioned.fill(child: successIcon()),
+          Positioned.fill(child: cooldown()),
+        ],
+      ],
     );
   }
 

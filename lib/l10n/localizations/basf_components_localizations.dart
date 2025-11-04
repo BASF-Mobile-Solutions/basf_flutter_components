@@ -157,6 +157,12 @@ abstract class BasfComponentsLocalizations {
   /// In en, this message translates to:
   /// **'Confirm'**
   String get generalConfirm;
+
+  /// No description provided for @scanQRorBarcode.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan QR or Barcode'**
+  String get scanQRorBarcode;
 }
 
 class _BasfComponentsLocalizationsDelegate

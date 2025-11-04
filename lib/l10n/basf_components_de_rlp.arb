@@ -6,5 +6,6 @@
   "rescan": "Erneut scannen",
   "warning": "Warnung",
   "generalAbort": "Abbrechen",
-  "generalConfirm": "Bestätigen"
+  "generalConfirm": "Bestätigen",
+  "scanQRorBarcode": "QR- oder Barcode scannen"
 }

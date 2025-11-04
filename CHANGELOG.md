@@ -1,3 +1,6 @@
+## 2.9.2
+- Scanner overlay fix
+
 ## 2.9.1
 - Camera lib update
 - Add Chinese translations

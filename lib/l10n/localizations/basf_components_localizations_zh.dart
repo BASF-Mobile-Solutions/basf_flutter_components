@@ -28,6 +28,9 @@ class BasfComponentsLocalizationsZh extends BasfComponentsLocalizations {
 
   @override
   String get generalConfirm => '确认';
+
+  @override
+  String get scanQRorBarcode => '扫描二维码或条形码';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hans`).
@@ -54,6 +57,9 @@ class BasfComponentsLocalizationsZhHans extends BasfComponentsLocalizationsZh {
 
   @override
   String get generalConfirm => '确认';
+
+  @override
+  String get scanQRorBarcode => '扫描二维码或条形码';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hant`).
@@ -80,4 +86,7 @@ class BasfComponentsLocalizationsZhHant extends BasfComponentsLocalizationsZh {
 
   @override
   String get generalConfirm => '確認';
+
+  @override
+  String get scanQRorBarcode => '掃描二維碼或條碼';
 }

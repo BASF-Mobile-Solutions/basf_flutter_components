@@ -81,6 +81,7 @@ export 'src/widgets/scanner/layouts/scanner_default_error_layout.dart';
 export 'src/widgets/scanner/layouts/scanner_no_camera_layout.dart';
 export 'src/widgets/scanner/layouts/scanner_no_permission_layout.dart';
 export 'src/widgets/scanner/layouts/scanner_success_layout.dart';
+export 'src/widgets/scanner/overlays/onoff_standard_overlay.dart';
 export 'src/widgets/scanner/overlays/standard_scanner_overlay.dart';
 export 'src/widgets/scanner/overlays/units_scanner_overlay.dart';
 export 'src/widgets/scanner/overlays/widgets/camera_edge.dart';
