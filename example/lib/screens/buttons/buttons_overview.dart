@@ -18,8 +18,8 @@ class ButtonsOverviewScreen extends StatelessWidget {
           children: [
             BasfTextButton.contained(
               text: 'Text Contained Buttons',
-              onPressed: () {
-                Navigator.push(
+              onPressed: () async {
+                await Navigator.push(
                   context,
                   MaterialPageRoute<void>(
                     builder: (context) => const TextButtonsContainedScreen(),
@@ -29,8 +29,8 @@ class ButtonsOverviewScreen extends StatelessWidget {
             ),
             BasfOutlinedButton(
               text: 'Outlined Buttons',
-              onPressed: () {
-                Navigator.push(
+              onPressed: () async {
+                await Navigator.push(
                   context,
                   MaterialPageRoute<void>(
                     builder: (context) => const OutlinedButtonsScreen(),
@@ -40,8 +40,8 @@ class ButtonsOverviewScreen extends StatelessWidget {
             ),
             BasfTextButton.transparent(
               text: 'Transparent Buttons',
-              onPressed: () {
-                Navigator.push(
+              onPressed: () async {
+                await Navigator.push(
                   context,
                   MaterialPageRoute<void>(
                     builder: (context) => const TextButtonsTransparentScreen(),

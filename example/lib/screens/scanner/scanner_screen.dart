@@ -128,8 +128,8 @@ class _ScannerScreenState extends State<ScannerScreen> {
 
   Widget bottomSheetButton() {
     return IconButton(
-      onPressed: () {
-        showModalBottomSheet<void>(
+      onPressed: () async {
+        await showModalBottomSheet<void>(
           context: context,
           showDragHandle: true,
           builder: (context) {
@@ -143,8 +143,8 @@ class _ScannerScreenState extends State<ScannerScreen> {
 
   Widget openNewPageButton(BuildContext context) {
     return IconButton(
-      onPressed: () {
-        Navigator.of(context).push(
+      onPressed: () async {
+        await Navigator.of(context).push(
           MaterialPageRoute<Widget>(
             builder: (context) {
               return Scaffold(

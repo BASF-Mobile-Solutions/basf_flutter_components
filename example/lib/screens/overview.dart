@@ -23,8 +23,8 @@ class _OverviewScreenState extends State<OverviewScreen> {
             BasfTextButton.contained(
               text: 'BASF Alerts',
               expanded: true,
-              onPressed: () {
-                Navigator.push(
+              onPressed: () async {
+                await Navigator.push(
                   context,
                   MaterialPageRoute<void>(
                     builder: (context) => const AlertsOverviewScreen(),
@@ -35,8 +35,8 @@ class _OverviewScreenState extends State<OverviewScreen> {
             BasfTextButton.contained(
               text: 'BASF Animations',
               expanded: true,
-              onPressed: () {
-                Navigator.push(
+              onPressed: () async {
+                await Navigator.push(
                   context,
                   MaterialPageRoute<void>(
                     builder: (context) => const AnimationsOverviewScreen(),
@@ -47,8 +47,8 @@ class _OverviewScreenState extends State<OverviewScreen> {
             BasfTextButton.contained(
               text: 'BASF Buttons',
               expanded: true,
-              onPressed: () {
-                Navigator.push(
+              onPressed: () async {
+                await Navigator.push(
                   context,
                   MaterialPageRoute<void>(
                     builder: (context) => const ButtonsOverviewScreen(),
@@ -59,8 +59,8 @@ class _OverviewScreenState extends State<OverviewScreen> {
             BasfTextButton.contained(
               text: 'BASF Colors',
               expanded: true,
-              onPressed: () {
-                Navigator.push(
+              onPressed: () async {
+                await Navigator.push(
                   context,
                   MaterialPageRoute<void>(
                     builder: (context) => const ColorsOverviewScreen(),
@@ -71,8 +71,8 @@ class _OverviewScreenState extends State<OverviewScreen> {
             BasfTextButton.contained(
               text: 'BASF Dialogs',
               expanded: true,
-              onPressed: () {
-                Navigator.push(
+              onPressed: () async {
+                await Navigator.push(
                   context,
                   MaterialPageRoute<void>(
                     builder: (context) => const DialogOverviewScreen(),
@@ -83,8 +83,8 @@ class _OverviewScreenState extends State<OverviewScreen> {
             BasfTextButton.contained(
               text: 'BASF Fonts',
               expanded: true,
-              onPressed: () {
-                Navigator.push(
+              onPressed: () async {
+                await Navigator.push(
                   context,
                   MaterialPageRoute<void>(
                     builder: (context) => const FontsScreen(),
@@ -95,8 +95,8 @@ class _OverviewScreenState extends State<OverviewScreen> {
             BasfTextButton.contained(
               text: 'BASF Forms',
               expanded: true,
-              onPressed: () {
-                Navigator.push(
+              onPressed: () async {
+                await Navigator.push(
                   context,
                   MaterialPageRoute<void>(
                     builder: (context) => const FormsOverviewScreen(),
@@ -107,8 +107,8 @@ class _OverviewScreenState extends State<OverviewScreen> {
             BasfTextButton.contained(
               text: 'BASF Icons',
               expanded: true,
-              onPressed: () {
-                Navigator.push(
+              onPressed: () async {
+                await Navigator.push(
                   context,
                   MaterialPageRoute<void>(
                     builder: (context) => const IconsOverviewScreen(),
@@ -119,8 +119,8 @@ class _OverviewScreenState extends State<OverviewScreen> {
             BasfTextButton.contained(
               text: 'BASF Themes',
               expanded: true,
-              onPressed: () {
-                Navigator.push(
+              onPressed: () async {
+                await Navigator.push(
                   context,
                   MaterialPageRoute<void>(
                     builder: (context) => const ThemesOverviewScreen(),
@@ -131,8 +131,8 @@ class _OverviewScreenState extends State<OverviewScreen> {
             BasfTextButton.contained(
               text: 'Scanner',
               expanded: true,
-              onPressed: () {
-                Navigator.push(
+              onPressed: () async {
+                await Navigator.push(
                   context,
                   MaterialPageRoute<void>(
                     builder: (context) {
