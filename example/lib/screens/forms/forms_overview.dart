@@ -17,8 +17,8 @@ class FormsOverviewScreen extends StatelessWidget {
           children: [
             BasfTextButton.contained(
               text: 'BASF Text Fields',
-              onPressed: () {
-                Navigator.push(
+              onPressed: () async {
+                await Navigator.push(
                   context,
                   MaterialPageRoute<void>(
                     builder: (context) => const TextFieldScreen(),
@@ -28,8 +28,8 @@ class FormsOverviewScreen extends StatelessWidget {
             ),
             BasfTextButton.contained(
               text: 'BASF Options',
-              onPressed: () {
-                Navigator.push(
+              onPressed: () async {
+                await Navigator.push(
                   context,
                   MaterialPageRoute<void>(
                     builder: (context) => const OptionsScreen(),

@@ -33,8 +33,8 @@ class DialogOverviewScreen extends StatelessWidget {
             ),
             BasfTextButton.contained(
               text: 'Only Confirm',
-              onPressed: () {
-                showDialog<void>(
+              onPressed: () async {
+                await showDialog<void>(
                   context: context,
                   builder: (context) {
                     return const BasfAlertDialog(
@@ -48,8 +48,8 @@ class DialogOverviewScreen extends StatelessWidget {
             ),
             BasfTextButton.contained(
               text: 'Changed Text',
-              onPressed: () {
-                showDialog<void>(
+              onPressed: () async {
+                await showDialog<void>(
                   context: context,
                   builder: (context) {
                     return const BasfAlertDialog(
@@ -62,8 +62,8 @@ class DialogOverviewScreen extends StatelessWidget {
             ),
             BasfTextButton.contained(
               text: 'Select functions',
-              onPressed: () {
-                showDialog<void>(
+              onPressed: () async {
+                await showDialog<void>(
                   context: context,
                   builder: (_) {
                     return BasfAlertDialog(
