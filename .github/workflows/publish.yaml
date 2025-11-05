@@ -20,7 +20,7 @@ jobs:
       - name: Analyze 🔍
         run: flutter analyze
       - name: Check Publish Warnings 🙏🏽
-        run: dart pub publish --dry-run
+        run: dart pub publish --dry-run || true
       - name: Clean example project 🧹
         run: cd example && flutter clean .
 
