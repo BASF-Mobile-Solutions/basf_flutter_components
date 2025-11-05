@@ -79,8 +79,8 @@ class HomeTile extends StatelessWidget {
           ),
         ),
         BasfTextButton.contained(
-          size: Size(double.maxFinite, _height),
           style: TextButton.styleFrom(
+            fixedSize: Size(double.maxFinite, _height),
             backgroundColor: Colors.transparent,
             foregroundColor: Theme.of(context).primaryColor,
             shape: RoundedRectangleBorder(
