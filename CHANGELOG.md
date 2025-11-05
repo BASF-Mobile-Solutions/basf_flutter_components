@@ -1,3 +1,6 @@
+## 2.9.3
+- Revert scanner to old stable version
+
 ## 2.9.2
 - Scanner overlay fix
 

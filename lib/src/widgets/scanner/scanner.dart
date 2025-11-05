@@ -147,6 +147,7 @@ class _ScannerState extends State<Scanner> with RouteAware {
       children: [
         MobileScanner(
           controller: scannerCubit.cameraController,
+          onDetect: (capture) => onDetect(context, capture),
           errorBuilder: (context, error) {
             return switch (error.errorCode) {
               MobileScannerErrorCode.unsupported ||
@@ -157,13 +158,18 @@ class _ScannerState extends State<Scanner> with RouteAware {
               _ => ScannerDefaultErrorLayout(message: error.errorCode.message),
             };
           },
-          onDetect: (capture) => onDetect(context, capture),
+          overlayBuilder: (context, constrains) {
+            return Stack(
+              children: [
+                widget.overlay,
+                if (widget.cooldownSeconds != null) ...[
+                  Positioned.fill(child: successIcon()),
+                  Positioned.fill(child: cooldown()),
+                ],
+              ],
+            );
+          },
         ),
-        widget.overlay,
-        if (widget.cooldownSeconds != null) ...[
-          Positioned.fill(child: successIcon()),
-          Positioned.fill(child: cooldown()),
-        ],
       ],
     );
   }
