@@ -163,7 +163,9 @@ class _ScannerState extends State<Scanner> with RouteAware {
           child: ValueListenableBuilder<MobileScannerState>(
             valueListenable: scannerCubit.cameraController,
             builder: (context, state, _) {
-              if (!state.isInitialized || state.error != null) const SizedBox();
+              if (!state.isInitialized || state.error != null) {
+                return const SizedBox();
+              }
 
               return Stack(
                 children: [
