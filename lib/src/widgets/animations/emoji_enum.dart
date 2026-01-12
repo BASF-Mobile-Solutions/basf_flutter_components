@@ -18,7 +18,8 @@ enum RiveEmoji {
   laughing('Laughing'),
 
   ///
-  surprise('Surprise');
+  surprise('Surprise')
+  ;
 
   const RiveEmoji(this.artBoard);
 
