@@ -23,7 +23,7 @@ dependencies:
 
   url_launcher: ^6.3.2
   path_provider: ^2.1.5
-  rive: ^0.14.0
+  rive: 0.13.20
   transparent_image: ^2.0.1
 
   mobile_scanner: ^7.1.4
@@ -47,7 +47,7 @@ flutter_gen:
       package_parameter_enabled: true
       class_name: BasfAssets
   integrations:
-    rive: false
+    rive: true
 
 flutter:
   generate: true
