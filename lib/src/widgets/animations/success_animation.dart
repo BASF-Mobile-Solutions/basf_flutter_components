@@ -1,6 +1,5 @@
 import 'package:basf_flutter_components/utils/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
-import 'package:rive/rive.dart';
 
 /// Rounded checkmark animation
 class SuccessAnimation extends StatelessWidget {

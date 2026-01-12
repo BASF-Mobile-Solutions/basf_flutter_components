@@ -138,8 +138,7 @@ class HomeTile extends StatelessWidget {
                 ],
               ),
             ),
-            if (unfinishedProcessNotification != null)
-              unfinishedProcessNotification!,
+            ?unfinishedProcessNotification,
           ],
         );
       },
