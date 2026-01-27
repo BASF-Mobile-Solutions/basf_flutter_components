@@ -1,3 +1,6 @@
+## 2.9.5
+- Small adjustments
+
 ## 2.9.4
 - Update scanner to the latest version and fix overlay button press problem
 - Fix 16KB memory support for android in Rive
