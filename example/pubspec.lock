@@ -15,7 +15,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "2.9.3"
+    version: "2.9.5"
   bloc:
     dependency: transitive
     description:
@@ -171,18 +171,18 @@ packages:
     dependency: transitive
     description:
       name: meta
-      sha256: e3641ec5d63ebf0d9b41bd43201a66e3fc79a65db5f61fc181f04cd27aab950c
+      sha256: "23f08335362185a5ea2ad3a4e597f1375e78bce8a040df5c600c8d3552ef2394"
       url: "https://pub.dev"
     source: hosted
-    version: "1.16.0"
+    version: "1.17.0"
   mobile_scanner:
     dependency: transitive
     description:
       name: mobile_scanner
-      sha256: "54005bdea7052d792d35b4fef0f84ec5ddc3a844b250ecd48dc192fb9b4ebc95"
+      sha256: c6184bf2913dd66be244108c9c27ca04b01caf726321c44b0e7a7a1e32d41044
       url: "https://pub.dev"
     source: hosted
-    version: "7.0.1"
+    version: "7.1.4"
   nested:
     dependency: transitive
     description:
@@ -251,18 +251,18 @@ packages:
     dependency: transitive
     description:
       name: permission_handler
-      sha256: "59adad729136f01ea9e35a48f5d1395e25cba6cea552249ddbe9cf950f5d7849"
+      sha256: bc917da36261b00137bbc8896bf1482169cd76f866282368948f032c8c1caae1
       url: "https://pub.dev"
     source: hosted
-    version: "11.4.0"
+    version: "12.0.1"
   permission_handler_android:
     dependency: transitive
     description:
       name: permission_handler_android
-      sha256: d3971dcdd76182a0c198c096b5db2f0884b0d4196723d21a866fc4cdea057ebc
+      sha256: "1e3bc410ca1bf84662104b100eb126e066cb55791b7451307f9708d4007350e6"
       url: "https://pub.dev"
     source: hosted
-    version: "12.1.0"
+    version: "13.0.1"
   permission_handler_apple:
     dependency: transitive
     description:
@@ -472,10 +472,10 @@ packages:
     dependency: transitive
     description:
       name: vibration
-      sha256: "1fd51cb0f91c6d512734ca0e282dd87fbc7f389b6da5f03c77709ba2cf8fa901"
+      sha256: bfb274be6996651d36bf3e3a947d2122767dae255cfb9ce6ce8ee4b38fb56bad
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.4"
+    version: "3.1.5"
   vibration_platform_interface:
     dependency: transitive
     description:
@@ -517,5 +517,5 @@ packages:
     source: hosted
     version: "1.1.0"
 sdks:
-  dart: ">=3.9.0 <4.0.0"
+  dart: ">=3.10.0 <4.0.0"
   flutter: ">=3.29.0"

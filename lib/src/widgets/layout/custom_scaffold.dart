@@ -14,6 +14,7 @@ class CustomScaffold extends StatelessWidget {
     this.actions,
     this.showBackButton = true,
     this.showAppBar = true,
+    this.maxWidth = 500,
     super.key,
   });
 
@@ -41,21 +42,48 @@ class CustomScaffold extends StatelessWidget {
   /// Whether to show the appbar or not
   final bool showAppBar;
 
+  /// Optional max width for the scaffold content (app bar, body, bottom bar)
+  final double? maxWidth;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: resizeToAvoidBottomInset,
       backgroundColor: BasfColors.backgroundGrey,
       appBar: showAppBar
-          ? CustomAppBar(
-              title: title,
-              previousScreenCall: backCallback,
-              actions: actions,
-              showBackButton: showBackButton,
+          ? _wrapAppBar(
+              CustomAppBar(
+                title: title,
+                previousScreenCall: backCallback,
+                actions: actions,
+                showBackButton: showBackButton,
+              ),
             )
           : null,
-      body: SafeArea(child: child),
-      bottomNavigationBar: bottomNavigationBar,
+      body: SafeArea(child: _wrapContent(child)),
+      bottomNavigationBar: bottomNavigationBar == null
+          ? null
+          : _wrapContent(bottomNavigationBar!),
+    );
+  }
+
+  PreferredSizeWidget _wrapAppBar(PreferredSizeWidget appBar) {
+    if (maxWidth == null) return appBar;
+
+    return PreferredSize(
+      preferredSize: appBar.preferredSize,
+      child: _wrapContent(appBar),
+    );
+  }
+
+  Widget _wrapContent(Widget content) {
+    if (maxWidth == null) return content;
+
+    return Center(
+      child: ConstrainedBox(
+        constraints: BoxConstraints(maxWidth: maxWidth!),
+        child: content,
+      ),
     );
   }
 }

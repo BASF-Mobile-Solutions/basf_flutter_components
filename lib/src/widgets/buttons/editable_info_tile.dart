@@ -76,7 +76,7 @@ class EditableInfoTile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     if (onDelete != null) deleteButton(),
-                    if (icon != null) icon!,
+                    ?icon,
                   ],
                 ),
               ],

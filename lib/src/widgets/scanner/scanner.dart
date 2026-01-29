@@ -158,17 +158,26 @@ class _ScannerState extends State<Scanner> with RouteAware {
               _ => ScannerDefaultErrorLayout(message: error.errorCode.message),
             };
           },
-          overlayBuilder: (context, constrains) {
-            return Stack(
-              children: [
-                widget.overlay,
-                if (widget.cooldownSeconds != null) ...[
-                  Positioned.fill(child: successIcon()),
-                  Positioned.fill(child: cooldown()),
+        ),
+        Positioned.fill(
+          child: ValueListenableBuilder<MobileScannerState>(
+            valueListenable: scannerCubit.cameraController,
+            builder: (context, state, _) {
+              if (!state.isInitialized || state.error != null) {
+                return const SizedBox();
+              }
+
+              return Stack(
+                children: [
+                  widget.overlay,
+                  if (widget.cooldownSeconds != null) ...[
+                    Positioned.fill(child: successIcon()),
+                    Positioned.fill(child: cooldown()),
+                  ],
                 ],
-              ],
-            );
-          },
+              );
+            },
+          ),
         ),
       ],
     );
