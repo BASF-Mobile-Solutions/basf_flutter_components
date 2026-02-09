@@ -23,7 +23,7 @@ dependencies:
 
   url_launcher: ^6.3.2
   path_provider: ^2.1.5
-  rive: 0.13.20
+  rive: 0.14.2
   transparent_image: ^2.0.1
 
   mobile_scanner: ^7.1.4
