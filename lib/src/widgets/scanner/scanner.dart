@@ -2,9 +2,8 @@ import 'dart:async';
 
 import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:vibration/vibration.dart';
-import 'package:vibration/vibration_presets.dart';
 
 /// !!! Read this to setup camera access https://pub.dev/packages/mobile_scanner
 /// !!! Requires [ScannerCubit] to be provided above this widget
@@ -200,7 +199,7 @@ class _ScannerState extends State<Scanner> with RouteAware {
 
     try {
       widget.onScan(barcode);
-      await vibrate(VibrationPreset.singleShortBuzz);
+      await HapticFeedback.vibrate();
 
       if (widget.cooldownSeconds == null) {
         await scannerCubit.cameraController.stop();
@@ -210,7 +209,10 @@ class _ScannerState extends State<Scanner> with RouteAware {
     } catch (e) {
       final msg = e.toString();
       const duration = Duration(milliseconds: 1700);
-      await vibrate(VibrationPreset.doubleBuzz);
+      for (var i = 0; i < 3; i++) {
+        await HapticFeedback.vibrate();
+        await Future<void>.delayed(const Duration(milliseconds: 100));
+      }
 
       if (context.mounted) {
         AppSnackBar.error(message: msg).show(context, duration: duration);
@@ -289,7 +291,4 @@ class _ScannerState extends State<Scanner> with RouteAware {
     );
   }
 
-  Future<void> vibrate(VibrationPreset preset) async {
-    if (await Vibration.hasVibrator()) await Vibration.vibrate(preset: preset);
-  }
 }

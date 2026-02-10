@@ -6,7 +6,7 @@ import '../../../helpers/pump_app.dart';
 
 void main() {
   group('BASF button', () {
-    testWidgets('BasfButtonTest', (WidgetTester tester) async {
+    testWidgets('BasfButtonTest', (tester) async {
       const text = 'Hi!';
       const text2 = 'henlo';
       await tester.pumpApp(
@@ -26,7 +26,7 @@ void main() {
       // expect(find.byIcon(Icons.abc), findsOneWidget);
       // expect(find.byIcon(Icons.abc_rounded), findsOneWidget);
     });
-    testWidgets('Basf date picker', (WidgetTester tester) async {
+    testWidgets('Basf date picker', (tester) async {
       const text = 'Hi!';
       const tapTarget = Key('tap-target');
       await tester.pumpApp(

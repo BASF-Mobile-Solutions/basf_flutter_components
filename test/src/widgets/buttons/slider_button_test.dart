@@ -6,7 +6,7 @@ import '../../../helpers/pump_app.dart';
 
 void main() {
   group('BASF Slider Button', () {
-    testWidgets('Slider button text', (WidgetTester tester) async {
+    testWidgets('Slider button text', (tester) async {
       const text = 'Hi!';
       await tester.pumpApp(
         SliderButton(text: text, onConfirmation: () {}),
@@ -23,7 +23,7 @@ void main() {
       await tester.drag(find.byType(GestureDetector), const Offset(50000, 0));
       await tester.pumpAndSettle();
     });
-    testWidgets('Slider button text, themed', (WidgetTester tester) async {
+    testWidgets('Slider button text, themed', (tester) async {
       const text = 'Hi!';
       await tester.pumpApp(
         SliderButton(
@@ -44,7 +44,7 @@ void main() {
     });
 
     testWidgets('Slider test slider button in the middle', (
-      WidgetTester tester,
+      tester,
     ) async {
       await tester.pumpApp(
         SliderButton(onConfirmation: () {}, width: 2000, height: 500),
