@@ -1,3 +1,7 @@
+## 2.9.6
+- Flutter 3.41 & Dart 3.11
+- Mobile scanner improvements
+
 ## 2.9.5
 - Small adjustments
 

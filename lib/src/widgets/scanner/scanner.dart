@@ -142,43 +142,30 @@ class _ScannerState extends State<Scanner> with RouteAware {
   }
 
   Widget scannerCamera(BuildContext context) {
-    return Stack(
-      children: [
-        MobileScanner(
-          controller: scannerCubit.cameraController,
-          onDetect: (capture) => onDetect(context, capture),
-          errorBuilder: (context, error) {
-            return switch (error.errorCode) {
-              MobileScannerErrorCode.unsupported ||
-              MobileScannerErrorCode.controllerAlreadyInitialized =>
-                const ScannerNoCameraLayout(),
-              MobileScannerErrorCode.permissionDenied =>
-                const ScannerNoPermissionLayout(),
-              _ => ScannerDefaultErrorLayout(message: error.errorCode.message),
-            };
-          },
-        ),
-        Positioned.fill(
-          child: ValueListenableBuilder<MobileScannerState>(
-            valueListenable: scannerCubit.cameraController,
-            builder: (context, state, _) {
-              if (!state.isInitialized || state.error != null) {
-                return const SizedBox();
-              }
-
-              return Stack(
-                children: [
-                  widget.overlay,
-                  if (widget.cooldownSeconds != null) ...[
-                    Positioned.fill(child: successIcon()),
-                    Positioned.fill(child: cooldown()),
-                  ],
-                ],
-              );
-            },
-          ),
-        ),
-      ],
+    return MobileScanner(
+      controller: scannerCubit.cameraController,
+      onDetect: (capture) => onDetect(context, capture),
+      overlayBuilder: (_, _) {
+        return Stack(
+          children: [
+            widget.overlay,
+            if (widget.cooldownSeconds != null) ...[
+              Positioned.fill(child: successIcon()),
+              Positioned.fill(child: cooldown()),
+            ],
+          ],
+        );
+      },
+      errorBuilder: (_, error) {
+        return switch (error.errorCode) {
+          MobileScannerErrorCode.unsupported ||
+          MobileScannerErrorCode.controllerAlreadyInitialized =>
+            const ScannerNoCameraLayout(),
+          MobileScannerErrorCode.permissionDenied =>
+            const ScannerNoPermissionLayout(),
+          _ => ScannerDefaultErrorLayout(message: error.errorCode.message),
+        };
+      },
     );
   }
 
