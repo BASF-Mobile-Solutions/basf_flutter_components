@@ -97,8 +97,10 @@ class ScannerCubit extends HydratedCubit<ScannerState> {
   Future<void> onChange(Change<ScannerState> change) async {
     super.onChange(change);
     switch (change.nextState) {
-      case ScannerDisabled(): break;
-      case ScannerEnabled(): _scannerDisabledAutomatically = false;
+      case ScannerDisabled():
+        break;
+      case ScannerEnabled():
+        _scannerDisabledAutomatically = false;
     }
   }
 
