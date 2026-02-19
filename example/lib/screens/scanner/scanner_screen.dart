@@ -19,6 +19,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
       appBar: AppBar(
         actions: [
           openNewPageButton(context),
+          scannerBottomSheetButton(),
           bottomSheetButton(),
           cameraSizeButton(),
           cameraCooldownMode(),
@@ -102,32 +103,54 @@ class _ScannerScreenState extends State<ScannerScreen> {
 
   Widget cameraSizeButton() {
     return IconButton(
+      icon: Icon(
+        isBig ? Icons.photo_size_select_large : Icons.photo_size_select_small,
+      ),
       onPressed: () {
         setState(() {
           isBig = !isBig;
         });
       },
-      icon: Icon(
-        isBig ? Icons.photo_size_select_large : Icons.photo_size_select_small,
-      ),
     );
   }
 
   Widget cameraCooldownMode() {
     return IconButton(
+      icon: Icon(
+        isCooldownMode ? Icons.timer_outlined : Icons.timer_off_outlined,
+      ),
       onPressed: () {
         setState(() {
           isCooldownMode = !isCooldownMode;
         });
       },
-      icon: Icon(
-        isCooldownMode ? Icons.timer_outlined : Icons.timer_off_outlined,
-      ),
+    );
+  }
+
+  Widget scannerBottomSheetButton() {
+    return IconButton(
+      icon: const Icon(Icons.add_a_photo_outlined),
+      onPressed: () async {
+        await showModalBottomSheet<void>(
+          context: context,
+          showDragHandle: true,
+          builder: (context) {
+            return BlocProvider<ScannerCubit>(
+              create: (context) => ScannerCubit(id: 'scanner_2'),
+              child: Scanner(
+                routeObserver: routeObserver,
+                onScan: print,
+              ),
+            );
+          },
+        );
+      },
     );
   }
 
   Widget bottomSheetButton() {
     return IconButton(
+      icon: const Icon(Icons.open_in_browser),
       onPressed: () async {
         await showModalBottomSheet<void>(
           context: context,
@@ -137,12 +160,12 @@ class _ScannerScreenState extends State<ScannerScreen> {
           },
         );
       },
-      icon: const Icon(Icons.open_in_browser),
     );
   }
 
   Widget openNewPageButton(BuildContext context) {
     return IconButton(
+      icon: const Icon(Icons.mobile_screen_share),
       onPressed: () async {
         await Navigator.of(context).push(
           MaterialPageRoute<Widget>(
@@ -157,7 +180,6 @@ class _ScannerScreenState extends State<ScannerScreen> {
           ),
         );
       },
-      icon: const Icon(Icons.mobile_screen_share),
     );
   }
 }
