@@ -1,10 +1,16 @@
-include: package:very_good_analysis/analysis_options.yaml
+include: package:flutter_lints/flutter.yaml
 
 linter:
   rules:
+    prefer_const_constructors: true
+    prefer_const_constructors_in_immutables: true
+    prefer_const_declarations: true
+    prefer_const_literals_to_create_immutables: true
+    prefer_constructors_over_static_methods: true
+    unnecessary_const: true
+
     no_default_cases: false
     sort_pub_dependencies: false
-    avoid_catches_without_on_clauses: false
     avoid_dynamic_calls: false
     use_null_aware_elements: true
 
