@@ -7,11 +7,11 @@ class OnOffStandardScannerOverlay extends StatelessWidget {
   ///
   const OnOffStandardScannerOverlay({
     super.key,
-    this.scanQRorBarcode,
+    this.middlePhrase,
   });
 
   /// "Scan QR or Barcode"
-  final String? scanQRorBarcode;
+  final String? middlePhrase;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class OnOffStandardScannerOverlay extends StatelessWidget {
               const EnableDisableCameraIconButton(),
               ScanSupportText(
                 scanQRorBarcode:
-                    scanQRorBarcode ??
+                    middlePhrase ??
                     BasfComponentsLocalizations.of(context).scanQRorBarcode,
               ),
               const ToggleFlashIconButton(),

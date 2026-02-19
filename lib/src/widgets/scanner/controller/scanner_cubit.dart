@@ -98,7 +98,7 @@ class ScannerCubit extends HydratedCubit<ScannerState> {
     super.onChange(change);
     switch (change.nextState) {
       case ScannerDisabled():
-        await cameraController.stop();
+        break;
       case ScannerEnabled():
         _scannerDisabledAutomatically = false;
     }

@@ -6,7 +6,7 @@ import '../../../helpers/pump_app.dart';
 
 void main() {
   group('BASF button', () {
-    testWidgets('BasfButtonTest with style', (WidgetTester tester) async {
+    testWidgets('BasfButtonTest with style', (tester) async {
       await tester.pumpApp(
         BasfTextButton.contained(
           onPressed: () {},
@@ -24,7 +24,7 @@ void main() {
       // expect(find.byIcon(Icons.abc), findsOneWidget);
       // expect(find.byIcon(Icons.abc_rounded), findsOneWidget);
     });
-    testWidgets('BasfButtonTest', (WidgetTester tester) async {
+    testWidgets('BasfButtonTest', (tester) async {
       await tester.pumpApp(
         BasfTextButton.contained(
           onPressed: () {},
@@ -41,7 +41,7 @@ void main() {
       // expect(find.byIcon(Icons.abc), findsOneWidget);
       // expect(find.byIcon(Icons.abc_rounded), findsOneWidget);
     });
-    testWidgets('BasfButtonTest hint with style', (WidgetTester tester) async {
+    testWidgets('BasfButtonTest hint with style', (tester) async {
       await tester.pumpApp(
         Builder(
           builder: (context) => BasfTextButton.hint(
@@ -57,7 +57,7 @@ void main() {
       expect(find.byType(Text), findsOneWidget);
       //  expect(find.widgetWithText(Text, 'Test'), findsOneWidget);
     });
-    testWidgets('BasfButtonTest hint', (WidgetTester tester) async {
+    testWidgets('BasfButtonTest hint', (tester) async {
       await tester.pumpApp(
         Builder(
           builder: (context) =>
@@ -71,7 +71,7 @@ void main() {
       //  expect(find.widgetWithText(Text, 'Test'), findsOneWidget);
     });
     testWidgets('BasfButtonTest transparent with style', (
-      WidgetTester tester,
+      tester,
     ) async {
       //
       await tester.pumpApp(
@@ -91,7 +91,7 @@ void main() {
       expect(find.byType(Text), findsOneWidget);
       //  expect(find.widgetWithText(Text, 'Test'), findsOneWidget);
     });
-    testWidgets('BasfButtonTest transparent', (WidgetTester tester) async {
+    testWidgets('BasfButtonTest transparent', (tester) async {
       //
       await tester.pumpApp(
         Builder(

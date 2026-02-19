@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:basf_flutter_components/basf_flutter_components.dart';
+import 'package:basf_flutter_components/src/widgets/scanner/overlays/widgets/enable_disable_camera_icon_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:vibration/vibration.dart';
-import 'package:vibration/vibration_presets.dart';
 
 /// !!! Read this to setup camera access https://pub.dev/packages/mobile_scanner
 /// !!! Requires [ScannerCubit] to be provided above this widget
@@ -45,6 +45,7 @@ class _ScannerState extends State<Scanner> with RouteAware {
   late final ScannerCubit scannerCubit;
   late final ValueNotifier<bool> codeScannedNotifier;
   late final ValueNotifier<bool> coolDownVisibilityNotifier;
+  int _cameraStartRequestId = 0;
 
   /// To prevent disable/enable cooldown restart when it's active
   DateTime? coolDownEndTime;
@@ -67,13 +68,12 @@ class _ScannerState extends State<Scanner> with RouteAware {
   }
 
   @override
-  Future<void> dispose() async {
+  void dispose() {
     // only unsubscribe if we previously subscribed
     widget.routeObserver?.unsubscribe(this);
     codeScannedNotifier.dispose();
     coolDownVisibilityNotifier.dispose();
     super.dispose();
-    await scannerCubit.cameraController.stop();
   }
 
   @override
@@ -85,41 +85,62 @@ class _ScannerState extends State<Scanner> with RouteAware {
   @override
   void didPopNext() {
     // the covering route went away
-    scannerCubit.enableCamera(save: false, automatic: true);
+    Future.delayed(const Duration(milliseconds: 700), () {
+      scannerCubit.enableCamera(save: false, automatic: true);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ScannerCubit, ScannerState>(
+    return BlocConsumer<ScannerCubit, ScannerState>(
       bloc: scannerCubit,
+      listenWhen: (previous, current) => previous != current,
+      listener: (context, state) {
+        switch (state) {
+          case ScannerEnabled():
+            unawaited(
+              _safeStartCamera(
+                errorContext: 'while starting scanner after enabling',
+              ),
+            );
+          case ScannerDisabled():
+            unawaited(
+              _safeStopCamera(
+                errorContext: 'while stopping scanner after disabling',
+              ),
+            );
+        }
+      },
       builder: (context, state) {
         return LayoutBuilder(
           builder: (context, constraints) {
-            final width =
-                constraints.maxWidth.isFinite && constraints.maxWidth > 500
-                ? constraints.maxWidth
-                : 500.0;
-            final height =
-                constraints.maxHeight.isFinite && constraints.maxHeight > 170
-                ? constraints.maxHeight
-                : 170.0;
-
             return SizedBox(
-              width: width,
-              height: height,
-              child: AnimatedSwitcher(
-                duration: const Duration(milliseconds: 500),
-                child: switch (state) {
-                  ScannerEnabled() => scanner(),
-                  ScannerDisabled() =>
-                    widget.offlinePlaceholder ?? basfLogo(context),
-                },
+              width: getWidth(constraints),
+              height: getHeight(constraints),
+              child: IndexedStack(
+                index: state is ScannerEnabled ? 0 : 1,
+                children: [
+                  scanner(),
+                  widget.offlinePlaceholder ?? basfLogo(context),
+                ],
               ),
             );
           },
         );
       },
     );
+  }
+
+  double getWidth(BoxConstraints constraints) {
+    return constraints.maxWidth.isFinite && constraints.maxWidth > 500
+        ? constraints.maxWidth
+        : 500.0;
+  }
+
+  double getHeight(BoxConstraints constraints) {
+    return constraints.maxHeight.isFinite && constraints.maxHeight > 170
+        ? constraints.maxHeight
+        : 170.0;
   }
 
   Widget scanner() {
@@ -143,43 +164,30 @@ class _ScannerState extends State<Scanner> with RouteAware {
   }
 
   Widget scannerCamera(BuildContext context) {
-    return Stack(
-      children: [
-        MobileScanner(
-          controller: scannerCubit.cameraController,
-          onDetect: (capture) => onDetect(context, capture),
-          errorBuilder: (context, error) {
-            return switch (error.errorCode) {
-              MobileScannerErrorCode.unsupported ||
-              MobileScannerErrorCode.controllerAlreadyInitialized =>
-                const ScannerNoCameraLayout(),
-              MobileScannerErrorCode.permissionDenied =>
-                const ScannerNoPermissionLayout(),
-              _ => ScannerDefaultErrorLayout(message: error.errorCode.message),
-            };
-          },
-        ),
-        Positioned.fill(
-          child: ValueListenableBuilder<MobileScannerState>(
-            valueListenable: scannerCubit.cameraController,
-            builder: (context, state, _) {
-              if (!state.isInitialized || state.error != null) {
-                return const SizedBox();
-              }
-
-              return Stack(
-                children: [
-                  widget.overlay,
-                  if (widget.cooldownSeconds != null) ...[
-                    Positioned.fill(child: successIcon()),
-                    Positioned.fill(child: cooldown()),
-                  ],
-                ],
-              );
-            },
-          ),
-        ),
-      ],
+    return MobileScanner(
+      controller: scannerCubit.cameraController,
+      onDetect: (capture) => onDetect(context, capture),
+      overlayBuilder: (_, _) {
+        return Stack(
+          children: [
+            widget.overlay,
+            if (widget.cooldownSeconds != null) ...[
+              Positioned.fill(child: successIcon()),
+              Positioned.fill(child: cooldown()),
+            ],
+          ],
+        );
+      },
+      errorBuilder: (_, error) {
+        return switch (error.errorCode) {
+          MobileScannerErrorCode.unsupported ||
+          MobileScannerErrorCode.controllerAlreadyInitialized =>
+            const ScannerNoCameraLayout(),
+          MobileScannerErrorCode.permissionDenied =>
+            const ScannerNoPermissionLayout(),
+          _ => ScannerDefaultErrorLayout(message: error.errorCode.message),
+        };
+      },
     );
   }
 
@@ -200,17 +208,21 @@ class _ScannerState extends State<Scanner> with RouteAware {
 
     try {
       widget.onScan(barcode);
-      await vibrate(VibrationPreset.singleShortBuzz);
+      await HapticFeedback.vibrate();
 
       if (widget.cooldownSeconds == null) {
-        await scannerCubit.cameraController.stop();
+        // Camera is stopped by MobileScanner lifecycle
+        // after scanner view switches.
       } else {
         await enableCooldown();
       }
     } catch (e) {
       final msg = e.toString();
       const duration = Duration(milliseconds: 1700);
-      await vibrate(VibrationPreset.doubleBuzz);
+      for (var i = 0; i < 3; i++) {
+        await HapticFeedback.vibrate();
+        await Future<void>.delayed(const Duration(milliseconds: 100));
+      }
 
       if (context.mounted) {
         AppSnackBar.error(message: msg).show(context, duration: duration);
@@ -278,18 +290,65 @@ class _ScannerState extends State<Scanner> with RouteAware {
   }
 
   Widget basfLogo(BuildContext context) {
+    final image = BasfAssets.images.basfLogo.image(
+      fit: BoxFit.contain,
+      color: Theme.of(context).primaryColor,
+    );
+
+    if (widget.overlay is OnOffStandardScannerOverlay) {
+      return Row(
+        spacing: Dimens.paddingMedium,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 80, maxHeight: 150),
+              child: image,
+            ),
+          ),
+          const EnableDisableCameraIconButton(),
+        ],
+      );
+    }
     return Center(
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 150, maxHeight: 150),
-        child: BasfAssets.images.basfLogo.image(
-          fit: BoxFit.contain,
-          color: Theme.of(context).primaryColor,
-        ),
+        child: image,
       ),
     );
   }
 
-  Future<void> vibrate(VibrationPreset preset) async {
-    if (await Vibration.hasVibrator()) await Vibration.vibrate(preset: preset);
+  Future<void> _safeStopCamera({required String errorContext}) async {
+    _cameraStartRequestId++;
+    await scannerCubit.cameraController.stop().catchError((_) => null);
+  }
+
+  Future<void> _safeStartCamera({required String errorContext}) async {
+    final requestId = ++_cameraStartRequestId;
+    const retryDelay = Duration(milliseconds: 100);
+    const maxAttempts = 20;
+
+    for (var attempt = 0; attempt < maxAttempts; attempt++) {
+      if (!mounted || requestId != _cameraStartRequestId) return;
+      if (scannerCubit.state is! ScannerEnabled) return;
+
+      await scannerCubit.cameraController.start().catchError((_) => null);
+
+      if (!mounted || requestId != _cameraStartRequestId) return;
+
+      final controllerState = scannerCubit.cameraController.value;
+      final errorCode = controllerState.error?.errorCode;
+
+      if (controllerState.isRunning && errorCode == null) return;
+
+      final canRetry =
+          errorCode == MobileScannerErrorCode.controllerAlreadyInitialized ||
+          errorCode == MobileScannerErrorCode.controllerInitializing ||
+          errorCode == MobileScannerErrorCode.controllerNotAttached;
+
+      if (!canRetry) return;
+
+      await Future<void>.delayed(retryDelay);
+    }
   }
 }
