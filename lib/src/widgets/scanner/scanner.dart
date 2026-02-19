@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:basf_flutter_components/basf_flutter_components.dart';
+import 'package:basf_flutter_components/src/widgets/scanner/overlays/widgets/enable_disable_camera_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -84,7 +85,9 @@ class _ScannerState extends State<Scanner> with RouteAware {
   @override
   void didPopNext() {
     // the covering route went away
-    scannerCubit.enableCamera(save: false, automatic: true);
+    Future.delayed(const Duration(milliseconds: 700), () {
+      scannerCubit.enableCamera(save: false, automatic: true);
+    });
   }
 
   @override
@@ -287,13 +290,30 @@ class _ScannerState extends State<Scanner> with RouteAware {
   }
 
   Widget basfLogo(BuildContext context) {
+    final image = BasfAssets.images.basfLogo.image(
+      fit: BoxFit.contain,
+      color: Theme.of(context).primaryColor,
+    );
+
+    if (widget.overlay is OnOffStandardScannerOverlay) {
+      return Row(
+        spacing: Dimens.paddingMedium,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 80, maxHeight: 150),
+              child: image,
+            ),
+          ),
+          const EnableDisableCameraIconButton(),
+        ],
+      );
+    }
     return Center(
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 150, maxHeight: 150),
-        child: BasfAssets.images.basfLogo.image(
-          fit: BoxFit.contain,
-          color: Theme.of(context).primaryColor,
-        ),
+        child: image,
       ),
     );
   }

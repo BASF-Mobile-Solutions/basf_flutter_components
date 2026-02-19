@@ -139,6 +139,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
               create: (context) => ScannerCubit(id: 'scanner_2'),
               child: Scanner(
                 routeObserver: routeObserver,
+                overlay: const OnOffStandardScannerOverlay(),
                 onScan: print,
               ),
             );
