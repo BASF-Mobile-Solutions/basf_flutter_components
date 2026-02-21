@@ -86,7 +86,7 @@ class _ScannerState extends State<Scanner> with RouteAware {
   void didPopNext() {
     // the covering route went away
     Future.delayed(const Duration(milliseconds: 700), () {
-      scannerCubit.enableCamera(save: false, automatic: true);
+      if (mounted) scannerCubit.enableCamera(save: false, automatic: true);
     });
   }
 
