@@ -47,9 +47,9 @@ class ScannerCubit extends HydratedCubit<ScannerState> {
         if (automatic && !_scannerDisabledAutomatically) {
           break;
         } else if (save) {
-          emit(ScannerEnabled(saveState: save));
+          if (!isClosed) emit(ScannerEnabled(saveState: save));
         } else if (!permanentlySaved) {
-          emit(ScannerEnabled(saveState: save));
+          if (!isClosed) emit(ScannerEnabled(saveState: save));
         }
       case ScannerEnabled():
         break;
@@ -62,7 +62,7 @@ class ScannerCubit extends HydratedCubit<ScannerState> {
     switch (state) {
       case ScannerEnabled():
         if (automatic) _scannerDisabledAutomatically = true;
-        emit(ScannerDisabled(saveState: save));
+        if (!isClosed) emit(ScannerDisabled(saveState: save));
       case ScannerDisabled():
         break;
     }
@@ -75,6 +75,7 @@ class ScannerCubit extends HydratedCubit<ScannerState> {
 
     switch (status) {
       case PermissionStatus.granted:
+        if (isClosed) return;
         emit(const ScannerDisabled());
         emit(const ScannerEnabled());
       case PermissionStatus.permanentlyDenied
