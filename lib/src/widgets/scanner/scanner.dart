@@ -24,12 +24,16 @@ class Scanner extends StatefulWidget {
   /// Scanner window size
   /// Callback for scanned barcode
   final void Function(String) onScan;
+
   /// Camera does not stop after scan, just pauses for a period
   final int? cooldownSeconds;
+
   /// Scanner design
   final Widget overlay;
+
   /// Shows when camera is off
   final Widget? offlinePlaceholder;
+
   /// Auto closes the scanner when it's not on the top screen in the stack
   final RouteObserver<ModalRoute<void>>? routeObserver;
 
@@ -38,16 +42,16 @@ class Scanner extends StatefulWidget {
 }
 
 class _ScannerState extends State<Scanner> with RouteAware {
-  static const _scannerMaxWidth           = 500.0;
-  static const _scannerMinHeight          = 170.0;
-  static const _routeResumeDelay          = Duration(milliseconds: 500);
-  static const _scanResultSwitchDuration  = Duration(milliseconds: 500);
-  static const _successIconFadeDuration   = Duration(milliseconds: 200);
-  static const _cooldownOverlayShowDelay  = Duration(milliseconds: 500);
-  static const _errorSnackDuration        = Duration(milliseconds: 1700);
-  static const _errorVibrationGap         = Duration(milliseconds: 100);
-  static const _cameraStartRetryDelay     = Duration(milliseconds: 100);
-  static const _cameraStartMaxAttempts    = 20;
+  static const _scannerMaxWidth = 500.0;
+  static const _scannerMinHeight = 170.0;
+  static const _routeResumeDelay = Duration(milliseconds: 500);
+  static const _scanResultSwitchDuration = Duration(milliseconds: 500);
+  static const _successIconFadeDuration = Duration(milliseconds: 200);
+  static const _cooldownOverlayShowDelay = Duration(milliseconds: 500);
+  static const _errorSnackDuration = Duration(milliseconds: 1700);
+  static const _errorVibrationGap = Duration(milliseconds: 100);
+  static const _cameraStartRetryDelay = Duration(milliseconds: 100);
+  static const _cameraStartMaxAttempts = 20;
 
   late final ScannerCubit scannerCubit;
   late final ValueNotifier<bool> codeScannedNotifier;
@@ -226,9 +230,9 @@ class _ScannerState extends State<Scanner> with RouteAware {
       }
 
       if (context.mounted) {
-        AppSnackBar
-            .error(message: msg)
-            .show(context, duration: _errorSnackDuration);
+        AppSnackBar.error(
+          message: msg,
+        ).show(context, duration: _errorSnackDuration);
       }
       if (widget.cooldownSeconds != null) await enableCooldown();
     }
