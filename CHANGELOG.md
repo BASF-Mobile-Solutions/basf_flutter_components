@@ -1,5 +1,6 @@
 ## 2.9.7
 - Code & Config improvements
+- Scanner fixes
 
 ## 2.9.6
 - Flutter 3.41 & Dart 3.11
