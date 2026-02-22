@@ -46,6 +46,8 @@ class _ScannerState extends State<Scanner> with RouteAware {
   late final ValueNotifier<bool> codeScannedNotifier;
   late final ValueNotifier<bool> coolDownVisibilityNotifier;
   int _cameraStartRequestId = 0;
+  Timer? _routeResumeTimer;
+  int _routeTransitionRequestId = 0;
 
   /// To prevent disable/enable cooldown restart when it's active
   DateTime? coolDownEndTime;
@@ -71,6 +73,7 @@ class _ScannerState extends State<Scanner> with RouteAware {
   void dispose() {
     // only unsubscribe if we previously subscribed
     widget.routeObserver?.unsubscribe(this);
+    _routeResumeTimer?.cancel();
     codeScannedNotifier.dispose();
     coolDownVisibilityNotifier.dispose();
     super.dispose();
@@ -79,14 +82,20 @@ class _ScannerState extends State<Scanner> with RouteAware {
   @override
   void didPushNext() {
     // we're covered by a new route
+    _routeTransitionRequestId++;
+    _routeResumeTimer?.cancel();
     scannerCubit.disableCamera(save: false, automatic: true);
   }
 
   @override
   void didPopNext() {
     // the covering route went away
-    Future.delayed(const Duration(milliseconds: 700), () {
-      if (mounted) scannerCubit.enableCamera(save: false, automatic: true);
+    final requestId = ++_routeTransitionRequestId;
+    _routeResumeTimer?.cancel();
+    _routeResumeTimer = Timer(const Duration(milliseconds: 500), () {
+      if (!mounted || requestId != _routeTransitionRequestId) return;
+      if (ModalRoute.of(context)?.isCurrent != true) return;
+      scannerCubit.enableCamera(save: false, automatic: true);
     });
   }
 
