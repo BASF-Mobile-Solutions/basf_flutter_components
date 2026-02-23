@@ -56,14 +56,6 @@ class BasfThemes {
         primarySwatch: basfThemeType.primaryColor,
         errorColor: BasfColors.red,
       ),
-      pageTransitionsTheme: PageTransitionsTheme(
-        builders: {
-          ...ThemeData().pageTransitionsTheme.builders.whereKey(
-            (key) => key != TargetPlatform.android,
-          ),
-          TargetPlatform.android: const FadeForwardsPageTransitionsBuilder(),
-        },
-      ),
       splashColor: basfThemeType.primaryColor.withValues(alpha: 0.1),
       highlightColor: basfThemeType.primaryColor.withValues(alpha: 0.2),
       iconTheme: IconThemeData(color: basfThemeType.primaryColor),

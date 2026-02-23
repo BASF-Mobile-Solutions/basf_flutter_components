@@ -42,10 +42,24 @@ class Scanner extends StatefulWidget {
 }
 
 class _ScannerState extends State<Scanner> with RouteAware {
+  static const _scannerMaxWidth = 500.0;
+  static const _scannerMinHeight = 170.0;
+  static const _routeResumeDelay = Duration(milliseconds: 500);
+  static const _scanResultSwitchDuration = Duration(milliseconds: 500);
+  static const _successIconFadeDuration = Duration(milliseconds: 200);
+  static const _cooldownOverlayShowDelay = Duration(milliseconds: 500);
+  static const _errorSnackDuration = Duration(milliseconds: 1700);
+  static const _errorVibrationGap = Duration(milliseconds: 100);
+  static const _cameraStartRetryDelay = Duration(milliseconds: 100);
+  static const _cameraStartMaxAttempts = 20;
+
   late final ScannerCubit scannerCubit;
   late final ValueNotifier<bool> codeScannedNotifier;
   late final ValueNotifier<bool> coolDownVisibilityNotifier;
+
   int _cameraStartRequestId = 0;
+  int _routeTransitionRequestId = 0;
+  Timer? _routeResumeTimer;
 
   /// To prevent disable/enable cooldown restart when it's active
   DateTime? coolDownEndTime;
@@ -71,6 +85,7 @@ class _ScannerState extends State<Scanner> with RouteAware {
   void dispose() {
     // only unsubscribe if we previously subscribed
     widget.routeObserver?.unsubscribe(this);
+    _routeResumeTimer?.cancel();
     codeScannedNotifier.dispose();
     coolDownVisibilityNotifier.dispose();
     super.dispose();
@@ -79,13 +94,17 @@ class _ScannerState extends State<Scanner> with RouteAware {
   @override
   void didPushNext() {
     // we're covered by a new route
+    _invalidatePendingRouteResume();
     scannerCubit.disableCamera(save: false, automatic: true);
   }
 
   @override
   void didPopNext() {
     // the covering route went away
-    Future.delayed(const Duration(milliseconds: 700), () {
+    int requestId = _resetRouteResumeTimer();
+    _routeResumeTimer = Timer(_routeResumeDelay, () {
+      if (!mounted || requestId != _routeTransitionRequestId) return;
+      if (ModalRoute.of(context)?.isCurrent != true) return;
       scannerCubit.enableCamera(save: false, automatic: true);
     });
   }
@@ -98,25 +117,17 @@ class _ScannerState extends State<Scanner> with RouteAware {
       listener: (context, state) {
         switch (state) {
           case ScannerEnabled():
-            unawaited(
-              _safeStartCamera(
-                errorContext: 'while starting scanner after enabling',
-              ),
-            );
+            unawaited(_safeStartCamera());
           case ScannerDisabled():
-            unawaited(
-              _safeStopCamera(
-                errorContext: 'while stopping scanner after disabling',
-              ),
-            );
+            unawaited(_safeStopCamera());
         }
       },
       builder: (context, state) {
         return LayoutBuilder(
           builder: (context, constraints) {
             return SizedBox(
-              width: getWidth(constraints),
-              height: getHeight(constraints),
+              width: _scannerWidth(constraints),
+              height: _scannerHeight(constraints),
               child: IndexedStack(
                 index: state is ScannerEnabled ? 0 : 1,
                 children: [
@@ -131,16 +142,18 @@ class _ScannerState extends State<Scanner> with RouteAware {
     );
   }
 
-  double getWidth(BoxConstraints constraints) {
-    return constraints.maxWidth.isFinite && constraints.maxWidth > 500
+  double _scannerWidth(BoxConstraints constraints) {
+    bool exceedsMaxWidth = constraints.maxWidth > _scannerMaxWidth;
+    return constraints.maxWidth.isFinite && exceedsMaxWidth
         ? constraints.maxWidth
-        : 500.0;
+        : _scannerMaxWidth;
   }
 
-  double getHeight(BoxConstraints constraints) {
-    return constraints.maxHeight.isFinite && constraints.maxHeight > 170
+  double _scannerHeight(BoxConstraints constraints) {
+    bool exceedsMaxHeight = constraints.maxHeight > _scannerMinHeight;
+    return constraints.maxHeight.isFinite && exceedsMaxHeight
         ? constraints.maxHeight
-        : 170.0;
+        : _scannerMinHeight;
   }
 
   Widget scanner() {
@@ -148,7 +161,7 @@ class _ScannerState extends State<Scanner> with RouteAware {
       valueListenable: codeScannedNotifier,
       builder: (context, scanned, _) {
         return AnimatedSwitcher(
-          duration: const Duration(milliseconds: 500),
+          duration: _scanResultSwitchDuration,
           child: scanned && widget.cooldownSeconds == null
               ? successLayout(context)
               : scannerCamera(context),
@@ -192,13 +205,12 @@ class _ScannerState extends State<Scanner> with RouteAware {
   }
 
   void onDetect(BuildContext context, BarcodeCapture capture) {
-    final valueExists =
-        capture.barcodes.isNotEmpty &&
-        capture.barcodes.first.rawValue?.isNotEmpty != null;
+    if (capture.barcodes.isEmpty) return;
 
-    if (valueExists) {
-      unawaited(stopCameraAfterScan(context, capture.barcodes.first.rawValue!));
-    }
+    String? rawValue = capture.barcodes.first.rawValue;
+    if (rawValue == null || rawValue.isEmpty) return;
+
+    unawaited(stopCameraAfterScan(context, rawValue));
   }
 
   Future<void> stopCameraAfterScan(BuildContext context, String barcode) async {
@@ -209,46 +221,39 @@ class _ScannerState extends State<Scanner> with RouteAware {
     try {
       widget.onScan(barcode);
       await HapticFeedback.vibrate();
-
-      if (widget.cooldownSeconds == null) {
-        // Camera is stopped by MobileScanner lifecycle
-        // after scanner view switches.
-      } else {
-        await enableCooldown();
-      }
+      if (widget.cooldownSeconds != null) await enableCooldown();
     } catch (e) {
       final msg = e.toString();
-      const duration = Duration(milliseconds: 1700);
       for (var i = 0; i < 3; i++) {
         await HapticFeedback.vibrate();
-        await Future<void>.delayed(const Duration(milliseconds: 100));
+        await Future<void>.delayed(_errorVibrationGap);
       }
 
       if (context.mounted) {
-        AppSnackBar.error(message: msg).show(context, duration: duration);
+        AppSnackBar.error(
+          message: msg,
+        ).show(context, duration: _errorSnackDuration);
       }
       if (widget.cooldownSeconds != null) await enableCooldown();
     }
   }
 
   Future<void> enableCooldown() async {
-    await Future.delayed(const Duration(milliseconds: 500), () {
-      if (mounted) {
-        coolDownVisibilityNotifier.value = true;
-        coolDownEndTime ??= DateTime.now().add(
-          Duration(seconds: widget.cooldownSeconds!),
-        );
-      }
-    });
+    await Future<void>.delayed(_cooldownOverlayShowDelay);
+    if (mounted) {
+      coolDownVisibilityNotifier.value = true;
+      coolDownEndTime ??= DateTime.now().add(
+        Duration(seconds: widget.cooldownSeconds!),
+      );
+    }
 
     // Turn scanning back after cooldown
-    await Future.delayed(Duration(seconds: widget.cooldownSeconds!), () {
-      if (mounted) {
-        codeScannedNotifier.value = false;
-        coolDownVisibilityNotifier.value = false;
-        coolDownEndTime = null;
-      }
-    });
+    await Future<void>.delayed(Duration(seconds: widget.cooldownSeconds!));
+    if (mounted) {
+      codeScannedNotifier.value = false;
+      coolDownVisibilityNotifier.value = false;
+      coolDownEndTime = null;
+    }
   }
 
   Widget successIcon() {
@@ -260,7 +265,7 @@ class _ScannerState extends State<Scanner> with RouteAware {
           builder: (context, scanned, _) {
             return AnimatedOpacity(
               opacity: scanned && !cooldownVisible ? 1 : 0,
-              duration: const Duration(milliseconds: 200),
+              duration: _successIconFadeDuration,
               child: Icon(
                 Icons.check,
                 size: 60,
@@ -290,7 +295,7 @@ class _ScannerState extends State<Scanner> with RouteAware {
   }
 
   Widget basfLogo(BuildContext context) {
-    final image = BasfAssets.images.basfLogo.image(
+    Widget image = BasfAssets.images.basfLogo.image(
       fit: BoxFit.contain,
       color: Theme.of(context).primaryColor,
     );
@@ -318,17 +323,26 @@ class _ScannerState extends State<Scanner> with RouteAware {
     );
   }
 
-  Future<void> _safeStopCamera({required String errorContext}) async {
+  void _invalidatePendingRouteResume() {
+    _routeTransitionRequestId++;
+    _routeResumeTimer?.cancel();
+    _routeResumeTimer = null;
+  }
+
+  int _resetRouteResumeTimer() {
+    _invalidatePendingRouteResume();
+    return _routeTransitionRequestId;
+  }
+
+  Future<void> _safeStopCamera() async {
     _cameraStartRequestId++;
     await scannerCubit.cameraController.stop().catchError((_) => null);
   }
 
-  Future<void> _safeStartCamera({required String errorContext}) async {
+  Future<void> _safeStartCamera() async {
     final requestId = ++_cameraStartRequestId;
-    const retryDelay = Duration(milliseconds: 100);
-    const maxAttempts = 20;
 
-    for (var attempt = 0; attempt < maxAttempts; attempt++) {
+    for (int attempt = 0; attempt < _cameraStartMaxAttempts; attempt++) {
       if (!mounted || requestId != _cameraStartRequestId) return;
       if (scannerCubit.state is! ScannerEnabled) return;
 
@@ -336,19 +350,19 @@ class _ScannerState extends State<Scanner> with RouteAware {
 
       if (!mounted || requestId != _cameraStartRequestId) return;
 
-      final controllerState = scannerCubit.cameraController.value;
-      final errorCode = controllerState.error?.errorCode;
+      MobileScannerState controllerState = scannerCubit.cameraController.value;
+      MobileScannerErrorCode? errorCode = controllerState.error?.errorCode;
 
       if (controllerState.isRunning && errorCode == null) return;
 
-      final canRetry =
+      bool canRetry =
           errorCode == MobileScannerErrorCode.controllerAlreadyInitialized ||
           errorCode == MobileScannerErrorCode.controllerInitializing ||
           errorCode == MobileScannerErrorCode.controllerNotAttached;
 
       if (!canRetry) return;
 
-      await Future<void>.delayed(retryDelay);
+      await Future<void>.delayed(_cameraStartRetryDelay);
     }
   }
 }
