@@ -9,7 +9,16 @@ part 'scanner_state.dart';
 
 /// Camera cubit
 class ScannerCubit extends HydratedCubit<ScannerState> {
-  ///
+  /// Relaunches scanner with delay
+  void relaunchScanner({Duration duration = const Duration(milliseconds: 500)}) {
+    if (state is! ScannerEnabled) return;
+
+    disableCamera(save: false);
+    Future.delayed(duration, () {
+      if (!isClosed) enableCamera(save: false);
+    });
+  }
+
   ScannerCubit({required this.id}) : super(const ScannerEnabled()) {
     // If you need to init camera later, just make Scanner widget creation later
     init();
@@ -78,8 +87,7 @@ class ScannerCubit extends HydratedCubit<ScannerState> {
         if (isClosed) return;
         emit(const ScannerDisabled());
         emit(const ScannerEnabled());
-      case PermissionStatus.permanentlyDenied
-          when !isRecheck && initialStatus == status:
+      case PermissionStatus.permanentlyDenied when !isRecheck && initialStatus == status:
         unawaited(openAppSettings());
       default:
         break;
