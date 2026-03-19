@@ -47,6 +47,10 @@ class _ScannerState extends State<Scanner> with RouteAware {
   static const _routeResumeDelay = Duration(milliseconds: 500);
   static const _scanResultSwitchDuration = Duration(milliseconds: 500);
   static const _successIconFadeDuration = Duration(milliseconds: 200);
+  static const _cameraPreviewFadeDuration = Duration(milliseconds: 320);
+  static const _cameraPlaceholderFadeDuration = Duration(milliseconds: 220);
+  static const _cameraLoaderFadeDuration = Duration(milliseconds: 180);
+  static const _cameraLoaderShowDelay = Duration(milliseconds: 220);
   static const _cooldownOverlayShowDelay = Duration(milliseconds: 500);
   static const _errorSnackDuration = Duration(milliseconds: 1700);
   static const _errorVibrationGap = Duration(milliseconds: 100);
@@ -58,10 +62,14 @@ class _ScannerState extends State<Scanner> with RouteAware {
   late final ScannerCubit scannerCubit;
   late final ValueNotifier<bool> codeScannedNotifier;
   late final ValueNotifier<bool> coolDownVisibilityNotifier;
+  late final ValueNotifier<bool> cameraStartupOverlayVisibleNotifier;
+  late final ValueNotifier<bool> cameraStartupLoaderVisibleNotifier;
 
   int _cameraStartRequestId = 0;
   int _routeTransitionRequestId = 0;
   Timer? _routeResumeTimer;
+  Timer? _cameraLoaderTimer;
+  MobileScannerController? _observedCameraController;
 
   /// To prevent disable/enable cooldown restart when it's active
   DateTime? coolDownEndTime;
@@ -72,6 +80,12 @@ class _ScannerState extends State<Scanner> with RouteAware {
     scannerCubit = context.read<ScannerCubit>();
     codeScannedNotifier = ValueNotifier(false);
     coolDownVisibilityNotifier = ValueNotifier(false);
+    cameraStartupOverlayVisibleNotifier = ValueNotifier(
+      scannerCubit.state is ScannerEnabled,
+    );
+    cameraStartupLoaderVisibleNotifier = ValueNotifier(false);
+    scannerCubit.cameraControllerRevision.addListener(_handleControllerRevisionChanged);
+    _attachCameraControllerListener();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
 
@@ -98,9 +112,14 @@ class _ScannerState extends State<Scanner> with RouteAware {
     // only unsubscribe if we previously subscribed
     widget.routeObserver?.unsubscribe(this);
     _routeResumeTimer?.cancel();
+    _cameraLoaderTimer?.cancel();
+    scannerCubit.cameraControllerRevision.removeListener(_handleControllerRevisionChanged);
+    _observedCameraController?.removeListener(_updateCameraStartupUi);
     unawaited(_safeStopCamera());
     codeScannedNotifier.dispose();
     coolDownVisibilityNotifier.dispose();
+    cameraStartupOverlayVisibleNotifier.dispose();
+    cameraStartupLoaderVisibleNotifier.dispose();
     super.dispose();
   }
 
@@ -128,6 +147,7 @@ class _ScannerState extends State<Scanner> with RouteAware {
       bloc: scannerCubit,
       listenWhen: (previous, current) => previous != current,
       listener: (context, state) {
+        _updateCameraStartupUi();
         switch (state) {
           case ScannerEnabled():
             unawaited(_safeStartCamera());
@@ -156,10 +176,8 @@ class _ScannerState extends State<Scanner> with RouteAware {
   }
 
   double _scannerWidth(BoxConstraints constraints) {
-    bool exceedsMaxWidth = constraints.maxWidth > _scannerMaxWidth;
-    return constraints.maxWidth.isFinite && exceedsMaxWidth
-        ? constraints.maxWidth
-        : _scannerMaxWidth;
+    if (!constraints.maxWidth.isFinite) return _scannerMaxWidth;
+    return constraints.maxWidth.clamp(0.0, _scannerMaxWidth);
   }
 
   double _scannerHeight(BoxConstraints constraints) {
@@ -199,44 +217,65 @@ class _ScannerState extends State<Scanner> with RouteAware {
             return Stack(
               fit: StackFit.expand,
               children: [
-                MobileScanner(
-                  key: ValueKey(revision),
-                  controller: scannerCubit.cameraController,
-                  onDetect: (capture) => onDetect(context, capture),
-                  overlayBuilder: (_, _) {
-                    return Stack(
-                      children: [
-                        widget.overlay,
-                        if (widget.cooldownSeconds != null) ...[
-                          Positioned.fill(child: successIcon()),
-                          Positioned.fill(child: cooldown()),
+                const ColoredBox(color: Colors.black),
+                AnimatedOpacity(
+                  opacity: controllerState.isRunning ? 1 : 0,
+                  duration: _cameraPreviewFadeDuration,
+                  curve: Curves.easeOutCubic,
+                  child: MobileScanner(
+                    key: ValueKey(revision),
+                    controller: scannerCubit.cameraController,
+                    onDetect: (capture) => onDetect(context, capture),
+                    overlayBuilder: (_, _) {
+                      return Stack(
+                        children: [
+                          widget.overlay,
+                          if (widget.cooldownSeconds != null) ...[
+                            Positioned.fill(child: successIcon()),
+                            Positioned.fill(child: cooldown()),
+                          ],
                         ],
-                      ],
-                    );
-                  },
-                  errorBuilder: (_, error) {
-                    return switch (error.errorCode) {
-                      MobileScannerErrorCode.unsupported => const ScannerNoCameraLayout(),
-                      MobileScannerErrorCode.permissionDenied => const ScannerNoPermissionLayout(),
-                      MobileScannerErrorCode.controllerAlreadyInitialized ||
-                      MobileScannerErrorCode.controllerInitializing ||
-                      MobileScannerErrorCode.controllerNotAttached => cameraStartupPlaceholder(
-                        context,
-                        loading: true,
-                      ),
-                      _ => ScannerDefaultErrorLayout(
-                        message: error.errorCode.message,
-                      ),
-                    };
-                  },
-                ),
-                if (_shouldShowCameraStartupPlaceholder(controllerState))
-                  Positioned.fill(
-                    child: cameraStartupPlaceholder(
-                      context,
-                      loading: controllerState.isStarting,
-                    ),
+                      );
+                    },
+                    errorBuilder: (_, error) {
+                      return switch (error.errorCode) {
+                        MobileScannerErrorCode.unsupported => const ScannerNoCameraLayout(),
+                        MobileScannerErrorCode.permissionDenied =>
+                          const ScannerNoPermissionLayout(),
+                        MobileScannerErrorCode.controllerAlreadyInitialized ||
+                        MobileScannerErrorCode.controllerInitializing ||
+                        MobileScannerErrorCode.controllerNotAttached => const SizedBox.shrink(),
+                        _ => ScannerDefaultErrorLayout(
+                          message: error.errorCode.message,
+                        ),
+                      };
+                    },
                   ),
+                ),
+                Positioned.fill(
+                  child: ValueListenableBuilder(
+                    valueListenable: cameraStartupOverlayVisibleNotifier,
+                    builder: (context, overlayVisible, _) {
+                      return IgnorePointer(
+                        ignoring: !overlayVisible,
+                        child: AnimatedOpacity(
+                          opacity: overlayVisible ? 1 : 0,
+                          duration: _cameraPlaceholderFadeDuration,
+                          curve: Curves.easeOutCubic,
+                          child: ValueListenableBuilder(
+                            valueListenable: cameraStartupLoaderVisibleNotifier,
+                            builder: (context, loaderVisible, _) {
+                              return cameraStartupPlaceholder(
+                                context,
+                                showLoader: loaderVisible,
+                              );
+                            },
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
               ],
             );
           },
@@ -253,31 +292,87 @@ class _ScannerState extends State<Scanner> with RouteAware {
         (!controllerState.isRunning && codeScannedNotifier.value == false);
   }
 
-  Widget cameraStartupPlaceholder(BuildContext context, {required bool loading}) {
+  Widget cameraStartupPlaceholder(
+    BuildContext context, {
+    required bool showLoader,
+  }) {
     return ColoredBox(
       color: Colors.black,
-      child: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          spacing: Dimens.paddingMedium,
-          children: [
-            ConstrainedBox(
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Center(
+            child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 120, maxHeight: 120),
               child: BasfAssets.images.basfLogo.image(
                 fit: BoxFit.contain,
                 color: Colors.white,
               ),
             ),
-            if (loading)
-              const SizedBox(
+          ),
+          Transform.translate(
+            offset: const Offset(0, 86),
+            child: AnimatedOpacity(
+              opacity: showLoader ? 1 : 0,
+              duration: _cameraLoaderFadeDuration,
+              curve: Curves.easeOut,
+              child: const SizedBox(
                 width: 24,
                 height: 24,
                 child: CircularProgressIndicator.adaptive(strokeWidth: 2),
               ),
-          ],
-        ),
+            ),
+          ),
+        ],
       ),
     );
+  }
+
+  void _handleControllerRevisionChanged() {
+    _attachCameraControllerListener();
+    _updateCameraStartupUi();
+  }
+
+  void _attachCameraControllerListener() {
+    final controller = scannerCubit.cameraController;
+    if (identical(_observedCameraController, controller)) return;
+
+    _observedCameraController?.removeListener(_updateCameraStartupUi);
+    _observedCameraController = controller;
+    controller.addListener(_updateCameraStartupUi);
+  }
+
+  void _updateCameraStartupUi() {
+    if (!mounted) return;
+
+    final controllerState = scannerCubit.cameraController.value;
+    final showOverlay = _shouldShowCameraStartupPlaceholder(controllerState);
+
+    if (cameraStartupOverlayVisibleNotifier.value != showOverlay) {
+      cameraStartupOverlayVisibleNotifier.value = showOverlay;
+    }
+
+    _cameraLoaderTimer?.cancel();
+
+    if (!showOverlay || !controllerState.isStarting) {
+      if (cameraStartupLoaderVisibleNotifier.value) {
+        cameraStartupLoaderVisibleNotifier.value = false;
+      }
+      return;
+    }
+
+    if (cameraStartupLoaderVisibleNotifier.value) return;
+
+    _cameraLoaderTimer = Timer(_cameraLoaderShowDelay, () {
+      if (!mounted) return;
+      if (!_shouldShowCameraStartupPlaceholder(scannerCubit.cameraController.value)) {
+        return;
+      }
+
+      if (scannerCubit.cameraController.value.isStarting) {
+        cameraStartupLoaderVisibleNotifier.value = true;
+      }
+    });
   }
 
   void onDetect(BuildContext context, BarcodeCapture capture) {
