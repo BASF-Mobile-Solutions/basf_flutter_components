@@ -176,7 +176,7 @@ class _ScannerState extends State<Scanner> with RouteAware {
 
   double _scannerWidth(BoxConstraints constraints) {
     if (!constraints.maxWidth.isFinite) return _scannerMaxWidth;
-    return constraints.maxWidth.clamp(0.0, _scannerMaxWidth);
+    return constraints.maxWidth;
   }
 
   double _scannerHeight(BoxConstraints constraints) {
