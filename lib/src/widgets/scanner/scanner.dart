@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:basf_flutter_components/basf_flutter_components.dart';
-import 'package:basf_flutter_components/src/widgets/scanner/overlays/widgets/enable_disable_camera_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -466,26 +465,68 @@ class _ScannerState extends State<Scanner> with RouteAware {
   }
 
   Widget basfLogo(BuildContext context) {
+    final theme = Theme.of(context);
+    final primaryColor = theme.primaryColor;
     Widget image = BasfAssets.images.basfLogo.image(
       fit: BoxFit.contain,
-      color: Theme.of(context).primaryColor,
+      color: primaryColor,
     );
 
     if (widget.overlay is OnOffStandardScannerOverlay) {
-      return Row(
-        spacing: Dimens.paddingMedium,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Center(
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 80, maxHeight: 150),
-              child: image,
+      return Center(
+        child: InkWell(
+          onTap: () => context.read<ScannerCubit>().enableCamera(save: true),
+          child: Container(
+            width: 224,
+            height: 70,
+            decoration: BoxDecoration(
+              color: primaryColor.withValues(alpha: 0.04),
+              border: Border.all(
+                color: primaryColor.withValues(alpha: 0.14),
+              ),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: Dimens.paddingLarge,
+                      vertical: Dimens.paddingMedium,
+                    ),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: SizedBox(
+                        width: 96,
+                        height: 44,
+                        child: image,
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  width: 64,
+                  height: double.infinity,
+                  decoration: BoxDecoration(
+                    border: Border(
+                      left: BorderSide(
+                        color: primaryColor.withValues(alpha: 0.14),
+                      ),
+                    ),
+                  ),
+                  child: const Center(
+                    child: Icon(
+                      Icons.camera_alt_outlined,
+                      size: 28,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
-          const EnableDisableCameraIconButton(),
-        ],
+        ),
       );
     }
+
     return Center(
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 150, maxHeight: 150),

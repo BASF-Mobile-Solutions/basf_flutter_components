@@ -227,7 +227,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
           MaterialPageRoute<Widget>(
             builder: (context) {
               return BlocProvider(
-                create: (context) => ScannerCubit(id: 'scanner_1'),
+                create: (context) => ScannerCubit(id: 'scanner_0'),
                 child: screenLayout(),
               );
             },
