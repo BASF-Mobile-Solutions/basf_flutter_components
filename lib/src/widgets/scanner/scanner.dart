@@ -202,8 +202,25 @@ class _ScannerState extends State<Scanner> with RouteAware {
 
   Widget successLayout(BuildContext context) {
     return ScannerSuccessLayout(
-      onPressed: () => codeScannedNotifier.value = false,
+      onPressed: _onRescanPressed,
     );
+  }
+
+  void _onRescanPressed() {
+    codeScannedNotifier.value = false;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || codeScannedNotifier.value) return;
+
+      unawaited(_restartCameraAfterRescan());
+    });
+  }
+
+  Future<void> _restartCameraAfterRescan() async {
+    await _safeStopCamera();
+    if (!mounted || codeScannedNotifier.value) return;
+    if (scannerCubit.state is! ScannerEnabled) return;
+
+    await _safeStartCamera();
   }
 
   Widget scannerCamera(BuildContext context) {
