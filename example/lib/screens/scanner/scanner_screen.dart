@@ -18,6 +18,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
     return Scaffold(
       appBar: AppBar(
         actions: [
+          openNewPageWithScannerButton(context),
           openNewPageButton(context),
           scannerBottomSheetButton(),
           bottomSheetButton(),
@@ -176,6 +177,58 @@ class _ScannerScreenState extends State<ScannerScreen> {
                 body: const Center(
                   child: Text('Scanner must be auto deactivated'),
                 ),
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
+
+  Widget openNewPageWithScannerButton(BuildContext context) {
+    Widget screenLayout() {
+      return Scaffold(
+        appBar: AppBar(),
+        body: Center(
+          child: SizedBox(
+            height: 300,
+            child: Scanner(
+              onScan: (code) {},
+              overlay: const OnOffStandardScannerOverlay(),
+              routeObserver: routeObserver,
+            ),
+          ),
+        ),
+        bottomSheet: Padding(
+          padding: const EdgeInsets.all(40),
+          child: TextButton(
+            style: TextButton.styleFrom(minimumSize: const Size(double.infinity, 53)),
+            onPressed: () async {
+              await Navigator.of(context).push(
+                MaterialPageRoute<Widget>(
+                  builder: (context) {
+                    return BlocProvider(
+                      create: (context) => ScannerCubit(id: 'scanner_3'),
+                      child: screenLayout(),
+                    );
+                  },
+                ),
+              );
+            },
+            child: const Text('Next screen'),
+          ),
+        ),
+      );
+    }
+    return IconButton(
+      icon: const Icon(Icons.send_to_mobile),
+      onPressed: () async {
+        await Navigator.of(context).push(
+          MaterialPageRoute<Widget>(
+            builder: (context) {
+              return BlocProvider(
+                create: (context) => ScannerCubit(id: 'scanner_1'),
+                child: screenLayout(),
               );
             },
           ),

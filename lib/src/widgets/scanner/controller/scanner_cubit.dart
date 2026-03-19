@@ -28,7 +28,10 @@ class ScannerCubit extends HydratedCubit<ScannerState> {
   final String id;
 
   /// Camera controller
-  late final MobileScannerController cameraController;
+  late MobileScannerController _cameraController;
+
+  /// Camera controller
+  MobileScannerController get cameraController => _cameraController;
 
   /// Flashlight controller
   late final ValueNotifier<TorchState> flashlightNotifier;
@@ -36,16 +39,39 @@ class ScannerCubit extends HydratedCubit<ScannerState> {
   /// Flashlight controller
   late final ValueNotifier<CameraFacing> directionNotifier;
 
+  /// Rebuilds MobileScanner when a controller has to be recreated.
+  late final ValueNotifier<int> cameraControllerRevision;
+
   /// For cases where scanner is disabled using route observer
   bool _scannerDisabledAutomatically = false;
 
   /// Initializes cubit
   void init() {
-    cameraController = MobileScannerController()
-      ..addListener(_torchListener)
-      ..addListener(_directionListener);
+    _cameraController = _createCameraController();
     flashlightNotifier = ValueNotifier(cameraController.value.torchState);
     directionNotifier = ValueNotifier(cameraController.value.cameraDirection);
+    cameraControllerRevision = ValueNotifier(0);
+  }
+
+  MobileScannerController _createCameraController() {
+    return MobileScannerController(autoStart: false)
+      ..addListener(_torchListener)
+      ..addListener(_directionListener);
+  }
+
+  /// Recreates controller when the platform gets stuck in a broken state.
+  Future<void> recreateCameraController() async {
+    final oldController = _cameraController;
+    oldController
+      ..removeListener(_torchListener)
+      ..removeListener(_directionListener);
+
+    _cameraController = _createCameraController();
+    flashlightNotifier.value = cameraController.value.torchState;
+    directionNotifier.value = cameraController.value.cameraDirection;
+    cameraControllerRevision.value++;
+
+    await oldController.dispose();
   }
 
   /// Enables/Shows scanner
@@ -115,8 +141,12 @@ class ScannerCubit extends HydratedCubit<ScannerState> {
 
   @override
   Future<void> close() async {
+    _cameraController
+      ..removeListener(_torchListener)
+      ..removeListener(_directionListener);
     flashlightNotifier.dispose();
     directionNotifier.dispose();
+    cameraControllerRevision.dispose();
     await cameraController.dispose();
     return super.close();
   }
