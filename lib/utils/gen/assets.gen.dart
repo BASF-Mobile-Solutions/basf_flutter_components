@@ -1,4 +1,4 @@
-// dart format width=80
+// dart format width=100
 
 /// GENERATED CODE - DO NOT MODIFY BY HAND
 /// *****************************************************
@@ -16,12 +16,10 @@ class $AssetsImagesGen {
   const $AssetsImagesGen();
 
   /// File path: assets/images/basf_logo.webp
-  AssetGenImage get basfLogo =>
-      const AssetGenImage('assets/images/basf_logo.webp');
+  AssetGenImage get basfLogo => const AssetGenImage('assets/images/basf_logo.webp');
 
   /// File path: assets/images/checklist_girl.webp
-  AssetGenImage get checklistGirl =>
-      const AssetGenImage('assets/images/checklist_girl.webp');
+  AssetGenImage get checklistGirl => const AssetGenImage('assets/images/checklist_girl.webp');
 
   /// List of all assets
   List<AssetGenImage> get values => [basfLogo, checklistGirl];
@@ -37,23 +35,19 @@ class $AssetsRiveGen {
   RiveGenImage get gears => const RiveGenImage('assets/rive/gears.riv');
 
   /// File path: assets/rive/logistics_box.riv
-  RiveGenImage get logisticsBox =>
-      const RiveGenImage('assets/rive/logistics_box.riv');
+  RiveGenImage get logisticsBox => const RiveGenImage('assets/rive/logistics_box.riv');
 
   /// File path: assets/rive/message_icon.riv
-  RiveGenImage get messageIcon =>
-      const RiveGenImage('assets/rive/message_icon.riv');
+  RiveGenImage get messageIcon => const RiveGenImage('assets/rive/message_icon.riv');
 
   /// File path: assets/rive/qr.riv
   RiveGenImage get qr => const RiveGenImage('assets/rive/qr.riv');
 
   /// File path: assets/rive/search_loop.riv
-  RiveGenImage get searchLoop =>
-      const RiveGenImage('assets/rive/search_loop.riv');
+  RiveGenImage get searchLoop => const RiveGenImage('assets/rive/search_loop.riv');
 
   /// File path: assets/rive/success_icon.riv
-  RiveGenImage get successIcon =>
-      const RiveGenImage('assets/rive/success_icon.riv');
+  RiveGenImage get successIcon => const RiveGenImage('assets/rive/success_icon.riv');
 
   /// List of all assets
   List<RiveGenImage> get values => [
@@ -77,12 +71,7 @@ class BasfAssets {
 }
 
 class AssetGenImage {
-  const AssetGenImage(
-    this._assetName, {
-    this.size,
-    this.flavors = const {},
-    this.animation,
-  });
+  const AssetGenImage(this._assetName, {this.size, this.flavors = const {}, this.animation});
 
   final String _assetName;
 
@@ -112,8 +101,7 @@ class AssetGenImage {
     bool matchTextDirection = false,
     bool gaplessPlayback = true,
     bool isAntiAlias = false,
-    @Deprecated('Do not specify package for a generated library asset')
-    String? package = package,
+    @Deprecated('Do not specify package for a generated library asset') String? package = package,
     FilterQuality filterQuality = FilterQuality.medium,
     int? cacheWidth,
     int? cacheHeight,
@@ -148,8 +136,7 @@ class AssetGenImage {
 
   ImageProvider provider({
     AssetBundle? bundle,
-    @Deprecated('Do not specify package for a generated library asset')
-    String? package = package,
+    @Deprecated('Do not specify package for a generated library asset') String? package = package,
   }) {
     return AssetImage(_assetName, bundle: bundle, package: package);
   }
