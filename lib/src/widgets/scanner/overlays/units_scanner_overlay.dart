@@ -46,8 +46,7 @@ class UnitsScannerOverlay extends StatelessWidget {
         Padding(padding: const EdgeInsets.only(left: 14), child: nexScanInfo()),
         ScanSupportText(
           scanQRorBarcode:
-              scanQRorBarcodeText ??
-              BasfComponentsLocalizations.of(context).scanQRorBarcode,
+              scanQRorBarcodeText ?? BasfComponentsLocalizations.of(context).scanQRorBarcode,
         ),
         const ToggleFlashIconButton(),
       ],

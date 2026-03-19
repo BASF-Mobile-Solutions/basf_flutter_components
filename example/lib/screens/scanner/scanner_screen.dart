@@ -202,7 +202,9 @@ class _ScannerScreenState extends State<ScannerScreen> {
         bottomSheet: Padding(
           padding: const EdgeInsets.all(40),
           child: TextButton(
-            style: TextButton.styleFrom(minimumSize: const Size(double.infinity, 53)),
+            style: TextButton.styleFrom(
+              minimumSize: const Size(double.infinity, 53),
+            ),
             onPressed: () async {
               await Navigator.of(context).push(
                 MaterialPageRoute<Widget>(
@@ -220,6 +222,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
         ),
       );
     }
+
     return IconButton(
       icon: const Icon(Icons.send_to_mobile),
       onPressed: () async {

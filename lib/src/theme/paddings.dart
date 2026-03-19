@@ -12,11 +12,10 @@ abstract class Paddings {
   ///   child: MyScreen(),
   /// );
   /// ```
-  static EdgeInsetsGeometry get defaultScreenPadding =>
-      const EdgeInsets.fromLTRB(
-        Dimens.paddingMediumLarge,
-        Dimens.paddingMediumLarge,
-        Dimens.paddingMediumLarge,
-        Dimens.paddingMediumSmall,
-      );
+  static EdgeInsetsGeometry get defaultScreenPadding => const EdgeInsets.fromLTRB(
+    Dimens.paddingMediumLarge,
+    Dimens.paddingMediumLarge,
+    Dimens.paddingMediumLarge,
+    Dimens.paddingMediumSmall,
+  );
 }

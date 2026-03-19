@@ -59,9 +59,7 @@ class _TextButtonStyles extends ButtonStyles {
       textStyle: BasfThemes.mainTextTheme.bodySmall,
     ).copyWith(
       foregroundColor: WidgetStateProperty.resolveWith((states) {
-        return states.contains(WidgetState.disabled)
-            ? BasfColors.grey
-            : foregroundColor;
+        return states.contains(WidgetState.disabled) ? BasfColors.grey : foregroundColor;
       }),
     );
   }

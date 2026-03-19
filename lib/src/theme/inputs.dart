@@ -41,24 +41,21 @@ abstract class BasfInputThemes {
     ),
   );
 
-  static final TextSelectionThemeData _errorTextSelectionTheme =
-      TextSelectionThemeData(
-        cursorColor: BasfColors.red,
-        selectionHandleColor: BasfColors.red,
-        selectionColor: BasfColors.red.shade200,
-      );
+  static final TextSelectionThemeData _errorTextSelectionTheme = TextSelectionThemeData(
+    cursorColor: BasfColors.red,
+    selectionHandleColor: BasfColors.red,
+    selectionColor: BasfColors.red.shade200,
+  );
 
-  static OutlineInputBorder _focusedBorder(MaterialColor color) =>
-      OutlineInputBorder(
-        borderSide: BorderSide(color: color),
-        borderRadius: BasfThemes.defaultBorderRadius,
-      );
+  static OutlineInputBorder _focusedBorder(MaterialColor color) => OutlineInputBorder(
+    borderSide: BorderSide(color: color),
+    borderRadius: BasfThemes.defaultBorderRadius,
+  );
 
-  static OutlineInputBorder _enabledBorder(MaterialColor color) =>
-      OutlineInputBorder(
-        borderSide: BorderSide(color: color.shade300),
-        borderRadius: BasfThemes.defaultBorderRadius,
-      );
+  static OutlineInputBorder _enabledBorder(MaterialColor color) => OutlineInputBorder(
+    borderSide: BorderSide(color: color.shade300),
+    borderRadius: BasfThemes.defaultBorderRadius,
+  );
 
   static final OutlineInputBorder _disabledBorder = OutlineInputBorder(
     borderSide: BorderSide(color: BasfColors.grey.shade300),

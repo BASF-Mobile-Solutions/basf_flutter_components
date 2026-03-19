@@ -58,8 +58,7 @@ class _AdaptiveSpacerState extends State<AdaptiveSpacer> {
     final bottomBoxHeight = widget.bottomWidgetKey.currentContext?.size?.height;
 
     if (bottomBoxHeight != null && listHeight != null) {
-      final difference =
-          widget.listViewHeight - listHeight - widget.bottomPaddingCorrection;
+      final difference = widget.listViewHeight - listHeight - widget.bottomPaddingCorrection;
 
       return difference > 0 ? difference : 0;
     } else {

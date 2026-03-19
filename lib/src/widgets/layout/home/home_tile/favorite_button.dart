@@ -1,5 +1,4 @@
-import 'package:basf_flutter_components/basf_flutter_components.dart'
-    show BasfColors;
+import 'package:basf_flutter_components/basf_flutter_components.dart' show BasfColors;
 import 'package:basf_flutter_components/src/dto/favorite_data.dart';
 import 'package:flutter/material.dart';
 
@@ -17,9 +16,7 @@ class FavoriteButton extends StatelessWidget {
       padding: EdgeInsets.zero,
       icon: Icon(
         Icons.star,
-        color: favoriteData.isFavorite
-            ? Theme.of(context).primaryColor
-            : BasfColors.boxGrey,
+        color: favoriteData.isFavorite ? Theme.of(context).primaryColor : BasfColors.boxGrey,
       ),
       iconSize: 20,
       onPressed: favoriteData.onPressed,

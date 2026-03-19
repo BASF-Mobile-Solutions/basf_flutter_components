@@ -28,8 +28,7 @@ class OnOffStandardScannerOverlay extends StatelessWidget {
               const EnableDisableCameraIconButton(),
               ScanSupportText(
                 scanQRorBarcode:
-                    middlePhrase ??
-                    BasfComponentsLocalizations.of(context).scanQRorBarcode,
+                    middlePhrase ?? BasfComponentsLocalizations.of(context).scanQRorBarcode,
               ),
               const ToggleFlashIconButton(),
             ],

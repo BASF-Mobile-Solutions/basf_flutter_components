@@ -61,9 +61,7 @@ class CustomScaffold extends StatelessWidget {
             )
           : null,
       body: SafeArea(child: _wrapContent(child)),
-      bottomNavigationBar: bottomNavigationBar == null
-          ? null
-          : _wrapContent(bottomNavigationBar!),
+      bottomNavigationBar: bottomNavigationBar == null ? null : _wrapContent(bottomNavigationBar!),
     );
   }
 

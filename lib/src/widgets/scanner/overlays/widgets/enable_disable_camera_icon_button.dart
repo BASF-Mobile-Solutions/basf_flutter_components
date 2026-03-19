@@ -15,14 +15,10 @@ class EnableDisableCameraIconButton extends StatelessWidget {
       builder: (context, state) {
         return IconButton(
           icon: Icon(
-            state is ScannerEnabled
-                ? Icons.no_photography_outlined
-                : Icons.camera_alt_outlined,
+            state is ScannerEnabled ? Icons.no_photography_outlined : Icons.camera_alt_outlined,
           ),
           iconSize: size,
-          color: state is ScannerEnabled
-              ? Colors.white.withValues(alpha: 0.4)
-              : null,
+          color: state is ScannerEnabled ? Colors.white.withValues(alpha: 0.4) : null,
           onPressed: () async {
             state is ScannerEnabled
                 ? context.read<ScannerCubit>().disableCamera(save: true)

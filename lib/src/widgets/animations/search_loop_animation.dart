@@ -72,6 +72,5 @@ class _SearchLoopAnimationState extends State<SearchLoopAnimation> {
   }
 
   void onTap() => (controller.findSMI('onTap') as SMITrigger).fire();
-  void onDoubleTap() =>
-      (controller.findSMI('onDoubleTap') as SMITrigger).fire();
+  void onDoubleTap() => (controller.findSMI('onDoubleTap') as SMITrigger).fire();
 }

@@ -118,9 +118,7 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
       } else if (widget.allowUnselected) {
         _selectedValue = _unselectedValue;
       } else {
-        _selectedValue = widget.values.isNotEmpty
-            ? widget.values.first
-            : _unselectedValue;
+        _selectedValue = widget.values.isNotEmpty ? widget.values.first : _unselectedValue;
       }
     }
     _updateController();
@@ -196,9 +194,7 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
                 child: Text(
                   value,
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color:
-                        widget.itemColor?.call(value) ??
-                        Theme.of(context).primaryColor,
+                    color: widget.itemColor?.call(value) ?? Theme.of(context).primaryColor,
                   ),
                 ),
               ),
@@ -217,17 +213,14 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
     final disabledTheme = BasfInputThemes.disabledInputTheme(theme);
 
     final borderColor = isDisabled
-        ? disabledTheme.inputDecorationTheme.disabledBorder?.borderSide.color ??
-              theme.disabledColor
+        ? disabledTheme.inputDecorationTheme.disabledBorder?.borderSide.color ?? theme.disabledColor
         : widget.isMandatory && _selectedValue == _unselectedValue
         ? theme.colorScheme.error
         : _selectedColor ??
               theme.inputDecorationTheme.enabledBorder?.borderSide.color ??
               theme.primaryColor;
 
-    final textColor = isDisabled
-        ? theme.disabledColor
-        : _selectedColor ?? theme.primaryColor;
+    final textColor = isDisabled ? theme.disabledColor : _selectedColor ?? theme.primaryColor;
 
     return Container(
       height: 48,
@@ -250,9 +243,7 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
               child: Text(
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                _selectedValue == _unselectedValue
-                    ? widget.unselectedText
-                    : _selectedValue,
+                _selectedValue == _unselectedValue ? widget.unselectedText : _selectedValue,
                 style: BasfThemes.mainTextTheme.titleLarge?.copyWith(
                   color: textColor,
                 ),
@@ -288,9 +279,7 @@ class _BasfDropDownInputState extends State<BasfDropDownInput> {
   }
 
   bool get isDisabled {
-    return (widget.values.isEmpty ||
-            widget.values.length == 1 ||
-            widget.isDisabled) &&
+    return (widget.values.isEmpty || widget.values.length == 1 || widget.isDisabled) &&
         !widget.isLoading;
   }
 }

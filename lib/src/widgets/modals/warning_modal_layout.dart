@@ -73,17 +73,13 @@ class _WarningModalLayoutState extends State<WarningModalLayout> {
                 padding: Paddings.defaultScreenPadding,
                 children: [
                   ModalHeader(
-                    title: widget.isError
-                        ? widget.errorLocalization
-                        : widget.warningLocalization,
+                    title: widget.isError ? widget.errorLocalization : widget.warningLocalization,
                     icon: emoji,
                     showCloseButton: false,
                   ),
                   Text(widget.warningMessage),
-                  if (widget.additionalInfo?.isNotEmpty ?? false)
-                    showMoreButton(),
-                  if (widget.additionalInfo?.isNotEmpty ?? false)
-                    additionalInfo(),
+                  if (widget.additionalInfo?.isNotEmpty ?? false) showMoreButton(),
+                  if (widget.additionalInfo?.isNotEmpty ?? false) additionalInfo(),
                 ].joinWithSeparator(VerticalSpacer.medium()),
               ),
             ),
@@ -111,11 +107,7 @@ class _WarningModalLayoutState extends State<WarningModalLayout> {
       visible: showAdditionalInfo,
       child: Column(
         children:
-            widget.additionalInfo
-                ?.map(Text.new)
-                .toList()
-                .joinWithSeparator(paddedDivider()) ??
-            [],
+            widget.additionalInfo?.map(Text.new).toList().joinWithSeparator(paddedDivider()) ?? [],
       ),
     );
   }

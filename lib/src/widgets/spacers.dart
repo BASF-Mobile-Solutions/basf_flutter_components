@@ -31,52 +31,40 @@ class VerticalSpacer extends SizedBox {
   const VerticalSpacer({required double super.height, super.key});
 
   /// [VerticalSpacer] with [2.0] as padding
-  factory VerticalSpacer.xSmall() =>
-      const VerticalSpacer(height: Dimens.paddingXSmall);
+  factory VerticalSpacer.xSmall() => const VerticalSpacer(height: Dimens.paddingXSmall);
 
   /// [VerticalSpacer] with [4.0] as padding
-  factory VerticalSpacer.small() =>
-      const VerticalSpacer(height: Dimens.paddingSmall);
+  factory VerticalSpacer.small() => const VerticalSpacer(height: Dimens.paddingSmall);
 
   /// [VerticalSpacer] with [8.0] as padding
-  factory VerticalSpacer.normal() =>
-      const VerticalSpacer(height: Dimens.paddingDefault);
+  factory VerticalSpacer.normal() => const VerticalSpacer(height: Dimens.paddingDefault);
 
   /// [VerticalSpacer] with [10.0] as padding
-  factory VerticalSpacer.semi() =>
-      const VerticalSpacer(height: Dimens.paddingSemi);
+  factory VerticalSpacer.semi() => const VerticalSpacer(height: Dimens.paddingSemi);
 
   /// [VerticalSpacer] with [12.0] as padding
-  factory VerticalSpacer.mediumSmall() =>
-      const VerticalSpacer(height: Dimens.paddingMediumSmall);
+  factory VerticalSpacer.mediumSmall() => const VerticalSpacer(height: Dimens.paddingMediumSmall);
 
   /// [VerticalSpacer] with [16.0] as padding
-  factory VerticalSpacer.medium() =>
-      const VerticalSpacer(height: Dimens.paddingMedium);
+  factory VerticalSpacer.medium() => const VerticalSpacer(height: Dimens.paddingMedium);
 
   /// [VerticalSpacer] with [20.0] as padding
-  factory VerticalSpacer.medium20() =>
-      const VerticalSpacer(height: Dimens.paddingMedium20);
+  factory VerticalSpacer.medium20() => const VerticalSpacer(height: Dimens.paddingMedium20);
 
   /// [VerticalSpacer] with [24.0] as padding
-  factory VerticalSpacer.mediumLarge() =>
-      const VerticalSpacer(height: Dimens.paddingMediumLarge);
+  factory VerticalSpacer.mediumLarge() => const VerticalSpacer(height: Dimens.paddingMediumLarge);
 
   /// [VerticalSpacer] with [32.0] as padding
-  factory VerticalSpacer.large() =>
-      const VerticalSpacer(height: Dimens.paddingLarge);
+  factory VerticalSpacer.large() => const VerticalSpacer(height: Dimens.paddingLarge);
 
   /// [VerticalSpacer] with [36.0] as padding
-  factory VerticalSpacer.xLarge() =>
-      const VerticalSpacer(height: Dimens.paddingXLarge);
+  factory VerticalSpacer.xLarge() => const VerticalSpacer(height: Dimens.paddingXLarge);
 
   /// [VerticalSpacer] with [48.0] as padding
-  factory VerticalSpacer.xxLarge() =>
-      const VerticalSpacer(height: Dimens.paddingXXLarge);
+  factory VerticalSpacer.xxLarge() => const VerticalSpacer(height: Dimens.paddingXXLarge);
 
   /// [VerticalSpacer] with [64.0] as padding
-  factory VerticalSpacer.xxxLarge() =>
-      const VerticalSpacer(height: Dimens.paddingXXXLarge);
+  factory VerticalSpacer.xxxLarge() => const VerticalSpacer(height: Dimens.paddingXXXLarge);
 }
 
 /// [HorizontalSpacer] creates a horizontal separation between Widgets
@@ -107,52 +95,42 @@ class HorizontalSpacer extends SizedBox {
   const HorizontalSpacer({required double super.width, super.key});
 
   /// [HorizontalSpacer] with [2.0] as padding
-  factory HorizontalSpacer.xSmall() =>
-      const HorizontalSpacer(width: Dimens.paddingXSmall);
+  factory HorizontalSpacer.xSmall() => const HorizontalSpacer(width: Dimens.paddingXSmall);
 
   /// [HorizontalSpacer] with [4.0] as padding
-  factory HorizontalSpacer.small() =>
-      const HorizontalSpacer(width: Dimens.paddingSmall);
+  factory HorizontalSpacer.small() => const HorizontalSpacer(width: Dimens.paddingSmall);
 
   /// [HorizontalSpacer] with [8.0] as padding
-  factory HorizontalSpacer.normal() =>
-      const HorizontalSpacer(width: Dimens.paddingDefault);
+  factory HorizontalSpacer.normal() => const HorizontalSpacer(width: Dimens.paddingDefault);
 
   /// [HorizontalSpacer] with [10.0] as padding
-  factory HorizontalSpacer.semi() =>
-      const HorizontalSpacer(width: Dimens.paddingSemi);
+  factory HorizontalSpacer.semi() => const HorizontalSpacer(width: Dimens.paddingSemi);
 
   /// [HorizontalSpacer] with [12.0] as padding
   factory HorizontalSpacer.mediumSmall() =>
       const HorizontalSpacer(width: Dimens.paddingMediumSmall);
 
   /// [HorizontalSpacer] with [16.0] as padding
-  factory HorizontalSpacer.medium() =>
-      const HorizontalSpacer(width: Dimens.paddingMedium);
+  factory HorizontalSpacer.medium() => const HorizontalSpacer(width: Dimens.paddingMedium);
 
   /// [HorizontalSpacer] with [20.0] as padding
-  factory HorizontalSpacer.medium20() =>
-      const HorizontalSpacer(width: Dimens.paddingMedium20);
+  factory HorizontalSpacer.medium20() => const HorizontalSpacer(width: Dimens.paddingMedium20);
 
   /// [HorizontalSpacer] with [24.0] as padding
   factory HorizontalSpacer.mediumLarge() =>
       const HorizontalSpacer(width: Dimens.paddingMediumLarge);
 
   /// [HorizontalSpacer] with [32.0] as padding
-  factory HorizontalSpacer.large() =>
-      const HorizontalSpacer(width: Dimens.paddingLarge);
+  factory HorizontalSpacer.large() => const HorizontalSpacer(width: Dimens.paddingLarge);
 
   /// [HorizontalSpacer] with [36.0] as padding
-  factory HorizontalSpacer.xLarge() =>
-      const HorizontalSpacer(width: Dimens.paddingXLarge);
+  factory HorizontalSpacer.xLarge() => const HorizontalSpacer(width: Dimens.paddingXLarge);
 
   /// [HorizontalSpacer] with [48.0] as padding
-  factory HorizontalSpacer.xxLarge() =>
-      const HorizontalSpacer(width: Dimens.paddingXXLarge);
+  factory HorizontalSpacer.xxLarge() => const HorizontalSpacer(width: Dimens.paddingXXLarge);
 
   /// [HorizontalSpacer] with [64.0] as padding
-  factory HorizontalSpacer.xxxLarge() =>
-      const HorizontalSpacer(width: Dimens.paddingXXXLarge);
+  factory HorizontalSpacer.xxxLarge() => const HorizontalSpacer(width: Dimens.paddingXXXLarge);
 }
 
 /// [HorizontalSpacerWithText] creates a horizontal separation between Widgets

@@ -11,8 +11,7 @@ class ScannerNoPermissionLayout extends StatefulWidget {
   });
 
   @override
-  State<ScannerNoPermissionLayout> createState() =>
-      _ScannerNoPermissionLayoutState();
+  State<ScannerNoPermissionLayout> createState() => _ScannerNoPermissionLayoutState();
 }
 
 class _ScannerNoPermissionLayoutState extends State<ScannerNoPermissionLayout>

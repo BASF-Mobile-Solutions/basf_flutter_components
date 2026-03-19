@@ -36,8 +36,7 @@ class SearchCriteriaModalLayout extends StatefulWidget {
   final String saveCriteriaLocalization;
 
   @override
-  State<SearchCriteriaModalLayout> createState() =>
-      _SearchCriteriaModalLayoutState();
+  State<SearchCriteriaModalLayout> createState() => _SearchCriteriaModalLayoutState();
 }
 
 class _SearchCriteriaModalLayoutState extends State<SearchCriteriaModalLayout> {
@@ -143,9 +142,7 @@ class _SearchCriteriaModalLayoutState extends State<SearchCriteriaModalLayout> {
       builder: (context, filled, _) {
         return BasfTextButton.contained(
           expanded: true,
-          text: filled
-              ? widget.searchLocalization
-              : widget.saveCriteriaLocalization,
+          text: filled ? widget.searchLocalization : widget.saveCriteriaLocalization,
           onPressed: saveCriteria,
         );
       },
@@ -185,8 +182,7 @@ class _SearchCriteriaModalLayoutState extends State<SearchCriteriaModalLayout> {
         labelText: tempTextFieldItems[index].labelText,
       ),
       validator: tempTextFieldItems[index].validator,
-      keyboardType:
-          tempTextFieldItems[index].keyboardType ?? TextInputType.text,
+      keyboardType: tempTextFieldItems[index].keyboardType ?? TextInputType.text,
       scrollPadding: const EdgeInsets.only(bottom: 70),
       inputFormatters: [
         ...?tempTextFieldItems[index].inputFormatters,

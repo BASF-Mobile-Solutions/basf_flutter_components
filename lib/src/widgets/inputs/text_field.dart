@@ -170,8 +170,7 @@ class BasfTextField extends StatefulWidget {
        autovalidateMode = autovalidateMode ?? textFieldData.autovalidateMode,
        keyboardType = keyboardType ?? textFieldData.keyboardType,
        inputFormatters = inputFormatters ?? textFieldData.inputFormatters,
-       textCapitalization =
-           textCapitalization ?? textFieldData.textCapitalization;
+       textCapitalization = textCapitalization ?? textFieldData.textCapitalization;
 
   /// Label of the [BasfTextField]
   /// Prefer this instead of the [decoration] property for the label
@@ -430,8 +429,7 @@ class _BasfTextFieldState extends State<BasfTextField> {
     }
   }
 
-  String? get errorText =>
-      hasValidation ? widget.validator!(widget.controller.text) : null;
+  String? get errorText => hasValidation ? widget.validator!(widget.controller.text) : null;
 
   bool get isEnabled => widget.enabled ?? widget.decoration?.enabled ?? true;
 
@@ -479,9 +477,7 @@ class _BasfTextFieldState extends State<BasfTextField> {
           if (widget.multiScanEnabled) {
             return _scanIconButton(theme);
           }
-          return emptyTextField
-              ? _scanIconButton(theme)
-              : _deleteIconButton(theme);
+          return emptyTextField ? _scanIconButton(theme) : _deleteIconButton(theme);
         }
 
         return Visibility(
@@ -592,8 +588,7 @@ class _BasfTextFieldState extends State<BasfTextField> {
       scrollController: widget.scrollController,
       restorationId: widget.restorationId,
       enableIMEPersonalizedLearning: widget.enableIMEPersonalizedLearning,
-      contextMenuBuilder:
-          widget.contextMenuBuilder ?? const TextField().contextMenuBuilder,
+      contextMenuBuilder: widget.contextMenuBuilder ?? const TextField().contextMenuBuilder,
       onTapOutside: widget.onTapOutside,
       canRequestFocus: widget.canRequestFocus,
       clipBehavior: widget.clipBehavior,

@@ -33,8 +33,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool showBackButton;
 
   @override
-  Size get preferredSize =>
-      Size(0, bottom == null ? kToolbarHeight : kToolbarHeight + 40);
+  Size get preferredSize => Size(0, bottom == null ? kToolbarHeight : kToolbarHeight + 40);
 
   @override
   Widget build(BuildContext context) {
