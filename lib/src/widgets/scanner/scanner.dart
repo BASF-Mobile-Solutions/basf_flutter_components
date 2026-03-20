@@ -305,7 +305,7 @@ class _ScannerState extends State<Scanner> with RouteAware {
   Widget _buildCameraView() {
     return ScannerCameraView(
       cameraControllerRevision: scannerCubit.cameraControllerRevision,
-      cameraController: scannerCubit.cameraController,
+      getCameraController: () => scannerCubit.cameraController,
       overlay: widget.overlay,
       cameraFeedbackOverlay: _buildCameraFeedbackOverlay(),
       startupOverlayVisibleNotifier: cameraStartupOverlayVisibleNotifier,
@@ -337,6 +337,13 @@ class _ScannerState extends State<Scanner> with RouteAware {
         (!controllerState.isRunning && codeScannedNotifier.value == false);
   }
 
+  bool _hasTerminalCameraError(MobileScannerState controllerState) {
+    final errorCode = controllerState.error?.errorCode;
+
+    return errorCode == MobileScannerErrorCode.unsupported ||
+        errorCode == MobileScannerErrorCode.permissionDenied;
+  }
+
   void _handleControllerRevisionChanged() {
     _attachCameraControllerListener();
     _updateCameraStartupUi();
@@ -348,6 +355,7 @@ class _ScannerState extends State<Scanner> with RouteAware {
 
     _isActuallyVisible = isVisible;
     _updateCameraStartupUi();
+    if (_hasTerminalCameraError(scannerCubit.cameraController.value)) return;
 
     if (_isActuallyVisible && scannerCubit.state is ScannerEnabled) {
       cameraCoordinator.scheduleSafeStartCamera();

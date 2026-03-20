@@ -10,7 +10,7 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 class ScannerCameraView extends StatelessWidget {
   const ScannerCameraView({
     required this.cameraControllerRevision,
-    required this.cameraController,
+    required this.getCameraController,
     required this.overlay,
     required this.startupOverlayVisibleNotifier,
     required this.startupLoaderVisibleNotifier,
@@ -23,7 +23,7 @@ class ScannerCameraView extends StatelessWidget {
   });
 
   final ValueListenable<int> cameraControllerRevision;
-  final MobileScannerController cameraController;
+  final MobileScannerController Function() getCameraController;
   final Widget overlay;
   final Widget? cameraFeedbackOverlay;
   final ValueListenable<bool> startupOverlayVisibleNotifier;
@@ -44,14 +44,16 @@ class ScannerCameraView extends StatelessWidget {
   }
 
   Widget _buildCameraState(int revision) {
+    final controller = getCameraController();
+
     return ValueListenableBuilder<MobileScannerState>(
-      valueListenable: cameraController,
+      valueListenable: controller,
       builder: (context, controllerState, _) {
         return Stack(
           fit: StackFit.expand,
           children: [
             if (controllerState.error == null) const ColoredBox(color: Colors.black),
-            _buildCameraPreview(revision, controllerState),
+            _buildCameraPreview(revision, controller, controllerState),
             _buildStartupOverlay(),
           ],
         );
@@ -59,14 +61,18 @@ class ScannerCameraView extends StatelessWidget {
     );
   }
 
-  Widget _buildCameraPreview(int revision, MobileScannerState controllerState) {
+  Widget _buildCameraPreview(
+    int revision,
+    MobileScannerController controller,
+    MobileScannerState controllerState,
+  ) {
     return AnimatedOpacity(
       opacity: controllerState.isRunning || controllerState.error != null ? 1 : 0,
       duration: cameraPreviewFadeDuration,
       curve: Curves.easeOutCubic,
       child: MobileScanner(
         key: ValueKey(revision),
-        controller: cameraController,
+        controller: controller,
         onDetect: onDetect,
         overlayBuilder: (_, _) => _buildScannerOverlay(),
         errorBuilder: (_, error) => _buildErrorLayout(error),

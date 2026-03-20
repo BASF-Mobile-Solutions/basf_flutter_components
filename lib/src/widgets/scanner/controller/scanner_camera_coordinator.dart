@@ -25,24 +25,36 @@ class ScannerCameraCoordinator {
   static const _cameraControllerRecreateMaxAttempts = 1;
 
   int _cameraStartRequestId = 0;
+  bool _startScheduled = false;
+  bool _stopScheduled = false;
   Future<void>? _cameraStopOperation;
   MobileScannerController? _cameraStopController;
 
   void scheduleSafeStartCamera() {
+    if (_startScheduled) return;
+
+    _startScheduled = true;
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      _startScheduled = false;
       if (!isMounted()) return;
       unawaited(safeStartCamera());
     });
   }
 
   void scheduleSafeStopCamera() {
+    if (_stopScheduled) return;
+
+    _stopScheduled = true;
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      _stopScheduled = false;
       unawaited(safeStopCamera());
     });
   }
 
   void scheduleDetachedControllerStop(MobileScannerController controller) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (scannerCubit.isClosed) return;
+      if (!identical(scannerCubit.cameraController, controller)) return;
       unawaited(_stopCameraController(controller));
     });
   }
@@ -72,6 +84,8 @@ class ScannerCameraCoordinator {
         ? _cameraStopOperation
         : null;
 
+    if (_hasTerminalCameraError(currentController.value)) return;
+
     if (pendingStop != null) {
       await pendingStop;
       if (!isMounted() || requestId != _cameraStartRequestId) return;
@@ -88,6 +102,7 @@ class ScannerCameraCoordinator {
       final controllerState = scannerCubit.cameraController.value;
       final errorCode = controllerState.error?.errorCode;
       if (controllerState.isRunning && errorCode == null) return;
+      if (_hasTerminalCameraError(controllerState)) return;
       if (!_canRetryCameraStart(controllerState)) break;
 
       await Future<void>.delayed(_cameraStartRetryDelay);
@@ -113,6 +128,13 @@ class ScannerCameraCoordinator {
         errorCode == MobileScannerErrorCode.controllerAlreadyInitialized ||
         errorCode == MobileScannerErrorCode.controllerInitializing ||
         errorCode == MobileScannerErrorCode.controllerNotAttached;
+  }
+
+  bool _hasTerminalCameraError(MobileScannerState controllerState) {
+    final errorCode = controllerState.error?.errorCode;
+
+    return errorCode == MobileScannerErrorCode.unsupported ||
+        errorCode == MobileScannerErrorCode.permissionDenied;
   }
 
   Future<void> _stopCameraController(MobileScannerController controller) {
