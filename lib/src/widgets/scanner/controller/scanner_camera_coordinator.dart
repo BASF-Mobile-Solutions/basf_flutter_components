@@ -94,8 +94,11 @@ class ScannerCameraCoordinator {
     for (int attempt = 0; attempt < _cameraStartMaxAttempts; attempt++) {
       if (!isMounted() || requestId != _cameraStartRequestId) return;
       if (!isScannerEnabled()) return;
+      if (scannerCubit.cameraController.value.isStarting) return;
 
-      await scannerCubit.cameraController.start().catchError((_) => null);
+      await Future<void>.sync(() => scannerCubit.cameraController.start()).catchError(
+        (_) => null,
+      );
 
       if (!isMounted() || requestId != _cameraStartRequestId) return;
 
