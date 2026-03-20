@@ -583,11 +583,7 @@ class _ScannerState extends State<Scanner> with RouteAware {
 
       if (controllerState.isRunning && errorCode == null) return;
 
-      bool canRetry =
-          controllerState.isStarting ||
-          errorCode == MobileScannerErrorCode.controllerAlreadyInitialized ||
-          errorCode == MobileScannerErrorCode.controllerInitializing ||
-          errorCode == MobileScannerErrorCode.controllerNotAttached;
+      bool canRetry = _canRetryCameraStart(controllerState);
 
       if (!canRetry) break;
 
@@ -597,6 +593,7 @@ class _ScannerState extends State<Scanner> with RouteAware {
     if (!mounted || requestId != _cameraStartRequestId) return;
     if (scannerCubit.state is! ScannerEnabled) return;
     if (recreateAttempt >= _cameraControllerRecreateMaxAttempts) return;
+    if (!_canRetryCameraStart(scannerCubit.cameraController.value)) return;
 
     await scannerCubit.recreateCameraController();
 
@@ -604,5 +601,13 @@ class _ScannerState extends State<Scanner> with RouteAware {
 
     await Future<void>.delayed(_cameraStartRetryDelay);
     return _safeStartCamera(recreateAttempt: recreateAttempt + 1);
+  }
+
+  bool _canRetryCameraStart(MobileScannerState controllerState) {
+    final errorCode = controllerState.error?.errorCode;
+    return controllerState.isStarting ||
+        errorCode == MobileScannerErrorCode.controllerAlreadyInitialized ||
+        errorCode == MobileScannerErrorCode.controllerInitializing ||
+        errorCode == MobileScannerErrorCode.controllerNotAttached;
   }
 }
