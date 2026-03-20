@@ -334,7 +334,10 @@ class _ScannerState extends State<Scanner> with RouteAware {
               child: const SizedBox(
                 width: 24,
                 height: 24,
-                child: CircularProgressIndicator.adaptive(strokeWidth: 2),
+                child: CircularProgressIndicator(
+                  color: Colors.white,
+                  strokeWidth: 2.5,
+                ),
               ),
             ),
           ),
