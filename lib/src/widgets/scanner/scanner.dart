@@ -233,9 +233,9 @@ class _ScannerState extends State<Scanner> with RouteAware {
             return Stack(
               fit: StackFit.expand,
               children: [
-                const ColoredBox(color: Colors.black),
+                if (controllerState.error == null) const ColoredBox(color: Colors.black),
                 AnimatedOpacity(
-                  opacity: controllerState.isRunning ? 1 : 0,
+                  opacity: controllerState.isRunning || controllerState.error != null ? 1 : 0,
                   duration: _cameraPreviewFadeDuration,
                   curve: Curves.easeOutCubic,
                   child: MobileScanner(
