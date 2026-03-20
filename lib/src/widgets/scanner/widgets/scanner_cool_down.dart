@@ -25,7 +25,8 @@ class ScannerCoolDown extends StatefulWidget {
   State<ScannerCoolDown> createState() => _ScannerCoolDownState();
 }
 
-class _ScannerCoolDownState extends State<ScannerCoolDown> with SingleTickerProviderStateMixin {
+class _ScannerCoolDownState extends State<ScannerCoolDown>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<int> _countdown;
 
