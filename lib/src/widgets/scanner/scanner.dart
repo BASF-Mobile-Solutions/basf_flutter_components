@@ -54,7 +54,6 @@ class _ScannerState extends State<Scanner> with RouteAware {
   static const _errorSnackDuration = Duration(milliseconds: 1700);
   static const _errorVibrationGap = Duration(milliseconds: 100);
   static const _cameraStartRetryDelay = Duration(milliseconds: 100);
-  static const _cameraStartAttemptTimeout = Duration(seconds: 2);
   static const _cameraStartMaxAttempts = 20;
   static const _cameraControllerRecreateMaxAttempts = 1;
 
@@ -326,8 +325,8 @@ class _ScannerState extends State<Scanner> with RouteAware {
               ),
             ),
           ),
-          Transform.translate(
-            offset: const Offset(0, 86),
+          Align(
+            alignment: const Alignment(0, 0.72),
             child: AnimatedOpacity(
               opacity: showLoader ? 1 : 0,
               duration: _cameraLoaderFadeDuration,
@@ -575,10 +574,7 @@ class _ScannerState extends State<Scanner> with RouteAware {
       if (!mounted || requestId != _cameraStartRequestId) return;
       if (scannerCubit.state is! ScannerEnabled) return;
 
-      await scannerCubit.cameraController
-          .start()
-          .timeout(_cameraStartAttemptTimeout)
-          .catchError((_) => null);
+      await scannerCubit.cameraController.start().catchError((_) => null);
 
       if (!mounted || requestId != _cameraStartRequestId) return;
 

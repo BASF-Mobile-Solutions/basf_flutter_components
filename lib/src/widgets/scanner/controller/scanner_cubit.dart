@@ -113,7 +113,10 @@ class ScannerCubit extends HydratedCubit<ScannerState> {
         if (isClosed) return;
         emit(const ScannerDisabled());
         emit(const ScannerEnabled());
-      case PermissionStatus.permanentlyDenied when !isRecheck && initialStatus == status:
+      case PermissionStatus.permanentlyDenied:
+      case PermissionStatus.restricted:
+        unawaited(openAppSettings());
+      case PermissionStatus.denied when !isRecheck && initialStatus == PermissionStatus.denied:
         unawaited(openAppSettings());
       default:
         break;
