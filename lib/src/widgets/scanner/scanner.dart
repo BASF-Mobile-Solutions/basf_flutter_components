@@ -89,9 +89,9 @@ class _ScannerState extends State<Scanner> with RouteAware {
 
       switch (scannerCubit.state) {
         case ScannerEnabled():
-          unawaited(_safeStartCamera());
+          _scheduleSafeStartCamera();
         case ScannerDisabled():
-          unawaited(_safeStopCamera());
+          _scheduleSafeStopCamera();
       }
     });
   }
@@ -148,9 +148,9 @@ class _ScannerState extends State<Scanner> with RouteAware {
         _updateCameraStartupUi();
         switch (state) {
           case ScannerEnabled():
-            unawaited(_safeStartCamera());
+            _scheduleSafeStartCamera();
           case ScannerDisabled():
-            unawaited(_safeStopCamera());
+            _scheduleSafeStopCamera();
         }
       },
       builder: (context, state) {
@@ -349,6 +349,19 @@ class _ScannerState extends State<Scanner> with RouteAware {
   void _handleControllerRevisionChanged() {
     _attachCameraControllerListener();
     _updateCameraStartupUi();
+  }
+
+  void _scheduleSafeStartCamera() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      unawaited(_safeStartCamera());
+    });
+  }
+
+  void _scheduleSafeStopCamera() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      unawaited(_safeStopCamera());
+    });
   }
 
   void _attachCameraControllerListener() {
