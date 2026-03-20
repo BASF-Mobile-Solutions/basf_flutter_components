@@ -213,26 +213,29 @@ class _ScannerScreenState extends State<ScannerScreen> {
             ),
           ),
         ),
-        bottomSheet: Padding(
-          padding: const EdgeInsets.all(40),
-          child: TextButton(
-            style: TextButton.styleFrom(
-              minimumSize: const Size(double.infinity, 53),
+        bottomSheet: Visibility(
+          visible: id < 3,
+          child: Padding(
+            padding: const EdgeInsets.all(40),
+            child: TextButton(
+              style: TextButton.styleFrom(
+                minimumSize: const Size(double.infinity, 53),
+              ),
+              onPressed: () async {
+                await Navigator.of(context).push(
+                  MaterialPageRoute<Widget>(
+                    builder: (context) {
+                      return BlocProvider(
+                        create: (context) =>
+                            ScannerCubit(id: 'scanner_${id + 1}'),
+                        child: screenLayout(id + 1),
+                      );
+                    },
+                  ),
+                );
+              },
+              child: const Text('Next screen'),
             ),
-            onPressed: () async {
-              await Navigator.of(context).push(
-                MaterialPageRoute<Widget>(
-                  builder: (context) {
-                    return BlocProvider(
-                      create: (context) =>
-                          ScannerCubit(id: 'scanner_${id + 1}'),
-                      child: screenLayout(id + 1),
-                    );
-                  },
-                ),
-              );
-            },
-            child: const Text('Next screen'),
           ),
         ),
       );
