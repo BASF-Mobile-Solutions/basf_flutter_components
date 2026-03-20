@@ -107,13 +107,14 @@ class _ScannerState extends State<Scanner> with RouteAware {
 
   @override
   void dispose() {
+    final controller = scannerCubit.cameraController;
     // only unsubscribe if we previously subscribed
     widget.routeObserver?.unsubscribe(this);
     _routeResumeTimer?.cancel();
     _cameraLoaderTimer?.cancel();
     scannerCubit.cameraControllerRevision.removeListener(_handleControllerRevisionChanged);
     _observedCameraController?.removeListener(_updateCameraStartupUi);
-    unawaited(_safeStopCamera());
+    _scheduleDetachedControllerStop(controller);
     codeScannedNotifier.dispose();
     coolDownVisibilityNotifier.dispose();
     cameraStartupOverlayVisibleNotifier.dispose();
@@ -361,6 +362,13 @@ class _ScannerState extends State<Scanner> with RouteAware {
   void _scheduleSafeStopCamera() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       unawaited(_safeStopCamera());
+    });
+  }
+
+  void _scheduleDetachedControllerStop(MobileScannerController controller) {
+    _cameraStartRequestId++;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      unawaited(controller.stop().catchError((_) => null));
     });
   }
 
