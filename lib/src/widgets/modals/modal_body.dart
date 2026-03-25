@@ -87,8 +87,7 @@ class ModalBody extends StatelessWidget {
                 ),
               Flexible(child: body()),
               if (bottomButton != null) VerticalSpacer.medium20(),
-              if (bottomButton != null)
-                Padding(padding: _horizontalPadding, child: bottomButton),
+              if (bottomButton != null) Padding(padding: _horizontalPadding, child: bottomButton),
             ],
           ),
         ),

@@ -15,8 +15,7 @@ class ScanSupportText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      scanQRorBarcode ??
-          BasfComponentsLocalizations.of(context).scanQRorBarcode,
+      scanQRorBarcode ?? BasfComponentsLocalizations.of(context).scanQRorBarcode,
       textAlign: TextAlign.center,
       style: TextStyle(color: Colors.white.withValues(alpha: 0.4)),
     );

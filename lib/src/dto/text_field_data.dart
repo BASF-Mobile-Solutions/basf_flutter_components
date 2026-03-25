@@ -48,9 +48,7 @@ class TextFieldData {
   /// Call this function to set the empty text field controller
   /// with the favorite value
   void setControllerWithFavorite({bool dependency = true}) {
-    if (!dependency ||
-        persistenceId.isNullOrEmpty ||
-        controller.text.isNotEmpty) {
+    if (!dependency || persistenceId.isNullOrEmpty || controller.text.isNotEmpty) {
       return;
     }
     final cubit = PersistedInputCubit(id: persistenceId!);

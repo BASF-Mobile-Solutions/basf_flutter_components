@@ -25,8 +25,7 @@ class StandardScannerOverlay extends StatelessWidget {
           right: 3,
           child: StandardBottomActions(
             scanQRorBarcode:
-                scanQRorBarcode ??
-                BasfComponentsLocalizations.of(context).scanQRorBarcode,
+                scanQRorBarcode ?? BasfComponentsLocalizations.of(context).scanQRorBarcode,
           ),
         ),
       ],

@@ -24,9 +24,7 @@ class ToggleFlashIconButton extends StatelessWidget {
               : Colors.white.withValues(alpha: 0.4),
           iconSize: size,
           icon: Icon(
-            torchState == TorchState.on
-                ? Icons.flash_on_rounded
-                : Icons.flash_off_rounded,
+            torchState == TorchState.on ? Icons.flash_on_rounded : Icons.flash_off_rounded,
           ),
         );
       },

@@ -10,8 +10,7 @@ class PersistedInputCubit extends HydratedCubit<PersistedInputData> {
   final String id;
 
   /// Checks if values exist
-  bool get valuesExist =>
-      state.favoriteValue != null || state.lastValues.isNotEmpty;
+  bool get valuesExist => state.favoriteValue != null || state.lastValues.isNotEmpty;
 
   /// Adds new input value to the list
   void addValue(String value) {

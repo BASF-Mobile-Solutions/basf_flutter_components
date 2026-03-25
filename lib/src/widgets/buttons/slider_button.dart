@@ -93,9 +93,7 @@ class _SliderButtonState extends State<SliderButton> {
       padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
         borderRadius: widget.backgroundShape ?? BasfThemes.defaultBorderRadius,
-        color: widget.backgroundColorEnd != null
-            ? _calculateBackground()
-            : widget.backgroundColor,
+        color: widget.backgroundColorEnd != null ? _calculateBackground() : widget.backgroundColor,
         boxShadow: [
           widget.shadow ??
               const BoxShadow(
@@ -114,8 +112,7 @@ class _SliderButtonState extends State<SliderButton> {
       child: Text(
         widget.text ?? '',
         style:
-            widget.textStyle ??
-            const TextStyle(color: Colors.black26, fontWeight: FontWeight.bold),
+            widget.textStyle ?? const TextStyle(color: Colors.black26, fontWeight: FontWeight.bold),
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
       ),
@@ -131,9 +128,7 @@ class _SliderButtonState extends State<SliderButton> {
         duration: Duration(milliseconds: _duration),
         curve: Curves.ease,
         decoration: BoxDecoration(
-          borderRadius:
-              widget.backgroundShape ??
-              BorderRadius.all(Radius.circular(widget.height)),
+          borderRadius: widget.backgroundShape ?? BorderRadius.all(Radius.circular(widget.height)),
           color: widget.backgroundColorEnd != null
               ? _calculateBackground()
               : widget.backgroundColor,
@@ -155,13 +150,10 @@ class _SliderButtonState extends State<SliderButton> {
           height: widget.height - 10,
           width: widget.height - 10,
           decoration: BoxDecoration(
-            borderRadius:
-                widget.foregroundShape ?? BasfThemes.defaultBorderRadius,
+            borderRadius: widget.foregroundShape ?? BasfThemes.defaultBorderRadius,
             color: widget.foregroundColor ?? Theme.of(context).primaryColor,
           ),
-          child:
-              widget.sliderButtonContent ??
-              Icon(Icons.navigate_next, color: widget.iconColor),
+          child: widget.sliderButtonContent ?? Icon(Icons.navigate_next, color: widget.iconColor),
         ),
       ),
     );

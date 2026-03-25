@@ -1,4 +1,4 @@
-// dart format width=80
+// dart format width=100
 /// GENERATED CODE - DO NOT MODIFY BY HAND
 /// *****************************************************
 ///  FlutterGen

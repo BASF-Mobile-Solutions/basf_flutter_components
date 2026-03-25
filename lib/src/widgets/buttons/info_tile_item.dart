@@ -54,8 +54,7 @@ class _InfoTileItemState extends State<InfoTileItem> {
 
   Widget textField() {
     return ValueListenableBuilder<String>(
-      valueListenable: textNotifier
-        ..value = widget.textFieldData.controller.text,
+      valueListenable: textNotifier..value = widget.textFieldData.controller.text,
       builder: (context, value, _) {
         return valueText(value);
       },

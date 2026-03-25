@@ -1,7 +1,10 @@
 import 'dart:async';
 
 import 'package:basf_flutter_components/basf_flutter_components.dart';
-import 'package:basf_flutter_components/src/widgets/scanner/overlays/widgets/enable_disable_camera_icon_button.dart';
+import 'package:basf_flutter_components/src/widgets/scanner/controller/scanner_camera_coordinator.dart';
+import 'package:basf_flutter_components/src/widgets/scanner/widgets/scanner_camera_view.dart';
+import 'package:basf_flutter_components/src/widgets/scanner/widgets/scanner_offline_placeholder.dart';
+import 'package:basf_flutter_components/src/widgets/scanner/widgets/viewport_visibility_listener.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -42,24 +45,36 @@ class Scanner extends StatefulWidget {
 }
 
 class _ScannerState extends State<Scanner> with RouteAware {
+  static const _cameraVisibleFractionThreshold = 0.01;
   static const _scannerMaxWidth = 500.0;
   static const _scannerMinHeight = 170.0;
+
   static const _routeResumeDelay = Duration(milliseconds: 500);
+  static const _cameraLoaderShowDelay = Duration(milliseconds: 220);
+  static const _cooldownOverlayShowDelay = Duration(milliseconds: 500);
+
   static const _scanResultSwitchDuration = Duration(milliseconds: 500);
   static const _successIconFadeDuration = Duration(milliseconds: 200);
-  static const _cooldownOverlayShowDelay = Duration(milliseconds: 500);
+  static const _cameraPreviewFadeDuration = Duration(milliseconds: 320);
+  static const _cameraPlaceholderFadeDuration = Duration(milliseconds: 220);
+  static const _cameraLoaderFadeDuration = Duration(milliseconds: 180);
+
   static const _errorSnackDuration = Duration(milliseconds: 1700);
   static const _errorVibrationGap = Duration(milliseconds: 100);
-  static const _cameraStartRetryDelay = Duration(milliseconds: 100);
-  static const _cameraStartMaxAttempts = 20;
 
   late final ScannerCubit scannerCubit;
+  late final ScannerCameraCoordinator cameraCoordinator;
   late final ValueNotifier<bool> codeScannedNotifier;
   late final ValueNotifier<bool> coolDownVisibilityNotifier;
+  late final ValueNotifier<bool> cameraStartupOverlayVisibleNotifier;
+  late final ValueNotifier<bool> cameraStartupLoaderVisibleNotifier;
 
-  int _cameraStartRequestId = 0;
   int _routeTransitionRequestId = 0;
+  bool _isActuallyVisible = true;
+  bool _wasScannerEnabled = true;
   Timer? _routeResumeTimer;
+  Timer? _cameraLoaderTimer;
+  MobileScannerController? _observedCameraController;
 
   /// To prevent disable/enable cooldown restart when it's active
   DateTime? coolDownEndTime;
@@ -68,8 +83,32 @@ class _ScannerState extends State<Scanner> with RouteAware {
   void initState() {
     super.initState();
     scannerCubit = context.read<ScannerCubit>();
+    cameraCoordinator = ScannerCameraCoordinator(
+      scannerCubit: scannerCubit,
+      isMounted: () => mounted,
+      isScannerEnabled: () => scannerCubit.state is ScannerEnabled,
+      isActuallyVisible: () => _isActuallyVisible,
+      onStartupUiChanged: _updateCameraStartupUi,
+    );
     codeScannedNotifier = ValueNotifier(false);
     coolDownVisibilityNotifier = ValueNotifier(false);
+    cameraStartupOverlayVisibleNotifier = ValueNotifier(
+      scannerCubit.state is ScannerEnabled,
+    );
+    cameraStartupLoaderVisibleNotifier = ValueNotifier(false);
+    _wasScannerEnabled = scannerCubit.state is ScannerEnabled;
+    scannerCubit.cameraControllerRevision.addListener(_handleControllerRevisionChanged);
+    _attachCameraControllerListener();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+
+      switch (scannerCubit.state) {
+        case ScannerEnabled():
+          cameraCoordinator.scheduleSafeStartCamera();
+        case ScannerDisabled():
+          cameraCoordinator.scheduleSafeStopCamera();
+      }
+    });
   }
 
   @override
@@ -83,11 +122,18 @@ class _ScannerState extends State<Scanner> with RouteAware {
 
   @override
   void dispose() {
+    final controller = scannerCubit.cameraController;
     // only unsubscribe if we previously subscribed
     widget.routeObserver?.unsubscribe(this);
     _routeResumeTimer?.cancel();
+    _cameraLoaderTimer?.cancel();
+    scannerCubit.cameraControllerRevision.removeListener(_handleControllerRevisionChanged);
+    _observedCameraController?.removeListener(_updateCameraStartupUi);
+    cameraCoordinator.scheduleDetachedControllerStop(controller);
     codeScannedNotifier.dispose();
     coolDownVisibilityNotifier.dispose();
+    cameraStartupOverlayVisibleNotifier.dispose();
+    cameraStartupLoaderVisibleNotifier.dispose();
     super.dispose();
   }
 
@@ -111,42 +157,101 @@ class _ScannerState extends State<Scanner> with RouteAware {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<ScannerCubit, ScannerState>(
-      bloc: scannerCubit,
-      listenWhen: (previous, current) => previous != current,
-      listener: (context, state) {
-        switch (state) {
-          case ScannerEnabled():
-            unawaited(_safeStartCamera());
-          case ScannerDisabled():
-            unawaited(_safeStopCamera());
-        }
-      },
-      builder: (context, state) {
-        return LayoutBuilder(
-          builder: (context, constraints) {
-            return SizedBox(
-              width: _scannerWidth(constraints),
-              height: _scannerHeight(constraints),
-              child: IndexedStack(
-                index: state is ScannerEnabled ? 0 : 1,
-                children: [
-                  scanner(),
-                  widget.offlinePlaceholder ?? basfLogo(context),
-                ],
-              ),
-            );
-          },
+    return _buildViewportAwareScanner();
+  }
+
+  Widget _buildViewportAwareScanner() {
+    return ViewportVisibilityListener(
+      onVisibilityChanged: _handleVisibilityFractionChanged,
+      child: BlocConsumer<ScannerCubit, ScannerState>(
+        bloc: scannerCubit,
+        listenWhen: (previous, current) => previous != current,
+        listener: (context, state) => _handleScannerStateChanged(state),
+        builder: (context, state) => _buildAnimatedScannerShell(state),
+      ),
+    );
+  }
+
+  void _handleScannerStateChanged(ScannerState state) {
+    final isScannerEnabled = state is ScannerEnabled;
+    final wasScannerEnabled = _wasScannerEnabled;
+    _wasScannerEnabled = isScannerEnabled;
+
+    _updateCameraStartupUi();
+    if (!wasScannerEnabled && isScannerEnabled) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        unawaited(_restartCameraAfterEnable());
+      });
+      return;
+    }
+
+    switch (state) {
+      case ScannerEnabled() when _isActuallyVisible:
+        cameraCoordinator.scheduleSafeStartCamera();
+      case ScannerEnabled():
+        cameraCoordinator.scheduleSafeStopCamera();
+      case ScannerDisabled():
+        cameraCoordinator.scheduleSafeStopCamera();
+    }
+  }
+
+  Widget _buildAnimatedScannerShell(ScannerState state) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final content = _buildScannerStateContent(state);
+
+        return SizedBox(
+          width: _scannerWidth(constraints),
+          height: _scannerHeight(constraints),
+          child: AnimatedSwitcher(
+            duration: _cameraPlaceholderFadeDuration,
+            switchInCurve: Curves.easeOutCubic,
+            switchOutCurve: Curves.easeOutCubic,
+            layoutBuilder: _buildSwitchLayout,
+            child: content,
+          ),
         );
       },
     );
   }
 
+  Widget _buildSwitchLayout(Widget? currentChild, List<Widget> previousChildren) {
+    return currentChild ?? const SizedBox.shrink();
+  }
+
+  Widget _buildScannerStateContent(ScannerState state) {
+    if (state is ScannerEnabled) {
+      return _buildEnabledScannerContent();
+    }
+
+    return KeyedSubtree(
+      key: const ValueKey('scanner-disabled'),
+      child: widget.offlinePlaceholder ?? _buildDefaultOfflinePlaceholder(),
+    );
+  }
+
+  Widget _buildDefaultOfflinePlaceholder() {
+    return ScannerOfflinePlaceholder(
+      isOnOffOverlay: widget.overlay is OnOffStandardScannerOverlay,
+      onEnableCamera: _enableCamera,
+    );
+  }
+
+  Widget _buildEnabledScannerContent() {
+    return KeyedSubtree(
+      key: const ValueKey('scanner-enabled'),
+      child: _buildScannerContent(),
+    );
+  }
+
+  void _enableCamera() {
+    context.read<ScannerCubit>().enableCamera(save: true);
+  }
+
   double _scannerWidth(BoxConstraints constraints) {
-    bool exceedsMaxWidth = constraints.maxWidth > _scannerMaxWidth;
-    return constraints.maxWidth.isFinite && exceedsMaxWidth
-        ? constraints.maxWidth
-        : _scannerMaxWidth;
+    if (!constraints.maxWidth.isFinite) return _scannerMaxWidth;
+    return constraints.maxWidth;
   }
 
   double _scannerHeight(BoxConstraints constraints) {
@@ -156,64 +261,162 @@ class _ScannerState extends State<Scanner> with RouteAware {
         : _scannerMinHeight;
   }
 
-  Widget scanner() {
+  Widget _buildScannerContent() {
     return ValueListenableBuilder(
       valueListenable: codeScannedNotifier,
       builder: (context, scanned, _) {
         return AnimatedSwitcher(
           duration: _scanResultSwitchDuration,
           child: scanned && widget.cooldownSeconds == null
-              ? successLayout(context)
-              : scannerCamera(context),
+              ? _buildSuccessLayout(context)
+              : _buildCameraView(),
         );
       },
     );
   }
 
-  Widget successLayout(BuildContext context) {
+  Widget _buildSuccessLayout(BuildContext context) {
     return ScannerSuccessLayout(
-      onPressed: () => codeScannedNotifier.value = false,
+      onPressed: _onRescanPressed,
     );
   }
 
-  Widget scannerCamera(BuildContext context) {
-    return MobileScanner(
-      controller: scannerCubit.cameraController,
-      onDetect: (capture) => onDetect(context, capture),
-      overlayBuilder: (_, _) {
-        return Stack(
-          children: [
-            widget.overlay,
-            if (widget.cooldownSeconds != null) ...[
-              Positioned.fill(child: successIcon()),
-              Positioned.fill(child: cooldown()),
-            ],
-          ],
-        );
-      },
-      errorBuilder: (_, error) {
-        return switch (error.errorCode) {
-          MobileScannerErrorCode.unsupported ||
-          MobileScannerErrorCode.controllerAlreadyInitialized =>
-            const ScannerNoCameraLayout(),
-          MobileScannerErrorCode.permissionDenied =>
-            const ScannerNoPermissionLayout(),
-          _ => ScannerDefaultErrorLayout(message: error.errorCode.message),
-        };
-      },
+  void _onRescanPressed() {
+    codeScannedNotifier.value = false;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || codeScannedNotifier.value) return;
+
+      unawaited(_restartCameraAfterRescan());
+    });
+  }
+
+  Future<void> _restartCameraAfterRescan() async {
+    await cameraCoordinator.safeStopCamera();
+    if (!mounted || codeScannedNotifier.value) return;
+    if (scannerCubit.state is! ScannerEnabled) return;
+
+    await cameraCoordinator.safeStartCamera();
+  }
+
+  Future<void> _restartCameraAfterEnable() async {
+    await cameraCoordinator.restartCameraAfterEnable();
+  }
+
+  Widget _buildCameraView() {
+    return ScannerCameraView(
+      cameraControllerRevision: scannerCubit.cameraControllerRevision,
+      getCameraController: () => scannerCubit.cameraController,
+      overlay: widget.overlay,
+      cameraFeedbackOverlay: _buildCameraFeedbackOverlay(),
+      startupOverlayVisibleNotifier: cameraStartupOverlayVisibleNotifier,
+      startupLoaderVisibleNotifier: cameraStartupLoaderVisibleNotifier,
+      cameraPreviewFadeDuration: _cameraPreviewFadeDuration,
+      cameraPlaceholderFadeDuration: _cameraPlaceholderFadeDuration,
+      cameraLoaderFadeDuration: _cameraLoaderFadeDuration,
+      onDetect: (capture) => _handleDetect(context, capture),
     );
   }
 
-  void onDetect(BuildContext context, BarcodeCapture capture) {
+  Widget? _buildCameraFeedbackOverlay() {
+    if (widget.cooldownSeconds == null) return null;
+
+    return Stack(
+      children: [
+        Positioned.fill(child: _buildSuccessIcon()),
+        Positioned.fill(child: _buildCooldownOverlay()),
+      ],
+    );
+  }
+
+  bool _shouldShowCameraStartupPlaceholder(MobileScannerState controllerState) {
+    if (!_isActuallyVisible) return false;
+    if (scannerCubit.state is! ScannerEnabled) return false;
+    if (controllerState.error != null) return false;
+
+    return controllerState.isStarting ||
+        (!controllerState.isRunning && codeScannedNotifier.value == false);
+  }
+
+  bool _hasTerminalCameraError(MobileScannerState controllerState) {
+    final errorCode = controllerState.error?.errorCode;
+
+    return errorCode == MobileScannerErrorCode.unsupported ||
+        errorCode == MobileScannerErrorCode.permissionDenied;
+  }
+
+  void _handleControllerRevisionChanged() {
+    _attachCameraControllerListener();
+    _updateCameraStartupUi();
+  }
+
+  void _handleVisibilityFractionChanged(double visibleFraction) {
+    final isVisible = visibleFraction > _cameraVisibleFractionThreshold;
+    if (isVisible == _isActuallyVisible) return;
+
+    _isActuallyVisible = isVisible;
+    _updateCameraStartupUi();
+    if (_hasTerminalCameraError(scannerCubit.cameraController.value)) return;
+
+    if (_isActuallyVisible && scannerCubit.state is ScannerEnabled) {
+      cameraCoordinator.scheduleSafeStartCamera();
+      return;
+    }
+
+    cameraCoordinator.scheduleSafeStopCamera();
+  }
+
+  void _attachCameraControllerListener() {
+    final controller = scannerCubit.cameraController;
+    if (identical(_observedCameraController, controller)) return;
+
+    _observedCameraController?.removeListener(_updateCameraStartupUi);
+    _observedCameraController = controller;
+    controller.addListener(_updateCameraStartupUi);
+  }
+
+  void _updateCameraStartupUi() {
+    if (!mounted) return;
+
+    final controllerState = scannerCubit.cameraController.value;
+    final showOverlay = _shouldShowCameraStartupPlaceholder(controllerState);
+
+    if (cameraStartupOverlayVisibleNotifier.value != showOverlay) {
+      cameraStartupOverlayVisibleNotifier.value = showOverlay;
+    }
+
+    _cameraLoaderTimer?.cancel();
+
+    if (!showOverlay || !controllerState.isStarting) {
+      if (cameraStartupLoaderVisibleNotifier.value) {
+        cameraStartupLoaderVisibleNotifier.value = false;
+      }
+      return;
+    }
+
+    if (cameraStartupLoaderVisibleNotifier.value) return;
+
+    _cameraLoaderTimer = Timer(_cameraLoaderShowDelay, () {
+      if (!mounted) return;
+      if (!_shouldShowCameraStartupPlaceholder(scannerCubit.cameraController.value)) {
+        return;
+      }
+
+      if (scannerCubit.cameraController.value.isStarting) {
+        cameraStartupLoaderVisibleNotifier.value = true;
+      }
+    });
+  }
+
+  void _handleDetect(BuildContext context, BarcodeCapture capture) {
     if (capture.barcodes.isEmpty) return;
 
     String? rawValue = capture.barcodes.first.rawValue;
     if (rawValue == null || rawValue.isEmpty) return;
 
-    unawaited(stopCameraAfterScan(context, rawValue));
+    unawaited(_handleScanResult(context, rawValue));
   }
 
-  Future<void> stopCameraAfterScan(BuildContext context, String barcode) async {
+  Future<void> _handleScanResult(BuildContext context, String barcode) async {
     // Continue only if camera is ready for next scan
     if (codeScannedNotifier.value || coolDownVisibilityNotifier.value) return;
     if (mounted) codeScannedNotifier.value = true;
@@ -221,10 +424,10 @@ class _ScannerState extends State<Scanner> with RouteAware {
     try {
       widget.onScan(barcode);
       await HapticFeedback.vibrate();
-      if (widget.cooldownSeconds != null) await enableCooldown();
+      if (widget.cooldownSeconds != null) await _runCooldown();
     } catch (e) {
       final msg = e.toString();
-      for (var i = 0; i < 3; i++) {
+      for (int i = 0; i < 3; i++) {
         await HapticFeedback.vibrate();
         await Future<void>.delayed(_errorVibrationGap);
       }
@@ -234,11 +437,11 @@ class _ScannerState extends State<Scanner> with RouteAware {
           message: msg,
         ).show(context, duration: _errorSnackDuration);
       }
-      if (widget.cooldownSeconds != null) await enableCooldown();
+      if (widget.cooldownSeconds != null) await _runCooldown();
     }
   }
 
-  Future<void> enableCooldown() async {
+  Future<void> _runCooldown() async {
     await Future<void>.delayed(_cooldownOverlayShowDelay);
     if (mounted) {
       coolDownVisibilityNotifier.value = true;
@@ -256,7 +459,7 @@ class _ScannerState extends State<Scanner> with RouteAware {
     }
   }
 
-  Widget successIcon() {
+  Widget _buildSuccessIcon() {
     return ValueListenableBuilder(
       valueListenable: coolDownVisibilityNotifier,
       builder: (context, cooldownVisible, _) {
@@ -278,7 +481,7 @@ class _ScannerState extends State<Scanner> with RouteAware {
     );
   }
 
-  Widget cooldown() {
+  Widget _buildCooldownOverlay() {
     return ValueListenableBuilder(
       valueListenable: coolDownVisibilityNotifier,
       builder: (context, visible, _) {
@@ -294,35 +497,6 @@ class _ScannerState extends State<Scanner> with RouteAware {
     );
   }
 
-  Widget basfLogo(BuildContext context) {
-    Widget image = BasfAssets.images.basfLogo.image(
-      fit: BoxFit.contain,
-      color: Theme.of(context).primaryColor,
-    );
-
-    if (widget.overlay is OnOffStandardScannerOverlay) {
-      return Row(
-        spacing: Dimens.paddingMedium,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Center(
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 80, maxHeight: 150),
-              child: image,
-            ),
-          ),
-          const EnableDisableCameraIconButton(),
-        ],
-      );
-    }
-    return Center(
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 150, maxHeight: 150),
-        child: image,
-      ),
-    );
-  }
-
   void _invalidatePendingRouteResume() {
     _routeTransitionRequestId++;
     _routeResumeTimer?.cancel();
@@ -332,37 +506,5 @@ class _ScannerState extends State<Scanner> with RouteAware {
   int _resetRouteResumeTimer() {
     _invalidatePendingRouteResume();
     return _routeTransitionRequestId;
-  }
-
-  Future<void> _safeStopCamera() async {
-    _cameraStartRequestId++;
-    await scannerCubit.cameraController.stop().catchError((_) => null);
-  }
-
-  Future<void> _safeStartCamera() async {
-    final requestId = ++_cameraStartRequestId;
-
-    for (int attempt = 0; attempt < _cameraStartMaxAttempts; attempt++) {
-      if (!mounted || requestId != _cameraStartRequestId) return;
-      if (scannerCubit.state is! ScannerEnabled) return;
-
-      await scannerCubit.cameraController.start().catchError((_) => null);
-
-      if (!mounted || requestId != _cameraStartRequestId) return;
-
-      MobileScannerState controllerState = scannerCubit.cameraController.value;
-      MobileScannerErrorCode? errorCode = controllerState.error?.errorCode;
-
-      if (controllerState.isRunning && errorCode == null) return;
-
-      bool canRetry =
-          errorCode == MobileScannerErrorCode.controllerAlreadyInitialized ||
-          errorCode == MobileScannerErrorCode.controllerInitializing ||
-          errorCode == MobileScannerErrorCode.controllerNotAttached;
-
-      if (!canRetry) return;
-
-      await Future<void>.delayed(_cameraStartRetryDelay);
-    }
   }
 }

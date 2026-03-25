@@ -74,10 +74,7 @@ abstract class BasfComponentsLocalizations {
   final String localeName;
 
   static BasfComponentsLocalizations of(BuildContext context) {
-    return Localizations.of<BasfComponentsLocalizations>(
-      context,
-      BasfComponentsLocalizations,
-    )!;
+    return Localizations.of<BasfComponentsLocalizations>(context, BasfComponentsLocalizations)!;
   }
 
   static const LocalizationsDelegate<BasfComponentsLocalizations> delegate =
@@ -177,16 +174,8 @@ class _BasfComponentsLocalizationsDelegate
   }
 
   @override
-  bool isSupported(Locale locale) => <String>[
-    'de',
-    'en',
-    'es',
-    'fr',
-    'it',
-    'ko',
-    'pt',
-    'zh',
-  ].contains(locale.languageCode);
+  bool isSupported(Locale locale) =>
+      <String>['de', 'en', 'es', 'fr', 'it', 'ko', 'pt', 'zh'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_BasfComponentsLocalizationsDelegate old) => false;

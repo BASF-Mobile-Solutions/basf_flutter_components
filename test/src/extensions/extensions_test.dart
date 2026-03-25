@@ -123,8 +123,7 @@ void main() {
             body: Builder(
               builder: (context) {
                 return GestureDetector(
-                  onTap: () =>
-                      AppSnackBar.info(message: helloSnackBar).show(context),
+                  onTap: () => AppSnackBar.info(message: helloSnackBar).show(context),
                   behavior: HitTestBehavior.opaque, // behaviour during the test
                   child: const SizedBox(
                     height: 100,

@@ -1,3 +1,6 @@
+## 2.9.8
+- Camera fix for auto-start behavior
+
 ## 2.9.7
 - Code & Config improvements
 - Scanner fixes

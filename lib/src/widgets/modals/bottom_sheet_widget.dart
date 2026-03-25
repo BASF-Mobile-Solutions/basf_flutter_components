@@ -67,9 +67,7 @@ class ModalBottomSheetWidget extends StatelessWidget {
         ),
         VerticalSpacer.mediumSmall(),
         BasfTextButton.contained(
-          style: withCancelButton
-              ? null
-              : TextButton.styleFrom(backgroundColor: buttonColor),
+          style: withCancelButton ? null : TextButton.styleFrom(backgroundColor: buttonColor),
           expanded: true,
           onPressed: onPressed,
           text: buttonText,

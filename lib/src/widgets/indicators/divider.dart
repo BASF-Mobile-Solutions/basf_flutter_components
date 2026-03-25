@@ -28,8 +28,7 @@ class AppDivider extends StatelessWidget {
   const AppDivider.double({super.key}) : _type = AppDividerType.double;
 
   /// Arrow down
-  const AppDivider.withArrowDown({super.key})
-    : _type = AppDividerType.withArrowDown;
+  const AppDivider.withArrowDown({super.key}) : _type = AppDividerType.withArrowDown;
 
   final AppDividerType _type;
 

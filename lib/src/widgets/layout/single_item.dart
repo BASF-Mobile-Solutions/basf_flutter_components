@@ -43,9 +43,7 @@ class SingleItem extends StatefulWidget {
 class _SingleItemState extends State<SingleItem> {
   bool copyIconIsVisible = false;
   bool get availableToCopy =>
-      !widget.blockCopy &&
-      widget.value.trim().isNotEmpty &&
-      widget.value != '-';
+      !widget.blockCopy && widget.value.trim().isNotEmpty && widget.value != '-';
 
   @override
   Widget build(BuildContext context) {

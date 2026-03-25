@@ -64,9 +64,7 @@ class LogoutButton extends StatelessWidget {
     unawaited(
       showCustomModalBottomSheet<void>(
         context: context,
-        backgroundColor:
-            Theme.of(context).bottomNavigationBarTheme.backgroundColor ??
-            Colors.white,
+        backgroundColor: Theme.of(context).bottomNavigationBarTheme.backgroundColor ?? Colors.white,
         constraints: BoxConstraints(
           maxHeight: MediaQuery.of(context).size.height * 0.8,
           maxWidth: 500,

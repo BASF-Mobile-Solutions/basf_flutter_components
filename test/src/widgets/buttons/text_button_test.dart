@@ -60,8 +60,7 @@ void main() {
     testWidgets('BasfButtonTest hint', (tester) async {
       await tester.pumpApp(
         Builder(
-          builder: (context) =>
-              BasfTextButton.hint(onPressed: () {}, child: const Text('Test')),
+          builder: (context) => BasfTextButton.hint(onPressed: () {}, child: const Text('Test')),
         ),
         BasfThemes.lightMainTheme(),
       );

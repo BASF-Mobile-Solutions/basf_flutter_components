@@ -18,28 +18,35 @@ class ScannerSuccessLayout extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       spacing: 10,
       children: [
-        successInfo(context),
-        BasfTextButton.transparent(
-          text: BasfComponentsLocalizations.of(context).rescan,
-          onPressed: onPressed,
-        ),
+        _buildSuccessInfo(context),
+        _buildRescanButton(context),
       ],
     );
   }
 
-  /// Success animation and text
-  Widget successInfo(BuildContext context) {
+  Widget _buildRescanButton(BuildContext context) {
+    return BasfTextButton.transparent(
+      text: BasfComponentsLocalizations.of(context).rescan,
+      onPressed: onPressed,
+    );
+  }
+
+  Widget _buildSuccessInfo(BuildContext context) {
     return Column(
       children: [
         const SuccessAnimation(),
         VerticalSpacer.normal(),
-        Text(
-          BasfComponentsLocalizations.of(context).codeScanSuccessPhrase,
-          style: Theme.of(
-            context,
-          ).textTheme.bodyMedium?.copyWith(color: BasfColors.copyTextGrey),
-        ),
+        _buildSuccessMessage(context),
       ],
+    );
+  }
+
+  Widget _buildSuccessMessage(BuildContext context) {
+    return Text(
+      BasfComponentsLocalizations.of(context).codeScanSuccessPhrase,
+      style: Theme.of(
+        context,
+      ).textTheme.bodyMedium?.copyWith(color: BasfColors.copyTextGrey),
     );
   }
 }

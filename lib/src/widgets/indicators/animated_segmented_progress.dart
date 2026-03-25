@@ -32,8 +32,7 @@ class AnimatedSegmentedProgress extends StatefulWidget {
   final Duration animationDuration;
 
   @override
-  State<AnimatedSegmentedProgress> createState() =>
-      _AnimatedSegmentedProgressState();
+  State<AnimatedSegmentedProgress> createState() => _AnimatedSegmentedProgressState();
 }
 
 class _AnimatedSegmentedProgressState extends State<AnimatedSegmentedProgress> {
@@ -50,9 +49,7 @@ class _AnimatedSegmentedProgressState extends State<AnimatedSegmentedProgress> {
             curve: Curves.easeInOut,
             height: 5,
             decoration: BoxDecoration(
-              color: isCompleted
-                  ? widget.completedColor
-                  : widget.remainingColor,
+              color: isCompleted ? widget.completedColor : widget.remainingColor,
             ),
           ),
         );

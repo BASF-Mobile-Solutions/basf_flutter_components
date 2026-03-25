@@ -14,8 +14,7 @@ void main() {
           body: Builder(
             builder: (context) {
               return GestureDetector(
-                onTap: () =>
-                    AppSnackBar.info(message: helloSnackBar).show(context),
+                onTap: () => AppSnackBar.info(message: helloSnackBar).show(context),
                 behavior: HitTestBehavior.opaque, // behaviour during the test
                 child: const SizedBox(height: 100, width: 100, key: tapTarget),
               );
@@ -40,8 +39,7 @@ void main() {
           body: Builder(
             builder: (context) {
               return GestureDetector(
-                onTap: () =>
-                    AppSnackBar.error(message: helloSnackBar).show(context),
+                onTap: () => AppSnackBar.error(message: helloSnackBar).show(context),
                 behavior: HitTestBehavior.opaque, // behaviour during the test
                 child: const SizedBox(height: 100, width: 100, key: tapTarget),
               );

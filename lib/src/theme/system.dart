@@ -18,13 +18,9 @@ class SystemThemes {
       systemNavigationBarDividerColor: Colors.transparent,
       systemNavigationBarIconBrightness: Brightness.dark,
     ).copyWith(
-      systemNavigationBarColor: whiteNavigationBar
-          ? Colors.white
-          : theme.primaryColor,
+      systemNavigationBarColor: whiteNavigationBar ? Colors.white : theme.primaryColor,
       systemNavigationBarDividerColor: Colors.transparent,
-      systemNavigationBarIconBrightness: whiteNavigationBar
-          ? Brightness.dark
-          : Brightness.light,
+      systemNavigationBarIconBrightness: whiteNavigationBar ? Brightness.dark : Brightness.light,
     );
   }
 
@@ -38,13 +34,9 @@ class SystemThemes {
         statusBarIconBrightness: Brightness.light, // For Android (light icons)
         statusBarBrightness: Brightness.dark, // For iOS (light icons)
       ).copyWith(
-        systemNavigationBarColor: whiteNavigationBar
-            ? Colors.white
-            : theme.primaryColor,
+        systemNavigationBarColor: whiteNavigationBar ? Colors.white : theme.primaryColor,
         systemNavigationBarDividerColor: Colors.transparent,
-        systemNavigationBarIconBrightness: whiteNavigationBar
-            ? Brightness.dark
-            : Brightness.light,
+        systemNavigationBarIconBrightness: whiteNavigationBar ? Brightness.dark : Brightness.light,
       );
 
   /// Set portrait mode for the app
