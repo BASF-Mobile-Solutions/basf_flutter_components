@@ -1,6 +1,5 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:flutter/material.dart';
-import 'package:rive/rive.dart';
 
 /// Warning modal layout
 class WarningModalLayout extends StatefulWidget {
@@ -147,9 +146,10 @@ class _WarningModalLayoutState extends State<WarningModalLayout> {
     return SizedBox(
       height: 32,
       width: 32,
-      child: RiveAnimation.asset(
+      child: BasfRiveAnimationAsset(
+        asset: BasfAssets.rive.emoji,
         artboard: RiveEmoji.surprise.artBoard,
-        RiveEmoji.surprise.path,
+        animationName: 'Animation 1',
       ),
     );
   }
