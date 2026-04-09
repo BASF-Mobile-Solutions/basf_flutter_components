@@ -21,11 +21,12 @@ class _SearchLoopAnimationState extends State<SearchLoopAnimation> {
   static final DataBind _dataBind = DataBind.auto();
   static const _stateMachineName = 'State Machine';
   static const _primaryColorBind = 'primaryColor';
-  static const _tapTriggerName = 'onTap';
-  static const _doubleTapTriggerName = 'onDoubleTap';
+  static const _tapTriggerBind = 'onTap';
+  static const _doubleTapTriggerBind = 'onDoubleTap';
 
-  RiveWidgetController? _controller;
   ViewModelInstanceColor? _primaryColor;
+  ViewModelInstanceTrigger? _tapTrigger;
+  ViewModelInstanceTrigger? _doubleTapTrigger;
 
   @override
   void didChangeDependencies() {
@@ -34,8 +35,10 @@ class _SearchLoopAnimationState extends State<SearchLoopAnimation> {
   }
 
   void _onLoaded(RiveLoaded state) {
-    _controller = state.controller;
-    _primaryColor = state.viewModelInstance?.color(_primaryColorBind);
+    final viewModelInstance = state.viewModelInstance;
+    _primaryColor = viewModelInstance?.color(_primaryColorBind);
+    _tapTrigger = viewModelInstance?.trigger(_tapTriggerBind);
+    _doubleTapTrigger = viewModelInstance?.trigger(_doubleTapTriggerBind);
     _applyPrimaryColor(Theme.of(context).primaryColor);
   }
 
@@ -61,17 +64,7 @@ class _SearchLoopAnimationState extends State<SearchLoopAnimation> {
     );
   }
 
-  void onTap() {
-    // ignore: deprecated_member_use
-    _controller?.stateMachine.trigger(_tapTriggerName)?.fire();
-  }
-
-  void onDoubleTap() {
-    // ignore: deprecated_member_use
-    _controller?.stateMachine.trigger(_doubleTapTriggerName)?.fire();
-  }
-
-  void _applyPrimaryColor(Color color) {
-    _primaryColor?.value = color;
-  }
+  void onTap() => _tapTrigger?.trigger();
+  void onDoubleTap() => _doubleTapTrigger?.trigger();
+  void _applyPrimaryColor(Color color) => _primaryColor?.value = color;
 }

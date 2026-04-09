@@ -2,7 +2,6 @@ import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
 
-
 ///
 class LogisticsBoxAnimation extends StatefulWidget {
   ///
@@ -19,17 +18,30 @@ class LogisticsBoxAnimation extends StatefulWidget {
 }
 
 class _LogisticsBoxAnimationState extends State<LogisticsBoxAnimation> {
-  RiveWidgetController? _controller;
-
+  static final DataBind _dataBind = DataBind.auto();
   static const _stateMachineName = 'State Machine 1';
-  static const _boxInputNames = <String>['Box_2', 'Box_3', 'Box_4'];
+  static const _boxTriggerNames = <String>['box2', 'box3', 'box4'];
+
+  final Map<String, ViewModelInstanceTrigger> _boxTriggers = {};
 
   Future<void> _onLoaded(RiveLoaded state) async {
-    _controller = state.controller;
-    for (final inputName in _boxInputNames) {
+    final viewModelInstance = state.viewModelInstance;
+    if (viewModelInstance == null) {
+      return;
+    }
+
+    _boxTriggers
+      ..clear()
+      ..addEntries(
+        _boxTriggerNames.map(
+          (name) => MapEntry(name, viewModelInstance.trigger(name)!),
+        ),
+      );
+
+    for (final triggerName in _boxTriggerNames) {
       await Future<void>.delayed(const Duration(seconds: 3));
       if (!mounted) return;
-      await _fireBoxAnimation(inputName);
+      _fireBoxAnimation(triggerName);
     }
   }
 
@@ -46,28 +58,12 @@ class _LogisticsBoxAnimationState extends State<LogisticsBoxAnimation> {
       asset: BasfAssets.rive.logisticsBox,
       animationNames: const ['Idle'],
       stateMachine: _stateMachineName,
+      dataBind: _dataBind,
       onLoaded: _onLoaded,
     );
   }
 
-  Future<void> _fireBoxAnimation(String inputName) async {
-    // ignore: deprecated_member_use
-    final trigger = _controller?.stateMachine.trigger(inputName);
-    if (trigger != null) {
-      trigger.fire();
-      return;
-    }
-
-    // ignore: deprecated_member_use
-    final boolean = _controller?.stateMachine.boolean(inputName);
-    if (boolean == null) return;
-
-    // Re-arm then set to true so repeated starts still work, but keep the value
-    // latched because this state machine appears to depend on the bool staying on.
-    boolean.value = false;
-    await Future<void>.delayed(const Duration(milliseconds: 16));
-    if (!mounted) return;
-
-    boolean.value = true;
+  void _fireBoxAnimation(String triggerName) {
+    _boxTriggers[triggerName]?.trigger();
   }
 }
