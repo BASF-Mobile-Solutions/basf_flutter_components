@@ -70,13 +70,12 @@ class _ScannerScreenState extends State<ScannerScreen> {
           '700090897979979',
           style: TextStyle(color: Colors.white.withValues(alpha: 0.4)),
         ),
-        SizedBox(
+        const SizedBox(
           width: 50,
           height: 30,
-          child: BasfRiveAnimationAsset(
-            asset: BasfAssets.rive.emoji,
-            artboard: RiveEmoji.smiling.artBoard,
-            animationName: 'Animation 1',
+          child: RiveEmojiIcon(
+            emoji: RiveEmoji.smiling,
+            size: 30,
           ),
         ),
       ],

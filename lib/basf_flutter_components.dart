@@ -4,7 +4,7 @@ library;
 export 'package:flutter_bloc/flutter_bloc.dart';
 export 'package:hydrated_bloc/hydrated_bloc.dart';
 export 'package:path_provider/path_provider.dart';
-export 'package:rive/rive.dart' show RiveNative;
+export 'package:rive/rive.dart' show Factory, RiveNative;
 
 export 'l10n/localizations/basf_components_localization_utils.dart';
 export 'l10n/localizations/basf_components_localizations.dart';

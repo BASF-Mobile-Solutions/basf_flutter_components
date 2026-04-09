@@ -1,13 +1,13 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:basf_flutter_components_example/screens/overview.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/foundation.dart' hide Factory;
 import 'package:flutter/material.dart';
 
 final RouteObserver<ModalRoute<void>> routeObserver = RouteObserver();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await RiveNative.init();
+  await BasfRive.init(defaultFactory: Factory.flutter);
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: kIsWeb
         ? HydratedStorageDirectory.web

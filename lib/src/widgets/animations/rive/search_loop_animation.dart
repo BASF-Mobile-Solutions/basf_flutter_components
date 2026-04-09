@@ -49,18 +49,14 @@ class _SearchLoopAnimationState extends State<SearchLoopAnimation> {
       onDoubleTap: onDoubleTap,
       child: SizedBox.fromSize(
         size: widget.size,
-        child: animation(context),
+        child: BasfRiveAnimationStateMachineAsset(
+          asset: BasfAssets.rive.searchLoop,
+          animationNames: const ['Searching', 'Flipping'],
+          stateMachine: _stateMachineName,
+          dataBind: _dataBind,
+          onLoaded: _onLoaded,
+        ),
       ),
-    );
-  }
-
-  Widget animation(BuildContext context) {
-    return BasfRiveAnimationStateMachineAsset(
-      asset: BasfAssets.rive.searchLoop,
-      animationNames: const ['Searching', 'Flipping'],
-      stateMachine: _stateMachineName,
-      dataBind: _dataBind,
-      onLoaded: _onLoaded,
     );
   }
 

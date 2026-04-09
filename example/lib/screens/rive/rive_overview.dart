@@ -16,7 +16,6 @@ class RiveOverviewScreen extends StatefulWidget {
 }
 
 class _RiveOverviewScreenState extends State<RiveOverviewScreen> {
-  bool _gearUsesThemeColor = true;
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +63,6 @@ class _RiveOverviewScreenState extends State<RiveOverviewScreen> {
     return TextButton(
       onPressed: () {
         widget.onThemeChanged(theme);
-        setState(() {});
       },
       style: TextButton.styleFrom(
         backgroundColor: theme.primaryColor,
@@ -98,10 +96,7 @@ class _RiveOverviewScreenState extends State<RiveOverviewScreen> {
       child: Center(
         child: AnimatedGearIcon(
           size: 72,
-          onTap: () => setState(
-            () => _gearUsesThemeColor = !_gearUsesThemeColor,
-          ),
-          color: _gearUsesThemeColor ? null : BasfColors.copyTextGrey,
+          onTap: () {},
         ),
       ),
     );
@@ -151,15 +146,7 @@ class _RiveOverviewScreenState extends State<RiveOverviewScreen> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          SizedBox(
-            width: 56,
-            height: 56,
-            child: BasfRiveAnimationAsset(
-              asset: BasfAssets.rive.emoji,
-              artboard: emoji.artBoard,
-              animationName: 'Animation 1',
-            ),
-          ),
+          RiveEmojiIcon(emoji: emoji),
           VerticalSpacer.small(),
           Text(
             emoji.name,

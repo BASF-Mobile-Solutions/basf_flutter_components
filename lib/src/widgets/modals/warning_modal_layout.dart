@@ -143,14 +143,9 @@ class _WarningModalLayoutState extends State<WarningModalLayout> {
   }
 
   Widget get emoji {
-    return SizedBox(
-      height: 32,
-      width: 32,
-      child: BasfRiveAnimationAsset(
-        asset: BasfAssets.rive.emoji,
-        artboard: RiveEmoji.surprise.artBoard,
-        animationName: 'Animation 1',
-      ),
+    return const RiveEmojiIcon(
+      emoji: RiveEmoji.surprise,
+      size: 32,
     );
   }
 

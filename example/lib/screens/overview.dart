@@ -3,7 +3,7 @@ import 'package:basf_flutter_components_example/screens/scanner/scanner_screen.d
 import 'package:basf_flutter_components_example/screens/screens.dart';
 import 'package:flutter/material.dart';
 
-class OverviewScreen extends StatefulWidget {
+class OverviewScreen extends StatelessWidget {
   const OverviewScreen({
     required this.currentTheme,
     required this.onThemeChanged,
@@ -12,17 +12,11 @@ class OverviewScreen extends StatefulWidget {
 
   final BasfThemeType currentTheme;
   final ValueChanged<BasfThemeType> onThemeChanged;
-
-  @override
-  State<OverviewScreen> createState() => _OverviewScreenState();
-}
-
-class _OverviewScreenState extends State<OverviewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildAppBar(),
-      body: _buildBody(),
+      body: _buildBody(context),
     );
   }
 
@@ -30,21 +24,22 @@ class _OverviewScreenState extends State<OverviewScreen> {
     return AppBar(title: const Text('BASF Components'));
   }
 
-  Widget _buildBody() {
+  Widget _buildBody(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: Dimens.paddingMedium20),
       child: ListView(
         padding: const EdgeInsets.symmetric(vertical: Dimens.paddingMedium20),
-        children: _buildSections().joinWithSeparator(
+        children: _buildSections(context).joinWithSeparator(
           VerticalSpacer.medium20(),
         ),
       ),
     );
   }
 
-  List<Widget> _buildSections() {
+  List<Widget> _buildSections(BuildContext context) {
     return [
       _buildSection(
+        context: context,
         title: 'Motion & Interaction',
         subtitle: 'Animations, Rive assets and flows that need quick visual checks.',
         children: [
@@ -57,14 +52,15 @@ class _OverviewScreenState extends State<OverviewScreen> {
             context,
             text: 'BASF Rive',
             pageBuilder: (_) => RiveOverviewScreen(
-              currentTheme: widget.currentTheme,
-              onThemeChanged: widget.onThemeChanged,
+              currentTheme: currentTheme,
+              onThemeChanged: onThemeChanged,
             ),
           ),
           _buildScannerButton(context),
         ],
       ),
       _buildSection(
+        context: context,
         title: 'Core UI',
         subtitle: 'Reusable controls and feedback primitives.',
         children: [
@@ -91,6 +87,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
         ],
       ),
       _buildSection(
+        context: context,
         title: 'Design System',
         subtitle: 'Foundations, tokens and theme-driven reference screens.',
         children: [
@@ -120,6 +117,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
   }
 
   Widget _buildSection({
+    required BuildContext context,
     required String title,
     required String subtitle,
     required List<Widget> children,

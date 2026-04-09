@@ -24,25 +24,23 @@ class AnimatedGearIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currentColor = color ?? Theme.of(context).primaryColor;
+    final animation = _GearsAnimation(
+      size: size,
+      color: currentColor,
+    );
 
-    if (onTap != null) {
-      return InkWell(
-        customBorder: const CircleBorder(),
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.all(5),
-          child: _GearsAnimation(
-            size: size,
-            color: currentColor,
-          ),
-        ),
-      );
-    } else {
-      return _GearsAnimation(
-        size: size,
-        color: currentColor,
-      );
+    if (onTap == null) {
+      return animation;
     }
+
+    return InkWell(
+      customBorder: const CircleBorder(),
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.all(5),
+        child: animation,
+      ),
+    );
   }
 }
 
