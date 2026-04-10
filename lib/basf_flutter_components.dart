@@ -72,6 +72,7 @@ export 'src/widgets/modals/bottom_sheet.dart';
 export 'src/widgets/modals/bottom_sheet_widget.dart';
 export 'src/widgets/modals/modal_body.dart';
 export 'src/widgets/modals/modal_header.dart';
+export 'src/widgets/modals/modal_parent.dart';
 export 'src/widgets/modals/search_criteria_modal_layout.dart';
 export 'src/widgets/modals/warning_modal_layout.dart';
 export 'src/widgets/options/checkboxes.dart';

@@ -5,6 +5,10 @@
   "provideCameraPermission": "Kameraberechtigung erteilen",
   "rescan": "Erneut scannen",
   "warning": "Warnung",
+  "error": "Fehler",
+  "retry": "Erneut versuchen",
+  "close": "Schließen",
+  "showMorePhrase": "Mehr Infos",
   "generalAbort": "Abbrechen",
   "generalConfirm": "Bestätigen",
   "scanQRorBarcode": "QR oder Barcode scannen"

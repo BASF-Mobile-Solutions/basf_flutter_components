@@ -24,6 +24,18 @@ class BasfComponentsLocalizationsZh extends BasfComponentsLocalizations {
   String get warning => '警告';
 
   @override
+  String get error => '错误';
+
+  @override
+  String get retry => '重试';
+
+  @override
+  String get close => '关闭';
+
+  @override
+  String get showMorePhrase => '显示更多';
+
+  @override
   String get generalAbort => '中止';
 
   @override
@@ -53,6 +65,18 @@ class BasfComponentsLocalizationsZhHans extends BasfComponentsLocalizationsZh {
   String get warning => '警告';
 
   @override
+  String get error => '错误';
+
+  @override
+  String get retry => '重试';
+
+  @override
+  String get close => '关闭';
+
+  @override
+  String get showMorePhrase => '显示更多';
+
+  @override
   String get generalAbort => '中止';
 
   @override
@@ -80,6 +104,18 @@ class BasfComponentsLocalizationsZhHant extends BasfComponentsLocalizationsZh {
 
   @override
   String get warning => '警告';
+
+  @override
+  String get error => '錯誤';
+
+  @override
+  String get retry => '重試';
+
+  @override
+  String get close => '關閉';
+
+  @override
+  String get showMorePhrase => '顯示更多';
 
   @override
   String get generalAbort => '中止';

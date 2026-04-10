@@ -24,6 +24,18 @@ class BasfComponentsLocalizationsKo extends BasfComponentsLocalizations {
   String get warning => 'Warning';
 
   @override
+  String get error => '오류';
+
+  @override
+  String get retry => '재시도';
+
+  @override
+  String get close => '종료';
+
+  @override
+  String get showMorePhrase => '더 보기';
+
+  @override
   String get generalAbort => 'Cancel';
 
   @override

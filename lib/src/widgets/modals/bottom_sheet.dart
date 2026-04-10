@@ -1,4 +1,3 @@
-import 'package:basf_flutter_components/src/theme/colors.dart' show BasfColors;
 import 'package:basf_flutter_components/src/theme/themes.dart' show BasfThemes;
 import 'package:flutter/material.dart';
 
@@ -6,25 +5,27 @@ import 'package:flutter/material.dart';
 Future<T?> showCustomModalBottomSheet<T>({
   required BuildContext context,
   required WidgetBuilder builder,
-  double ratio = 0.8,
+  double ratio = 0.9,
   BoxConstraints? constraints,
   bool isDismissible = true,
-  Color backgroundColor = BasfColors.backgroundGrey,
+  bool showDragHandle = false,
+  bool? enableDrag,
+  Color? backgroundColor,
+  Color? barrierColor,
+  double? elevation,
 }) {
   return showModalBottomSheet(
-    elevation: 0,
+    elevation: elevation,
     backgroundColor: backgroundColor,
     isScrollControlled: true,
     isDismissible: isDismissible,
-    enableDrag: isDismissible,
-    showDragHandle: isDismissible,
-    barrierColor: Colors.black54,
-    constraints:
-        constraints ??
-        BoxConstraints(
-          maxWidth: 500,
-          maxHeight: MediaQuery.of(context).size.height * ratio,
-        ),
+    enableDrag: enableDrag ?? isDismissible,
+    showDragHandle: showDragHandle,
+    barrierColor: barrierColor,
+    constraints: constraints ?? BoxConstraints(
+      maxWidth: 500,
+      maxHeight: MediaQuery.of(context).size.height * ratio,
+    ),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(BasfThemes.defaultBorderRadius.topLeft.y),

@@ -67,14 +67,11 @@ class ModalBody extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               if (title != null)
-                Padding(
-                  padding: _headerPadding,
-                  child: ModalHeader(
-                    title: title!,
-                    icon: titleIcon,
-                    actions: actions,
-                    showCloseButton: showCloseButton,
-                  ),
+                ModalHeader(
+                  title: title!,
+                  icon: titleIcon,
+                  actions: actions,
+                  showCloseButton: showCloseButton,
                 ),
               if (description != null)
                 Padding(
@@ -109,14 +106,4 @@ class ModalBody extends StatelessWidget {
   EdgeInsetsGeometry get _horizontalPadding => EdgeInsets.symmetric(
     horizontal: Paddings.defaultScreenPadding.horizontal / 2,
   );
-
-  ///
-  EdgeInsetsGeometry get _headerPadding {
-    return Paddings.defaultScreenPadding.subtract(
-      const EdgeInsets.only(
-        top: Dimens.paddingMediumSmall,
-        right: Dimens.paddingMedium - 1,
-      ),
-    );
-  }
 }

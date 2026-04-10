@@ -1,210 +1,476 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 
 /// Modal layout for search criteria.
 class SearchCriteriaModalLayout extends StatefulWidget {
   /// Creates a modal layout for search criteria.
   const SearchCriteriaModalLayout({
-    required this.title,
-    required this.textFieldItems,
-    this.relatedControllers = const [],
-    this.inputFormatters,
     super.key,
+    this.title,
+    this.searchText = false,
+    required this.items,
     this.searchLocalization = 'Search',
     this.saveCriteriaLocalization = 'Save Criteria',
+    this.filtersLocalization = 'Filters',
   });
 
-  /// Modal title
-  final String title;
+  /// Modal title.
+  final String? title;
 
-  /// List of [TextFieldData]
-  final List<TextFieldData> textFieldItems;
+  /// Search criteria items.
+  final List<SearchCriteriaModalUiModel> items;
 
-  /// List of related [TextEditingController]s
-  /// that will be controlled based on other fields
-  final List<TextEditingController> relatedControllers;
+  /// Whether the action button should show search text.
+  final bool searchText;
 
-  /// A list of [TextInputFormatter] that formats the input.
-  /// Will apply to all text fields on this modal
-  final List<TextInputFormatter>? inputFormatters;
-
-  /// Translation
+  /// Search localization.
   final String searchLocalization;
 
-  /// Translation
+  /// Save criteria localization.
   final String saveCriteriaLocalization;
 
+  /// Filters localization.
+  final String filtersLocalization;
+
   @override
-  State<SearchCriteriaModalLayout> createState() => _SearchCriteriaModalLayoutState();
+  State<SearchCriteriaModalLayout> createState() =>
+      _SearchCriteriaModalLayoutState();
 }
 
 class _SearchCriteriaModalLayoutState extends State<SearchCriteriaModalLayout> {
-  late final List<TextFieldData> tempTextFieldItems;
-  final List<ValueNotifier<bool>> textFieldNotifiers = [];
-  final List<TextFieldUpdateData> enabledControllers = [];
-  final ValueNotifier<bool> saveTriggerNotifier = ValueNotifier(false);
-  late final ValueNotifier<bool> buttonNotifier;
+  final _formKey = GlobalKey<FormState>();
+  final _validatedNotifier = ValueNotifier(false);
+  final _saveTriggerNotifier = ValueNotifier(false);
 
   @override
   void initState() {
-    initControllers();
-    buttonNotifier = ValueNotifier(
-      tempTextFieldItems.any((e) => e.controller.text.trim().isNotEmpty),
-    );
-
     super.initState();
-  }
-
-  void initControllers() {
-    tempTextFieldItems = List.generate(widget.textFieldItems.length, (index) {
-      textFieldNotifiers.add(
-        ValueNotifier(widget.textFieldItems[index].controller.text.isEmpty),
-      );
-
-      final controller = TextEditingController()
-        ..text = widget.textFieldItems[index].controller.text;
-
-      if (widget.relatedControllers.contains(
-        widget.textFieldItems[index].controller,
-      )) {
-        enabledControllers.add(
-          TextFieldUpdateData(
-            controller: controller,
-            notifier: ValueNotifier(controllerEnabled(controller)),
-          ),
-        );
-
-        controller.addListener(() {
-          for (final controller in enabledControllers) {
-            controller.notifier.value = controllerEnabled(
-              controller.controller,
-            );
-          }
-        });
+    for (final item in widget.items) {
+      switch (item) {
+        case SearchCriteriaModalUiModelTextField():
+          item.controller.addListener(_validateForm);
+        case SearchCriteriaModalUiModelDatePicker():
+          item.controller.addListener(_validateForm);
+        case SearchCriteriaModalUiModelSwitch():
+        case SearchCriteriaModalUiModelInfoTileItem():
       }
+    }
 
-      final textField = widget.textFieldItems[index];
-      return TextFieldData(
-        persistenceId: textField.persistenceId,
-        labelText: textField.labelText,
-        controller: controller,
-        autovalidateMode: textField.autovalidateMode,
-        inputFormatters: textField.inputFormatters,
-        keyboardType: textField.keyboardType,
-        textCapitalization: textField.textCapitalization,
-        validator: textField.validator,
-      );
+    WidgetsBinding.instance.addPostFrameCallback((_) => _validateForm());
+  }
+
+  void _validateForm() {
+    final isFormValid = _formKey.currentState?.validate() ?? false;
+    final areRequiredFieldsFilled = _areAllRequiredFieldsFilled();
+    _validatedNotifier.value = isFormValid && areRequiredFieldsFilled;
+  }
+
+  bool _areAllRequiredFieldsFilled() {
+    return widget.items.every((item) {
+      switch (item) {
+        case SearchCriteriaModalUiModelDatePicker():
+          return !item.isNecessary || item.notifier.value != null;
+        case SearchCriteriaModalUiModelTextField():
+          final isRequired = item.validator?.call('') != null;
+          return !isRequired || item.controller.text.trim().isNotEmpty;
+        case SearchCriteriaModalUiModelSwitch():
+        case SearchCriteriaModalUiModelInfoTileItem():
+          return true;
+      }
     });
-
-    for (final data in tempTextFieldItems) {
-      data.controller.addListener(() {
-        buttonNotifier.value = tempTextFieldItems.any(
-          (e) => e.controller.text.trim().isNotEmpty,
-        );
-      });
-    }
-  }
-
-  bool controllerEnabled(TextEditingController controller) {
-    if (enabledControllers.isEmpty) {
-      return true;
-    } else if (enabledControllers.every((c) => c.controller.text.isEmpty)) {
-      return true;
-    } else if (controller.text.isNotEmpty) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  @override
-  void dispose() {
-    for (final data in tempTextFieldItems) {
-      data.controller.dispose();
-    }
-    saveTriggerNotifier.dispose();
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return ModalBody(
-      title: widget.title,
-      bodyWidgets: textFields(),
-      bottomButton: saveButton(),
-    );
-  }
-
-  Widget saveButton() {
-    return ValueListenableBuilder<bool>(
-      valueListenable: buttonNotifier,
-      builder: (context, filled, _) {
-        return BasfTextButton.contained(
-          expanded: true,
-          text: filled ? widget.searchLocalization : widget.saveCriteriaLocalization,
-          onPressed: saveCriteria,
-        );
-      },
-    );
-  }
-
-  List<Widget> textFields() {
-    return List.generate(tempTextFieldItems.length, (index) {
-      return enabledControllers.any(
-            (k) => k.controller == tempTextFieldItems[index].controller,
-          )
-          ? switchableTextField(index)
-          : textField(index: index);
-    }).joinWithSeparator(VerticalSpacer.medium());
-  }
-
-  Widget switchableTextField(int index) {
-    return ValueListenableBuilder<bool>(
-      valueListenable: enabledControllers
-          .firstWhere(
-            (e) => e.controller == tempTextFieldItems[index].controller,
-          )
-          .notifier,
-      builder: (context, enabled, _) {
-        return textField(index: index, enabled: enabled);
-      },
-    );
-  }
-
-  Widget textField({required int index, bool enabled = true}) {
-    return PersistedTextField(
-      persistenceId: tempTextFieldItems[index].labelText,
-      saveTriggerNotifier: saveTriggerNotifier,
-      enabled: enabled,
-      controller: tempTextFieldItems[index].controller,
-      decoration: InputDecoration(
-        labelText: tempTextFieldItems[index].labelText,
+      title: widget.title ?? widget.filtersLocalization,
+      bodyWidgets: [_dataFields()],
+      bottomButton: ValueListenableBuilder<bool>(
+        valueListenable: _validatedNotifier,
+        builder: (_, isValid, _) => _saveButton(enabled: isValid),
       ),
-      validator: tempTextFieldItems[index].validator,
-      keyboardType: tempTextFieldItems[index].keyboardType ?? TextInputType.text,
-      scrollPadding: const EdgeInsets.only(bottom: 70),
-      inputFormatters: [
-        ...?tempTextFieldItems[index].inputFormatters,
-      ],
-      textCapitalization: tempTextFieldItems[index].textCapitalization,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
     );
+  }
+
+  Widget _saveButton({required bool enabled}) {
+    return BasfTextButton.contained(
+      expanded: true,
+      text:
+          widget.searchText
+              ? widget.searchLocalization
+              : widget.saveCriteriaLocalization,
+      onPressed: enabled ? saveCriteria : null,
+    );
+  }
+
+  Widget _dataFields() {
+    return Form(
+      key: _formKey,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      onChanged: _validateForm,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: _getWidgets().joinWithSeparator(VerticalSpacer.medium()),
+      ),
+    );
+  }
+
+  List<Widget> _getWidgets() {
+    final widgets = <Widget>[];
+    final buffer = <Widget>[];
+    bool? currentFullWidth;
+
+    void flushRun(List<Widget> run, bool fullWidth) {
+      if (fullWidth) {
+        widgets.addAll(run);
+      } else {
+        widgets.addAll(_InfoItemsRow.multipleFromList(run));
+      }
+    }
+
+    for (final item in widget.items) {
+      final itemWidget = switch (item) {
+        SearchCriteriaModalUiModelTextField() => _textField(item),
+        SearchCriteriaModalUiModelDatePicker() => _buildDatePicker(item),
+        SearchCriteriaModalUiModelSwitch() => _buildCheckbox(item),
+        SearchCriteriaModalUiModelInfoTileItem() => item.infoItem,
+      };
+
+      final isFull = item.fullWidth;
+
+      if (currentFullWidth == null) {
+        currentFullWidth = isFull;
+      } else if (currentFullWidth != isFull) {
+        flushRun(buffer, currentFullWidth);
+        buffer.clear();
+        currentFullWidth = isFull;
+      }
+
+      buffer.add(itemWidget);
+    }
+
+    if (buffer.isNotEmpty && currentFullWidth != null) {
+      flushRun(buffer, currentFullWidth);
+    }
+
+    return widgets;
+  }
+
+  Widget _buildCheckbox(SearchCriteriaModalUiModelSwitch item) => BasfCheckbox(
+    text: item.title,
+    value: item.notifier.value,
+    onChanged: (value) {
+      setState(() => item.notifier.value = !value);
+      _validateForm();
+    },
+  );
+
+  Widget _buildDatePicker(SearchCriteriaModalUiModelDatePicker item) {
+    final dates =
+        widget.items.whereType<SearchCriteriaModalUiModelDatePicker>().toList();
+    final startDate =
+        dates.firstWhereOrNull((o) => o.title == item.titleIsAfter)?.notifier.value;
+    final endDate =
+        dates.firstWhereOrNull((o) => o.title == item.titleIsBefore)?.notifier.value;
+
+    String? validator(String? _) {
+      final thisDate = item.notifier.value;
+      return (item.isNecessary && thisDate == null) ||
+              (thisDate != null &&
+                  startDate != null &&
+                  startDate.isAfter(thisDate)) ||
+              (thisDate != null &&
+                  endDate != null &&
+                  endDate.isBefore(thisDate))
+          ? ''
+          : null;
+    }
+
+    return FormField<String>(
+      validator: validator,
+      builder:
+          (state) => _ModalDatePicker(
+            validator: validator,
+            title: item.title,
+            controller: item.controller,
+            enabled: item.enabled,
+            setDateTime: (dateTime) => setState(() => item.notifier.value = dateTime),
+            firstDate: startDate,
+            lastDate: endDate,
+          ),
+    );
+  }
+
+  Widget _textField(SearchCriteriaModalUiModelTextField item) {
+    if (item.persistenceId != null) {
+      return PersistedTextField.fromTextFieldData(
+        textFieldData: item.textFieldData,
+        saveTriggerNotifier: _saveTriggerNotifier,
+        enabled: true,
+      );
+    }
+
+    return BasfTextField.fromTextFieldData(textFieldData: item.textFieldData);
   }
 
   void saveCriteria() {
-    for (final data in widget.textFieldItems) {
-      final item = tempTextFieldItems.firstWhere(
-        (d) => d.labelText == data.labelText,
-      );
-      data.controller.text = item.controller.text.trim();
+    _saveTriggerNotifier.value = true;
+    for (final item in widget.items) {
+      switch (item) {
+        case SearchCriteriaModalUiModelTextField():
+          item.onSaveValue();
+        case SearchCriteriaModalUiModelDatePicker():
+          item.onSaveValue();
+        case SearchCriteriaModalUiModelSwitch():
+          item.onSaveValue();
+        case SearchCriteriaModalUiModelInfoTileItem():
+      }
     }
 
-    saveTriggerNotifier.value = !saveTriggerNotifier.value;
+    Navigator.pop(context, true);
+  }
 
-    Navigator.pop(
-      context,
-      tempTextFieldItems.any((i) => i.controller.text.trim().isNotEmpty),
+  @override
+  void dispose() {
+    for (final item in widget.items) {
+      switch (item) {
+        case SearchCriteriaModalUiModelTextField():
+          item.controller.removeListener(_validateForm);
+          item.controller.dispose();
+        case SearchCriteriaModalUiModelDatePicker():
+          item.controller.removeListener(_validateForm);
+          item.controller.dispose();
+        case SearchCriteriaModalUiModelSwitch():
+        case SearchCriteriaModalUiModelInfoTileItem():
+      }
+    }
+    _validatedNotifier.dispose();
+    _saveTriggerNotifier.dispose();
+    super.dispose();
+  }
+}
+
+sealed class SearchCriteriaModalUiModel {
+  const SearchCriteriaModalUiModel({required this.fullWidth});
+
+  final bool fullWidth;
+}
+
+final class SearchCriteriaModalUiModelTextField
+    extends SearchCriteriaModalUiModel {
+  const SearchCriteriaModalUiModelTextField({
+    required this.labelText,
+    required this.controller,
+    required this.notifier,
+    this.persistenceId,
+    this.validator,
+    this.autovalidateMode,
+    this.keyboardType,
+    this.inputFormatters,
+    this.textCapitalization = TextCapitalization.none,
+    required this.onSaveValue,
+    super.fullWidth = true,
+  });
+
+  final String labelText;
+  final TextEditingController controller;
+  final ValueNotifier<bool> notifier;
+  final String? persistenceId;
+  final String? Function(String?)? validator;
+  final AutovalidateMode? autovalidateMode;
+  final TextInputType? keyboardType;
+  final List<TextInputFormatter>? inputFormatters;
+  final TextCapitalization textCapitalization;
+  final VoidCallback onSaveValue;
+
+  TextFieldData get textFieldData {
+    return TextFieldData(
+      controller: controller,
+      labelText: labelText,
+      autovalidateMode: autovalidateMode,
+      inputFormatters: inputFormatters,
+      keyboardType: keyboardType,
+      persistenceId: persistenceId,
+      textCapitalization: textCapitalization,
+      validator: validator,
     );
+  }
+}
+
+final class SearchCriteriaModalUiModelDatePicker
+    extends SearchCriteriaModalUiModel {
+  const SearchCriteriaModalUiModelDatePicker({
+    required this.title,
+    required this.controller,
+    required this.notifier,
+    required this.isNecessary,
+    this.enabled = true,
+    this.titleIsAfter,
+    this.titleIsBefore,
+    required this.onSaveValue,
+    super.fullWidth = false,
+  });
+
+  final String title;
+  final TextEditingController controller;
+  final ValueNotifier<DateTime?> notifier;
+  final bool isNecessary;
+  final bool enabled;
+  final String? titleIsAfter;
+  final String? titleIsBefore;
+  final VoidCallback onSaveValue;
+}
+
+final class SearchCriteriaModalUiModelSwitch
+    extends SearchCriteriaModalUiModel {
+  const SearchCriteriaModalUiModelSwitch({
+    required this.title,
+    required this.notifier,
+    required this.onSaveValue,
+    super.fullWidth = true,
+  });
+
+  final String title;
+  final ValueNotifier<bool> notifier;
+  final VoidCallback onSaveValue;
+}
+
+final class SearchCriteriaModalUiModelInfoTileItem
+    extends SearchCriteriaModalUiModel {
+  const SearchCriteriaModalUiModelInfoTileItem({
+    required this.infoItem,
+    super.fullWidth = true,
+  });
+
+  final InfoTileItem infoItem;
+}
+
+class _InfoItemsRow extends StatelessWidget {
+  const _InfoItemsRow({
+    this.leading,
+    this.tailing,
+    this.spacer,
+    this.crossAxisAlignment = CrossAxisAlignment.start,
+  });
+
+  static List<Widget> multipleFromList(
+    List<Widget> widgets, {
+    Widget? spacer,
+    CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment.start,
+  }) {
+    return widgets.slices(2).map((slice) {
+      if (slice.length == 1) return slice.first;
+
+      return _InfoItemsRow(
+        leading: slice.first,
+        tailing: slice.last,
+        spacer: spacer,
+        crossAxisAlignment: crossAxisAlignment,
+      );
+    }).toList();
+  }
+
+  final Widget? leading;
+  final Widget? tailing;
+  final Widget? spacer;
+  final CrossAxisAlignment crossAxisAlignment;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: crossAxisAlignment,
+      children: [
+        Expanded(child: leading ?? const SizedBox.shrink()),
+        Expanded(child: tailing ?? const SizedBox.shrink()),
+      ].joinWithSeparator(spacer ?? HorizontalSpacer.semi()),
+    );
+  }
+}
+
+class _ModalDatePicker extends StatelessWidget {
+  const _ModalDatePicker({
+    required this.title,
+    required this.controller,
+    required this.setDateTime,
+    this.enabled = true,
+    this.validator,
+    this.firstDate,
+    this.lastDate,
+  });
+
+  final String title;
+  final TextEditingController controller;
+  final ValueChanged<DateTime?> setDateTime;
+  final bool enabled;
+  final String? Function(String?)? validator;
+  final DateTime? firstDate;
+  final DateTime? lastDate;
+
+  @override
+  Widget build(BuildContext context) {
+    final appTheme = Theme.of(context);
+
+    return LabeledWidget(
+      labelText: title,
+      child: InkWell(
+        onTap: enabled ? () => _openCalendar(context, appTheme) : null,
+        onLongPress: () {
+          controller.clear();
+          setDateTime(null);
+        },
+        splashColor: appTheme.primaryColor.withValues(alpha: 0.1),
+        highlightColor: appTheme.primaryColor.withValues(alpha: 0.1),
+        child: BasfTextField(
+          validator: validator,
+          controller: controller,
+          style: appTheme.textTheme.bodySmall?.copyWith(fontSize: 13),
+          canRequestFocus: false,
+          greyWhenDisabled: false,
+          enabled: false,
+          decoration: InputDecoration(
+            errorStyle: const TextStyle(height: 0),
+            alignLabelWithHint: true,
+            hintText: '-',
+            filled: !enabled,
+            disabledBorder: enabled ? appTheme.inputDecorationTheme.enabledBorder : null,
+            suffixIcon: enabled ? const Icon(BasfIcons.calendar, size: 20) : null,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _openCalendar(BuildContext context, ThemeData appTheme) async {
+    final today = DateTime.now();
+    final dateTime = await showDatePicker(
+      context: context,
+      initialDate: _parsedDate ?? lastDate ?? today,
+      firstDate: firstDate ?? today.subtract(const Duration(days: 365)),
+      lastDate: lastDate ?? today,
+      builder: (context, child) {
+        return Theme(
+          data: BasfThemes.datePickerButtonTheme(appTheme),
+          child: child!,
+        );
+      },
+    );
+
+    if (dateTime != null) {
+      controller.text = DateFormat('dd.MM.yyyy').format(dateTime);
+      setDateTime(dateTime);
+    }
+  }
+
+  DateTime? get _parsedDate {
+    if (controller.text.trim().isEmpty) return null;
+
+    try {
+      return DateFormat('dd.MM.yyyy').parseStrict(controller.text.trim());
+    } catch (_) {
+      return null;
+    }
   }
 }

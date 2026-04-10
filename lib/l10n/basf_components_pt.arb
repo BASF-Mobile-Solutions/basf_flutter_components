@@ -1,3 +1,7 @@
 {
-  "@@locale": "pt"
+  "@@locale": "pt",
+  "error": "Erro",
+  "retry": "Repetir",
+  "close": "Fechar",
+  "showMorePhrase": "Mostrar mais"
 }

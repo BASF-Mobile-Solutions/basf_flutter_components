@@ -6,7 +6,7 @@ class ScanCameraIconButton extends StatelessWidget {
   /// Scanner camera icon button
   const ScanCameraIconButton({
     required this.scannerCubit,
-    required this.scanCameraVisNotifier,
+    this.scanCameraVisNotifier,
     super.key,
   });
 
