@@ -14,10 +14,7 @@ class OverviewScreen extends StatelessWidget {
   final ValueChanged<BasfThemeType> onThemeChanged;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _buildAppBar(),
-      body: _buildBody(context),
-    );
+    return Scaffold(appBar: _buildAppBar(), body: _buildBody(context));
   }
 
   PreferredSizeWidget _buildAppBar() {
@@ -29,9 +26,9 @@ class OverviewScreen extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: Dimens.paddingMedium20),
       child: ListView(
         padding: const EdgeInsets.symmetric(vertical: Dimens.paddingMedium20),
-        children: _buildSections(context).joinWithSeparator(
-          VerticalSpacer.medium20(),
-        ),
+        children: _buildSections(
+          context,
+        ).joinWithSeparator(VerticalSpacer.medium20()),
       ),
     );
   }
@@ -41,7 +38,8 @@ class OverviewScreen extends StatelessWidget {
       _buildSection(
         context: context,
         title: 'Motion & Interaction',
-        subtitle: 'Animations, Rive assets and flows that need quick visual checks.',
+        subtitle:
+            'Animations, Rive assets and flows that need quick visual checks.',
         children: [
           _buildNavigationButton(
             context,
@@ -129,9 +127,7 @@ class OverviewScreen extends StatelessWidget {
       decoration: BoxDecoration(
         color: BasfColors.backgroundGrey,
         borderRadius: BasfThemes.defaultBorderRadius,
-        border: Border.all(
-          color: theme.primaryColor.withValues(alpha: 0.18),
-        ),
+        border: Border.all(color: theme.primaryColor.withValues(alpha: 0.18)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

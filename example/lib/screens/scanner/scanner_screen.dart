@@ -73,10 +73,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
         const SizedBox(
           width: 50,
           height: 30,
-          child: RiveEmojiIcon(
-            emoji: RiveEmoji.smiling,
-            size: 30,
-          ),
+          child: RiveEmojiIcon(emoji: RiveEmoji.smiling, size: 30),
         ),
       ],
     );

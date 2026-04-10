@@ -13,14 +13,12 @@ abstract final class BasfRive {
   }
 }
 
-ArtboardSelector _artboardSelector(String? artboard) => artboard == null
-    ? ArtboardSelector.byDefault()
-    : ArtboardSelector.byName(artboard);
+ArtboardSelector _artboardSelector(String? artboard) =>
+    artboard == null ? ArtboardSelector.byDefault() : ArtboardSelector.byName(artboard);
 
-StateMachineSelector _stateMachineSelector(String? stateMachine) =>
-    stateMachine == null
-        ? StateMachineSelector.byDefault()
-        : StateMachineSelector.byName(stateMachine);
+StateMachineSelector _stateMachineSelector(String? stateMachine) => stateMachine == null
+    ? StateMachineSelector.byDefault()
+    : StateMachineSelector.byName(stateMachine);
 
 ErrorWidget _riveErrorWidget(String message, Object error) {
   return ErrorWidget.withDetails(
@@ -29,9 +27,8 @@ ErrorWidget _riveErrorWidget(String message, Object error) {
   );
 }
 
-Artboard? _artboardFromFile(File file, String? artboard) => artboard == null
-    ? file.defaultArtboard()
-    : file.artboard(artboard);
+Artboard? _artboardFromFile(File file, String? artboard) =>
+    artboard == null ? file.defaultArtboard() : file.artboard(artboard);
 
 base class _BasfRiveAnimationStateMachineController extends RiveWidgetController {
   _BasfRiveAnimationStateMachineController(
@@ -56,8 +53,7 @@ base class _BasfRiveAnimationStateMachineController extends RiveWidgetController
   bool advance(double elapsedSeconds) {
     var didAdvanceAnimations = false;
     for (final animation in _animations) {
-      didAdvanceAnimations =
-          animation.advanceAndApply(elapsedSeconds) || didAdvanceAnimations;
+      didAdvanceAnimations = animation.advanceAndApply(elapsedSeconds) || didAdvanceAnimations;
     }
 
     final didAdvanceStateMachine = super.advance(elapsedSeconds);
@@ -96,10 +92,10 @@ class BasfRiveAnimationStateMachineAsset extends StatefulWidget {
       _BasfRiveAnimationStateMachineAssetState();
 }
 
-class _BasfRiveAnimationStateMachineAssetState
-    extends State<BasfRiveAnimationStateMachineAsset> {
-  late final Future<bool> _initialization =
-      RiveNative.isInitialized ? Future.value(true) : RiveNative.init();
+class _BasfRiveAnimationStateMachineAssetState extends State<BasfRiveAnimationStateMachineAsset> {
+  late final Future<bool> _initialization = RiveNative.isInitialized
+      ? Future.value(true)
+      : RiveNative.init();
   late FileLoader _fileLoader = _createFileLoader();
 
   FileLoader _createFileLoader() {
@@ -111,8 +107,7 @@ class _BasfRiveAnimationStateMachineAssetState
   @override
   void didUpdateWidget(covariant BasfRiveAnimationStateMachineAsset oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.asset.keyName != widget.asset.keyName ||
-        oldWidget.factory != widget.factory) {
+    if (oldWidget.asset.keyName != widget.asset.keyName || oldWidget.factory != widget.factory) {
       _fileLoader.dispose();
       _fileLoader = _createFileLoader();
     }
@@ -158,14 +153,14 @@ class _BasfRiveAnimationStateMachineAssetState
           builder: (context, state) => switch (state) {
             RiveLoading() => widget.loading,
             RiveFailed() => _riveErrorWidget(
-                'Failed to load Rive asset.',
-                state.error,
-              ),
+              'Failed to load Rive asset.',
+              state.error,
+            ),
             RiveLoaded() => RiveWidget(
-                controller: state.controller,
-                fit: widget.fit,
-                alignment: widget.alignment,
-              ),
+              controller: state.controller,
+              fit: widget.fit,
+              alignment: widget.alignment,
+            ),
           },
         );
       },
@@ -198,8 +193,9 @@ class BasfRiveAnimationAsset extends StatefulWidget {
 }
 
 class _BasfRiveAnimationAssetState extends State<BasfRiveAnimationAsset> {
-  late final Future<bool> _initialization =
-      RiveNative.isInitialized ? Future.value(true) : RiveNative.init();
+  late final Future<bool> _initialization = RiveNative.isInitialized
+      ? Future.value(true)
+      : RiveNative.init();
   late FileLoader _fileLoader = _createFileLoader();
   late SingleAnimationPainter _painter = _createPainter();
   late Future<File> _fileFuture = _loadFile();
@@ -241,8 +237,7 @@ class _BasfRiveAnimationAssetState extends State<BasfRiveAnimationAsset> {
       shouldRebuild = true;
     }
 
-    if (oldWidget.asset.keyName != widget.asset.keyName ||
-        oldWidget.factory != widget.factory) {
+    if (oldWidget.asset.keyName != widget.asset.keyName || oldWidget.factory != widget.factory) {
       _loadedFile?.dispose();
       _loadedFile = null;
       _fileLoader.dispose();

@@ -16,13 +16,9 @@ class RiveOverviewScreen extends StatefulWidget {
 }
 
 class _RiveOverviewScreenState extends State<RiveOverviewScreen> {
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _buildAppBar(),
-      body: _buildBody(),
-    );
+    return Scaffold(appBar: _buildAppBar(), body: _buildBody());
   }
 
   PreferredSizeWidget _buildAppBar() {
@@ -50,8 +46,7 @@ class _RiveOverviewScreenState extends State<RiveOverviewScreen> {
         spacing: 12,
         runSpacing: 12,
         children: [
-          for (final theme in BasfThemeType.values)
-            _buildThemeButton(theme),
+          for (final theme in BasfThemeType.values) _buildThemeButton(theme),
         ],
       ),
     );
@@ -93,31 +88,23 @@ class _RiveOverviewScreenState extends State<RiveOverviewScreen> {
     return _buildSection(
       title: 'Gear Icon',
       subtitle: 'Tap the gear to verify interaction and current theme color.',
-      child: Center(
-        child: AnimatedGearIcon(
-          size: 72,
-          onTap: () {},
-        ),
-      ),
+      child: Center(child: AnimatedGearIcon(size: 72, onTap: () {})),
     );
   }
 
   Widget _buildSearchLoopSection() {
     return _buildSection(
       title: 'Search Loop',
-      subtitle: 'Tap or double tap the animation to test state machine triggers.',
-      child: const Center(
-        child: SearchLoopAnimation(),
-      ),
+      subtitle:
+          'Tap or double tap the animation to test state machine triggers.',
+      child: const Center(child: SearchLoopAnimation()),
     );
   }
 
   Widget _buildLogisticsBoxSection() {
     return _buildSection(
       title: 'Logistics Box',
-      child: const Center(
-        child: LogisticsBoxAnimation(),
-      ),
+      child: const Center(child: LogisticsBoxAnimation()),
     );
   }
 
@@ -148,10 +135,7 @@ class _RiveOverviewScreenState extends State<RiveOverviewScreen> {
         children: [
           RiveEmojiIcon(emoji: emoji),
           VerticalSpacer.small(),
-          Text(
-            emoji.name,
-            textAlign: TextAlign.center,
-          ),
+          Text(emoji.name, textAlign: TextAlign.center),
         ],
       ),
     );
@@ -169,9 +153,9 @@ class _RiveOverviewScreenState extends State<RiveOverviewScreen> {
         if (subtitle != null)
           Text(
             subtitle,
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: BasfColors.copyTextGrey,
-            ),
+            style: Theme.of(
+              context,
+            ).textTheme.bodyMedium?.copyWith(color: BasfColors.copyTextGrey),
           ),
         child,
       ].joinWithSeparator(VerticalSpacer.medium()),

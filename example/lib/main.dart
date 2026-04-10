@@ -36,10 +36,7 @@ class _ExampleAppState extends State<ExampleApp> {
     return MaterialApp(
       title: 'BASF Components',
       theme: BasfThemes.lightMainTheme(basfThemeType: _theme),
-      home: OverviewScreen(
-        currentTheme: _theme,
-        onThemeChanged: _setTheme,
-      ),
+      home: OverviewScreen(currentTheme: _theme, onThemeChanged: _setTheme),
       navigatorObservers: [routeObserver],
       localizationsDelegates:
           BasfComponentsLocalizations.localizationsDelegates,
