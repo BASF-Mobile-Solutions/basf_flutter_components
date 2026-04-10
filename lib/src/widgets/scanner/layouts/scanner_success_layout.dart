@@ -34,7 +34,7 @@ class ScannerSuccessLayout extends StatelessWidget {
   Widget _buildSuccessInfo(BuildContext context) {
     return Column(
       children: [
-        const SuccessAnimation(),
+        const SuccessAnimatedIcon(),
         VerticalSpacer.normal(),
         _buildSuccessMessage(context),
       ],

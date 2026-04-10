@@ -46,8 +46,8 @@ class $AssetsRiveGen {
   /// File path: assets/rive/search_loop.riv
   RiveGenImage get searchLoop => const RiveGenImage('assets/rive/search_loop.riv');
 
-  /// File path: assets/rive/success_icon.riv
-  RiveGenImage get successIcon => const RiveGenImage('assets/rive/success_icon.riv');
+  /// File path: assets/rive/success_status_icon.riv
+  RiveGenImage get successStatusIcon => const RiveGenImage('assets/rive/success_status_icon.riv');
 
   /// List of all assets
   List<RiveGenImage> get values => [
@@ -57,7 +57,7 @@ class $AssetsRiveGen {
     messageIcon,
     qr,
     searchLoop,
-    successIcon,
+    successStatusIcon,
   ];
 }
 
@@ -166,30 +166,10 @@ class RiveGenImage {
 
   static const String package = 'basf_flutter_components';
 
-  _rive.RiveAnimation rive({
-    String? artboard,
-    List<String> animations = const [],
-    List<String> stateMachines = const [],
-    BoxFit? fit,
-    Alignment? alignment,
-    Widget? placeHolder,
-    bool antialiasing = true,
-    bool useArtboardSize = false,
-    List<_rive.RiveAnimationController> controllers = const [],
-    _rive.OnInitCallback? onInit,
-  }) {
-    return _rive.RiveAnimation.asset(
+  _rive.FileLoader riveFileLoader({_rive.Factory? factory}) {
+    return _rive.FileLoader.fromAsset(
       'packages/basf_flutter_components/$_assetName',
-      artboard: artboard,
-      animations: animations,
-      stateMachines: stateMachines,
-      fit: fit,
-      alignment: alignment,
-      placeHolder: placeHolder,
-      antialiasing: antialiasing,
-      useArtboardSize: useArtboardSize,
-      controllers: controllers,
-      onInit: onInit,
+      riveFactory: factory ?? _rive.Factory.rive,
     );
   }
 

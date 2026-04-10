@@ -1,3 +1,6 @@
+# 2.10.0
+- Rive updated to ver.14
+
 ## 2.9.8
 - Camera fix for auto-start behavior
 

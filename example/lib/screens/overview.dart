@@ -3,151 +3,178 @@ import 'package:basf_flutter_components_example/screens/scanner/scanner_screen.d
 import 'package:basf_flutter_components_example/screens/screens.dart';
 import 'package:flutter/material.dart';
 
-class OverviewScreen extends StatefulWidget {
-  const OverviewScreen({super.key});
+class OverviewScreen extends StatelessWidget {
+  const OverviewScreen({
+    required this.currentTheme,
+    required this.onThemeChanged,
+    super.key,
+  });
 
-  @override
-  State<OverviewScreen> createState() => _OverviewScreenState();
-}
-
-class _OverviewScreenState extends State<OverviewScreen> {
+  final BasfThemeType currentTheme;
+  final ValueChanged<BasfThemeType> onThemeChanged;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('BASF Components')),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: Dimens.paddingMedium20),
-        child: ListView(
-          padding: const EdgeInsets.symmetric(vertical: Dimens.paddingMedium20),
-          children: [
-            BasfTextButton.contained(
-              text: 'BASF Alerts',
-              expanded: true,
-              onPressed: () async {
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (context) => const AlertsOverviewScreen(),
-                  ),
-                );
-              },
+    return Scaffold(appBar: _buildAppBar(), body: _buildBody(context));
+  }
+
+  PreferredSizeWidget _buildAppBar() {
+    return AppBar(title: const Text('BASF Components'));
+  }
+
+  Widget _buildBody(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: Dimens.paddingMedium20),
+      child: ListView(
+        padding: const EdgeInsets.symmetric(vertical: Dimens.paddingMedium20),
+        children: _buildSections(
+          context,
+        ).joinWithSeparator(VerticalSpacer.medium20()),
+      ),
+    );
+  }
+
+  List<Widget> _buildSections(BuildContext context) {
+    return [
+      _buildSection(
+        context: context,
+        title: 'Motion & Interaction',
+        subtitle:
+            'Animations, Rive assets and flows that need quick visual checks.',
+        children: [
+          _buildNavigationButton(
+            context,
+            text: 'BASF Animations',
+            pageBuilder: (_) => const AnimationsOverviewScreen(),
+          ),
+          _buildNavigationButton(
+            context,
+            text: 'BASF Rive',
+            pageBuilder: (_) => RiveOverviewScreen(
+              currentTheme: currentTheme,
+              onThemeChanged: onThemeChanged,
             ),
-            BasfTextButton.contained(
-              text: 'BASF Animations',
-              expanded: true,
-              onPressed: () async {
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (context) => const AnimationsOverviewScreen(),
-                  ),
-                );
-              },
+          ),
+          _buildScannerButton(context),
+        ],
+      ),
+      _buildSection(
+        context: context,
+        title: 'Core UI',
+        subtitle: 'Reusable controls and feedback primitives.',
+        children: [
+          _buildNavigationButton(
+            context,
+            text: 'BASF Buttons',
+            pageBuilder: (_) => const ButtonsOverviewScreen(),
+          ),
+          _buildNavigationButton(
+            context,
+            text: 'BASF Forms',
+            pageBuilder: (_) => const FormsOverviewScreen(),
+          ),
+          _buildNavigationButton(
+            context,
+            text: 'BASF Dialogs',
+            pageBuilder: (_) => const DialogOverviewScreen(),
+          ),
+          _buildNavigationButton(
+            context,
+            text: 'BASF Alerts',
+            pageBuilder: (_) => const AlertsOverviewScreen(),
+          ),
+        ],
+      ),
+      _buildSection(
+        context: context,
+        title: 'Design System',
+        subtitle: 'Foundations, tokens and theme-driven reference screens.',
+        children: [
+          _buildNavigationButton(
+            context,
+            text: 'BASF Colors',
+            pageBuilder: (_) => const ColorsOverviewScreen(),
+          ),
+          _buildNavigationButton(
+            context,
+            text: 'BASF Fonts',
+            pageBuilder: (_) => const FontsScreen(),
+          ),
+          _buildNavigationButton(
+            context,
+            text: 'BASF Icons',
+            pageBuilder: (_) => const IconsOverviewScreen(),
+          ),
+          _buildNavigationButton(
+            context,
+            text: 'BASF Themes',
+            pageBuilder: (_) => const ThemesOverviewScreen(),
+          ),
+        ],
+      ),
+    ];
+  }
+
+  Widget _buildSection({
+    required BuildContext context,
+    required String title,
+    required String subtitle,
+    required List<Widget> children,
+  }) {
+    final theme = Theme.of(context);
+
+    return Container(
+      padding: const EdgeInsets.all(Dimens.paddingMedium20),
+      decoration: BoxDecoration(
+        color: BasfColors.backgroundGrey,
+        borderRadius: BasfThemes.defaultBorderRadius,
+        border: Border.all(color: theme.primaryColor.withValues(alpha: 0.18)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title, style: theme.textTheme.titleMedium),
+          Text(
+            subtitle,
+            style: theme.textTheme.bodyMedium?.copyWith(
+              color: BasfColors.copyTextGrey,
             ),
-            BasfTextButton.contained(
-              text: 'BASF Buttons',
-              expanded: true,
-              onPressed: () async {
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (context) => const ButtonsOverviewScreen(),
-                  ),
-                );
-              },
-            ),
-            BasfTextButton.contained(
-              text: 'BASF Colors',
-              expanded: true,
-              onPressed: () async {
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (context) => const ColorsOverviewScreen(),
-                  ),
-                );
-              },
-            ),
-            BasfTextButton.contained(
-              text: 'BASF Dialogs',
-              expanded: true,
-              onPressed: () async {
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (context) => const DialogOverviewScreen(),
-                  ),
-                );
-              },
-            ),
-            BasfTextButton.contained(
-              text: 'BASF Fonts',
-              expanded: true,
-              onPressed: () async {
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (context) => const FontsScreen(),
-                  ),
-                );
-              },
-            ),
-            BasfTextButton.contained(
-              text: 'BASF Forms',
-              expanded: true,
-              onPressed: () async {
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (context) => const FormsOverviewScreen(),
-                  ),
-                );
-              },
-            ),
-            BasfTextButton.contained(
-              text: 'BASF Icons',
-              expanded: true,
-              onPressed: () async {
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (context) => const IconsOverviewScreen(),
-                  ),
-                );
-              },
-            ),
-            BasfTextButton.contained(
-              text: 'BASF Themes',
-              expanded: true,
-              onPressed: () async {
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (context) => const ThemesOverviewScreen(),
-                  ),
-                );
-              },
-            ),
-            BasfTextButton.contained(
-              text: 'Scanner',
-              expanded: true,
-              onPressed: () async {
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (context) {
-                      return BlocProvider<ScannerCubit>(
-                        create: (context) => ScannerCubit(id: 'scanner_1'),
-                        child: const ScannerScreen(),
-                      );
-                    },
-                  ),
-                );
-              },
-            ),
-          ].joinWithSeparator(VerticalSpacer.medium20()),
+          ),
+          ...children,
+        ].joinWithSeparator(VerticalSpacer.medium()),
+      ),
+    );
+  }
+
+  Widget _buildNavigationButton(
+    BuildContext context, {
+    required String text,
+    required WidgetBuilder pageBuilder,
+  }) {
+    return BasfTextButton.contained(
+      text: text,
+      expanded: true,
+      onPressed: () => _push(context, pageBuilder),
+    );
+  }
+
+  Widget _buildScannerButton(BuildContext context) {
+    return BasfTextButton.contained(
+      text: 'Scanner',
+      expanded: true,
+      onPressed: () => _push(
+        context,
+        (context) => BlocProvider<ScannerCubit>(
+          create: (context) => ScannerCubit(id: 'scanner_1'),
+          child: const ScannerScreen(),
         ),
       ),
+    );
+  }
+
+  Future<void> _push(BuildContext context, WidgetBuilder pageBuilder) async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute<void>(builder: pageBuilder),
     );
   }
 }
