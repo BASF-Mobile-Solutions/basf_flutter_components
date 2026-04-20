@@ -100,7 +100,7 @@ class ModalParent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         body,
-        if (bottomButton != null) bottomButton!,
+        ?bottomButton,
       ].joinWithSeparator(VerticalSpacer.medium20()),
     );
   }
