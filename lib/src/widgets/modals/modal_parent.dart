@@ -139,24 +139,23 @@ class ModalParentForScrollableChild extends ModalParent {
               showCloseButton: showCloseButton,
             ),
           Flexible(
-            child:
-                defaultHorizontalPadding
-                    ? Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: Paddings.defaultScreenPadding.horizontal / 2,
-                      ),
-                      child: body,
-                    )
-                    : body,
+            child: defaultHorizontalPadding
+                ? Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: Paddings.defaultScreenPadding.horizontal / 2,
+                    ),
+                    child: body,
+                  )
+                : body,
           ),
           if (bottomButton != null)
             defaultHorizontalPadding
                 ? Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: Paddings.defaultScreenPadding.horizontal / 2,
-                  ),
-                  child: bottomButton!,
-                )
+                    padding: EdgeInsets.symmetric(
+                      horizontal: Paddings.defaultScreenPadding.horizontal / 2,
+                    ),
+                    child: bottomButton!,
+                  )
                 : bottomButton!,
         ],
       ),

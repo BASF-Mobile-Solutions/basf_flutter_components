@@ -36,8 +36,7 @@ class SearchCriteriaModalLayout extends StatefulWidget {
   final String filtersLocalization;
 
   @override
-  State<SearchCriteriaModalLayout> createState() =>
-      _SearchCriteriaModalLayoutState();
+  State<SearchCriteriaModalLayout> createState() => _SearchCriteriaModalLayoutState();
 }
 
 class _SearchCriteriaModalLayoutState extends State<SearchCriteriaModalLayout> {
@@ -98,10 +97,7 @@ class _SearchCriteriaModalLayoutState extends State<SearchCriteriaModalLayout> {
   Widget _saveButton({required bool enabled}) {
     return BasfTextButton.contained(
       expanded: true,
-      text:
-          widget.searchText
-              ? widget.searchLocalization
-              : widget.saveCriteriaLocalization,
+      text: widget.searchText ? widget.searchLocalization : widget.saveCriteriaLocalization,
       onPressed: enabled ? saveCriteria : null,
     );
   }
@@ -169,38 +165,30 @@ class _SearchCriteriaModalLayoutState extends State<SearchCriteriaModalLayout> {
   );
 
   Widget _buildDatePicker(SearchCriteriaModalUiModelDatePicker item) {
-    final dates =
-        widget.items.whereType<SearchCriteriaModalUiModelDatePicker>().toList();
-    final startDate =
-        dates.firstWhereOrNull((o) => o.title == item.titleIsAfter)?.notifier.value;
-    final endDate =
-        dates.firstWhereOrNull((o) => o.title == item.titleIsBefore)?.notifier.value;
+    final dates = widget.items.whereType<SearchCriteriaModalUiModelDatePicker>().toList();
+    final startDate = dates.firstWhereOrNull((o) => o.title == item.titleIsAfter)?.notifier.value;
+    final endDate = dates.firstWhereOrNull((o) => o.title == item.titleIsBefore)?.notifier.value;
 
     String? validator(String? _) {
       final thisDate = item.notifier.value;
       return (item.isNecessary && thisDate == null) ||
-              (thisDate != null &&
-                  startDate != null &&
-                  startDate.isAfter(thisDate)) ||
-              (thisDate != null &&
-                  endDate != null &&
-                  endDate.isBefore(thisDate))
+              (thisDate != null && startDate != null && startDate.isAfter(thisDate)) ||
+              (thisDate != null && endDate != null && endDate.isBefore(thisDate))
           ? ''
           : null;
     }
 
     return FormField<String>(
       validator: validator,
-      builder:
-          (state) => _ModalDatePicker(
-            validator: validator,
-            title: item.title,
-            controller: item.controller,
-            enabled: item.enabled,
-            setDateTime: (dateTime) => setState(() => item.notifier.value = dateTime),
-            firstDate: startDate,
-            lastDate: endDate,
-          ),
+      builder: (state) => _ModalDatePicker(
+        validator: validator,
+        title: item.title,
+        controller: item.controller,
+        enabled: item.enabled,
+        setDateTime: (dateTime) => setState(() => item.notifier.value = dateTime),
+        firstDate: startDate,
+        lastDate: endDate,
+      ),
     );
   }
 
@@ -259,8 +247,7 @@ sealed class SearchCriteriaModalUiModel {
   final bool fullWidth;
 }
 
-final class SearchCriteriaModalUiModelTextField
-    extends SearchCriteriaModalUiModel {
+final class SearchCriteriaModalUiModelTextField extends SearchCriteriaModalUiModel {
   const SearchCriteriaModalUiModelTextField({
     required this.labelText,
     required this.controller,
@@ -300,8 +287,7 @@ final class SearchCriteriaModalUiModelTextField
   }
 }
 
-final class SearchCriteriaModalUiModelDatePicker
-    extends SearchCriteriaModalUiModel {
+final class SearchCriteriaModalUiModelDatePicker extends SearchCriteriaModalUiModel {
   const SearchCriteriaModalUiModelDatePicker({
     required this.title,
     required this.controller,
@@ -324,8 +310,7 @@ final class SearchCriteriaModalUiModelDatePicker
   final VoidCallback onSaveValue;
 }
 
-final class SearchCriteriaModalUiModelSwitch
-    extends SearchCriteriaModalUiModel {
+final class SearchCriteriaModalUiModelSwitch extends SearchCriteriaModalUiModel {
   const SearchCriteriaModalUiModelSwitch({
     required this.title,
     required this.notifier,
@@ -338,8 +323,7 @@ final class SearchCriteriaModalUiModelSwitch
   final VoidCallback onSaveValue;
 }
 
-final class SearchCriteriaModalUiModelInfoTileItem
-    extends SearchCriteriaModalUiModel {
+final class SearchCriteriaModalUiModelInfoTileItem extends SearchCriteriaModalUiModel {
   const SearchCriteriaModalUiModelInfoTileItem({
     required this.infoItem,
     super.fullWidth = true,

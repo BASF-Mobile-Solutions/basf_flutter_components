@@ -23,11 +23,11 @@ class EditableInfoTile extends StatelessWidget {
     this.icon,
     super.key,
   }) : child = Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: _getGridRows(items).joinWithSeparator(VerticalSpacer.normal()),
-        );
+         crossAxisAlignment: CrossAxisAlignment.start,
+         mainAxisSize: MainAxisSize.min,
+         mainAxisAlignment: MainAxisAlignment.end,
+         children: _getGridRows(items).joinWithSeparator(VerticalSpacer.normal()),
+       );
 
   ///
   EditableInfoTile.withGridView({
@@ -38,11 +38,11 @@ class EditableInfoTile extends StatelessWidget {
     this.icon,
     super.key,
   }) : child = Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: _getGridRows(items).joinWithSeparator(VerticalSpacer.normal()),
-        );
+         crossAxisAlignment: CrossAxisAlignment.start,
+         mainAxisSize: MainAxisSize.min,
+         mainAxisAlignment: MainAxisAlignment.end,
+         children: _getGridRows(items).joinWithSeparator(VerticalSpacer.normal()),
+       );
 
   /// Callback to be called when the tile is clicked
   final VoidCallback? onClick;
