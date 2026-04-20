@@ -10,11 +10,7 @@ class WarningModalLayout extends StatefulWidget {
     this.customButtonLabel,
     this.withRetryButton = false,
     this.isError = true,
-    this.errorLocalization = 'Error',
-    this.warningLocalization = 'Warning',
-    this.showMoreLocalization = 'Show more',
-    this.retryLocalization = 'Retry',
-    this.closeLocalization = 'Close',
+    this.additionalWidget,
     super.key,
   });
 
@@ -33,20 +29,8 @@ class WarningModalLayout extends StatefulWidget {
   /// If message is an error or a warning
   final bool isError;
 
-  /// Error text
-  final String errorLocalization;
-
-  /// Warning text
-  final String warningLocalization;
-
-  /// Show more
-  final String showMoreLocalization;
-
-  /// Retry
-  final String retryLocalization;
-
-  /// Close
-  final String closeLocalization;
+  /// Optional custom widget displayed above the action buttons.
+  final Widget? additionalWidget;
 
   @override
   State<WarningModalLayout> createState() => _WarningModalLayoutState();
@@ -58,44 +42,50 @@ class _WarningModalLayoutState extends State<WarningModalLayout> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = BasfComponentsLocalizations.of(context);
+
     return Padding(
       padding: MediaQuery.of(context).viewInsets,
       child: SafeArea(
         minimum: const EdgeInsets.only(bottom: Dimens.paddingMedium20),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Flexible(
-              child: ListView(
-                shrinkWrap: true,
-                physics: const ClampingScrollPhysics(),
-                padding: Paddings.defaultScreenPadding,
-                children: [
-                  ModalHeader(
-                    title: widget.isError ? widget.errorLocalization : widget.warningLocalization,
-                    icon: emoji,
-                    showCloseButton: false,
-                  ),
-                  Text(widget.warningMessage),
-                  if (widget.additionalInfo?.isNotEmpty ?? false) showMoreButton(),
-                  if (widget.additionalInfo?.isNotEmpty ?? false) additionalInfo(),
-                ].joinWithSeparator(VerticalSpacer.medium()),
-              ),
-            ),
-            if (widget.withRetryButton)
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: Dimens.paddingMedium20,
+        child: Container(
+          color: Theme.of(context).scaffoldBackgroundColor,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Flexible(
+                child: ListView(
+                  shrinkWrap: true,
+                  physics: const ClampingScrollPhysics(),
+                  padding: Paddings.defaultScreenPadding,
+                  children: [
+                    ModalHeader(
+                      title: widget.isError ? localizations.error : localizations.warning,
+                      icon: emoji,
+                      showCloseButton: false,
+                    ),
+                    Text(widget.warningMessage),
+                    if (widget.additionalInfo?.isNotEmpty ?? false) showMoreButton(localizations),
+                    if (widget.additionalInfo?.isNotEmpty ?? false) additionalInfo(),
+                  ].joinWithSeparator(VerticalSpacer.medium()),
                 ),
-                child: retryButton(context),
               ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: Dimens.paddingMedium20,
+              if (widget.additionalWidget != null)
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: Dimens.paddingMedium20),
+                  child: widget.additionalWidget!,
+                ),
+              if (widget.withRetryButton)
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: Dimens.paddingMedium20),
+                  child: retryButton(context, localizations),
+                ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: Dimens.paddingMedium20),
+                child: closeButton(context, localizations),
               ),
-              child: closeButton(context),
-            ),
-          ].joinWithSeparator(VerticalSpacer.medium()),
+            ].joinWithSeparator(VerticalSpacer.medium()),
+          ),
         ),
       ),
     );
@@ -120,7 +110,7 @@ class _WarningModalLayoutState extends State<WarningModalLayout> {
     );
   }
 
-  Widget showMoreButton() {
+  Widget showMoreButton(BasfComponentsLocalizations localizations) {
     final Widget showMoreButton = BasfTextButton.transparent(
       onPressed: () {
         setState(() => showAdditionalInfo = true);
@@ -128,7 +118,7 @@ class _WarningModalLayoutState extends State<WarningModalLayout> {
           setState(() => showLine = true);
         });
       },
-      child: Text(widget.showMoreLocalization),
+      child: Text(localizations.showMorePhrase),
     );
 
     return Fade(
@@ -149,17 +139,23 @@ class _WarningModalLayoutState extends State<WarningModalLayout> {
     );
   }
 
-  Widget retryButton(BuildContext context) {
+  Widget retryButton(
+    BuildContext context,
+    BasfComponentsLocalizations localizations,
+  ) {
     return BasfOutlinedButton(
-      text: widget.retryLocalization,
+      text: localizations.retry,
       expanded: true,
       onPressed: () => Navigator.pop(context, true),
     );
   }
 
-  Widget closeButton(BuildContext context) {
+  Widget closeButton(
+    BuildContext context,
+    BasfComponentsLocalizations localizations,
+  ) {
     return BasfTextButton.contained(
-      text: widget.customButtonLabel ?? widget.closeLocalization,
+      text: widget.customButtonLabel ?? localizations.close,
       expanded: true,
       onPressed: () => Navigator.pop(context, false),
     );

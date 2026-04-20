@@ -143,6 +143,30 @@ abstract class BasfComponentsLocalizations {
   /// **'Warning'**
   String get warning;
 
+  /// No description provided for @error.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get error;
+
+  /// No description provided for @retry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retry;
+
+  /// No description provided for @close.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get close;
+
+  /// No description provided for @showMorePhrase.
+  ///
+  /// In en, this message translates to:
+  /// **'Show more'**
+  String get showMorePhrase;
+
   /// No description provided for @generalAbort.
   ///
   /// In en, this message translates to:

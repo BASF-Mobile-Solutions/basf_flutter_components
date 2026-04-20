@@ -1,4 +1,10 @@
-# 2.10.0
+## 2.12.0
+- GM migration
+
+## 2.11.0
+- Duplicates migration
+
+## 2.10.0
 - Rive updated to ver.14
 
 ## 2.9.8

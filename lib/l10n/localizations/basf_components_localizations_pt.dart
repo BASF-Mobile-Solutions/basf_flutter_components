@@ -24,6 +24,18 @@ class BasfComponentsLocalizationsPt extends BasfComponentsLocalizations {
   String get warning => 'Warning';
 
   @override
+  String get error => 'Erro';
+
+  @override
+  String get retry => 'Repetir';
+
+  @override
+  String get close => 'Fechar';
+
+  @override
+  String get showMorePhrase => 'Mostrar mais';
+
+  @override
   String get generalAbort => 'Cancel';
 
   @override

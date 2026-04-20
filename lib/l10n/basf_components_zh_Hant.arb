@@ -5,6 +5,10 @@
   "provideCameraPermission": "授予相機權限",
   "rescan": "重新掃描",
   "warning": "警告",
+  "error": "錯誤",
+  "retry": "重試",
+  "close": "關閉",
+  "showMorePhrase": "顯示更多",
   "generalAbort": "中止",
   "generalConfirm": "確認",
   "scanQRorBarcode": "掃描二維碼或條碼"

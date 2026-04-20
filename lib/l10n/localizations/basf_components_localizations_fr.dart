@@ -24,6 +24,18 @@ class BasfComponentsLocalizationsFr extends BasfComponentsLocalizations {
   String get warning => 'Warning';
 
   @override
+  String get error => 'Erreur';
+
+  @override
+  String get retry => 'Réessayer';
+
+  @override
+  String get close => 'Fermer';
+
+  @override
+  String get showMorePhrase => 'Afficher plus';
+
+  @override
   String get generalAbort => 'Cancel';
 
   @override

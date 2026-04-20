@@ -24,20 +24,32 @@ class ModalHeader extends StatelessWidget {
   ///
   final List<Widget>? actions;
 
+  EdgeInsetsGeometry get customPadding {
+    return Paddings.defaultScreenPadding.subtract(
+      const EdgeInsets.only(
+        top: Dimens.paddingMediumSmall,
+        right: Dimens.paddingMedium - 1,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        if (icon != null)
-          Expanded(child: titleWithIcon(context))
-        else
-          Expanded(child: sectionTitle(context)),
-        if (actions != null)
-          closeButtonWithActions(context)
-        else if (showCloseButton)
-          closeButton(context),
-      ],
+    return Padding(
+      padding: customPadding,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          if (icon != null)
+            Expanded(child: titleWithIcon(context))
+          else
+            Expanded(child: sectionTitle(context)),
+          if (actions != null)
+            closeButtonWithActions(context)
+          else if (showCloseButton)
+            closeButton(context),
+        ],
+      ),
     );
   }
 

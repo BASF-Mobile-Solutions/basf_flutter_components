@@ -24,6 +24,18 @@ class BasfComponentsLocalizationsDe extends BasfComponentsLocalizations {
   String get warning => 'Warnung';
 
   @override
+  String get error => 'Fehler';
+
+  @override
+  String get retry => 'Erneut versuchen';
+
+  @override
+  String get close => 'Schließen';
+
+  @override
+  String get showMorePhrase => 'Mehr Infos';
+
+  @override
   String get generalAbort => 'Abbrechen';
 
   @override
@@ -51,6 +63,18 @@ class BasfComponentsLocalizationsDeRlp extends BasfComponentsLocalizationsDe {
 
   @override
   String get warning => 'Warnung';
+
+  @override
+  String get error => 'Fehler';
+
+  @override
+  String get retry => 'Erneut versuche';
+
+  @override
+  String get close => 'Schliesse';
+
+  @override
+  String get showMorePhrase => 'Mehr Infos';
 
   @override
   String get generalAbort => 'Abbrechen';

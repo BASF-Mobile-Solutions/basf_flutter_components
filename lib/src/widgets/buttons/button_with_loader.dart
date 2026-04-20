@@ -16,6 +16,8 @@ class ButtonWithLoader extends StatelessWidget {
     this.color = Colors.white,
     this.leadingIcon,
     this.isOutlined = false,
+    this.showInRed = false,
+    this.size = const Size(double.infinity, 53),
   });
 
   /// Callback when the button is pressed.
@@ -36,18 +38,28 @@ class ButtonWithLoader extends StatelessWidget {
   /// Whether the button should be an outlined button.
   final bool isOutlined;
 
+  /// Whether the button should use the destructive red style.
+  final bool showInRed;
+
+  /// The button size.
+  final Size size;
+
   @override
   Widget build(BuildContext context) {
     if (isOutlined) {
       return BasfOutlinedButton(
         expanded: true,
+        size: size,
         onPressed: isLoading ? null : onPressed,
+        style: showInRed ? cancelRedStyle : null,
         child: isLoading ? loader() : title(),
       );
     } else {
       return BasfTextButton.contained(
         expanded: true,
+        size: size,
         onPressed: isLoading ? null : onPressed,
+        style: showInRed ? cancelRedStyle : null,
         child: isLoading ? loader() : title(),
       );
     }
@@ -69,5 +81,15 @@ class ButtonWithLoader extends StatelessWidget {
     return const Center(
       child: AppCircularProgress.button(size: 19),
     );
+  }
+
+  /// Cancel button style
+  ButtonStyle get cancelRedStyle {
+    return isOutlined
+        ? OutlinedButton.styleFrom(
+            side: const BorderSide(color: BasfColors.red),
+            foregroundColor: BasfColors.red,
+          )
+        : TextButton.styleFrom(backgroundColor: BasfColors.red);
   }
 }

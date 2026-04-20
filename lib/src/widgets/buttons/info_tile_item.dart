@@ -1,5 +1,6 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 /// info tile
 class InfoTileItem extends StatefulWidget {
@@ -22,6 +23,10 @@ class _InfoTileItemState extends State<InfoTileItem> {
   @override
   void initState() {
     super.initState();
+    if (widget.textFieldData.persistenceId == 'quantity' &&
+        widget.textFieldData.controller.text.isEmpty) {
+      widget.textFieldData.controller.text = _formattedZeroQuantity();
+    }
     textNotifier = ValueNotifier(widget.textFieldData.controller.text);
     widget.textFieldData.controller.addListener(changeText);
   }
@@ -34,6 +39,17 @@ class _InfoTileItemState extends State<InfoTileItem> {
 
   void changeText() {
     textNotifier.value = widget.textFieldData.controller.text;
+  }
+
+  String _formattedZeroQuantity() {
+    final locale = WidgetsBinding.instance.platformDispatcher.locale;
+    final formattedString = NumberFormat(
+      '#,##0.000',
+      Intl.canonicalizedLocale(locale.toLanguageTag()),
+    ).format(0.0);
+
+    // Strip locale-specific separators that break later parsing in inputs.
+    return formattedString.replaceAll(RegExp(r'[\u00A0\u202f\u2019]'), '');
   }
 
   @override

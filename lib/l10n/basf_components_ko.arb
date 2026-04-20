@@ -1,3 +1,7 @@
 {
-  "@@locale": "ko"
+  "@@locale": "ko",
+  "error": "오류",
+  "retry": "재시도",
+  "close": "종료",
+  "showMorePhrase": "더 보기"
 }
