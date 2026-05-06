@@ -19,12 +19,8 @@ class $AssetsImagesGen {
   AssetGenImage get basfLogo =>
       const AssetGenImage('assets/images/basf_logo.webp');
 
-  /// File path: assets/images/checklist_girl.webp
-  AssetGenImage get checklistGirl =>
-      const AssetGenImage('assets/images/checklist_girl.webp');
-
   /// List of all assets
-  List<AssetGenImage> get values => [basfLogo, checklistGirl];
+  List<AssetGenImage> get values => [basfLogo];
 }
 
 class $AssetsRiveGen {

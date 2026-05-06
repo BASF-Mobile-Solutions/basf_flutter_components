@@ -4,7 +4,7 @@ library;
 export 'package:flutter_bloc/flutter_bloc.dart';
 export 'package:hydrated_bloc/hydrated_bloc.dart';
 export 'package:path_provider/path_provider.dart';
-export 'package:rive/rive.dart' show Factory, RiveNative;
+export 'package:rive/rive.dart' show DataBind, Factory, RiveNative, ViewModelInstanceColor;
 
 export 'l10n/localizations/basf_components_localization_utils.dart';
 export 'l10n/localizations/basf_components_localizations.dart';
@@ -32,6 +32,8 @@ export 'src/widgets/animations/rive/animated_gear_icon.dart';
 export 'src/widgets/animations/rive/emoji_enum.dart';
 export 'src/widgets/animations/fade.dart';
 export 'src/widgets/animations/rive/logistics_box_animation.dart';
+export 'src/widgets/animations/rive/message_animation.dart';
+export 'src/widgets/animations/rive/qr_animation.dart';
 export 'src/widgets/animations/rive/search_loop_animation.dart';
 export 'src/widgets/animations/rive/animated_icon.dart';
 export 'src/widgets/animations/rive/rive_asset_widgets.dart';

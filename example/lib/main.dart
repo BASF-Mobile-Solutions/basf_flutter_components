@@ -7,7 +7,7 @@ final RouteObserver<ModalRoute<void>> routeObserver = RouteObserver();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await BasfRive.init(defaultFactory: Factory.flutter);
+  await BasfRive.init(defaultFactory: kIsWeb ? Factory.rive : Factory.flutter);
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: kIsWeb
         ? HydratedStorageDirectory.web
