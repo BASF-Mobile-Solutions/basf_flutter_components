@@ -70,6 +70,6 @@ class _QrRiveAnimationState extends State<QrRiveAnimation> {
   void _applyColors() {
     final color = widget.color ?? Theme.of(context).primaryColor;
     _primaryColor?.value = color;
-    _primaryColorGradientStart?.value = widget.gradientStartColor ?? color.withValues(alpha: 0.7);
+    _primaryColorGradientStart?.value = widget.gradientStartColor ?? color.withValues(alpha: 0.2);
   }
 }
