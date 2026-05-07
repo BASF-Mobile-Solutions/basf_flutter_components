@@ -54,17 +54,9 @@ class _InfoTileItemState extends State<InfoTileItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          widget.textFieldData.labelText,
-          style: Theme.of(context).textTheme.bodyMedium,
-        ),
-        VerticalSpacer.small(),
-        textField(),
-        // valueText(widget.textFieldData.value),
-      ],
+    return LabeledWidget(
+      labelText: widget.textFieldData.labelText,
+      child: textField(),
     );
   }
 

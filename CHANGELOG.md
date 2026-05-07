@@ -1,3 +1,8 @@
+## 2.12.1
+- Fixed animations
+- fixed UI of InfoTileItem
+- add getter to TextFieldData
+
 ## 2.12.0
 - GM migration
 

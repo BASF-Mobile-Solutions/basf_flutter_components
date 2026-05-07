@@ -1,6 +1,5 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:flutter/material.dart';
-import 'package:rive/rive.dart';
 
 /// Settings gear icon animated
 class AnimatedGearIcon extends StatelessWidget {

@@ -34,6 +34,7 @@ class _RiveOverviewScreenState extends State<RiveOverviewScreen> {
         _buildGearSection(),
         _buildSearchLoopSection(),
         _buildLogisticsBoxSection(),
+        _buildUtilityIconsSection(),
         _buildEmojiSection(),
       ].joinWithSeparator(VerticalSpacer.medium20()),
     );
@@ -108,6 +109,26 @@ class _RiveOverviewScreenState extends State<RiveOverviewScreen> {
     );
   }
 
+  Widget _buildUtilityIconsSection() {
+    return _buildSection(
+      title: 'Utility Icons',
+      child: Center(
+        child: Wrap(
+          alignment: WrapAlignment.center,
+          spacing: 16,
+          runSpacing: 16,
+          children: [
+            _buildRiveAssetCard(title: 'QR', child: const QrRiveAnimation()),
+            _buildRiveAssetCard(
+              title: 'Message',
+              child: const MessageRiveAnimation(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _buildEmojiSection() {
     return _buildSection(
       title: 'Emoji Artboards',
@@ -123,6 +144,13 @@ class _RiveOverviewScreenState extends State<RiveOverviewScreen> {
   }
 
   Widget _buildEmojiCard(RiveEmoji emoji) {
+    return _buildRiveAssetCard(
+      title: emoji.name,
+      child: RiveEmojiIcon(emoji: emoji),
+    );
+  }
+
+  Widget _buildRiveAssetCard({required String title, required Widget child}) {
     return Container(
       width: 120,
       padding: const EdgeInsets.all(Dimens.paddingMedium),
@@ -133,9 +161,9 @@ class _RiveOverviewScreenState extends State<RiveOverviewScreen> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          RiveEmojiIcon(emoji: emoji),
+          SizedBox.square(dimension: 64, child: child),
           VerticalSpacer.small(),
-          Text(emoji.name, textAlign: TextAlign.center),
+          Text(title, textAlign: TextAlign.center),
         ],
       ),
     );
