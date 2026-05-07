@@ -61,4 +61,6 @@ class TextFieldData {
 
   /// This is to directly set the text from the controller
   set text(String value) => controller.text = value;
+
+  bool get hasValidInput => validator != null ? validator!(text) == null : true;
 }
