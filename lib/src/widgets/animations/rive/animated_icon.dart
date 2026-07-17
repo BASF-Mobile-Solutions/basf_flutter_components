@@ -60,8 +60,7 @@ class WarningAnimatedIcon extends StatelessWidget {
 enum _StatusArtboard {
   success('success'),
   error('error'),
-  warning('warning')
-  ;
+  warning('warning');
 
   const _StatusArtboard(this.name);
 
