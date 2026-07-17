@@ -63,9 +63,7 @@ class $AssetsRiveGen {
   ];
 }
 
-class BasfAssets {
-  const BasfAssets._();
-
+abstract final class BasfAssets {
   static const String package = 'basf_flutter_components';
 
   static const $AssetsImagesGen images = $AssetsImagesGen();
