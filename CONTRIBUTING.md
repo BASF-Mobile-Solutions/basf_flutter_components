@@ -23,21 +23,21 @@ open coverage/index.html
 flutter test --coverage --test-randomize-ordering-seed random && genhtml coverage/lcov.info -o coverage/html && open coverage/html/index.html
 ```
 
-8. **Update `coverage_badge.svg`** file with the current coverage report percentage (there's two fields), update both of them with the same value.
+1. **Update `coverage_badge.svg`** file with the current coverage report percentage (there's two fields), update both of them with the same value.
 
-9. **Run `flutter clean`** in example folder
+2. **Run `flutter clean`** in example folder
 
-10. **Creating a PR** Remember to use semantic pull request
+3. **Creating a PR** Remember to use semantic pull request
 Examples:
-	- **fix:** Fix a bug (equivalent to a PATCH in Semantic Versioning).
-	- **feat:** Add a new feature to the codebase (MINOR in semantic versioning).
-	- **chore:** Update something without impacting the user (ex: bump a dependency in package.json).
-	- **ci:** Update something related to the pipelines.
-	- **docs:** Documentation changes.
-	- **style:** Code style change (semicolon, indentation...).
-	- **refactor:** Refactor code without changing public API.
-	- **perf:** Update code performances.
-	- **test:** Add test to an existing feature.
+   - **fix:** Fix a bug (equivalent to a PATCH in Semantic Versioning).
+   - **feat:** Add a new feature to the codebase (MINOR in semantic versioning).
+   - **chore:** Update something without impacting the user (ex: bump a dependency in package.json).
+   - **ci:** Update something related to the pipelines.
+   - **docs:** Documentation changes.
+   - **style:** Code style change (semicolon, indentation...).
+   - **refactor:** Refactor code without changing public API.
+   - **perf:** Update code performances.
+   - **test:** Add test to an existing feature.
 
 # Publishing
 
