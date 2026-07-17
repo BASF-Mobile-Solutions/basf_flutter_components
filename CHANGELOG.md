@@ -1,3 +1,6 @@
+## 2.13.0
+- Dependencies update
+
 ## 2.12.1
 - Fixed animations
 - fixed UI of InfoTileItem
