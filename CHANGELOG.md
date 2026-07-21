@@ -1,3 +1,6 @@
+## 2.13.1
+- Dependencies update
+
 ## 2.13.0
 - Dependencies update
 

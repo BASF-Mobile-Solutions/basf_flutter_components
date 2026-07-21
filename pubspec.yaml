@@ -1,6 +1,6 @@
 name: basf_flutter_components
 description: A collection of BASF Style components such as Buttons, Theming, etc...
-version: 2.13.0
+version: 2.13.1
 
 homepage: https://github.com/BASF-Mobile-Solutions/basf_flutter_components
 repository: https://github.com/BASF-Mobile-Solutions/basf_flutter_components
@@ -26,7 +26,7 @@ dependencies:
   rive: ^0.14.9
   transparent_image: ^2.0.1
 
-  mobile_scanner: ^7.3.0
+  mobile_scanner: ^7.4.0
   # Setup related config in your app in your app
   permission_handler: ^12.0.3
 
