@@ -1,3 +1,9 @@
+## 2.13.2
+- Fix for TextField validations: `BasfTextField` now respects `autovalidateMode` when showing the
+  validator result. Previously the error was rendered from the first frame in every mode, and the
+  mode only switched the error theme on top of it
+- `AutovalidateMode.onUnfocus` now works without an externally provided `focusNode`
+
 ## 2.13.1
 - Dependencies update
 

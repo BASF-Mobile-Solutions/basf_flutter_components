@@ -406,6 +406,9 @@ class BasfTextField extends StatefulWidget {
 class _BasfTextFieldState extends State<BasfTextField> {
   late final hasValidation = widget.validator != null;
   bool isFirstValidation = true;
+  bool hasBeenFocused = false;
+  bool hasLostFocus = false;
+  FocusNode? ownedFocusNode;
   late final ValueNotifier<bool> emptyTextFieldNotifier = ValueNotifier(
     widget.controller.text.isEmpty,
   );
@@ -414,13 +417,32 @@ class _BasfTextFieldState extends State<BasfTextField> {
   void initState() {
     if (hasValidation) {
       widget.controller.addListener(redrawToChangeThemeBasedOnState);
+      if (widget.autovalidateMode == AutovalidateMode.onUnfocus) {
+        if (widget.focusNode == null) ownedFocusNode = FocusNode();
+        focusNode!.addListener(handleFocusChange);
+      }
     }
     widget.controller.addListener(checkDeleteButtonVisibility);
     super.initState();
   }
 
+  /// Node the inner [TextField] is attached to. For
+  /// [AutovalidateMode.onUnfocus] a node is created when the caller did not
+  /// provide one, since focus changes are invisible to this widget otherwise
+  FocusNode? get focusNode => widget.focusNode ?? ownedFocusNode;
+
   void checkDeleteButtonVisibility() {
     emptyTextFieldNotifier.value = widget.controller.text.isEmpty;
+  }
+
+  void handleFocusChange() {
+    if (focusNode?.hasFocus ?? false) {
+      hasBeenFocused = true;
+      return;
+    }
+    if (hasBeenFocused && !hasLostFocus && mounted) {
+      setState(() => hasLostFocus = true);
+    }
   }
 
   void redrawToChangeThemeBasedOnState() {
@@ -429,7 +451,25 @@ class _BasfTextFieldState extends State<BasfTextField> {
     }
   }
 
-  String? get errorText => hasValidation ? widget.validator!(widget.controller.text) : null;
+  /// Whether the [validator] result may be surfaced to the user, according to
+  /// the [autovalidateMode]. This gates both the error text and the error theme
+  bool get shouldShowError {
+    if (!hasValidation) return false;
+
+    return switch (widget.autovalidateMode) {
+      // A null mode keeps validating from the first frame: most
+      // [TextFieldData]s leave the mode unset and rely on that
+      null || AutovalidateMode.always => true,
+      // This widget re-runs the validator on every rebuild, so there is no
+      // separate `ifError` state to distinguish these two modes by
+      AutovalidateMode.onUserInteraction ||
+      AutovalidateMode.onUserInteractionIfError => !isFirstValidation,
+      AutovalidateMode.onUnfocus => hasLostFocus,
+      AutovalidateMode.disabled => false,
+    };
+  }
+
+  String? get errorText => shouldShowError ? widget.validator!(widget.controller.text) : null;
 
   bool get isEnabled => widget.enabled ?? widget.decoration?.enabled ?? true;
 
@@ -447,24 +487,7 @@ class _BasfTextFieldState extends State<BasfTextField> {
     if (!isEnabled && widget.greyWhenDisabled) {
       return BasfInputThemes.disabledInputTheme(theme);
     }
-    if (!hasValidation) return Theme.of(context);
-
-    switch (widget.autovalidateMode) {
-      case AutovalidateMode.always:
-        if (errorText != null) {
-          return BasfInputThemes.errorInputTheme(theme);
-        }
-      case AutovalidateMode.onUserInteraction:
-        if (!isFirstValidation && errorText != null) {
-          return BasfInputThemes.errorInputTheme(theme);
-        }
-      case AutovalidateMode.onUnfocus:
-        if (widget.focusNode?.hasFocus == false && errorText != null) {
-          return BasfInputThemes.errorInputTheme(theme);
-        }
-      default:
-        break;
-    }
+    if (errorText != null) return BasfInputThemes.errorInputTheme(theme);
 
     return Theme.of(context);
   }
@@ -508,7 +531,7 @@ class _BasfTextFieldState extends State<BasfTextField> {
       highlightColor: Theme.of(context).dialogTheme.backgroundColor,
       onPressed: () {
         widget.controller.clear();
-        widget.focusNode?.requestFocus();
+        focusNode?.requestFocus();
         widget.onChanged?.call('');
         isFirstValidation = false;
         // redrawToChangeThemeBasedOnState();
@@ -529,7 +552,7 @@ class _BasfTextFieldState extends State<BasfTextField> {
 
   Widget textField(ThemeData theme) {
     return TextField(
-      focusNode: widget.focusNode,
+      focusNode: focusNode,
       controller: widget.controller,
       decoration: (widget.decoration ?? const InputDecoration()).copyWith(
         suffixIcon: widget.decoration?.suffixIcon ?? actionIcon(theme),
@@ -617,6 +640,8 @@ class _BasfTextFieldState extends State<BasfTextField> {
     widget.controller
       ..removeListener(redrawToChangeThemeBasedOnState)
       ..removeListener(checkDeleteButtonVisibility);
+    focusNode?.removeListener(handleFocusChange);
+    ownedFocusNode?.dispose();
     super.dispose();
   }
 }
