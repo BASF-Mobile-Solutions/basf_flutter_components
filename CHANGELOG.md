@@ -1,3 +1,6 @@
+## 2.13.3
+- Dependencies update
+
 ## 2.13.2
 - Fix for TextField validations: `BasfTextField` now respects `autovalidateMode` when showing the
   validator result. Previously the error was rendered from the first frame in every mode, and the
