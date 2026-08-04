@@ -70,7 +70,7 @@ class _FadeState extends State<Fade> with SingleTickerProviderStateMixin {
         curve: widget.curve,
       ),
       child: SizeTransition(
-        axisAlignment: 1,
+        alignment: AlignmentDirectional.bottomStart,
         sizeFactor: CurvedAnimation(
           parent: _animationController,
           curve: widget.curve,

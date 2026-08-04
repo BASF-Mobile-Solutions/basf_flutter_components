@@ -21,8 +21,7 @@ enum BasfThemeType {
   lightBlue(BasfColors.lightBlue),
 
   /// BASF darkBlue color
-  darkBlue(BasfColors.darkBlue)
-  ;
+  darkBlue(BasfColors.darkBlue);
 
   /// BASF theme type
   const BasfThemeType(this.primaryColor);
