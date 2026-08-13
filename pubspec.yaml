@@ -1,6 +1,6 @@
 name: basf_flutter_components
 description: A collection of BASF Style components such as Buttons, Theming, etc...
-version: 2.14.1
+version: 2.14.2
 
 homepage: https://github.com/BASF-Mobile-Solutions/basf_flutter_components
 repository: https://github.com/BASF-Mobile-Solutions/basf_flutter_components
@@ -15,7 +15,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
-  material_ui: 1.0.0
+  material_ui: ^1.0.0
 
   intl: ^0.20.3
   collection: ^1.19.1

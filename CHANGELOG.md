@@ -1,3 +1,6 @@
+## 2.14.2
+- hotfix for material version loc
+
 ## 2.14.1
 - Migrate to material_ui
 
