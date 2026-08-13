@@ -1,5 +1,5 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Modal parent widget used as a default bottom-sheet shell.
 class ModalParent extends StatelessWidget {

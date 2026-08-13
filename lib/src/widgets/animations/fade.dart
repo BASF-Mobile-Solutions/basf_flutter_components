@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// {@template fade_widget}
 /// Hides and shows child [Widget] with a beautiful [Curves.easeOut] animation

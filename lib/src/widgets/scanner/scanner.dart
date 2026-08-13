@@ -5,7 +5,7 @@ import 'package:basf_flutter_components/src/widgets/scanner/controller/scanner_c
 import 'package:basf_flutter_components/src/widgets/scanner/widgets/scanner_camera_view.dart';
 import 'package:basf_flutter_components/src/widgets/scanner/widgets/scanner_offline_placeholder.dart';
 import 'package:basf_flutter_components/src/widgets/scanner/widgets/viewport_visibility_listener.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 

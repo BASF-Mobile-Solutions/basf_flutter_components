@@ -1,7 +1,7 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:basf_flutter_components_example/screens/overview.dart';
 import 'package:flutter/foundation.dart' hide Factory;
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 final RouteObserver<ModalRoute<void>> routeObserver = RouteObserver();
 

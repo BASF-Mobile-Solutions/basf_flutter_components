@@ -1,3 +1,9 @@
+## 2.14.1
+- Migrate to material_ui
+
+## 2.14.0
+- Dart 3.13 support
+
 ## 2.13.3
 - Dependencies update
 

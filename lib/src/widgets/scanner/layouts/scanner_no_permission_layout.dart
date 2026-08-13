@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:basf_flutter_components/basf_flutter_components.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Layout for no permission to use camera
 class ScannerNoPermissionLayout extends StatefulWidget {

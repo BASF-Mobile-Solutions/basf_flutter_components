@@ -1,7 +1,7 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:basf_flutter_components_example/screens/scanner/scanner_screen.dart';
 import 'package:basf_flutter_components_example/screens/screens.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class OverviewScreen extends StatelessWidget {
   const OverviewScreen({

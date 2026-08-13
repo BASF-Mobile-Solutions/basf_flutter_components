@@ -1,6 +1,6 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:basf_flutter_components_example/main.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class ScannerScreen extends StatefulWidget {
   const ScannerScreen({super.key});

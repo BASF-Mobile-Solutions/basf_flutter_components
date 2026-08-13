@@ -1,5 +1,5 @@
 import 'package:basf_flutter_components/utils/gen/assets.gen.dart';
-import 'package:flutter/material.dart' hide Animation;
+import 'package:material_ui/material_ui.dart' hide Animation;
 import 'package:rive/rive.dart';
 
 abstract final class BasfRive {

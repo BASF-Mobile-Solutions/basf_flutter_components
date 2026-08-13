@@ -1,5 +1,5 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Default placeholder shown when the scanner is disabled.
 class ScannerOfflinePlaceholder extends StatelessWidget {

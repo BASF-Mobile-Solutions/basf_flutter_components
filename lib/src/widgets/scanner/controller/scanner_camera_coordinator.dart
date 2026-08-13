@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:basf_flutter_components/src/widgets/scanner/controller/scanner_cubit.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
 /// Coordinates camera start/stop and recovery for [Scanner].

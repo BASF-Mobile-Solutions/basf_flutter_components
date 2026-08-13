@@ -2,7 +2,7 @@ import 'package:basf_flutter_components/src/theme/dimens.dart';
 import 'package:basf_flutter_components/src/theme/paddings.dart';
 import 'package:basf_flutter_components/src/widgets/modals/modal_header.dart';
 import 'package:basf_flutter_components/src/widgets/spacers.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Modal body
 class ModalBody extends StatelessWidget {

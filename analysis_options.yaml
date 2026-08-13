@@ -24,3 +24,10 @@ analyzer:
     use_setters_to_change_properties: ignore
   exclude:
     - "**/icons.dart"
+    - build/**
+    - android/**
+    - ios/**
+    - web/**
+    - windows/**
+    - macos/**
+    - linux/**

@@ -2,7 +2,7 @@ import 'package:basf_flutter_components/l10n/localizations/basf_components_local
 import 'package:basf_flutter_components/src/widgets/scanner/overlays/widgets/camera_edge.dart';
 import 'package:basf_flutter_components/src/widgets/scanner/overlays/widgets/scan_support_text.dart';
 import 'package:basf_flutter_components/src/widgets/scanner/overlays/widgets/toggle_flash_icon_button.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Overlay which shows next expected scan
 class UnitsScannerOverlay extends StatelessWidget {

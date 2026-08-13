@@ -1,5 +1,5 @@
 import 'package:basf_flutter_components/src/theme/colors.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Circular progress
 class AppCircularProgress extends StatelessWidget {
