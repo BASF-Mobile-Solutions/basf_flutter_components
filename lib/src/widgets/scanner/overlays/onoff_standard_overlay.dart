@@ -1,6 +1,6 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:basf_flutter_components/src/widgets/scanner/overlays/widgets/enable_disable_camera_icon_button.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Overlay which can disable camera
 class OnOffStandardScannerOverlay extends StatelessWidget {

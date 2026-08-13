@@ -1,5 +1,5 @@
 import 'package:basf_flutter_components/src/theme/dimens.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// [VerticalSpacer] creates a vertical separation between Widgets
 /// the same way you would use a SizedBox, but with predefined values

@@ -1,6 +1,6 @@
 import 'package:basf_flutter_components/src/theme/colors.dart';
 import 'package:basf_flutter_components/src/widgets/layout/custom_appbar.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Scaffold with custom appbar
 class CustomScaffold extends StatelessWidget {

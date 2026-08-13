@@ -1,5 +1,5 @@
 import 'package:basf_flutter_components/src/theme/themes.dart' show BasfThemes;
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Show modal sheet
 Future<T?> showCustomModalBottomSheet<T>({

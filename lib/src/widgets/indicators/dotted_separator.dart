@@ -1,5 +1,5 @@
 import 'package:basf_flutter_components/src/widgets/indicators/dotted_line.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Dotted separator
 class DottedSeparator extends StatelessWidget {

@@ -1,7 +1,7 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
 import 'package:basf_flutter_components_example/screens/forms/options.dart';
 import 'package:basf_flutter_components_example/screens/forms/text_field.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class FormsOverviewScreen extends StatelessWidget {
   const FormsOverviewScreen({super.key});

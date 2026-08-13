@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:basf_flutter_components/src/widgets/modals/bottom_sheet.dart';
 import 'package:basf_flutter_components/src/widgets/modals/bottom_sheet_widget.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Logout button
 class LogoutButton extends StatelessWidget {

@@ -1,5 +1,5 @@
 import 'package:basf_flutter_components/src/widgets/scanner/overlays/widgets/camera_edge.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Black transparent overlay for scanner
 class ScannerBlackoutSquare extends StatelessWidget {

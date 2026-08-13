@@ -6,7 +6,7 @@ import 'package:basf_flutter_components/src/widgets/buttons/text_button.dart';
 import 'package:basf_flutter_components/src/widgets/indicators/dotted_separator.dart';
 import 'package:basf_flutter_components/src/widgets/layout/double_items_row.dart';
 import 'package:collection/collection.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 ///
 class CollapsibleList extends StatefulWidget {

@@ -1,7 +1,7 @@
 import 'package:basf_flutter_components/l10n/localizations/basf_components_localizations.dart';
 import 'package:basf_flutter_components/src/widgets/scanner/overlays/widgets/scanner_blackout_square.dart';
 import 'package:basf_flutter_components/src/widgets/scanner/overlays/widgets/standard_bottom_actions.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Standard overlay for scanner
 class StandardScannerOverlay extends StatelessWidget {

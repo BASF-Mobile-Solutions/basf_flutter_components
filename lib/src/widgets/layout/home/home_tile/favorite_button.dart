@@ -1,6 +1,6 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart' show BasfColors;
 import 'package:basf_flutter_components/src/dto/favorite_data.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Favorite button
 class FavoriteButton extends StatelessWidget {

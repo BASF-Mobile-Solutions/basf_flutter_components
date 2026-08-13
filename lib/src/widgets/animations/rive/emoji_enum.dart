@@ -1,5 +1,5 @@
 import 'package:basf_flutter_components/utils/gen/assets.gen.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import 'rive_asset_widgets.dart';
 

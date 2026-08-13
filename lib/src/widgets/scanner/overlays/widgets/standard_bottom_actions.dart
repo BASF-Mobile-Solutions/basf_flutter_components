@@ -1,7 +1,7 @@
 import 'package:basf_flutter_components/src/widgets/scanner/overlays/widgets/scan_support_text.dart';
 import 'package:basf_flutter_components/src/widgets/scanner/overlays/widgets/toggle_direction_icon.dart';
 import 'package:basf_flutter_components/src/widgets/scanner/overlays/widgets/toggle_flash_icon_button.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Standard bottom actions
 class StandardBottomActions extends StatelessWidget {

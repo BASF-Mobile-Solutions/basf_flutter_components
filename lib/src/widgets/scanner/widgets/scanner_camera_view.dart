@@ -3,7 +3,7 @@ import 'package:basf_flutter_components/src/widgets/scanner/layouts/scanner_no_c
 import 'package:basf_flutter_components/src/widgets/scanner/layouts/scanner_no_permission_layout.dart';
 import 'package:basf_flutter_components/src/widgets/scanner/widgets/scanner_startup_placeholder.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
 /// Composes the preview, overlay, errors, and startup placeholder for scanner camera.

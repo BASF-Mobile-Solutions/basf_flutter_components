@@ -1,5 +1,5 @@
 import 'package:basf_flutter_components/l10n/localizations/basf_components_localizations.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Scan text
 class ScanSupportText extends StatelessWidget {

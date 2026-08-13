@@ -3,7 +3,7 @@ import 'package:basf_flutter_components/src/widgets/buttons/outlined_button.dart
 import 'package:basf_flutter_components/src/widgets/buttons/text_button.dart';
 import 'package:basf_flutter_components/src/widgets/modals/modal_body.dart';
 import 'package:basf_flutter_components/src/widgets/spacers.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Bottom sheet widget
 class ModalBottomSheetWidget extends StatelessWidget {
