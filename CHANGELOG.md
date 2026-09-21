@@ -1,3 +1,6 @@
+## 2.14.3
+- Dependencies updates
+
 ## 2.14.2
 - hotfix for material version loc
 
