@@ -1,13 +1,13 @@
 name: basf_flutter_components
 description: A collection of BASF Style components such as Buttons, Theming, etc...
-version: 2.14.2
+version: 2.14.3
 
 homepage: https://github.com/BASF-Mobile-Solutions/basf_flutter_components
 repository: https://github.com/BASF-Mobile-Solutions/basf_flutter_components
 issue_tracker: https://github.com/BASF-Mobile-Solutions/basf_flutter_components/issues
 
 environment:
-  sdk: ^3.13.0
+  sdk: ^3.13.4
 
 dependencies:
   flutter:
@@ -15,7 +15,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
-  material_ui: ^1.0.0
+  material_ui: ^1.4.0
 
   intl: ^0.20.3
   collection: ^1.19.1
@@ -28,16 +28,16 @@ dependencies:
   rive: ^0.14.11
   transparent_image: ^2.0.1
 
-  mobile_scanner: ^7.4.0
+  mobile_scanner: ^7.4.2
   # Setup related config in your app in your app
-  permission_handler: ^13.0.1
+  permission_handler: ^13.0.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^6.0.0
-  build_runner: ^2.16.0
+  build_runner: ^2.16.1
   flutter_gen_runner: ^5.15.0
 
 flutter_gen:
