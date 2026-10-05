@@ -1,0 +1,18 @@
+{
+  "@@locale": "tr",
+  "cameraNotAvailable": "Kamera mevcut değil",
+  "codeScanSuccessPhrase": "Kod başarıyla tarandı",
+  "provideCameraPermission": "Kamera izni ver",
+  "rescan": "Yeniden tara",
+  "warning": "Uyarı",
+  "error": "Hata",
+  "retry": "Yeniden dene",
+  "close": "Kapat",
+  "showMorePhrase": "Daha fazlasını göster",
+  "generalAbort": "İptal",
+  "generalConfirm": "Onayla",
+  "scanQRorBarcode": "QR kodunu veya barkodu tara",
+  "copy": "Kopyala",
+  "copiedToClipboard": "Panoya kopyalandı",
+  "generalDetails": "Ayrıntılar"
+}

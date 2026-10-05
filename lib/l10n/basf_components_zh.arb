@@ -1,18 +1,3 @@
 {
-  "@@locale": "zh",
-  "cameraNotAvailable": "相机不可用",
-  "codeScanSuccessPhrase": "代码扫描成功",
-  "provideCameraPermission": "授予相机权限",
-  "rescan": "重新扫描",
-  "warning": "警告",
-  "error": "错误",
-  "retry": "重试",
-  "close": "关闭",
-  "showMorePhrase": "显示更多",
-  "generalAbort": "中止",
-  "generalConfirm": "确认",
-  "scanQRorBarcode": "扫描二维码或条形码",
-  "copy": "复制",
-  "copiedToClipboard": "复制到剪贴板",
-  "generalDetails": "详情"
+  "@@locale": "zh"
 }

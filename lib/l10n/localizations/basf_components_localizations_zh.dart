@@ -10,49 +10,49 @@ class BasfComponentsLocalizationsZh extends BasfComponentsLocalizations {
   BasfComponentsLocalizationsZh([String locale = 'zh']) : super(locale);
 
   @override
-  String get cameraNotAvailable => '相机不可用';
+  String get cameraNotAvailable => 'Camera is not available';
 
   @override
-  String get codeScanSuccessPhrase => '代码扫描成功';
+  String get codeScanSuccessPhrase => 'Code scanned successfully';
 
   @override
-  String get provideCameraPermission => '授予相机权限';
+  String get provideCameraPermission => 'Provide Camera Permission';
 
   @override
-  String get rescan => '重新扫描';
+  String get rescan => 'Rescan';
 
   @override
-  String get warning => '警告';
+  String get warning => 'Warning';
 
   @override
-  String get error => '错误';
+  String get error => 'Error';
 
   @override
-  String get retry => '重试';
+  String get retry => 'Retry';
 
   @override
-  String get close => '关闭';
+  String get close => 'Close';
 
   @override
-  String get showMorePhrase => '显示更多';
+  String get showMorePhrase => 'Show more';
 
   @override
-  String get generalAbort => '中止';
+  String get generalAbort => 'Cancel';
 
   @override
-  String get generalConfirm => '确认';
+  String get generalConfirm => 'Confirm';
 
   @override
-  String get scanQRorBarcode => '扫描二维码或条形码';
+  String get scanQRorBarcode => 'Scan QR or Barcode';
 
   @override
-  String get copy => '复制';
+  String get copy => 'Copy';
 
   @override
-  String get copiedToClipboard => '复制到剪贴板';
+  String get copiedToClipboard => 'Copied to clipboard';
 
   @override
-  String get generalDetails => '详情';
+  String get generalDetails => 'Details';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hans`).

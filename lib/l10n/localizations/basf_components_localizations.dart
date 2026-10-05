@@ -5,13 +5,21 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
+import 'basf_components_localizations_ar.dart';
 import 'basf_components_localizations_de.dart';
+import 'basf_components_localizations_el.dart';
 import 'basf_components_localizations_en.dart';
 import 'basf_components_localizations_es.dart';
 import 'basf_components_localizations_fr.dart';
 import 'basf_components_localizations_it.dart';
 import 'basf_components_localizations_ko.dart';
+import 'basf_components_localizations_nl.dart';
+import 'basf_components_localizations_pl.dart';
 import 'basf_components_localizations_pt.dart';
+import 'basf_components_localizations_ru.dart';
+import 'basf_components_localizations_sq.dart';
+import 'basf_components_localizations_tr.dart';
+import 'basf_components_localizations_uk.dart';
 import 'basf_components_localizations_zh.dart';
 
 // ignore_for_file: type=lint
@@ -100,14 +108,23 @@ abstract class BasfComponentsLocalizations {
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
+    Locale('ar'),
     Locale('de'),
     Locale('de', 'rlp'),
+    Locale('el'),
     Locale('en'),
     Locale('es'),
     Locale('fr'),
     Locale('it'),
     Locale('ko'),
+    Locale('nl'),
+    Locale('nl', 'BE'),
+    Locale('pl'),
     Locale('pt'),
+    Locale('ru'),
+    Locale('sq'),
+    Locale('tr'),
+    Locale('uk'),
     Locale('zh'),
     Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hans'),
     Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hant'),
@@ -216,8 +233,24 @@ class _BasfComponentsLocalizationsDelegate
   }
 
   @override
-  bool isSupported(Locale locale) =>
-      <String>['de', 'en', 'es', 'fr', 'it', 'ko', 'pt', 'zh'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>[
+    'ar',
+    'de',
+    'el',
+    'en',
+    'es',
+    'fr',
+    'it',
+    'ko',
+    'nl',
+    'pl',
+    'pt',
+    'ru',
+    'sq',
+    'tr',
+    'uk',
+    'zh',
+  ].contains(locale.languageCode);
 
   @override
   bool shouldReload(_BasfComponentsLocalizationsDelegate old) => false;
@@ -248,12 +281,24 @@ BasfComponentsLocalizations lookupBasfComponentsLocalizations(Locale locale) {
         }
         break;
       }
+    case 'nl':
+      {
+        switch (locale.countryCode) {
+          case 'BE':
+            return BasfComponentsLocalizationsNlBe();
+        }
+        break;
+      }
   }
 
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
+    case 'ar':
+      return BasfComponentsLocalizationsAr();
     case 'de':
       return BasfComponentsLocalizationsDe();
+    case 'el':
+      return BasfComponentsLocalizationsEl();
     case 'en':
       return BasfComponentsLocalizationsEn();
     case 'es':
@@ -264,8 +309,20 @@ BasfComponentsLocalizations lookupBasfComponentsLocalizations(Locale locale) {
       return BasfComponentsLocalizationsIt();
     case 'ko':
       return BasfComponentsLocalizationsKo();
+    case 'nl':
+      return BasfComponentsLocalizationsNl();
+    case 'pl':
+      return BasfComponentsLocalizationsPl();
     case 'pt':
       return BasfComponentsLocalizationsPt();
+    case 'ru':
+      return BasfComponentsLocalizationsRu();
+    case 'sq':
+      return BasfComponentsLocalizationsSq();
+    case 'tr':
+      return BasfComponentsLocalizationsTr();
+    case 'uk':
+      return BasfComponentsLocalizationsUk();
     case 'zh':
       return BasfComponentsLocalizationsZh();
   }

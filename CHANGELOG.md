@@ -1,7 +1,7 @@
 ## 2.15.0
 - Redesigned `WarningModalLayout`: emoji title, collapsible "Details" with copy, JSON shown as readable text.
 - New `String` extensions `toSentenceCase()`, `toJsonValue()`, `toPrettyJson()`
-- new l10n keys, missing translations filled.
+- new l10n keys and languages, missing translations filled.
 
 ## 2.14.3
 - Dependencies updates

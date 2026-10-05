@@ -1,0 +1,18 @@
+{
+  "@@locale": "nl_BE",
+  "cameraNotAvailable": "Camera is niet beschikbaar",
+  "codeScanSuccessPhrase": "Code succesvol gescand",
+  "provideCameraPermission": "Toegang tot camera toestaan",
+  "rescan": "Opnieuw scannen",
+  "warning": "Waarschuwing",
+  "error": "Fout",
+  "retry": "Opnieuw proberen",
+  "close": "Sluiten",
+  "showMorePhrase": "Meer tonen",
+  "generalAbort": "Annuleren",
+  "generalConfirm": "Bevestigen",
+  "scanQRorBarcode": "QR-code of barcode scannen",
+  "copy": "Kopiëren",
+  "copiedToClipboard": "Gekopieerd naar klembord",
+  "generalDetails": "Details"
+}

@@ -1,0 +1,18 @@
+{
+  "@@locale": "ar",
+  "cameraNotAvailable": "الكاميرا غير متوفرة",
+  "codeScanSuccessPhrase": "تم مسح الرمز بنجاح",
+  "provideCameraPermission": "السماح بالوصول إلى الكاميرا",
+  "rescan": "إعادة المسح",
+  "warning": "تحذير",
+  "error": "خطأ",
+  "retry": "إعادة المحاولة",
+  "close": "إغلاق",
+  "showMorePhrase": "إظهار المزيد",
+  "generalAbort": "إلغاء",
+  "generalConfirm": "تأكيد",
+  "scanQRorBarcode": "مسح رمز QR أو الرمز الشريطي",
+  "copy": "نسخ",
+  "copiedToClipboard": "نُسخ إلى الحافظة",
+  "generalDetails": "التفاصيل"
+}
