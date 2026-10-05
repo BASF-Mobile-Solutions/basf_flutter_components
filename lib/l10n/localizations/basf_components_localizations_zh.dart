@@ -44,6 +44,15 @@ class BasfComponentsLocalizationsZh extends BasfComponentsLocalizations {
 
   @override
   String get scanQRorBarcode => '扫描二维码或条形码';
+
+  @override
+  String get copy => '复制';
+
+  @override
+  String get copiedToClipboard => '复制到剪贴板';
+
+  @override
+  String get generalDetails => '详情';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hans`).
@@ -85,6 +94,15 @@ class BasfComponentsLocalizationsZhHans extends BasfComponentsLocalizationsZh {
 
   @override
   String get scanQRorBarcode => '扫描二维码或条形码';
+
+  @override
+  String get copy => '复制';
+
+  @override
+  String get copiedToClipboard => '复制到剪贴板';
+
+  @override
+  String get generalDetails => '详情';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hant`).
@@ -126,4 +144,13 @@ class BasfComponentsLocalizationsZhHant extends BasfComponentsLocalizationsZh {
 
   @override
   String get scanQRorBarcode => '掃描二維碼或條碼';
+
+  @override
+  String get copy => '複製';
+
+  @override
+  String get copiedToClipboard => '複製到剪貼板';
+
+  @override
+  String get generalDetails => '詳情';
 }

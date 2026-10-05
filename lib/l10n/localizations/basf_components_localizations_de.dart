@@ -44,6 +44,15 @@ class BasfComponentsLocalizationsDe extends BasfComponentsLocalizations {
 
   @override
   String get scanQRorBarcode => 'QR oder Barcode scannen';
+
+  @override
+  String get copy => 'Kopieren';
+
+  @override
+  String get copiedToClipboard => 'In Zwischenablage kopiert';
+
+  @override
+  String get generalDetails => 'Details';
 }
 
 /// The translations for German (`de_rlp`).
@@ -85,4 +94,13 @@ class BasfComponentsLocalizationsDeRlp extends BasfComponentsLocalizationsDe {
 
   @override
   String get scanQRorBarcode => 'QR- oder Barcode scannen';
+
+  @override
+  String get copy => 'Kopiere';
+
+  @override
+  String get copiedToClipboard => 'In Zwischeablage kopiert';
+
+  @override
+  String get generalDetails => 'Details';
 }

@@ -323,6 +323,41 @@ Usage: `toCapitalized` and `toTitleCase`
 'carlos g'.toTitleCase(); // Carlos G
 ```
 
+#### Sentence case on String
+
+This extension turns a camelCase, snake_case or kebab-case identifier into readable words
+Usage: `toSentenceCase`
+
+```dart
+'errorMessages'.toSentenceCase(); // Error messages
+'send_by'.toSentenceCase(); // Send by
+```
+
+#### JSON value on String
+
+This extension decodes a String that holds a JSON object or array, JSON nested in string values included; it returns `null` for any other text
+Usage: `toJsonValue`
+
+```dart
+'{"detail":"{\\"code\\":500}"}'.toJsonValue(); // {detail: {code: 500}}
+'Not found'.toJsonValue(); // null
+```
+
+#### Pretty JSON on String
+
+This extension pretty prints a String that holds a JSON object or array, expanding JSON nested in string values too; any other text is returned as it is
+Usage: `toPrettyJson`
+
+```dart
+'{"status":"500","detail":"{\\"code\\":500}"}'.toPrettyJson();
+// {
+//   "status": "500",
+//   "detail": {
+//     "code": 500
+//   }
+// }
+```
+
 You can find how to use all of this components at the example project
 
 [pub_badge]: https://img.shields.io/pub/v/basf_flutter_components.svg?label=basf_flutter_components

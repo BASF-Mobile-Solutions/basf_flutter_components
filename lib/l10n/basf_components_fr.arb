@@ -1,7 +1,18 @@
 {
   "@@locale": "fr",
+  "cameraNotAvailable": "L''appareil photo n''est pas disponible",
+  "codeScanSuccessPhrase": "Code analysé avec succès",
+  "provideCameraPermission": "Fournir l''autorisation de la caméra",
+  "rescan": "Numériser à nouveau",
+  "warning": "Avertissement",
   "error": "Erreur",
   "retry": "Réessayer",
   "close": "Fermer",
-  "showMorePhrase": "Afficher plus"
+  "showMorePhrase": "Afficher plus",
+  "generalAbort": "Annuler",
+  "generalConfirm": "Confirmer",
+  "scanQRorBarcode": "Scanner un code QR ou un code-barres",
+  "copy": "Copier",
+  "copiedToClipboard": "Copié dans le presse-papiers",
+  "generalDetails": "Détails"
 }

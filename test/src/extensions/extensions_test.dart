@@ -34,6 +34,94 @@ void main() {
     });
   });
 
+  group('Sentence case', () {
+    test('Splits camelCase', () {
+      expect('errorMessages'.toSentenceCase(), equals('Error messages'));
+    });
+
+    test('Splits snake_case and kebab-case', () {
+      expect('send_by'.toSentenceCase(), equals('Send by'));
+      expect('mat-doc-no'.toSentenceCase(), equals('Mat doc no'));
+    });
+
+    test('Keeps a single word', () {
+      expect('instance'.toSentenceCase(), equals('Instance'));
+    });
+
+    test('Stays empty for an empty text', () {
+      expect(''.toSentenceCase(), equals(''));
+    });
+  });
+
+  group('JSON string extension', () {
+    test('Decodes a JSON object with the JSON nested in its values', () {
+      final result = r'{"detail":"{\"code\":500}"}'.toJsonValue();
+
+      expect(
+        result,
+        equals({
+          'detail': {'code': 500},
+        }),
+      );
+    });
+
+    test('Has no JSON value for plain text', () {
+      expect('Purchase order 4711 not found'.toJsonValue(), isNull);
+    });
+
+    test('Has no JSON value for broken or empty JSON', () {
+      expect('{"detail": '.toJsonValue(), isNull);
+      expect(''.toJsonValue(), isNull);
+      expect('{"detail": '.toPrettyJson(), equals('{"detail": '));
+    });
+
+    test('Pretty prints a JSON object', () {
+      final result = '{"title":"Internal Server Error","status":"500"}'.toPrettyJson();
+
+      expect(result, equals('{\n  "title": "Internal Server Error",\n  "status": "500"\n}'));
+    });
+
+    test('Pretty prints a JSON array', () {
+      final result = '[1,2]'.toPrettyJson();
+
+      expect(result, equals('[\n  1,\n  2\n]'));
+    });
+
+    test('Expands JSON nested in a string value', () {
+      const detail =
+          r'{"detail":"{\"errorMessages\":[{\"text\":\"Purchase order 4711 not found\"}]}"}';
+      final result = detail.toPrettyJson();
+
+      expect(
+        result,
+        equals(
+          '{\n'
+          '  "detail": {\n'
+          '    "errorMessages": [\n'
+          '      {\n'
+          '        "text": "Purchase order 4711 not found"\n'
+          '      }\n'
+          '    ]\n'
+          '  }\n'
+          '}',
+        ),
+      );
+    });
+
+    test('Leaves plain text as it is', () {
+      expect(
+        'Purchase order 4711 not found'.toPrettyJson(),
+        equals('Purchase order 4711 not found'),
+      );
+    });
+
+    test('Leaves text that only looks like JSON as it is', () {
+      const mapToString = '{title: Internal Server Error, status: 500}';
+
+      expect(mapToString.toPrettyJson(), equals(mapToString));
+    });
+  });
+
   group('Widgets extensions', () {
     const items = <Widget>[Text('a'), Text('b'), Text('c'), Text('d')];
     test('Adding separator', () {

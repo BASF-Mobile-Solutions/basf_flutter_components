@@ -44,4 +44,13 @@ class BasfComponentsLocalizationsEn extends BasfComponentsLocalizations {
 
   @override
   String get scanQRorBarcode => 'Scan QR or Barcode';
+
+  @override
+  String get copy => 'Copy';
+
+  @override
+  String get copiedToClipboard => 'Copied to clipboard';
+
+  @override
+  String get generalDetails => 'Details';
 }

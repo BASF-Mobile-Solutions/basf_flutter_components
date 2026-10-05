@@ -184,6 +184,24 @@ abstract class BasfComponentsLocalizations {
   /// In en, this message translates to:
   /// **'Scan QR or Barcode'**
   String get scanQRorBarcode;
+
+  /// No description provided for @copy.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get copy;
+
+  /// No description provided for @copiedToClipboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied to clipboard'**
+  String get copiedToClipboard;
+
+  /// No description provided for @generalDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get generalDetails;
 }
 
 class _BasfComponentsLocalizationsDelegate

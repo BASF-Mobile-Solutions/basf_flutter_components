@@ -26,9 +26,8 @@ class OverviewScreen extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: Dimens.paddingMedium20),
       child: ListView(
         padding: const EdgeInsets.symmetric(vertical: Dimens.paddingMedium20),
-        children: _buildSections(
-          context,
-        ).joinWithSeparator(VerticalSpacer.medium20()),
+        children: _buildSections(context)
+            .joinWithSeparator(VerticalSpacer.medium20()),
       ),
     );
   }

@@ -181,9 +181,8 @@ class _RiveOverviewScreenState extends State<RiveOverviewScreen> {
         if (subtitle != null)
           Text(
             subtitle,
-            style: Theme.of(
-              context,
-            ).textTheme.bodyMedium?.copyWith(color: BasfColors.copyTextGrey),
+            style: Theme.of(context).textTheme.bodyMedium
+                ?.copyWith(color: BasfColors.copyTextGrey),
           ),
         child,
       ].joinWithSeparator(VerticalSpacer.medium()),
