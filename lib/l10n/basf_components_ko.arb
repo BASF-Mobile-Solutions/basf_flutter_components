@@ -1,7 +1,18 @@
 {
   "@@locale": "ko",
+  "cameraNotAvailable": "카메라를 사용할 수 없습니다.",
+  "codeScanSuccessPhrase": "코드가 성공적으로 스캔되었습니다.",
+  "provideCameraPermission": "카메라 권한 제공",
+  "rescan": "재검색",
+  "warning": "경고",
   "error": "오류",
   "retry": "재시도",
   "close": "종료",
-  "showMorePhrase": "더 보기"
+  "showMorePhrase": "더 보기",
+  "generalAbort": "취소",
+  "generalConfirm": "확인하다",
+  "scanQRorBarcode": "QR 또는 바코드 스캔",
+  "copy": "복사",
+  "copiedToClipboard": "클립보드에 복사됨",
+  "generalDetails": "세부 정보"
 }

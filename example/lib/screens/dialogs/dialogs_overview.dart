@@ -71,14 +71,12 @@ class DialogOverviewScreen extends StatelessWidget {
                           'Shows error or info snackbars '
                           'on different buttons',
                       onConfirmed: () {
-                        AppSnackBar.info(
-                          message: 'Confirm pressed',
-                        ).show(context);
+                        AppSnackBar.info(message: 'Confirm pressed')
+                            .show(context);
                       },
                       onDismissed: () {
-                        AppSnackBar.error(
-                          message: 'Cancel pressed',
-                        ).show(context);
+                        AppSnackBar.error(message: 'Cancel pressed')
+                            .show(context);
                       },
                     );
                   },

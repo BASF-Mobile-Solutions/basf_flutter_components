@@ -11,5 +11,8 @@
   "showMorePhrase": "Show more",
   "generalAbort": "Cancel",
   "generalConfirm": "Confirm",
-  "scanQRorBarcode": "Scan QR or Barcode"
+  "scanQRorBarcode": "Scan QR or Barcode",
+  "copy": "Copy",
+  "copiedToClipboard": "Copied to clipboard",
+  "generalDetails": "Details"
 }

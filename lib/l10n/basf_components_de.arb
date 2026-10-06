@@ -11,5 +11,8 @@
   "showMorePhrase": "Mehr Infos",
   "generalAbort": "Abbrechen",
   "generalConfirm": "Bestätigen",
-  "scanQRorBarcode": "QR oder Barcode scannen"
+  "scanQRorBarcode": "QR oder Barcode scannen",
+  "copy": "Kopieren",
+  "copiedToClipboard": "In Zwischenablage kopiert",
+  "generalDetails": "Details"
 }

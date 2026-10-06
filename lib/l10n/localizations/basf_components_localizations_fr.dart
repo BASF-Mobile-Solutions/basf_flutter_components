@@ -10,19 +10,19 @@ class BasfComponentsLocalizationsFr extends BasfComponentsLocalizations {
   BasfComponentsLocalizationsFr([String locale = 'fr']) : super(locale);
 
   @override
-  String get cameraNotAvailable => 'Camera is not available';
+  String get cameraNotAvailable => 'L\'appareil photo n\'est pas disponible';
 
   @override
-  String get codeScanSuccessPhrase => 'Code scanned successfully';
+  String get codeScanSuccessPhrase => 'Code analysé avec succès';
 
   @override
-  String get provideCameraPermission => 'Provide Camera Permission';
+  String get provideCameraPermission => 'Fournir l\'autorisation de la caméra';
 
   @override
-  String get rescan => 'Rescan';
+  String get rescan => 'Numériser à nouveau';
 
   @override
-  String get warning => 'Warning';
+  String get warning => 'Avertissement';
 
   @override
   String get error => 'Erreur';
@@ -37,11 +37,20 @@ class BasfComponentsLocalizationsFr extends BasfComponentsLocalizations {
   String get showMorePhrase => 'Afficher plus';
 
   @override
-  String get generalAbort => 'Cancel';
+  String get generalAbort => 'Annuler';
 
   @override
-  String get generalConfirm => 'Confirm';
+  String get generalConfirm => 'Confirmer';
 
   @override
-  String get scanQRorBarcode => 'Scan QR or Barcode';
+  String get scanQRorBarcode => 'Scanner un code QR ou un code-barres';
+
+  @override
+  String get copy => 'Copier';
+
+  @override
+  String get copiedToClipboard => 'Copié dans le presse-papiers';
+
+  @override
+  String get generalDetails => 'Détails';
 }

@@ -1,7 +1,18 @@
 {
   "@@locale": "es",
+  "cameraNotAvailable": "La cámara no está disponible",
+  "codeScanSuccessPhrase": "Código escaneado correctamente",
+  "provideCameraPermission": "Proporcionar permiso de cámara",
+  "rescan": "Reescaneo",
+  "warning": "Advertencia",
   "error": "Error",
   "retry": "Reintentar",
   "close": "Cerrar",
-  "showMorePhrase": "Mostrar más"
+  "showMorePhrase": "Mostrar más",
+  "generalAbort": "Cancelar",
+  "generalConfirm": "Confirmar",
+  "scanQRorBarcode": "Escanear QR o código de barras",
+  "copy": "Copiar",
+  "copiedToClipboard": "Copiado en el portapapeles",
+  "generalDetails": "Detalles"
 }

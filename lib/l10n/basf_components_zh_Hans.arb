@@ -11,5 +11,8 @@
   "showMorePhrase": "显示更多",
   "generalAbort": "中止",
   "generalConfirm": "确认",
-  "scanQRorBarcode": "扫描二维码或条形码"
+  "scanQRorBarcode": "扫描二维码或条形码",
+  "copy": "复制",
+  "copiedToClipboard": "复制到剪贴板",
+  "generalDetails": "详情"
 }

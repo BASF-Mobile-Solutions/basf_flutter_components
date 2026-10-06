@@ -1,0 +1,18 @@
+{
+  "@@locale": "pl",
+  "cameraNotAvailable": "Aparat nie jest dostępny",
+  "codeScanSuccessPhrase": "Kod zeskanowano pomyślnie",
+  "provideCameraPermission": "Zezwól na dostęp do aparatu",
+  "rescan": "Skanuj ponownie",
+  "warning": "Ostrzeżenie",
+  "error": "Błąd",
+  "retry": "Spróbuj ponownie",
+  "close": "Zamknij",
+  "showMorePhrase": "Pokaż więcej",
+  "generalAbort": "Anuluj",
+  "generalConfirm": "Potwierdź",
+  "scanQRorBarcode": "Skanuj kod QR lub kod kreskowy",
+  "copy": "Kopiuj",
+  "copiedToClipboard": "Skopiowano do schowka",
+  "generalDetails": "Szczegóły"
+}

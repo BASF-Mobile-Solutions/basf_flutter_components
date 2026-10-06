@@ -1,0 +1,18 @@
+{
+  "@@locale": "sq",
+  "cameraNotAvailable": "Kamera nuk është në dispozicion",
+  "codeScanSuccessPhrase": "Kodi u skanua me sukses",
+  "provideCameraPermission": "Jep leje për kamerën",
+  "rescan": "Skano përsëri",
+  "warning": "Paralajmërim",
+  "error": "Gabim",
+  "retry": "Provo përsëri",
+  "close": "Mbyll",
+  "showMorePhrase": "Shfaq më shumë",
+  "generalAbort": "Anulo",
+  "generalConfirm": "Konfirmo",
+  "scanQRorBarcode": "Skano kodin QR ose barkodin",
+  "copy": "Kopjo",
+  "copiedToClipboard": "U kopjua në kujtesë",
+  "generalDetails": "Detajet"
+}

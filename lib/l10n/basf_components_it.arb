@@ -1,7 +1,18 @@
 {
   "@@locale": "it",
+  "cameraNotAvailable": "La fotocamera non è disponibile",
+  "codeScanSuccessPhrase": "Codice analizzato correttamente",
+  "provideCameraPermission": "Fornisci l''autorizzazione alla fotocamera",
+  "rescan": "Rescan",
+  "warning": "Avvertimento",
   "error": "Errore",
   "retry": "Ripetere",
   "close": "Chiudere",
-  "showMorePhrase": "Mostra di più"
+  "showMorePhrase": "Mostra di più",
+  "generalAbort": "Annulla",
+  "generalConfirm": "Confermare",
+  "scanQRorBarcode": "Scansiona QR o codice a barre",
+  "copy": "Copiare",
+  "copiedToClipboard": "Copiato negli appunti",
+  "generalDetails": "Dettagli"
 }

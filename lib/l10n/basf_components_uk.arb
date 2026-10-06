@@ -1,0 +1,18 @@
+{
+  "@@locale": "uk",
+  "cameraNotAvailable": "Камера недоступна",
+  "codeScanSuccessPhrase": "Код успішно проскановано",
+  "provideCameraPermission": "Надати доступ до камери",
+  "rescan": "Сканувати повторно",
+  "warning": "Попередження",
+  "error": "Помилка",
+  "retry": "Повторити",
+  "close": "Закрити",
+  "showMorePhrase": "Показати більше",
+  "generalAbort": "Скасувати",
+  "generalConfirm": "Підтвердити",
+  "scanQRorBarcode": "Сканувати QR-код або штрихкод",
+  "copy": "Копіювати",
+  "copiedToClipboard": "Скопійовано до буфера обміну",
+  "generalDetails": "Деталі"
+}

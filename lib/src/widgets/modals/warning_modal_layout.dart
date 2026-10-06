@@ -1,8 +1,24 @@
 import 'package:basf_flutter_components/basf_flutter_components.dart';
+import 'package:basf_flutter_components/src/widgets/modals/warning_modal_details.dart';
 import 'package:material_ui/material_ui.dart';
 
 /// Warning modal layout
-class WarningModalLayout extends StatefulWidget {
+///
+/// The title with the surprised emoji, the message below it and, collapsed
+/// under the message, the [additionalInfo] — technical texts that can be
+/// expanded and copied. Pops `true` when the user chooses to retry.
+///
+/// ```dart
+/// showCustomModalBottomSheet<bool>(
+///   context: context,
+///   builder: (context) => const WarningModalLayout(
+///     warningMessage: 'Purchase order 4711 not found',
+///     additionalInfo: ['{"status": 500}'],
+///     withRetryButton: true,
+///   ),
+/// );
+/// ```
+class WarningModalLayout extends StatelessWidget {
   ///
   const WarningModalLayout({
     required this.warningMessage,
@@ -32,117 +48,119 @@ class WarningModalLayout extends StatefulWidget {
   /// Optional custom widget displayed above the action buttons.
   final Widget? additionalWidget;
 
-  @override
-  State<WarningModalLayout> createState() => _WarningModalLayoutState();
-}
+  static const double _margin = Dimens.paddingMediumLarge;
 
-class _WarningModalLayoutState extends State<WarningModalLayout> {
-  bool showAdditionalInfo = false;
-  bool showLine = false;
+  /// Softer than the title, still well above the contrast minimum.
+  static final Color _messageColor = BasfColors.copyTextGrey.withValues(alpha: 0.85);
 
   @override
   Widget build(BuildContext context) {
     final localizations = BasfComponentsLocalizations.of(context);
+    final List<String> details = additionalInfo ?? const [];
 
     return Padding(
       padding: MediaQuery.of(context).viewInsets,
-      child: SafeArea(
-        minimum: const EdgeInsets.only(bottom: Dimens.paddingMedium20),
-        child: Container(
-          color: Theme.of(context).scaffoldBackgroundColor,
+      child: Container(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        child: SafeArea(
+          minimum: const EdgeInsets.only(bottom: Dimens.paddingMedium),
           child: Column(
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Flexible(
                 child: ListView(
                   shrinkWrap: true,
                   physics: const ClampingScrollPhysics(),
-                  padding: Paddings.defaultScreenPadding,
+                  // Without the details block the message gets more room before
+                  // the buttons, so it does not sit right on top of them.
+                  padding: EdgeInsets.fromLTRB(
+                    _margin,
+                    28,
+                    _margin,
+                    details.isEmpty ? Dimens.paddingMediumLarge : Dimens.paddingMedium,
+                  ),
                   children: [
-                    ModalHeader(
-                      title: widget.isError ? localizations.error : localizations.warning,
-                      icon: emoji,
-                      showCloseButton: false,
+                    // Read out by screen readers as soon as the modal opens.
+                    Semantics(
+                      liveRegion: true,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          title(localizations),
+                          const SizedBox(height: 4),
+                          message(),
+                        ],
+                      ),
                     ),
-                    Text(widget.warningMessage),
-                    if (widget.additionalInfo?.isNotEmpty ?? false) showMoreButton(localizations),
-                    if (widget.additionalInfo?.isNotEmpty ?? false) additionalInfo(),
-                  ].joinWithSeparator(VerticalSpacer.medium()),
+                    if (details.isNotEmpty) ...[
+                      const SizedBox(height: Dimens.paddingMedium),
+                      WarningModalDetails(details: details),
+                    ],
+                  ],
                 ),
               ),
-              if (widget.additionalWidget != null)
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: Dimens.paddingMedium20),
-                  child: widget.additionalWidget!,
-                ),
-              if (widget.withRetryButton)
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: Dimens.paddingMedium20),
-                  child: retryButton(context, localizations),
-                ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: Dimens.paddingMedium20),
-                child: closeButton(context, localizations),
-              ),
-            ].joinWithSeparator(VerticalSpacer.medium()),
+              actions(context, localizations),
+            ],
           ),
         ),
       ),
     );
   }
 
-  Widget additionalInfo() {
-    return Fade(
-      visible: showAdditionalInfo,
+  /// Title of the modal followed by the surprised emoji.
+  Widget title(BasfComponentsLocalizations localizations) {
+    return Row(
+      children: [
+        Flexible(
+          child: Text(
+            isError ? localizations.error : localizations.warning,
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w700,
+              color: BasfColors.copyTextGrey,
+            ),
+          ),
+        ),
+        // The animation has its own transparent margin, hence the small gap.
+        const SizedBox(width: 2),
+        const RiveEmojiIcon(emoji: RiveEmoji.surprise, size: 34),
+      ],
+    );
+  }
+
+  /// The [warningMessage], selectable so it can be copied.
+  Widget message() {
+    return SelectableText(
+      warningMessage,
+      style: TextStyle(fontSize: 15, height: 1.4, color: _messageColor),
+    );
+  }
+
+  /// The [additionalWidget] and the buttons, below the scrollable content.
+  Widget actions(BuildContext context, BasfComponentsLocalizations localizations) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(_margin, Dimens.paddingDefault, _margin, 0),
       child: Column(
-        children:
-            widget.additionalInfo?.map(Text.new).toList().joinWithSeparator(paddedDivider()) ?? [],
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          if (additionalWidget != null) ...[
+            additionalWidget!,
+            const SizedBox(height: Dimens.paddingMediumSmall),
+          ],
+          if (withRetryButton) ...[
+            retryButton(context, localizations),
+            const SizedBox(height: 10),
+          ],
+          closeButton(context, localizations),
+        ],
       ),
     );
   }
 
-  Widget paddedDivider() {
-    return const Padding(
-      padding: EdgeInsets.symmetric(
-        vertical: Dimens.paddingMedium,
-      ),
-      child: AppDivider.thick(),
-    );
-  }
-
-  Widget showMoreButton(BasfComponentsLocalizations localizations) {
-    final Widget showMoreButton = BasfTextButton.transparent(
-      onPressed: () {
-        setState(() => showAdditionalInfo = true);
-        Future.delayed(const Duration(milliseconds: 300), () {
-          setState(() => showLine = true);
-        });
-      },
-      child: Text(localizations.showMorePhrase),
-    );
-
-    return Fade(
-      visible: !showAdditionalInfo || showLine,
-      duration: const Duration(milliseconds: 250),
-      child: AnimatedScale(
-        scale: showAdditionalInfo && !showLine ? 0 : 1,
-        duration: const Duration(milliseconds: 200),
-        child: showLine ? const AppDivider.thick() : showMoreButton,
-      ),
-    );
-  }
-
-  Widget get emoji {
-    return const RiveEmojiIcon(
-      emoji: RiveEmoji.surprise,
-      size: 32,
-    );
-  }
-
-  Widget retryButton(
-    BuildContext context,
-    BasfComponentsLocalizations localizations,
-  ) {
+  /// Button that closes the modal with `true`.
+  Widget retryButton(BuildContext context, BasfComponentsLocalizations localizations) {
     return BasfOutlinedButton(
       text: localizations.retry,
       expanded: true,
@@ -150,12 +168,10 @@ class _WarningModalLayoutState extends State<WarningModalLayout> {
     );
   }
 
-  Widget closeButton(
-    BuildContext context,
-    BasfComponentsLocalizations localizations,
-  ) {
+  /// Button that closes the modal with `false`.
+  Widget closeButton(BuildContext context, BasfComponentsLocalizations localizations) {
     return BasfTextButton.contained(
-      text: widget.customButtonLabel ?? localizations.close,
+      text: customButtonLabel ?? localizations.close,
       expanded: true,
       onPressed: () => Navigator.pop(context, false),
     );

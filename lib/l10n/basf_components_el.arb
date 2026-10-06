@@ -1,0 +1,18 @@
+{
+  "@@locale": "el",
+  "cameraNotAvailable": "Η κάμερα δεν είναι διαθέσιμη",
+  "codeScanSuccessPhrase": "Ο κωδικός σαρώθηκε επιτυχώς",
+  "provideCameraPermission": "Παροχή άδειας κάμερας",
+  "rescan": "Επανάληψη σάρωσης",
+  "warning": "Προειδοποίηση",
+  "error": "Σφάλμα",
+  "retry": "Επανάληψη",
+  "close": "Κλείσιμο",
+  "showMorePhrase": "Εμφάνιση περισσότερων",
+  "generalAbort": "Ακύρωση",
+  "generalConfirm": "Επιβεβαίωση",
+  "scanQRorBarcode": "Σάρωση QR ή γραμμωτού κώδικα",
+  "copy": "Αντιγραφή",
+  "copiedToClipboard": "Αντιγράφηκε στο πρόχειρο",
+  "generalDetails": "Λεπτομέρειες"
+}

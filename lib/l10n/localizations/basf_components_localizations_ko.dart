@@ -10,19 +10,19 @@ class BasfComponentsLocalizationsKo extends BasfComponentsLocalizations {
   BasfComponentsLocalizationsKo([String locale = 'ko']) : super(locale);
 
   @override
-  String get cameraNotAvailable => 'Camera is not available';
+  String get cameraNotAvailable => '카메라를 사용할 수 없습니다.';
 
   @override
-  String get codeScanSuccessPhrase => 'Code scanned successfully';
+  String get codeScanSuccessPhrase => '코드가 성공적으로 스캔되었습니다.';
 
   @override
-  String get provideCameraPermission => 'Provide Camera Permission';
+  String get provideCameraPermission => '카메라 권한 제공';
 
   @override
-  String get rescan => 'Rescan';
+  String get rescan => '재검색';
 
   @override
-  String get warning => 'Warning';
+  String get warning => '경고';
 
   @override
   String get error => '오류';
@@ -37,11 +37,20 @@ class BasfComponentsLocalizationsKo extends BasfComponentsLocalizations {
   String get showMorePhrase => '더 보기';
 
   @override
-  String get generalAbort => 'Cancel';
+  String get generalAbort => '취소';
 
   @override
-  String get generalConfirm => 'Confirm';
+  String get generalConfirm => '확인하다';
 
   @override
-  String get scanQRorBarcode => 'Scan QR or Barcode';
+  String get scanQRorBarcode => 'QR 또는 바코드 스캔';
+
+  @override
+  String get copy => '복사';
+
+  @override
+  String get copiedToClipboard => '클립보드에 복사됨';
+
+  @override
+  String get generalDetails => '세부 정보';
 }

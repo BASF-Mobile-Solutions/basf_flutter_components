@@ -1,0 +1,18 @@
+{
+  "@@locale": "ru",
+  "cameraNotAvailable": "Камера недоступна",
+  "codeScanSuccessPhrase": "Код успешно отсканирован",
+  "provideCameraPermission": "Предоставить доступ к камере",
+  "rescan": "Сканировать повторно",
+  "warning": "Предупреждение",
+  "error": "Ошибка",
+  "retry": "Повторить",
+  "close": "Закрыть",
+  "showMorePhrase": "Показать больше",
+  "generalAbort": "Отменить",
+  "generalConfirm": "Подтвердить",
+  "scanQRorBarcode": "Сканировать QR-код или штрихкод",
+  "copy": "Копировать",
+  "copiedToClipboard": "Скопировано в буфер обмена",
+  "generalDetails": "Подробности"
+}
